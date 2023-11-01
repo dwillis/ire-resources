@@ -1,0 +1,439 @@
+Finding needles
+IN HAYSTACKS
+WITH FUZZY MATCHING
+@maxharlow
+
+Phil C. Harris
+Baron Harris of Peckham
+Philip Harris
+Philip Charles Harris
+Philip C Harris
+The Right Honourable Lord Harris of Peckham
+P Harris
+Lord Harris
+
+Finding needles
+IN HAYSTACKS
+WITH FUZZY MATCHING
+@maxharlow
+
+What is fuzzy matching?
+Matching up two sets of names of things
+that aren’t quite the same, but refer to the
+same thing.
+Typically in journalism that’s names of
+people or names of companies.
+
+CSV Match
+github.com/maxharlow/csvmatch
+
+Getting started with
+the terminal
+
+What folder am I in?
+aka. ‘Print Working Directory’
+
+$ pwd
+
+What ﬁles and folders are here?
+
+$ ls
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd foldername
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd Desktop
+
+$ cd hands_on_classes
+
+$ cd 20220303_finding_needles_in_haystacks_with_f
+
+$ ls
+
+$ ls
+bloomberg-billionaires.csv
+
+forbes-billionaires.csv
+
+peppercat-world-leaders.csv
+
+davos-delegates.csv
+
+un-sanctioned-people.csv
+
+cop26-attendees.csv
+
+Open current folder in the Finder
+
+$ open .
+
+Exact matches
+
+Which people are on both
+Forbes and Bloomberg’s
+billionaires lists?
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName
+
+Lin Li,Lin Li
+Hong Ra-hee,Hong Ra-hee
+Prajogo Pangestu,Prajogo Pangestu
+Lin Jianhua,Lin Jianhua
+Wang Laichun,Wang Laichun
+Wang Laisheng,Wang Laisheng
+Jane Lauder,Jane Lauder
+Manuel Villar,Manuel Villar
+Wang Wenjing,Wang Wenjing
+Jack Dorsey,Jack Dorsey
+Oleg Tinkov,Oleg Tinkov
+Cheng Xue,Cheng Xue
+John Collison,John Collison
+Patrick Collison,Patrick Collison
+Wang Liping,Wang Liping
+Yao Liangsong,Yao Liangsong
+Liu Hanyuan,Liu Hanyuan
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName
+
+a ﬂag
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+-1 name \
+-2 commonName
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName \
+> billionaires-in-both.csv
+
+Specifying which
+columns we want
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName \
+--output 1.name 1.rank 2.rank \
+> billionaires-in-both-ranked.csv
+
+--output 1.name 1.rank 2.rank \
+
+--output 1.name 1.rank 2.rank \
+
+--output 1.name 1.rank 2.rank \
+
+--output 1.name 1.rank 2.rank \
+
+--output 1.name 1.rank 2.rank \
+
+--output 1.name 1.rank 2.rank \
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 commonName \
+--output 1.name 1.rank 2.rank \
+> billionaires-in-both-ranked.csv
+
+Fuzzier matches with
+
+normalisation
+
+What could we ignore?
+Case (upper/lower)
+Non-alphanumerics
+Non-latin characters (é, å, ß, etc)
+The order the words are in
+The order the letters are in
+Common name preﬁxes (Mr, Ms, etc)
+A custom list of words
+
+What could we ignore?
+Case (upper/lower)
+
+-i
+
+--ignore-case
+
+Non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Non-latin characters (é, å, ß, etc)
+
+-n
+
+--ignore-nonlatin
+
+The order the words are in
+
+-s
+
+--ignore-order-words
+
+The order the letters are in
+
+-e
+
+--ignore-order-letters
+
+Common name preﬁxes (Mr, Ms, etc)
+
+-t
+
+--ignore-titles
+
+A custom list of words
+
+-l
+
+--ignore-custom
+
+Orbán, Viktor
+Viktor Orban
+
+Orban, Viktor
+Viktor Orban
+
+Orban Viktor
+Viktor Orban
+
+Orban Viktor
+=
+Orban Viktor
+
+Which world leaders went
+to Davos?
+
+$ csvmatch \
+peppercat-world-leaders.csv \
+davos-delegates.csv \
+--fields1 person \
+--fields2 full_name
+
+$ csvmatch \
+peppercat-world-leaders.csv \
+davos-delegates.csv \
+--fields1 person \
+--fields2 full_name \
+--ignore-case \
+> leaders-at-davos.csv
+
+What could we ignore?
+Case (upper/lower)
+
+-i
+
+--ignore-case
+
+Non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Non-latin characters (é, å, ß, etc)
+
+-n
+
+--ignore-nonlatin
+
+The order the words are in
+
+-s
+
+--ignore-order-words
+
+The order the letters are in
+
+-e
+
+--ignore-order-letters
+
+Common name preﬁxes (Mr, Ms, etc)
+
+-t
+
+--ignore-titles
+
+A custom list of words
+
+-l
+
+--ignore-custom
+
+$ csvmatch \
+peppercat-world-leaders.csv \
+davos-delegates.csv \
+--fields1 person \
+--fields2 full_name \
+-i -a -n -s \
+> leaders-at-davos-2.csv
+
+$ csvmatch \
+peppercat-world-leaders.csv \
+davos-delegates.csv \
+--fields1 person \
+--fields2 full_name \
+-ians \
+> leaders-at-davos-2.csv
+
+Fuzzy matching with
+
+edit distances
+
+What is the edit distance?
+
+Max Harlow
+
+=
+
+Max Harkow
+
+90%
+
+Max Harlow
+
+=
+
+John Dales
+
+10%
+
+‘Levenshtein’
+
+Which world leaders are
+billionaires?
+
+$ csvmatch \
+peppercat-world-leaders.csv \
+bloomberg-billionaires.csv \
+--fields1 person \
+--fields2 commonName \
+--fuzzy levenshtein \
+> billionaire-leaders.csv
+
+False positives
+& false negatives
+
+this is coffee
+
+FALSE POSITIVE
+
+this is not
+coffee
+
+FALSE NEGATIVE
+
+Fuzzy matching with
+
+phonetics
+
+What are phonetic matches?
+
+Catherine
+
+=
+
+Kathryn
+
+David
+
+=
+
+Dave
+
+‘Metaphone’
+
+Fuzzy matching with
+
+machine learning
+
+How can a machine learn?
+Fumio Kishida = Kishida Fumio
+Olaf Scholz = O. Scholz
+Mario Draghi OMRI = Mario Draghi
+V. Putin =
+Macron, Emmanuel =
+Joe Biden =
+
+Vladimir Putin
+Emmanuel Macron
+Joseph Biden Jr
+
+‘Bilenko’
+
+Which billionaires went to
+Davos?
+
+$ csvmatch \
+forbes-billionaires.csv \
+davos-delegates.csv \
+--fields1 name \
+--fields2 full_name \
+--fuzzy bilenko \
+> billionaires-at-davos.csv
+
+name: Mark Leonard & family
+name: Mark Leonard
+Do these records refer to the same thing? [y/n/s/f] y
+name: Kenneth Lo
+name: Kenneth Rogoff
+Do these records refer to the same thing? [y/n/s/f] n
+name: Zhang Jin
+name: Zhang Jiachen
+Do these records refer to the same thing? [y/n/s/f]
+
+Know your data
+
+Same name, same person
+
+How long will it take?
+Medium sized data only
+Every row needs to be matched against every other row
+To work out how many comparisons that means take the number
+of rows in the two ﬁles, and multiply them
+Both ﬁles will need to be completely loaded into your computer’s
+memory -- if their combined size is bigger, it won’t work
+
+Ok, but how do I do this in code?
+Python
+● github.com/jsoma/fuzzy_pandas
+● github.com/dedupeio/dedupe
+● github.com/RobinL/fuzzymatcher
+
+R
+● github.com/dgrtwo/fuzzyjoin
+
+@maxharlow
+github.com/maxharlow/csvmatch
+Slides at bit.ly/3hwwjVl
+
+

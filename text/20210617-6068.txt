@@ -1,0 +1,338 @@
+Scraping Without
+Programming
+© Samantha Sunne
+
+What is scraping?
+
+How do journalists usually get data?
+From Humans
+
+Ask Nicely
+
+From Computers
+
+FOIA
+
+Download
+
+3
+
+Scrape
+
+How do journalists usually get data?
+From Humans
+
+Ask Nicely
+
+From Computers
+
+FOIA
+
+Download
+
+Scrape
+
+Playing Hardball
+
+Playing Hardball
+
+4
+
+What is scraping?
+It means to grab data
+through code, elbow
+grease, or whatever
+method you have on hand.
+
+5
+
+Web scraping
+Today we will extract data
+from a single webpage.
+This is different from
+web crawling, document
+scraping, and other kinds
+of scraping.
+
+6
+
+HTML
+We're going to scrape with HTML. This
+is sometimes called source code.
+
+This is how a website
+looks to a human.
+
+8
+
+This is how it looks to a
+computer.
+
+9
+
+Our goal is to land
+somewhere in the
+middle.
+
+10
+
+Sometimes source code
+itself is interesting.
+Jeb Bush's campaign
+site included a detailed
+summary of the movie
+Die Hard.
+
+11
+
+HTML elements
+HTML is broken into
+elements. Elements are
+wrapped in tags that look like
+this:
+
+There are a lot of tags, like
+<h1> and <li> and <a>.
+If you don't know what it
+means, use an HTML
+dictionary.
+
+<>element</>
+
+12
+
+HTML elements
+For example, tables:
+
+Or headers:
+
+<table>
+
+<h1>
+
+Here is my table,
+between these table
+tags.
+
+Here is my header.
+</h1>
+
+</table>
+
+13
+
+Nested elements
+Elements can be inside
+other elements. That
+means you can grab an
+element and all the
+elements inside it.
+
+14
+
+Nested elements
+Table cell
+1
+
+Table row
+A table row has the tag
+<tr>, and contains table
+cells inside it.
+
+2
+
+One cell in a table has
+the tag <td>, which
+stands for "table data."
+
+Table
+3
+
+15
+
+A table element
+contains both table
+rows and table cells. It
+has the tag <table>.
+
+Nested elements
+
+You can grab a cell from a
+table, a row, or a whole
+table.
+
+16
+
+Technique 1
+ImportHTML
+
+importHTML
+Type this formula in Google Sheets:
+=ImportHTML(“url”, “element”)
+
+The url is the link you are scraping.
+The element is the HTML tag.
+
+18
+
+importHTML
+For example:
+=ImportHTML("https://ourworldindata.org/covidvaccinations","table")
+
+This scrapes a table of Covid-19 vaccines available in
+118 countries.
+19
+
+20
+
+Hooray!
+We scraped a live webpage.
+But the ImportHTML formula is pretty limited.
+Let's try something more advanced.
+
+21
+
+Technique 2
+ImportXML
+
+importXML
+Type this formula in Google Sheets:
+=ImportXML(“url”, “XPATH”)
+
+The url is the link you are scraping.
+The XPATH is the address of the data.
+
+23
+
+What is an XPATH?
+An XPATH is like an address to a very
+specific bit of data.
+
+XPATH Examples
+//table[@id='vaccines']/tr[3]/td[4]
+
+//table[@id='vaccines']
+
+// on this page
+
+in the table called
+'vaccines'
+
+tr[3]/td[4]
+
+in row 3
+
+in cell 4
+
+XPATH Examples
+
+26
+
+XPATH Examples
+
+27
+
+XPATH Examples
+All bold text
+
+//b
+
+All headers (large text)
+
+//h1
+
+All headers containing the
+word "country"
+
+//h1[contains(.,'coun
+try')]
+//h1[@class='countryname']
+
+All headers with the class
+"country-name"
+
+28
+
+Having trouble finding
+the XPATH?
+You can also use the
+Web Inspector to
+cheat.
+
+29
+
+XPATH
+Now that we know what
+XPATH is (more or less),
+let's use it to scrape
+something a lot more
+specific than tables.
+
+30
+
+importXML
+For example:
+=ImportXML("https://ourworldindata.org/covid-v
+accinations","//table//tr/td/a/@href")
+
+This scrapes all the links and their destinations in
+that table of Covid-19 vaccines.
+31
+
+32
+
+ImportHTML and ImportXML
+That's just the basics. You can find plenty of in-depth
+tutorials on ImportHTML, ImportXML, and other
+formulas like ImportFEED.
+
+33
+
+Technique 3
+Point-and-Click Apps
+
+OutWit Hub
+OutWit Hub is a desktop
+app that can identify
+each HTML element on a
+webpage and scrape it.
+The free version lets you
+download 100 rows at a
+time.
+
+35
+
+ParseHub
+ParseHub is a desktop
+app that can identify and
+scrape elements and
+sub-elements. The free
+version lets you scrape
+200 pages at a time.
+
+36
+
+WebScraper
+WebScraper is a browser
+extension that helps you
+scrape stuff through the
+Web Inspector. It only
+sometimes works.
+
+37
+
+Disclaimer:
+Free apps come and go.
+They may not be up to date when you're reading
+this. But that's why we learned the code instead.
+
+38
+
+And that's it!
+Find me with questions.
+I also recommend my newsletter Tools for
+Reporters for cool stuff like this. Good luck!
+
+39
+
+
