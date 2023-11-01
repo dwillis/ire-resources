@@ -2,12 +2,8 @@ import openai
 import os
 import subprocess
 
-# Specify the directory containing the .txt files
 directory_path = "text"
 
-# Define the command to be executed
-
-# Iterate through the files in the directory
 for filename in os.listdir(directory_path):
     if filename.endswith(".txt"):
         print(filename)
