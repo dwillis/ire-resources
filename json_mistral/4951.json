@@ -1,0 +1,9 @@
+ The provided text is a step-by-step guide for creating a simple web application using the Django framework. This tutorial aims to teach you how to create database tables, load data, and create an administration panel for others to improve the data. The application being created is a system to share the load of producing a follow-up story on the Academy of Motion Picture Arts and Sciences' invitation list.
+
+To start, ensure you have the necessary tools installed, such as a command-line interface, a text editor, Python (version 2.7), pip, and virtualenv. Once you have these tools ready, you can set up a new development environment with virtualenv, install Django, and create a new Django project. After that, create a new app within the project and name it "academy." Configure the project to include the new app by adding its name to the `INSTALLED_APPS` list in the `settings.py` file.
+
+In the `academy/models.py` file, define a `Invite` class that inherits from `models.Model`. This class will represent the database table holding the source data. Add fields to the `Invite` class, such as `name`, `branch`, `gender`, `date_of_birth`, `race`, and `notes`, as described in the text. After defining the model, create a database table for the `Invite` model by running `python manage.py makemigrations` and `python manage.py migrate` commands.
+
+Next, create a management command to load the source CSV file into the model. To do this, create a `loadacademycsv.py` file within the `academy/management/commands` directory and use Python's built-in `csv` module to read and load the CSV file into the database.
+
+The text also includes information on prerequisites, troubleshooting, and other details necessary for following this tutorial. Make sure to read through the entire text and follow the steps carefully to successfully create the web application.

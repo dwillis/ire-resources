@@ -1,0 +1,35 @@
+The following are some of the most common aggregate functions in SQL:
+
+* COUNT: Returns the number of rows in a group.
+* SUM: Returns the sum of the values in a group.
+* AVG: Returns the average of the values in a group.
+* MAX: Returns the maximum value in a group.
+* MIN: Returns the minimum value in a group.
+
+To use an aggregate function, you first need to group your data. This can be done using the GROUP BY clause. The GROUP BY clause specifies which columns you want to group your data by. For example, if you want to group your data by county, you would use the following GROUP BY clause:
+
+```
+GROUP BY county
+```
+
+Once you have grouped your data, you can use an aggregate function to calculate a summary statistic for each group. For example, to calculate the total cost of repairing all the bridges in a county, you would use the following query:
+
+```
+SELECT county, SUM(cost) AS total_cost
+FROM bridge15_la
+GROUP BY county
+```
+
+This query will return a table with one row for each county, showing the county name and the total cost of repairing all the bridges in that county.
+
+You can also use aggregate functions to calculate more complex statistics. For example, to calculate the average cost per square foot of repairing bridges in a county, you would use the following query:
+
+```
+SELECT county, SUM(cost) AS total_cost, COUNT(*) AS num_bridges
+FROM bridge15_la
+GROUP BY county
+```
+
+This query will return a table with one row for each county, showing the county name, the total cost of repairing all the bridges in that county, and the number of bridges in that county. You can then divide the total cost by the number of bridges to calculate the average cost per square foot.
+
+Aggregate functions are a powerful tool that can be used to summarize and analyze data. By understanding how to use aggregate functions, you can gain valuable insights into your data.

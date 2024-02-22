@@ -1,0 +1,142 @@
+ It seems like you're providing a series of tweets about a workshop on using Ruby on Rails for data journalism. Here's a summary of the information in a more organized format:
+
+Intro to Rails: A workshop on using Ruby on Rails for data journalism by Al Shaw.
+
+Do you need a web framework?
+
+* Your data is too large to bake into individual pages
+* You need user input
+* You need dynamic processing that can't be done in the browser
+
+Do you need Rails?
+
+* Your app is larger than a couple of pages
+* You have a big or complicated database
+* You need users and sessions
+* You want a place to organize your work
+
+Rails vs Sinatra:
+
+* Rails is a full-stack framework, while Sinatra is a DSL for quickly creating web applications in Ruby.
+
+Rails includes several components:
+
+* Controller
+* ORM (ActiveRecord)
+* Views
+* Assets
+* Authentication
+* Migrations
+* Email
+* JS
+
+To install Rails:
+
+* `gem install rails`
+
+Rails structure:
+
+* Gemfile
+* Gemfile.lock
+* README.rdoc
+* Rakefile
+* app
+* bin
+* config
+* config.ru
+* db
+* lib
+* log
+* public
+* test
+* tmp
+* vendor
+
+Important Rails directories and their significance:
+
+* assets: contains CSS, JavaScript, and image files
+* controllers: contains application logic
+* helpers: provides reusable methods for views
+* mailers: contains code for sending emails
+* models: contains the application's data models
+* views: contains the application's user interface
+
+Following the MVC (Model-View-Controller) architecture:
+
+* Model: Represents the data and business logic
+* Controller: Processes input, queries the model, and determines the appropriate view
+* View: Represents the user interface
+
+Rails' "convention over configuration" principle: It simplifies development by having a default way of doing things to follow, minimizing the configuration needed.
+
+For data storage, Rails supports SQLite, PostgreSQL, and MySQL.
+
+To create a new model, you can use:
+
+* `rails generate migration AddSchoolsTable`
+* Edit the generated file (e.g., 20160308170855\_add\_schools\_table.rb) to define the table schema using the `change` method.
+* Run `rake db:migrate` to create the table
+
+To create a new School record:
+
+* Use `School.new` and set the attributes manually
+* Use `School.create` and pass a hash with attributes and values
+
+ActiveRecord magic:
+
+* Fetching records: `School.find(1)`, `School.first`, `School.last`, `School.find_by(:name => "Acme High School")`, `School.where.not(:kind => "high")`, `School.select("name").where(:kind => "high")`
+* Using these fetched records: `School.all`, `s.save`, etc.
+
+Setting up controllers:
+
+* `rails generate controller Schools` to generate a new controller and associated views
+* Set up routes to map the controller actions to the URLs
+
+Routing:
+
+* In `config/routes.rb`, define routes for URL handling. Examples:
+	+ `get '/schools', to: 'schools#index'`
+	+ `get '/schools/:id', to: 'schools#show'`
+* Rails provides powerful routing options, including CRUD (Create, Read, Update, Delete) operations.
+
+Data loading:
+
+* Use rake tasks for data loading. Example:
+	+ Create `lib/tasks/load_data.rake` and add a `rake csv` task for loading the `db/initial/schools.csv` file.
+
+Loading Rails console:
+
+* `rails console`
+* Perform tasks like defining and fetching records (e.g., `s = School.new`, `School.create`, `School.all`, etc.)
+
+When adding a large number of records, consider using the `import` method, which can speed up the process compared to `create` and `save`:
+
+* `School.import [ { name: "John's School", kind: "elementary", students: 500, teachers: \[...] }, {...} ]`
+
+To get all the records, modify the `index` action in the controller:
+
+* `def index; @schools = School.all; end`
+
+Developing a simple view in ERB (Embedded Ruby):
+
+* In the corresponding `index.html.erb` file, use embedded Ruby logic for displaying data:
+	+ `<% @schools.each do |school| %>`
+	+ `<tr>`
+	+ `<td><%= school.name %></td>`
+
+Adding new columns:
+
+* Generate a new migration with `rails generate migration AddNewColumnToSchools new
+ \_column:column_type`
+* Run `rake db:migrate`
+
+Querying with conditions:
+
+* Use methods such as `where`, `limit`, `offset`, and `order` for fetching desired records. Example:
+	+ `School.where(:kind => "elementary").limit(5).order(:name)`
+
+Displaying fetched records:
+
+* In your-app.com/schools, you can see the results of your records.
+
+Now you know Rails! The presenter provides more specific guidance throughout the workshop.

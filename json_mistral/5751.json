@@ -1,0 +1,11 @@
+ Regular expressions (or regex) is a programming language used to match patterns in text, making it very useful for data cleaning. In this context, the key concept is 'patterns'. For example, if you have a list of phone numbers in 10-digit format (e.g. 512-555-1212), but want the area code to be in parentheses (e.g. (512) 555-1212), you could use regex to search for a pattern of characters and save it as a group. This allows you to replace the group with parentheses outside of it, regardless of the contents of the group.
+
+Regex uses special characters and commands, often preceded by a backslash (). For example, '^' matches the beginning of a line, '*' matches zero or more of the preceding character, and '\d' matches any number character. To find the literal expression of a character that would otherwise be a token, you can use a backslash before it.
+
+Regex101 is a useful tool for building and testing regex patterns. In this lesson, we use it to split address data into its parts. The goal is to turn a single field containing an address, city, state, zip code, latitude, and longitude into separate columns. This is done by building a pattern in the regular expression field that captures each part of the address that you want to keep, and then searching and replacing to put tabs between each group.
+
+In order to do this, the modifier "gm" is used in the regular expression string to signify that the search should be global and multi-line. Parentheses are used to create groups, and the period token . matches any character. The new line token \n is used to recognize the next line, and \d is used to match any number character. The quantifier + is used to find one or more of the characters in the set.
+
+When building the regex pattern, it's important to check for errors and make sure that all records are being captured. In this lesson, the error is caused by the fact that some city names have spaces while others do not. This is fixed by using a character set that allows for both word characters and spaces inside a group.
+
+Once the regex pattern has been built and tested, it can be used in a search and replace in a text editor to separate the address data into separate columns. This allows for more efficient data analysis and visualization.

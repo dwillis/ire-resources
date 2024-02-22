@@ -1,0 +1,34 @@
+ When dealing with data stored in the Portable Document Format (PDF), which was designed to maintain consistent formatting across different systems, you may encounter challenges when attempting to extract organized information. However, there are several tools available to help you get data out of PDFs. Here are some common tools for this purpose:
+
+1. **Adobe Acrobat Pro** (Win/Mac, $14.99 per month)
+2. **Abbyy FineReader Pro** (Win/Mac, $169.99 for Windows, $119.99 for Mac)
+3. **Tabula** (Win/Mac, Free)
+4. **CometDocs** (Web, Free for IRE members)
+
+In this example, we will demonstrate how to extract data from a 2013 report on homicides in California, available at <https://oag.ca.gov/sites/all/files/agweb/pdfs/cjsc/publications/homicide/hm13/hm13.pdf>.
+
+To convert the PDF into an Excel file, you can use CometDocs:
+
+1. Go to CometDocs.com and create an account if necessary. Log in and upload the PDF.
+2. Choose to convert the document into the Excel format.
+3. Download the converted Excel file.
+
+For more complex PDFs, you may need to use Optical Character Recognition (OCR) to convert images into text. Here's an example of converting expenditure reports for the city of Champaign into a usable format:
+
+1. Download the expenditure report from <http://tinyurl.com/zwua2sl>.
+2. Convert the PDF into images using the PDF to Image website (<http://pdftoimage.com/>).
+3. Upload the images to <http://www.onlineocr.net/> to perform OCR conversion.
+4. Combine the resulting text files using copy & paste, if needed.
+
+After extracting the data, you can use OpenRefine to clean and structure the information for analysis. OpenRefine allows you to remove unwanted rows, create records, and parse individual columns using Regular Expressions. OpenRefine might look complex at first, but it offers powerful tools for handling challenging datasets. You can download OpenRefine from their official website (<https://openrefine.org/>).
+
+Using the expenditure report example, follow these steps to clean and structure the extracted data:
+
+1. Create a new project in OpenRefine and import the text file saved from onlineocr.net.
+2. Clean up the rows by removing unwanted headers, repeating information, and blank rows.
+3. Create a new column for itemizations and associate them with checks.
+4. Parse the individual columns within the rows and records using Regular Expressions. OpenRefine uses a special language called Google Refine Expression Language (GREL) for this purpose. Familiarize yourself with basic GREL commands, such as "value", "match", opening and closing parenthesis, slashes, regex query, and brackets.
+5. Remove unwanted columns and apply necessary transformations to columns for proper formatting.
+6. Export the data from OpenRefine into a desired format, such as CSV, Excel, or JSON.
+
+By following these steps and using appropriate tools, you can efficiently extract data from PDF documents and structure them for efficient analysis.

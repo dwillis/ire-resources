@@ -1,0 +1,29 @@
+Here is the code to split the address into six columns:
+
+```python
+import re
+
+def split_address(address):
+    """Splits the address into six columns: address, city, state, zip, latitude, and longitude."""
+    regex = r"^" + r"(.*?)" + r"\n" + r"(.*?)" + r", (TX)" + r"(\d*)" + r"\n" + r"\((.*?)\)" + r", (.*?)$"
+    groups = re.findall(regex, address)
+    return groups
+
+def main():
+    # Get the address from the user.
+    address = input("Enter the address: ")
+
+    # Split the address into six columns.
+    groups = split_address(address)
+
+    # Print the six columns.
+    print("Address:", groups[0])
+    print("City:", groups[1])
+    print("State:", groups[2])
+    print("Zip:", groups[3])
+    print("Latitude:", groups[4])
+    print("Longitude:", groups[5])
+
+if __name__ == "__main__":
+    main()
+```

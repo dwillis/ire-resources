@@ -1,0 +1,60 @@
+ Welcome to this interactive session on data wrangling with Python, presented by Jackie Kazil and Abe Epton. We will cover loading, transforming, and storing data using the agate library and other Python tools.
+
+First, we will load data from a CSV file using the agate library. Agate is a data analysis library built with journalists in mind, and it provides a simple way to load data from a CSV file into an agate table. Here's how you can do it:
+
+```python
+import agate
+table = agate.Table.from_csv('data/contracts_data.csv')
+print table
+```
+
+Next, we will preview the data by iterating over the rows in the table and printing out the values for each column. We will use the `row.keys()` method to get the column headers, and we will use `row[column]` to get the corresponding value for each column. Here's how you can do it:
+
+```python
+for row in table.rows[:3]:
+    for column in row.keys():
+        print('%s: %s' % (column, row[column]))
+    print('--------------------------------------------------------------')
+```
+
+We can also use the `print_table` method to print a few rows at a time in a human-readable format. Here's how you can do it:
+
+```python
+table.print_table(max_columns=4, max_rows=10)
+```
+
+There are other ways to load CSVs as well. For example, you can use the built-in `csv` library and the `DictReader` class to read in a CSV file. Here's how you can do it:
+
+```python
+from csv import DictReader
+from pprint import pprint
+
+csv_data = []
+with open('data/contracts_data.csv') as datafile:
+    reader = DictReader(datafile)
+    for row in reader:
+        csv_data.append(row)
+
+print('Found %d lines' % len(csv_data))
+pprint(csv_data[0])
+```
+
+The `csv` library is a part of core Python, which means you don't need to install any additional libraries to use it. However, the `agate` library provides additional features for data wrangling, such as data aggregation and filtering.
+
+Finally, we will store the transformed data in a new CSV file. We can use the `csv` library to write the data to a new file. Here's how you can do it:
+
+```python
+import csv
+
+with open('output.csv', 'w') as csvfile:
+    fieldnames = table.column_names
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for row in table.rows:
+        writer.writerow(row)
+```
+
+This will create a new CSV file called `output.csv` with the same column headers and row data as the original `contracts_data.csv` file.
+
+In summary, data wrangling with Python involves loading data from a source, transforming it to fit your needs, and storing it in a new format. The agate library and the built-in `csv` module provide powerful tools for data wrangling in Python. By following the steps outlined in this tutorial, you can load, transform, and store data using Python.

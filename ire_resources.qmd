@@ -1,0 +1,13 @@
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+ire_pdfs <- read_csv("ire_pdfs.csv") |> distinct() |> filter(str_detect(url, ".pdf"))
+```
+
+```{r}
+write_csv(ire_pdfs, "pdf_urls.csv")
+```
+

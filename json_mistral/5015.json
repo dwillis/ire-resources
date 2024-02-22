@@ -1,0 +1,13 @@
+ A web API is a standardized way of communicating with a piece of software using the web. It utilizes the HTTP request-response cycle, similar to how the postal service works, but with the difference that all necessary instructions for the desired response must be included in the URL itself. Understanding this concept is crucial as it forms the basis for requesting and accessing data from web APIs.
+
+In this specific example, the goal is to get the number of violent crimes in Chicago for the year 2016 and previous years from the Chicago crime data hosted on Socrata, an open data platform. To do this, we will use Postman, a tool that allows you to make HTTP requests and view the responses more structured and data-centric than a web browser would.
+
+By breaking down a web API call URL, we can understand its components: the API host (in this case, api.twitter.com), versioning (e.g., 1.1), the type of data being accessed (e.g., statuses or Tweets), and the endpoint, which provides specific information in a defined format (oEmbed JSON format in this example). The portion after the question mark in the URL defines which data point we want to access through parameters.
+
+In the case of the Chicago crime data, we found the API link through the data portal and tested it in Postman. It worked, returning a list of structured data representing individual crime incidents. To group the data by year, we added the $group parameter to the URL in Postman and successfully obtained yearly crime counts.
+
+Debugging is essential when working with APIs, especially when issues arise. Reading error messages, searching for relevant keywords, and checking the API documentation can help resolve issues quickly. In this case, we found that a column was not included in the group by statement, requiring us to adjust our query accordingly.
+
+Finally, as a bonus, we learned how to obtain the data as a CSV file, as the person who needs the data might prefer it in that format. By changing the URL to the CSV format, we were successful in obtaining the CSV file, which can be easily imported into Excel.
+
+In summary, understanding web APIs, their components, and utilizing tools like Postman can enable us to efficiently gather, analyze, and present data in a structured manner for our reporting purposes.

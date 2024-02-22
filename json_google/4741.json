@@ -1,0 +1,46 @@
+Here is a sample rake task for loading data from a CSV file:
+
+```ruby
+desc "load the data"
+task :csv => :environment do
+  require 'csv'
+
+  # Open the CSV file
+  csv_file = File.open('db/initial/schools.csv', 'r')
+
+  # Create a new array to store the data
+  schools = []
+
+  # Iterate over the rows in the CSV file
+  csv_file.each do |row|
+    # Create a new school object
+    school = School.new
+
+    # Set the school's name
+    school.name = row[0]
+
+    # Set the school's kind
+    school.kind = row[1]
+
+    # Set the school's students
+    school.students = row[2]
+
+    # Set the school's teachers
+    school.teachers = row[3]
+
+    # Add the school to the array
+    schools << school
+  end
+
+  # Save the schools to the database
+  School.import schools
+end
+```
+
+To run this task, you can use the following command:
+
+```
+rake csv
+```
+
+This will load the data from the CSV file into the database.

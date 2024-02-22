@@ -1,0 +1,23 @@
+Here is a sample Rake task for loading data from a CSV file:
+
+```
+desc "load the data"
+task :csv => :environment do
+  require 'csv'
+
+  # Open the CSV file
+  csv_file = File.open('db/initial/schools.csv', 'r')
+
+  # Create a new ActiveRecord::Base subclass for each row in the CSV file
+  csv_reader = CSV.new(csv_file, headers: true) do |row|
+    School.create(
+      name: row[0],
+      kind: row[1],
+      students: row[2],
+      teachers: row[3]
+    )
+  end
+end
+```
+
+This task will create a new School record for each row in the CSV file, with the fields "name", "kind", "students", and "teachers".

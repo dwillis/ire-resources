@@ -1,0 +1,103 @@
+ Welcome to this QGIS workshop tutorial from the NICAR session in 2017 by Christine Jeavans and John Walton. In this guide, you will learn how to use QGIS, a powerful and free GIS software, for data exploration and map creation, focusing on journalists' needs. Here is a quick rundown of what you will learn:
+
+1. Download and install QGIS (version 2.14 Essen)
+2. Basic navigation and user interface
+3. Adding a shapefile (US county shapefiles)
+4. Adding data through delimited text files (CSV format)
+5. Joining area data (fatal road traffic accidents in Florida)
+6. Styling the area data with graduated colors
+7. Adding point data (individual crash locations)
+8. Scaling point symbols based on data values
+9. Categorizing data using different colors
+
+**Section 1: Download and install QGIS**
+
+Download the required version of QGIS (2.14 Essen) for your operating system from the following links:
+
+* Windows: <http://download.osgeo.org/qgis/windows/>
+* Mac: <http://www.kyngchaos.com/software/archive>
+
+**Section 2: Basic navigation and user interface**
+
+Launch QGIS and get familiar with the user interface. Key components include:
+
+* Layers panel (contains map layers)
+* Identify features button (inspects features' attributes)
+* Zoom in, zoom out, full extent, and back/forward buttons
+* Layer menu (for adding, removing, styling layers)
+
+**Section 3: Adding a shapefile**
+
+Download the example data from the workshop folder, which includes the US county shapefiles. To add a shapefile:
+
+1. Go to Layer > Add Vector Layer
+2. Browse to the workshop folder and select the sub-folder `U.S. county shapefiles`
+3. Select the shapefile `tl_2015_us_county.shp`
+4. Click Open and you should see a map with all the US counties
+
+**Section 4: Adding data through delimited text files (CSV format)**
+
+The provided dataset is a cut-down version of the not very cheery data set containing fatal road traffic accidents in Florida in 2015.
+
+1. Go to Layer > Add Delimited Text Layer
+2. Browse in `Fatals_fl_county_pop`
+3. Check the box for 'First record has field names'
+4. Choose 'No geometry'
+5. Click OK
+
+**Section 5: Joining area data**
+
+Join the data to the map and display the results by county. This process is called a chloropleth.
+
+1. Go to Layer > Data Source Manager
+2. Highlight the shapefile in the Layers panel
+3. Add the join layer `fatals_fl_county_pop`
+4. Set the join fields: FIPS for the data and GEOID for the shapefile
+5. Set the target field for the shapefile
+
+When you use the Identify Features button, it shows the fatalities_sum from the CSV data in the Identify Results panel.
+
+**Section 6: Styling the area data**
+
+Show the fatality numbers using graduated colors and style the map accordingly.
+
+1. Double click on the layer name to open the Layer Properties
+2. Choose the Graduated style
+3. Select fatalities\_fl\_county\_pop\_FATALS\_SUM as the column for aggregation
+4. Set Number of classes as desired
+5. Select a color ramp and apply
+
+**Section 7: Adding point data**
+
+The dataset contains individual crashes, so plot them using LatLong.
+
+1. Go to Layer > Add Delimited Text Layer
+2. Browse to `accident_florida` CSV file
+3. Check 'X field is Longitude' & 'Y field is Latitude'
+4. Select CRS WGS 84 (4326)
+5. Click OK
+
+You should see several differently-sized dots over Florida. These dots represent the relative loss of life in each crash.
+
+**Section 8: Scaling point symbols based on data values**
+
+Adjust the symbol size based on crash severity.
+
+1. Double click on the layer name in the Layers panel
+2. Choose Style > Size > Field type
+3. Select FATALS as the column for adjusting the size
+4. Adjust the transparency
+
+Click apply and OK to see the adjustment in the map.
+
+**Section 9: Categorizing data**
+
+Look at the data using categories. For example, use the number of drunk drivers in the crash.
+
+1. Double click on the layer name in the Layers panel
+2. Choose Style > Categorized
+3. Select the DRUNK\_DR column
+4. Classify and uncheck or delete the "No Data" option
+5. Edit colors based on crash severity or other factors
+
+With these steps, you have created a powerful, engaging visualization using QGIS and shared it with readers. Keep exploring and learning more about QGIS to uncover other valuable features.

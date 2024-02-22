@@ -1,0 +1,22 @@
+Here is a sample data cleaning code using regular expressions in Python:
+
+```python
+import re
+
+# Read the data from a file
+data = open('socrata_addresses.txt', 'r').read()
+
+# Split the data into lines
+lines = data.splitlines()
+
+# Create a regular expression pattern to capture the address, city, state, zip, latitude and longitude
+pattern = r'^"(.*)\n([\w ]+), (TX) (\d*)\n\(([\d\.]+), ([\d\-\.]+)\)$'
+
+# Replace the data with the regular expression pattern
+new_data = re.sub(pattern, r'\1\t\2\t\3\t\4\t\5', data)
+
+# Write the new data to a file
+open('socrata_addresses_cleaned.txt', 'w').write(new_data)
+```
+
+This code will split the data into lines, create a regular expression pattern to capture the address, city, state, zip, latitude and longitude, and then replace the data with the regular expression pattern. The new data will be written to a file called `socrata_addresses_cleaned.txt`.

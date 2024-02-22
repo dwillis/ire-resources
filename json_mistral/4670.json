@@ -1,0 +1,64 @@
+ It seems like you've shared a part of a tutorial that focuses on refactoring spaghetti code into smaller, more manageable functions with descriptive names. The goal is to improve the readability, testability, and maintainability of the code. Now, let me answer your questions and provide some guidance for the exercises.
+
+**Questions**
+
+1. *What are unit tests?*
+   Unit tests are small pieces of code designed to test the individual functions or methods in isolation. They ensure that a specific function behaves as expected for a given input and condition. The primary goal is to verify the correctness of the function and help identify any regression issues when making changes to the codebase.
+2. *Can you identify three sections of logic that could be unit tested?*
+   Without seeing the actual code, it's hard to identify specific sections. However, in general, you can test functions responsible for:
+   a. Downloading election data
+   b. Parsing election data
+   c. Calculating candidate vote totals and determining winners
+3. *What are modules?*
+   In Python, a module is a file containing Python definitions and statements. It's a way of organizing related code into reusable units. Modules allow us to package related functionality and share it with other developers.
+4. *What are packages?*
+   Packages are a way to organize related Python modules together into a single namespace. They provide a hierarchical structure for organizing modules, making it easier to manage larger codebases and promoting code reuse.
+
+**Exercises**
+
+1. *Slice up this code into a bunch of functions, where related bits of logic are grouped together. Do function names accurately reflect what they actually do? If not, how could you rename functions and/or re-organize the code to clarify the purpose of each function?*
+   - Review the code and identify logical segments that can be separated into distinct functions.
+   - Name the functions descriptively based on what they do. For example, `download_election_data`, `parse_election_data`, `calculate_vote_totals`, etc.
+   - Remove any duplicate code or logic by creating helper functions as needed.
+2. *Compare your revised script to our version. What's similar? What's different? Explain 5 things you like or dislike about each and why.*
+   - After completing your refactoring, compare your solution to the provided version.
+   - Identify similarities, such as function names and organization.
+   - Identify differences, such as the approach to solving specific problems.
+   - Provide constructive feedback on both solutions, highlighting what works well and what could be improved.
+3. *Write a unit test for one or more functions extracted from this module.*
+   - Using a testing framework like `unittest` or `pytest`, create tests for the functions you've extracted.
+   - Ensure that each test covers a specific scenario or edge case.
+   - Verify that functions return the expected output for given inputs.
+   - Refactor your code as needed to pass the tests and ensure that your changes don't break existing functionality (regression testing).
+
+As for the JSON file creation task, here's a simple example:
+
+```python
+json_data = {
+    "id": 4670,
+    "authors": [
+        {
+            "name": "Martha Ruiz",
+            "email": "martha.ruiz@cnn.com",
+            "affiliation": "CNN"
+        },
+        {
+            "name": "David Begnaud",
+            "email": None,
+            "affiliation": "CBS News"
+        }
+    ],
+    "conference": "IRE",
+    "year": 2022,
+    "title": "Election Data Analysis",
+    "description": "A comprehensive analysis of election data.",
+    "keywords": ["election", "data", "analysis", "politics", "vote"]
+}
+
+import json
+
+with open('output.json', 'w') as json_file:
+    json.dump(json_data, json_file, indent=4)
+```
+
+This script will generate a JSON file named `output.json` with the provided data.

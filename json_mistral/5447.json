@@ -1,0 +1,67 @@
+ Chapter 3: Hello Template
+
+In this chapter, we will create a template for our project using the Nunjucks templating language. Templates allow us to
+separate the structure and design of our site from the actual content. This helps us to keep our code organized and
+reusable.
+
+First, let's create a new file called `base.nunjucks` in the `src/_layouts` directory. This file will serve as the base
+template for our site and will contain all the common elements such as the header, footer, and navigation.
+
+Here's an example of what our `base.nunjucks` file might look like:
+```perl
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Default Title{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  <footer>
+    <p>Copyright © 2023 My Site</p>
+  </footer>
+</body>
+</html>
+```
+In this template, we have defined three blocks: `title`, `description`, and `content`. The `title` and `description`
+blocks allow us to set the title and meta description of each page, while the `content` block is where we will insert the
+unique content for each page.
+
+Next, let's create a new file called `index.nunjucks` in the `src` directory. This file will be the homepage for our
+site.
+
+Here's an example of what our `index.nunjucks` file might look like:
+```jinja
+{% extends "_layouts/base.nunjucks" %}
+
+{% block title %}Home{% endblock %}
+
+{% block description %}Welcome to my site!{% endblock %}
+
+{% block content %}
+<h1>Welcome to My Site</h1>
+<p>Thank you for visiting my site. Please take a look around and let me know if you have any questions.</p>
+{% endblock %}
+```
+In this file, we have extended the `base.nunjucks` template and defined the `title`, `description`, and `content`
+blocks. The `title` block contains the title of the page, the `description` block contains a brief description of the
+page, and the `content` block contains the main content of the page.
+
+By using templates, we can easily reuse common elements across our site and make changes to the structure and
+design without affecting the content. This is especially useful when working with large sites or when collaborating
+with a team.
+
+In the next chapter, we will learn how to add data to our project using JSON.
