@@ -1,0 +1,312 @@
+Practical blockchain
+
+What this talk is about
+●
+●
+●
+●
+●
+
+A broad overview of basic bitcoin touchstones
+A non-technical primer on how a cryptocurrency works
+How to access transaction records
+How to analyze blockchain records for newsgathering
+A brief discussion of challenges and limitations with respect to tracing the
+ﬂow of funds
+
+What this talk isn't about
+●
+●
+●
+●
+●
+●
+
+A cryptography course
+An algorithms and distributed computing discussion
+A money laundering tutorial
+A monetary policy analysis
+An existential exploration of value, trust and identity
+A personal screed about statist lizard people attempting to censor
+ﬁnancial transactions
+
+About me
+Wall Street Journal
+Data Reporter
+
+https://bit.ly/2SWBwqW
+
+Buying your ﬁrst bitcoin
+
+Get a wallet
+Your blockchain interface
+
+Find an exchange
+
+Or ﬁnd a stranger
+
+And spend!
+
+Or invest
+
+Exchange for other currencies
+
+And proﬁt!
+
+Under the hood
+
+Requires trust
+Does Peter have at least $5 to pay
+Paul when Peter says he does
+
+Ofﬂoading Trust
+●
+
+Goal: Create an unchangeable ledger
+○
+
+●
+●
+●
+●
+
+●
+
+Transactions cannot be blocked or reversed by an intermediary
+
+Everyone’s bank balance is public
+Everyone’s balance can be checked on a public ledger is eﬀectively giant
+google spreadsheet that you can only append data
+When I want to spend money I create a message detailing how much and
+who the will receive payment… also known as a check
+A group of “miners” gather all the checks into a pile (a “block”) and they
+are racing other miners to add their pile of checks to the front of the
+“chain”
+Miners are “rewarded” for their eﬀort of making sure all prior checks
+match what is on the public ledger
+
+Hashing
+Data goes in, value comes out…
+Cannot be reversed
+
+Hash functions begin to solve the issue of trust
+
+Start with a hash
+
+Format my hash so it ﬁts the structure of a “block”
+My peers will only accept hashes with an agreed upon format
+
+Miners work to create a hash matching an agreed format, “0000”
+Adjust the “Nonce” until we get a HASH starting with four 0’s
+
+What does a miner do?
+Miners take all “unconﬁrmed” transactions and compiles them into a “block”
+Links to the prior block on the chain
+Performs the “proof of work” calculation or is chosen by the “proof of stake”
+lottery to sign the block.
+Proof-of-work: make sure a “hash” starts with the agreed-upon number of 0s
+by manipulating the “nonce” and work for a reward of new coins
+Proof-of-stake: Select older/wealthier investors and miners vote on the next
+block to use and are paid with transaction fees
+
+Connect blocks by linking to the hash of the prior block
+
+Updating a block changes the hash of this block
+Every block from this to the end of the chain must be “mined” again
+
+Wait...
+How can I tell if a chain was
+changed?
+
+Replicate!
+Does peer B match peer A?
+
+Comparing the hashes of blocks on different peers
+
+Who’s right?
+Majority rules
+
+Distributed doesn’t mean decentralized
+Transactions and ledgers are kept up to date and consistent through a
+process known as “mining”
+●
+●
+
+Few companies sell mining hardware
+There are few “miners” of consequence that process transactions
+
+Few exchanges exist where individuals can trade ﬁat for cryptocurrencies
+Developers can change how the code works
+
+Code is law
+Everyone can’t agree?
+Fork it!
+
+Combine all the concepts to create internet money like Bitcoin
+
+Wait, who is Ripley?
+To spend coins, addresses
+have to be unique. Receivers
+have to be able to verify they
+are authorized to send funds
+
+Public Key Cryptography
+
+Why no one else spends your bitcoin
+●
+●
+●
+●
+●
+●
+●
+●
+
+You generate a public/private key pair
+Private key is kept PRIVATE
+Public key can be shared with ANYONE
+Encrypt a message to “spend” bitcoins
+You SIGN that message with your PRIVATE key
+Send that SIGNATURE as part of your transaction
+Anyone can use your PUBLIC KEY to verify the transaction was SIGNED by
+YOU
+If no one else has your private key, then only you could have signed it
+
+Sign the check
+
+Sending “money”
+I need to know who will receive it (public key B)
+I need to generate a message detailing the amount (hash)
+I need to “sign” the message (private key A)
+I need to publish my “check”
+I need to wait for “miners” conﬁrm I can spend the money I say I have and to
+add my check to the next pile of checks that will be published to the
+blockchain
+
+Does Peter have $5 to pay Paul?
+Bitcoin currently does not maintain a current balance
+●
+●
+
+Potentially, every transaction needs to be checked to determine the
+balance of a wallet
+Go backwards block-by-block until we can ﬁnd Peter was given $5 at some
+point and hasn’t spent it all already
+
+Coinbase
+First transaction must create “money” and send it somewhere
+
+Build your own blockchain
+http://blockchain.mit.edu/how-blockchain-works
+https://anders.com/blockchain/public-private-keys/transac
+tion.html
+
+Analyzing transactions
+
+Challenges
+●
+●
+●
+●
+●
+●
+●
+
+Accessing records
+Finding speciﬁc transactions
+Storing records
+Who owns a wallet?
+Mixers
+Cross-chain transactions
+Exchanges
+
+Lookup Tools
+
+https://www.blockchain.com/explorer
+https://etherscan.io/
+https://live.blockcypher.com/
+
+Other queries?
+
+IMPOSSIBLE!
+
+Unless
+You can access raw data
+
+Wallet histories
+Traverse the blockchain
+to ﬁnd other
+connections
+
+1mb / 10 min
+Bitcoin blockchain growth rate
+
+190
+gigabytes
+Est. size of Bitcoin blockchain, Jan. 2019
+
+How can I trace transactions?
+●
+●
+●
+●
+●
+●
+
+Engage a forensics company - Elliptic, Chainalysis, etc
+Run a node, download everything
+Use a BlockSci https://github.com/citp/BlockSci
+Use an API from a block explorer to download slices
+https://github.com/shaneshiﬄett/blockchain-scraper
+https://cloud.google.com/blog/products/data-analytics/ethereum-bigquer
+y-public-dataset-smart-contract-analytics
+
+Wait, who is Ripley?
+Or “gfadel47”... or Coinbase
+
+Identifying Wallet Owners
+
+Use a “phone book”
+
+Find an ad!
+
+Transact!
+
+Then cluster!
+Use heuristics to establish
+rules to ﬁnd connected
+addresses that “likely”
+controlled by the same service
+
+When the trail goes cold
+●
+
+Mixers and tumblers
+○
+○
+
+●
+
+Cross-chain services
+○
+○
+
+●
+
+Send crypto to a service that mixes it with other users funds and wallets
+Original sender receives funds in a new wallet from multiple deposit address
+Exchange bitcoin for ether, have to trace a new chain
+Can exchange for privacy-focused coins like monero that don’t detail amounts or
+destinations
+
+Exchanges
+○
+○
+
+Addresses are controlled by the exchange
+Funds from multiple users are sent to shared accounts, records of who owns what is
+private
+
+Questions?
+
+

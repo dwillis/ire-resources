@@ -1,0 +1,410 @@
+QGIS I - workshop, Nicar 2017
+Christine Jeavans & John Walton
+@chrisjeavans @walt_jw
+QGIS is a powerful and complex piece of software but journalists can get excellent
+results from a couple of relatively simple functions. It’s useful for data exploration as well
+as for producing data maps for publication, and it’s free!
+These are the full follow-along instructions from the NICAR session with a worked
+example.
+Download the example data for this session
+Opening QGIS
+Latest download ​http://www.qgis.org/en/site/forusers/download.html
+Earlier versions, inc the one we are using today
+http://download.osgeo.org/qgis/windows/
+And earlier versions for Mac ​http://www.kyngchaos.com/software/archive
+There are lots of versions as it is frequently updated. The version we are using here is
+2.14 ​or ​Essen, ​it's not the newest version but it should be robust.
+TIP​ Be aware that QGIS projects are not always backwards-compatible so when you
+update, you may have to rebuild old projects.
+Finding your way around
+Your QGIS should look something like this. It may not be exactly the same, depending
+on the edition and whether the panels and toolbars have been moved around but it
+should have these functions. The version for Mac looks slightly different.
+
+You need two basic ingredients for most QGIS maps 1) a ​shapefile ​which is the map on which you will display your data.
+2​) a ​data file​, usually a CSV, which contains the information you want to display
+There are other options - for example you can bring in a highly detailed aerial
+photograph.
+
+Adding a shapefile
+When people talk about a shapefile, or you go looking for one, you actually need a
+collection of files which all correspond to each other. They are often found in zip files.
+In the folder for this workshop, find the sub-folder called U
+​ S county shapefiles
+
+There are eight files in there including:
+● .shp ​the geometry drawing file. It's a "​vector​" file
+● .dbf​ a database file with all the text based information such as the name of a
+county or the ID code
+● .shx​ an index file which ties the two together
+● .prj​ contains the projection information
+You need to keep these files in the same folder so QGIS can reference them and they
+must all keep the same prefix as each other.
+
+Go back to QGIS and click the button which looks like a V with dots on it - this will ​open
+a vector​ ​layer
+Browse to the folder we were just looking at and select the shapefile itself
+tl_2015_us_county.shp
+Hit ​open ​and you should see a map forming and you have a layer in your layers panel
+(​You could also ​add a shapefile by ​using the dropdown in the Layer menu, or by
+dragging and dropping from the folder​)
+Save your project!
+TIP​ - QGIS works in projects which are temporary arrangements of the files which you
+have told it to look at. This means that if you move or rename a file then it will no longer
+appear in your QGIS project. For this reason it is a good idea to keep your files for a
+map all in one folder. Your map is not a permanent object until you export it in some
+form. Beware having some files on pen drive only!
+
+Finding your way around the shapefile
+You should have now have a map of all of the counties in the US, including overseas
+territories, so we are very zoomed out.
+But you can easily zoom in, either with the mouse wheel when the touch zoom button is
+selected (PC only) or with the other zoom buttons at the top.
+Avoid using the trackpad on a Mac as you will skeeter all over the place.
+
+Pan
+
+​to grab and move around
+
+Zoom​
+
+use in normal way or draw rectangle of the view you wish to zoom to
+
+Full extent​
+
+is useful if you get lost in the map. It resets to the original view
+
+Forward & back​
+
+zoom levels step you back/forwards through previous views
+
+Notice as you zoom in and out the lines stay crisp. That's because a vector file is
+generated mathematically, rather than being an image. So in theory you could magnify
+this to any size and it would stay true.
+This also means that you can project the map in different ways - ​more about projections
+here​.
+
+TIP ​if you have a very detailed shapefile and moving around is slowing you down, toggle
+off the render button at the bottom right, perform your move or zoom, then switch it back
+on. It means QGIS is not trying to constantly draw.
+Identify features
+Zoom into the Florida area using the zoom buttons or mouse wheel.
+
+This button
+area or a point.
+
+is ​identify features​, which reveals the information attached to an
+
+If you click on one of the counties you will see the ​Identify results panel​ open. ​On
+some versions this is a tab, with the Layers panel, on others it is a separate floating
+panel.
+
+The panel shows the information which the shapefile already holds about this county​: the
+county name, it tells you the state id code which is 12 for Florida and it has a field called
+GEOID which will be important later. Other info in there includes land area and water
+area.
+Attribute table
+And we can look at this information another way by viewing the attribute table.
+It will show all the data in the shapefile as a table with, in this case, one row per county.
+
+Styling
+Final thing before we add some data - you may want to change the background colour.
+Double click on the layer name in your Layers panel and it will bring you up a menu.
+Select the second item: ​Style
+
+Several ways to change the colour ● Simple: the dropdown next to Color gives you recent and standard colours
+● Full: clicking on the colour itself, gives you a full range of options.
+● Or click on simple fill and you can also change the colour there
+
+TIP​ When you use QGIS regularly you can set your own colour palettes and save them
+as style files which can be shared with colleagues or reused by you. Eg house mapping
+style, political parties' colours.
+Choose one which you like, hit apply and OK
+Save your project
+
+ADDING DATA
+There are two main ways of adding data - adding point data and joining area data.
+Your data needs to be a ​delimited text file​ - most often this will be a CSV file. You can't
+import an excel workbook.
+In your data:
+● Make sure your first row has column headers
+● Keep column headers short and single words or use underscore _ and no
+spaces
+● Do not have notes in columns, it should just be the data
+● Try to make sure that your data is as clean and consistent as possible,
+sometimes text in a numbers column can mean QGIS thinks the whole
+column is text.
+● Keep symbols out of the data - eg don't have 100% in a cell, just use 100
+
+The data set we have are two cuts of a not very cheery data set - fatal road traffic
+accidents in Florida in 2015.
+It comes from a massive data set of all the fatal road traffic accidents in the US and it is
+very detailed so we are using a cut down version here.
+Adding area data via a join
+Now we will look at the first key way of entering data - joining it to your map.
+We do this by using a common ID shared by the shapefile and the data, and we will display
+the results by county. Often called a heatmap but it's properly called a ​chloropleth​.
+
+●
+●
+●
+●
+●
+
+Use the ​add delimited text layer ​button
+Browse in ​Fatals_fl_county_pop
+It’s a CSV so keep that button checked
+Discard 0 lines and the first record has field names
+There is nothing inherent in the file which tells you how to map it straight away so
+choose ​No geometry
+
+You get a preview of the data - it shows the total number of road accident deaths ​per
+county
+
+●
+●
+
+●
+●
+●
+
+First column is the county code
+Then a FIPS code which is a ​unique ID​ for each county - it's the county number
+prefixed by 12 which is the Florida state code - this is what we are going to be using
+to join the data to the shapefile
+County name
+Sum of fatalities over the year
+And then we have population and a rate too
+
+Hit OK
+Joining data
+We’ve now imported the data but nothing will show up until we integrate it with the shape file.
+We do that with a join.
+●
+●
+●
+●
+●
+●
+●
+●
+
+Highlight your ​shapefile ​in layers
+Double click to open the Layer properties
+Go to ​joins
+Click the green plus at the bottom
+Join layer - ​fatals_fl_county_pop​ .
+Join field​ - this is where you have to tell it which column to use in the ​data​ - the
+FIPS​ column.
+Target field​ - this is the corresponding column in the shapefile. It's called ​GEOID
+OK
+
+Now hit apply and OK.
+
+Nothing has changed.... or rather it ​looks ​as though nothing has changed but if you use the
+identify features ​button again, this time you will see that it gives you some extra fields in
+your results panel which come from the data so we know the join has worked.
+Next we need to style it.
+Styling the area data
+This is where you will tell the shape file how to display the data it now contains
+●
+●
+
+Open Layer properties > Style
+Pick the third dropdown option: ​Graduated
+
+●
+
+Column​ - it offers you the columns which it thinks are numbers. NB if you hadn't
+have done the join, it would not see the two options starting fatals_fl_ in there as your
+shapefile wouldn't know about them.
+Choose ​fatals_fl_county_pop_FATALS_SUM
+Colour ramp​ keep as blue for now but there are lots of options in there
+Mode​: This is where you decide on a way of splitting it up - see below for more info
+on these options. It defaults to ​Equal Interval. ​And just above it, you can set the
+number of classes.
+Hit Classify, Apply, OK
+
+●
+●
+●
+
+●
+
+Now your map should colour up.
+
+You'll notice that we're now looking only at Florida. That's because they were the only
+counties which we joined. The rest of the shapefile is still there, we're just not seeing it.
+TIP​ It sometimes can be hard to find data with codes already attached. Often it will have
+county name but not the code. You may have to do some wrangling to get your data in a
+format which can join to your shapefile. It is *possible* to join on name but really not
+recommended as punctuation and abbreviation etc can cause problems. Eg "City of London"
+is the same as "London, City of" but QGIS won't spot that.
+The dark coloured county is Miami Dade which is by far the most populous area so it's no
+great surprise that it has the most fatalities.
+But we can also see different things in this data by breaking it in different ways.
+Changing the break points
+Experiment with the other breaks by opening up the Layer properties menu again and
+choosing one of the other options. They are all algorithms
+● Equal Interval​ - creates classes which have the same range as each other. So in
+this case, the maximum number of deaths in one county is 340. If you have 5 classes
+then they will each have a range of one fifth of 340 = 68. Class one is 0-68, class two
+is 68-136 and so on
+● Quantile​ - This method will put an equal number of counties into each class. There
+are 67 counties so if you have five classes you will find 13 or 14 counties in each
+class. You could try it with 10 classes to add greater detail
+● Natural Breaks (Jenks)​ - This tries to group data in clusters with the biggest
+variance between the classes
+● Standard Deviation​ - This method will calculate the mean of the data, and create
+classes based on standard deviation from the mean.
+● Pretty Breaks​ - Creates class boundaries in whole numbers
+You can also edit the breaks yourself.
+In Layer properties, double click on the first value and change the upper value to 50.
+Do the same with the next and change the upper value to 100 and carry on
+
+You will end up with more detail spread throughout apart from the top category.
+You can also change the legend in the same way
+And in the same way that we could change the colour for the base map, we can edit these
+colours too by double clicking on the colour in the layers panel or in the Layers
+properties>Style menu.
+TIP ​as with the project itself, the join is temporary. If you delete the data layer, the join will
+disappear. You can save the map as a new shapefile (using Save As) but be aware that your
+column headers may change.
+
+Adding point data
+A second common form of data for mapping is point data using Lat Long.
+Import the data in the same way: Add delimited text layer - and bring in ​accident_florida
+This is the same dataset as before but this time it shows the individual crashes, not the
+totals. It has a lot more variables to explore.
+Keep all the options as default apart from this time we DO have ​Geometry definition​ because this data has something in it which means it could be plotted on a map: Lat
+Long
+MEGA TIP!​ - ​X is LONGITUDE and Y is LATITUDE!
+Easy way to remember is it is the opposite way of how you say it.
+OR - The X-axis is horizontal so you need the figure that will tell you how far round the
+globe you are. Y-axis is vertical so you need the figure that will tell you how far up or
+down you are.
+
+TIP ​If you find all your points all bunched up in one spot or you map looks otherwise
+wrong, check that you have the X&Y fields pointing to the right columns
+Use the dropdowns to tell QGIS that the ​X field is Long and the Y field is Lat​. Click OK
+In the new window QGIS wants to know the ​CRS
+This is the Co-ordinate Reference System and it tells QGIS how to plot the points
+Choose ​WGS 84
+If you don't see it then search ​4326
+And now you SHOULD have a whole lot of points on your map. Quite likely in garish
+colours but as with the shapefile that is easy to fix.
+You can use the ​identify features​ button to click on your circles - make sure you have
+the data layer highlighted in your layers panel. Click on the attribute table to see the data
+as a table.
+Styling your data
+Currently all the accidents have the same symbol so let's change that to something more
+useful.
+Double click on the layer name in your layers panel to bring up the menu and choose
+style. You get options to change the symbol and colour but we will look at those later.
+Scaling the points
+One of the columns in your data is how many people were killed in each crash. So
+instead of having all the symbols the same size we can scale them, showing the crashes
+with the biggest loss of life.
+
+●
+●
+●
+●
+
+In Style, Single Symbol, click the
+button next to the size
+Navigate to Field type and it brings up a list of your columns
+Choose FATALS
+It's also a good idea to make the symbols slightly transparent so that they
+don't blot each other out.
+● You can do that on the transparency scale, go for 20%.
+● Apply and OK
+Now you should have a range of dot sizes
+Again zoom in and out to see how they change
+Use ​identify features​ to look at some you are interested in
+Note that you can end up with several points highlighted at once when you use identify
+features. The expanders in the features panel allow you to look at each one.
+TIP​ in some other versions of QGIS the option to scale by the value of a field is in an
+advanced setting at the bottom of the style window
+Categorising
+Another way of looking at your data is by using categories
+Open your data attribute table again and look along the top you'll see a column header
+called
+DRUNK_DR
+
+That is the number of drunk drivers involved in the crash. Does not denote blame but
+obviously a potential factor. Sometimes this will be a code but here it's a simple count: 0,
+1 or 2.
+Go back to styling and this time instead of ​Single symbol​ choose ​Categorized
+
+Now go to the Column dropdown and you will see it offers you all the possible columns
+which we just looked at in the attribute table
+● Choose DRUNK_DR
+● Hit Classify and you should get four symbols with different colours and values
+● Uncheck or delete the bottom one, that's no data.
+The colours are probably a bit strange but we'll sort that out in a mo but first let's see
+how it looks so hit apply then OK
+
+Now you've got a big old mess but if you click the ​plus symbol​ next to your
+accident_florida ​layer in the layers panel, you can see that each number now has a
+checkbox by it.
+Experiment with turning them on and off
+Change colour
+Just like with the map, the colours of these points are easy to change
+● Either double click on the layer name to bring up the style panel again, then
+change the colours in a similar way to the shapefile, by clicking on the symbol
+and choosing a colour there. Note that there are preset colour ramps which
+you could choose to use.
+● Or you can double click on the symbol directly in your layers panel. This
+brings you straight to colour editing that symbol.
+● You can copy and paste a colour - so if for eg you wanted a colour difference
+simply between any drunk drivers or no drunk drivers, you could copy and
+paste the same colour for categories 1 and 2. And choose a different colour
+for category 0.
+Different category
+You could look at any categorisable column this way - eg you could use the column
+which shows days of the week (1=Sunday, 2=Monday etc) to see if there are any
+different patterns on a weekend.
+
+Labels - optional
+To label your county map, either bring up the Layer properties menu again or use the
+abc​ button on a yellow background
+
+● Choose Show labels for this layer
+● Label with - and choose what you want to show eg: Name, Values
+● You can change the font, size, colour - again you can match this to house
+style
+● Buffer tab can be useful to make the text stand out from the background
+
+If you have chosen county names, you will see that they don't all show up on the map,
+because they won’t all fit. There are ways to manually change the placing - ​more details
+here
+Saving as image and exporting
+Simplest way of getting a map out is ​Project>Save As Image​ which saves the main
+window as a png. Quick and easy but lacks the legend and is quite small.
+Better option: ​Project>New Print Composer
+It prompts you for a title and brings you to this window
+
+● Click add map and then draw a rectangle with the cursor on the blank page.
+● Map will appear
+● Click on Add legend and Add scale and drop them where you want them
+Finally you may want to add a title
+● Still in the print composer - use the ​Add label button​ or from layout menu
+● Draw a fairly big box and it will put the word “QGIS” in tiny font on your page
+● Go to​ Item Properties​ and edit the text, set the font and colour
+
+To export your map
+● Composer>export as image​ to save as PNG
+● Or ​export as SVG​ to save as vector graphic for Adobe Illustrator or similar
+● Or ​export as pdf
+
+You're done!
+-----------------------------------------------------------------------------------------------------------------Useful links
+Original full US Fatal Accident 2015dataset
+Context
+And the ​manual​ to explain the column headers
+FIPS codes
+Text version ​http://www2.census.gov/geo/docs/reference/codes/files/st12_fl_cou.txt
+Florida population
+
+

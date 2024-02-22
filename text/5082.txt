@@ -1,0 +1,225 @@
+Swiss Asylum Lottery
+Scraping the Federal Administrative Court's Database
+and Analysing the Verdicts
+by Simone Rau & Barnaby Skinner
+4 Mar 17, MICAR, bsk
+
+Switzerland, Tages-Anzeiger, SonntagsZeitung
+
+4 Mar 17, MICAR, bsk
+
+Switzerland - Is chocolate, Cheese and Democracy...
+
+4 Mar 17, MICAR, bsk
+
+...and it’s courts.
+
+Swiss
+Administrative
+Supreme Court,
+St. Gallen
+(since 2007)
+Swiss Supreme Court, Lausanne
+
+4 Mar 17, MICAR, bsk
+
+PArty Affiliation of Judges is the same as in US
+
+4 Mar 17, MICAR, bsk
+
+Lawyer’s said: Judges from right leaning Parties
+Are So much tougher!
+That was quite a claim. Because the judges
+are selected randomly by a machine. Can we
+prove or dismiss this (with code)?
+4 Mar 17, MICAR, bsk
+
+Verdicts published since 2007 - 30’000 Asylum Appeals
+
+URL
+4 Mar 17, MICAR, bsk
+
+Textfiles - German, French, Italian
+
+4 Mar 17, MICAR, bsk
+
+The Plan
+
+A Scrape judges
+B Scrape appeal DB
+C Analyse verdicts
+
+4 Mar 17, MICAR, bsk
+
+A The judges
+Scraping the BVGer site
+using BeaufitulSoup
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+Code on Github
+
+4 Mar 17, MICAR, bsk
+
+B THE APPEALS
+This is a little trickier,
+want to go a little more
+into depth here
+
+import selenium
+from selenium import webdriver
+import glob
+(not on Github, please let me
+know, if you want to take a
+closer look at the scraper)
+
+4 Mar 17, MICAR, bsk
+
+#Navigating to text files
+driver = webdriver.Firefox()
+search_url = 'http://www.bvger.ch/publiws/?lang=de'
+driver.get(search_url)
+driver.find_element_by_id('form:tree:n-3:_id145').click()
+driver.find_element_by_id('form:tree:n-4:_id145').click()
+driver.find_element_by_id('form:_id189').click()
+
+4 Mar 17, MICAR, bsk
+
+#Visiting and saving all the text files
+for file in range(0,last_element):
+Text = driver.find_element_by_class_name('icePnlGrp')
+counter = str(file)
+file = open('txtfiles/' + counter + ".txt", "w")
+file.write(Text.text)
+file.close()
+driver.find_element_by_id("_id8:_id25").click()
+
+4 Mar 17, MICAR, bsk
+
+C Analyse verdicts
+The is the trickiest part. I
+wont go through the whole
+code
+
+import re
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import time
+import dateutil.parser
+from collections import Counter
+%matplotlib inline
+The entire code
+
+4 Mar 17, MICAR, bsk
+
+#Preparing list of file names
+whole_list_of_names = []
+for name in glob.glob('txtfiles/*'):
+name = name.split('/')[-1]
+whole_list_of_names.append(name)
+
+4 Mar 17, MICAR, bsk
+
+#Developing Regular Expressions
+def extract_aktennummer(doc):
+nr = re.search(r'Abteilung [A-Z]+\n[A-Z]-[0-9]+/[0-9]+', doc)
+return nr
+def extracting_entscheid_italian(doc):
+entscheid = re.findall(r'le Tribunal administratif fédéral
+prononce\s*:1.([^.]*)', doc)
+return entscheid[0][:150]
+
+3 Mar 17, MICAR, bsk
+
+#Categorising using Regular Expressions
+def decision_harm_auto(string):
+gutgeheissen = re.search(
+R'gutgeheissen|gutzuheissen|admis|accolto|accolta'
+, string)
+if gutgeheissen != None:
+string = 'Gutgeheissen'
+else:
+string = 'Abgewiesen'
+
+3 Mar 17, MICAR, bsk
+
+#Looking for the judges
+for judge in relevant_clean_judges:
+judge = re.search(judge, doc)
+if judge != None:
+judge = judge.group()
+short_judge_list.append(judge)
+else:
+continue
+
+3 Mar 17, MICAR, bsk
+
+#First results and visuals
+
+3 Mar 17, MICAR, bsk
+
+#And after a bit of pandas wrangling, the softest judges...
+
+3 Mar 17, MICAR, bsk
+
+#...and toughest ones
+
+3 Mar 17, MICAR, bsk
+
+2,5%
+...of appeals we couldn’t categorise automatically. So
+approximately 750. (If we were scientists we would do this
+by hand now, but we’re lazy journalists…)
+
+3 Mar 17, MICAR, bsk
+
+publishing
+After talking to
+lawyers, experts
+and the court, we
+published our story
+“Das Parteibuch der
+Richter beeinflusst
+die Asylentscheide”
+on 10 Oct 2016. The
+whole investigation
+took us approx. 3
+weeks.
+3 Mar 17, MICAR, bsk
+
+3 Mar 17, MICAR, bsk
+
+The court couldn’t except the results (at first)
+
+3 Mar 17, MICAR, bsk
+
+A Completely Different Angle
+
+URL
+3 Mar 17, MICAR, bsk
+
+Thanks!
+Barnaby Skinner,
+Datajournalist
+@tagesanzeiger &
+@sonntagszeitung
+
+Simone Rau,
+Investigative Reporter
+@tagesanzeiger
+
+@barjack,
+github.com/barjacks,
+www.barnabyskinner.com
+
+simone.rau@tages-anzeiger.ch
+
+@simonerau,
+
+3 Mar 17, MICAR, bsk
+
+

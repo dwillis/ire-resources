@@ -1,0 +1,153 @@
+Using Indexes for More Precise Community Profiles
+(Being more precise – and less precise – with advanced statistics, 2004 NICAR
+Conference, Cincinnati, Ohio)
+David Donald
+Training Director
+
+Investigative Reporters & Editors
+138 Neff Annex
+Missouri School of Journalism
+Columbia, MO 65211
+
+Phone: 912-713-2728
+Fax: 912-898-8240
+E-mail: ddonald@ire.org
+
+Journalists often need community portraits to get an understanding of how the system is working –
+or not working. For example, crime statistics are put into context when we see what communities with high
+or low crime rates are like. Or when investigating environmental justice, we need to understand the socioeconomic conditions of the neighborhoods near polluters.
+At the same time, social researchers have been critical of reports that use a single measure, such as
+poverty rate, to describe a community’s status. In their terms, the concept is too complex for a single
+measure or variable. In our terms, we should think about being more precise.
+Why? Because more precision can mean more accuracy.
+An index is one solution. It’s a powerful way of describing a community with a single number that
+readers and viewers can understand. It uses readily acquired census data. It can be mapped in GIS. And it’s
+easy to do in SPSS.
+A well-used index for socio-economic status is the Social Disadvantage Index. You’ll see various
+forms of this in the social research literature. We’ll use one by B. Jarman developed in 1983 to illustrate.
+Jarman is from the United Kingdom, and the SDI (not to be confused with the Strategic Defense Initiative)
+uses U.K. census data. We’ll use U.S. census data that is very similar to the U.K. data. For example, a lot of
+U.K. census data measures people age 15 and older. The U.S. data is at age 16 and older.
+STEP 1 – The Data
+Begin by downloading seven measures, or what SPSS calls variables, from the U.S. Census
+Bureau’s AmericanFactfinder at http://factfinder.census.gov. If you need help with this, check out IRE
+tipsheet #1978 by Ron Campbell of The Orange County Register. It’s an excellent introduction to the
+Census Bureau’s main Web site for disseminating data.
+The seven variables for this index are
+1. Households of four or more people.
+2. Single-parent families.
+3. Rental housing units.
+4. People 18 years and older without a high school diploma.
+5. People 16 years and older who are unemployed.
+6. People 16 years and older who are not in the labor force.
+7. Families below the poverty level.
+Download these data for your community at the census tract level, the closest census geography for the
+neighborhood level. For this illustration, we’ll use data from Chatham County, GA, which includes the city
+of Savannah. Because SPSS reads Excel files, download the variables as an Excel table. Collapse the data
+(for example, adding male single parent families to female) and bring the data into SPSS. It should look
+something like this.
+
+Notice we’ve included the geographic identifier so that our results can be mapped in GIS. Also, we’ve
+included total populations so we can figure rates and percentages for each variable. Give the variables
+(columns) names you can remember.
+Step 2 – A Rate
+Because census tracts vary in size in population, we need to calculate a rate for each of the seven
+variables. That will help give us our first step in making an apples-to-apples, not apples-to-oranges,
+comparison.
+Because census tracts usually vary between 1,000 and 4,000 people, we’ll use the familiar percent
+as our rate. It can give us easy to understand whole numbers, although the default in SPSS is two decimal
+places. We won’t report the percentages, so it’s not important at this step.
+You’ll find an easy way to figure percentages in SPSS using the Compute dialog box under the
+Transform menu item.
+
+2
+
+Under Target Variable, give you percent a new name. From the list on the left, highlight the variable you
+want to figure percent for. In this instance, it’s families below the poverty level. Click the arrow between
+the boxes, moving the variable into the right dialog. Divide that variable by total number of families for
+whom poverty is figured. Multiply the answer by 100 to turn into a percent. You can use your computer’s
+key pad or the key pad in the dialog box to do this. When finished, click OK and SPSS computes the
+percent and puts it in a new variable (column) with your name on it.
+Repeat for the remaining six variables.
+Step 3 – Standardize
+One more step makes sure you can compare scores among the census tracts. By calculating a
+standard score or Z score, which is the mean or average score subtracted from the raw score and divided by
+the standard deviation. This puts the raw rates into scores in which all the assumptions of the standard
+normal curve apply. For our purposes, that makes the apples-to-apples comparison complete.
+While you can compute a Z score in Excel by using the above formula (after you have calculated
+the mean and the standard deviation), SPSS can do this for you. It saves a lot of time.
+Go to the Analyze menu, click on Descriptive Statistics, then Descritptives to get the following
+dialog box.
+
+3
+
+Move the seven variables that are percentages from the left list to the right Variable(s) list. Again, use the
+arrow between the lists. Also, you can select all seven at once by highlighting the first, holding down the
+ctrl key and clicking on the remaining six. They’re now all highlighted and you click the arrow once.
+Next, make sure the box on the lower left is checked. This figures Z scores for all variables in the
+right hand list, putting them in new variables (columns) in our data file. Go to the variables on the right end
+of your file and check. Notice that some are positive and some are negative. That depends on whether their
+rates or percents are above or below the mean (average).
+Step 4 – To weight or not to weight
+In Jarman’s SDI, the Z scores are then weighted. But do you need to do this? Another way of
+asking this question is, how precise must you be? Or even, how precisely can you do this? Or are you being
+“too” precise?
+Weights are used because we know that each of the seven variables has a different amount of
+impact in measuring socio-economic status. For example, the number of employed people may have a
+bigger effect than, say, the number of households with four or more people in them. Simply put, not all
+measures are equal, and weighting tries to account for this.
+Sounds good, put it raises its own question. What should the weights be? How do we determine
+them?
+Jarmen figured the weights by surveying those who work with disadvantaged people. The survey
+asked them on a 10-point scale how much each of the seven variables affected their workload. The higher
+the ranking, the higher the weight that needs to be given to that variable.
+But consider. Jarmen developed this SDI in 1983. Over 20 years, those rankings could change.
+And it’s from the United Kingdom. Maybe the United States would be different. And finally, how much do
+you want to trust the survey? While it gives you what appears to be a hard, precise number, that number
+represents the impressions of the survey respondents.
+If you decide to use Jarmen’s weights, here they are.
+1. Households of four or more people – 2.88.
+2. Single-parent families – 3.01.
+3. Rental housing units – 3.60.
+4. People 18 years and older without a high school diploma – 2.90.
+5. People 16 years and older who are unemployed – 3.34.
+6. People 16 years and older who are not in the labor force – 3.34
+7. Families below the poverty level – 3.00.
+To do this, go back to the Transform menu and click on Compute. For each variable, give it a name for the
+weighted variable, move the corresponding Z score variable into the compute area and multiple by the
+weight list above. That will give you a weighted Z score.
+
+4
+
+Step 5 – The Index
+Finally, whether you are using the seven Z scores or the seven weighted Z scores, we need to put
+them into one number. That’s easy. Go back to the Transform menu and click on Compute one final time.
+
+Add all seven of the Z scores or weighted Z scores together. Make sure you give the sum a name in the
+Target Variable box. Click OK. That gives you the last computation in your data file, a single number
+Social Disadvantage Index.
+Take a look at the distribution in your index. Since Chatham County, Georgia, has 68 census
+tracts, we can look at the spread of those 68 scores.
+Go to the Analyze menu, click on Descriptive Statistics, then click on Explore.
+
+Move the final variable to the Dependent List and select plots in the Display selection on the lower left.
+The click on the Plots … button.
+
+5
+
+Select Histogram, click Continue, then click OK.
+You’ll get this histogram.
+
+Notice that many of the census tracts are in the negative range. That makes sense. They have little if any
+social disadvantage. They might even be gated (some are gated in Chatham). High positive numbers mean
+high social disadvantage, with each of the seven variables playing its role.
+It’s a rich – and precise – portrait.
+You can put the process you’ve gone through into a nerd box. But most readers and viewers can
+grasp the concept of negative numbers being the opposite of the positive numbers.
+And what really is cool is exporting the data file as a dbf, easily done in SPSS. Join that file to a
+census tract map in a GIS program. You now have an intuitive visual display that readers and viewers will
+grasp quickly.
+
+6
+
+

@@ -1,0 +1,70 @@
+The Quick and Dirty Varnish Setup
+(for Django)
+Andy Boyle
+Web Developer, NYTimes RMG
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+WHAT THE HELL IS VARNISH
+
+• IT MAKES WEBSITES FLY!
+• High traffic doesn't break your shit
+• App server isn't punched in the face
+• Allows you to use smaller server space
+• Developed by a newspaper company in
+Norway, so that's nice.
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+WHY YOU SHOULD CARE
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+WHY YOU SHOULD CARE PT. 2
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Install
+• For Ubuntu, it's as simple as:
+• curl http://repo.varnish-cache.org/debian/GPGkey.txt | apt-key add • echo "deb http://repo.varnishcache.org/ubuntu/ $(lsb_release -s -c) varnish-2.1"
+>> /etc/apt/sources.list
+• apt-get update
+• apt-get install varnish
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Set up you VCL
+Copy and paste this from Al Shaw: http://bit.ly/vrnshalshaw
+Change:
+
+backend default {
+.host = "127.0.0.1";
+.port = "81";
+}
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Django-y bits in your views.py
+
+@cache_control(must_revalidate=True,
+max_age=300)
+def players(request, blah):
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Varnish-y commands
+sudo varnishd -f /etc/varnish/default.vcl -s malloc,1G -T
+127.0.0.1:2000 -T 127.0.0.1:6082
+varnishstat
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Repoint your DNS settings
+• Point your .com or whatever to the
+Varnish IP
+• PRAY
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+

@@ -1,0 +1,321 @@
+Diversity, Segregation and Disparity
+Key concepts in reporting on race
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DIVERSITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DIVERSITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+Diversity is sometimes confused with “minority/non-minority” – it is not
+the same thing. Diversity is all about the mixture of people, and when
+measuring diversity, what we’re after is literally the chance that two
+people chosen at random from the population will be different.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+9
+
+49
+
+68
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DIVERSITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+The use of diversity measures in journalism was pioneered in the early
+90s by Phil Meyer of the University of North Carolina and Shawn
+McIntosh of USA Today. For the formula, you calculate the percentage of
+the total for each group, sum the squares, and subtract it from one.
+See:
+http://www.usatoday.com/story/news/nation/2014/10/21/diversityindex-data-how-we-did-report/17432103/
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DIVERSITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+In MySQL, for example, the formula looks like this, where w= White,
+b=Black, h=Hispanic, a=Asian, na=Native American,o=Other, ttot=Total
+diversity=(1(POW(wtot/ttot,2)+POW(btot/ttot,2)+POW(htot/ttot,2)+POW(atot/ttot,2)
++POW(natot/ttot,2)+POW(otot/ttot,2)))*100
+WHERE ttot>0
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+SEGREGATION: WHAT IS IT AND HOW DO YOU MEASURE
+IT?
+Segregation measures look at two groups and determine the extent to
+which they are apart. This is done by taking the overall population of the
+two groups in a given place (such as a metropolitan area) and then
+assessing how individual neighborhoods (such as Census Tracts)
+compare to the total.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+SEGREGATION: WHAT IS IT AND HOW DO YOU MEASURE
+IT?
+In other words, if the mix of Whites and Blacks in a metropolitan area is
+75-25, the formula assesses how close individual neighborhoods in the
+metro match the overall mix. Professor Michael Rosenfeld of Stanford
+posted some examples (https://web.stanford.edu/~mrosenfe/)
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+SEGREGATION: WHAT IS IT AND HOW DO YOU MEASURE
+IT?
+Download Professor Rosenfeld’s spreadsheet to learn more about the
+formula, but the quick explanation:
+Each row generates a coefficient:
+=ABS((B113/B$101)-(C113/C$101))
+Translated: For each neighborhood, we’re calculating the percentage of
+all whites that live there and subtracting the percentage of all blacks
+that live there.
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+SEGREGATION: WHAT IS IT AND HOW DO YOU MEASURE
+IT?
+Then to calculate the index score itself:
+=SUM(E91:E100)*0.5*100
+Translated: This is the sum of each neighborhood’s coefficient,
+divided by two because there is two groups, and multiplied by 100 to
+convert into a whole number. If the result is, say 75, it means that 75
+percent of group members would have to move to a different
+neighborhood to achieve perfect integration.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+On the face of it, measuring disparity is as simple as quantifying the
+difference between groups in whatever category you’re reporting on. But
+there are still factors to keep in mind, both statistical and journalistic.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+First and foremost, you need to consider whether the differences you’ve
+measured are significant. There is statistical significance, which you can
+calculate with a formula, but also common sense – if test scores in your
+city are two percentage points higher for one group compared to
+another, the difference might be statistically significant, but is it
+meaningful? What about a difference of five points?
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+This table shows the racial distribution of inmates sentenced to solitary
+confinement at the Clinton Correctional Facility in 2015, compared to
+the overall inmate population. As you can see, white inmates got sent to
+solitary at much lower rate:
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+The difference seems large and obvious. But what if somebody wanted
+to argue there were only a 402 SHU sentences, the disparity could have
+happened by chance. For a better explanation of the math, see
+http://www.biostathandbook.com/chigof.html. Using the “goodness of
+fit” spreadsheet on this page, let’s look at a data example how to assess
+this:
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+
+Chi-square analysis tells you likelihood the difference is by
+chance…
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+
+http://www.amstat.org/asa/files/pdfs/P-ValueStatement.pdf
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+An important technique for any data analysis is to
+“account for” other variables. Example: Does the racial
+disparity you find hold up for all age groups or is it
+concentrated among young people?
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+Start with your total population, then look at the
+components. Social scientists – and journalists – often
+conduct regression analysis to account for multiple
+factors at once.
+See
+https://www.youtube.com/playlist?list=PL8jfD0J4Etj3D
+oaj7IirVZW9wJ42DiyJt
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+Another thing to consider is scale. All 5-point differences are not alike.
+It’s important to consider the natural scale of what you’re looking at.
+What are the lowest values? What are the highest?
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+Using school data as an example, if you look at, say, school-level test
+passing rates, you’ll probably see a range of something like 30 to 90 – a
+very normal distribution. But if you look at school attendance rates, the
+range might be from 85 to 99 – much more compressed, and therefore,
+a five point difference could be much more significant.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+Therefore, a lot of social scientists prefer to “standardize” data into a
+common scale. One of the most common techniques is to use “zscores”. Z-scores measure the distance a number is from the average
+value in standard deviations. See
+https://github.com/gebelo/gijc/blob/master/Z-Scores.ppt for more
+information.
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+One last piece of advice: Show, don’ tell. Instead of characterizing the
+disparity with adjectives (LARGE, HUGE, MASSIVE etc.), give readers the
+actual numbers.
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+DISPARITY: WHAT IS IT AND HOW DO YOU MEASURE IT?
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+Some datasets often used in reporting on disparity:
+CURRENT POPULATION SURVEY -http://www.census.gov/data/tables/time-series/demo/incomepoverty/historical-income-households.html
+-- Base household income by race --
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+Some datasets often used in reporting on disparity:
+SURVEY OF CONSUMER FINANCE
+https://www.federalreserve.gov/econresdata/scf/scfindex.htm -summary data
+http://sda.berkeley.edu/cgi-bin36/hsda?harcscfcomb+scfcomb -excellent query interface, all years
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+Some datasets often used in reporting on disparity:
+HOME MORTGAGE DISCLOSURE ACT DATA (HMDA)
+https://ire.org/nicar/database-library/databases/hmda/
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+Those are just some examples – the best data is often data you collect
+yourself, either through FOIA or by creating a database from paper
+records…
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+https://www.nytimes.com/2016/08/21/us/milwaukee-segregation-wealthy-black-families.html?_r=0
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+Many people assume residential segregation is
+closely related to income disparity – that blacks and
+whites in particular live apart mostly because of
+income differences.
+To test this, we calculated segregation indexes for
+all U.S. metros but for all income levels
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+https://nyti.ms/2jDMoMz
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+Diversity, Segregation and Disparity
+
+IRE New York Watch Dog Workshop, January 27, 2017
+
+

@@ -1,0 +1,1159 @@
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Introduction to d3.js
+
+1 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 1 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Stuff d3.js is not good at!
+Being a chart library
+Being Backward compatibile
+Rendering things for you
+Abstracting basic graphic primitives
+
+2 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 2 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Stuff d3.js is good at!
+Providing a way to map data to documents.
+Being a general purpose visualization library
+Handling data transformation
+Providing basic math & layout algorithms
+
+3 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 3 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js & jQuery
+
+4 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 4 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js is a little like jQuery
+jQuery is a fast, small, and feature-rich JavaScript library. It makes things like
+HTML document traversal and manipulation, event handling, animation, and
+Ajax much simpler with an easy-to-use API that works across a multitude of
+browsers. With a combination of versatility and extensibility, jQuery has
+changed the way that millions of people write JavaScript.
+http://jquery.com/
+
+5 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 5 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+jQuery intro in 2 slides
+DOM Traversal and Manipulation
+$( "button.continue" ).html( "Next Step..." )
+
+Event Handling:
+Show the #banner-message element that is hidden with display:none in its CSS
+when any button in #button-container is clicked.
+var hiddenBox = $( "#banner-message" );
+$( "#button-container button" ).on( "click", function( event ) {
+hiddenBox.show();
+});
+
+6 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 6 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+jQuery intro in 2 slides
+Remote Data with Ajax:
+Call a local script on the server /api/getWeather with the query parameter
+zipcode=97201 and replace the element #weather-temp's html with the
+returned text.
+$.ajax({
+url: "/api/getWeather",
+data: {
+zipcode: 97201
+},
+success: function( data ) {
+$( "#weather-temp" ).html( "<strong>" + data + "</strong> degrees" );
+}
+});
+
+7 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 7 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js & jQuery: Selections
+Finding elements in the DOM:
+
+d3:
+d3.select("#vis")
+
+jQuery:
+$("#vis")
+
+8 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 8 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js & jQuery: Styles
+Applying css styles to DOM elements:
+
+d3:
+d3.select("#vis").style("font-size", "12px");
+
+jQuery:
+$("#vis").css("font-size", "12px");
+
+9 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 9 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js & jQuery: Attributes
+Setting attributes on DOM elements:
+
+d3:
+d3.select("#vis").attr("name", "phonenumber");
+
+jQuery:
+$("#vis").attr("name", "phonenumber");
+
+10 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 10 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js & jQuery: DOM events
+Capturing user events:
+
+d3:
+d3.select("#vis")
+.on("mouseover", function(d) {
+// 'this' is the element
+// 'd' is the datum associated with it
+// to act on this element with d3, we have to
+// reselect it:
+d3.select(this).classed("selected", true);
+});
+
+jQuery:
+$('#vis').mouseover(function(ev) {
+$(this).attr("class","selected");
+});
+
+11 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 11 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.js and jQuery: Fetching Data
+Both libraries come with helpers for making ajax requests:
+
+d3:
+d3.json("data.json", function(err, data) {});
+
+jQuery:
+$.getJSON("data.json", function(data) {});
+
+12 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 12 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 scales
+
+13 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 13 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 scales
+
+14 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 14 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 scales
+D3 lets us define mappings between data very easily! For the previous
+example, our scale would look like so:
+var scale = d3.scale.linear()
+.domain([10,155])
+.range([0,600]);
+
+Note that this returns a function
+function! This is now a helper function we can use to
+map our values from our domain to our range:
+scale(10); // 10
+scale(155); // 600
+scale(82.5); // 300
+
+15 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 15 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 scales
+There are three types of scales in d3:
+Quantitative Scales - for continuous input domains, such as numbers.
+Ordinal Scales - for discrete input domains, such as names or categories.
+Often useful for colors:
+var color = d3.scale.ordinal()
+.range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+"#8c564b", "#e377c2"])
+.domain(["Asia", "Africa", "North America", "South America",
+"Antarctica", "Europe", "Australia"]);
+color("Asia"); //"#1f77b4"
+color("North America"); //"#2ca02c
+
+Time Scales - for time domains. Useful for axis labeling:
+var xScale = d3.time.scale()
+.domain([new Date("01/01/2013"), new Date("30/12/2013")])
+.range([0, 600]);
+xScale(new Date("06/31/2013")); //296.6346153846154
+
+16 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 16 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+What is a data join?
+
+17 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 17 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data joins
+The act of creating a mapping between data points and the objects
+representing them.
+For example, take the array:
+[1,2,3]
+
+If I wanted to represent each number as a symbol, then it would look like so:
+[1,2,3] -> ♦ ♦ ♦
+
+Adding a number to that array, should also increase the number of symbols:
+[1,2,3,4] -> ♦ ♦ ♦ ♦
+
+Removing a number, should remove its symbol:
+[1,2] -> ♦ ♦
+
+18 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 18 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+In practice, we would probably want to represent each data point in a way
+that takes the actual value into account. For example, if we want to have a div
+for each item in our array, the mapping might look like so:
+[1,2,3]
+<div>1</div>
+<div>2</div>
+<div>3</div>
+
+Now adding an element should add a div in the right place: [1,2,2.5,3]
+<div>1</div>
+<div>2</div>
+<div>2.5</div>
+<div>3</div>
+
+Same with removing: [1,3]
+<div>1</div>
+<div>3</div>
+
+19 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 19 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+How would we implement a join?
+
+20 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 20 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+function arrayJoiner() {
+var j = {}, data = [];
+j.join = function(newdata) {};
+return j;
+}
+
+21 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 21 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+function arrayJoiner() {
+var j = {}, data = [];
+j.join = function(newdata) {
+// what in our new set of data did not exist in
+// our current set of data?
+var enter = newdata.filter(function(n) {
+return data.indexOf(n) === -1;
+});
+// overwrite our current data
+data = newdata;
+// return the results of the filter
+return {
+enter: enter
+};
+};
+return j;
+}
+
+22 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 22 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+function arrayJoiner() {
+var j = {}, data = [];
+j.join = function(newdata) {
+var enter = newdata.filter(function(n) {
+return data.indexOf(n) === -1;
+});
+var exists = newdata.filter(function(n) {
+return data.indexOf(n) !== -1;
+});
+var exit = data.filter(function(n) {
+return newdata.indexOf(n) === -1;
+});
+data = newdata;
+return {
+enter: enter,
+exists: exists,
+exit: exit
+};
+};
+return j;
+}
+
+23 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 23 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins
+Results:
+http://www.macwright.org/mistakes/#5010465
+// first: construct a join
+var myjoin = arrayJoiner();
+var j = myjoin.join(['cats']);
+j.enter; // ['cats']
+j.exists; // []
+j.exit; // []
+// new let's add dogs and kittens
+var k = myjoin.join(['cats', 'dogs', 'kittens']);
+k.enter; // ['dogs', 'kittens']
+k.exists; // ['cats']
+k.exit;
+// []
+
+24 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 24 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins in d3
+Thankfully you don't have to think about how to implement data joining
+yourself in d3. It's all done for you! Like Magic. Complicated, Dark Magic.
+
+25 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 25 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins in d3
+In order to define what should happen for your different element states, you
+first have to go through the following standard set of voodoo:
+Designate a selection that you wish to bind to. It can exist or not:
+d3.selectAll("div")
+
+Then, bind your data to it and optionally define how exactly we
+determine when data is unique (by default, it's by position!)
+var binding = d3.selectAll("div")
+.data(data, function(d) {
+return d;
+});
+
+26 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 26 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins in d3
+Now you can define your different selections:
+
+entering selection:
+New elements:
+var entering = binding.enter();
+
+27 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 27 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins in d3
+exiting selection:
+Elements for which the data was removed.
+var exiting = binding.exit();
+
+28 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 28 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Data Joins in d3
+updating selection:
+Elements for which the data previously existed (but may need updating)
+var updating = binding;
+
+29 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 29 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+
+30 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 30 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+First, let's establish our chart dimensions:
+// define some default dimensions
+var width = 500,
+height = 100,
+r = 5;
+
+And the actual selection from which we are going to make this chart:
+// define our general chart container
+var chart = d3.select("#vis")
+.append("svg")
+.attr("width", width)
+.attr("height", height);
+
+31 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 31 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+Then, define the scale we are going to use to position our circles along the x
+axis:
+// define a scale based on which we will position our circles
+var xScale = d3.scale.linear()
+.range([5, width-r])
+.domain([1,51]);
+
+Important things to note:
+We are positioning elements along the entire width, but are taking out a
+radius' worth of space on each end (so that our circles don't get cropped.)
+Our domain is actually dictated by our data, it specifies the "edges" of our
+data.
+
+32 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 32 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+Now, let's define the actual container for our circles and a draw method that is
+going to take in our data:
+// define the container for our circles
+var circles = chart.append("g")
+.classed("circles", true);
+function draw(data) {
+// implement this...
+}
+// draw two separate sets of data
+draw([1,3,5,10,11,12,50]);
+draw([1,2,5,11,12,51]);
+
+33 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 33 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+Now, inside our draw method, the first thing we want to do is establish our
+data binding:
+function draw(data) {
+// define the data binding from which we will make our join selections
+// we are going to be adding circle elements:
+var binding = circles.selectAll("circle")
+// we are going to use the actual value of each datum as the join key.
+.data(data, function(d) {
+return d;
+});
+// ...
+}
+
+34 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 34 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+Now, define our join selections:
+function draw(data) {
+var binding = circles.selectAll("circle")
+.data(data, function(d) {
+return d;
+});
+var existing = binding;
+var entering = binding.enter();
+var exiting = binding.exit();
+}
+
+35 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 35 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+Lastly, define behavior for each selection:
+function draw(data) {
+var binding = circles.selectAll("circle")
+.data(data, function(d) {
+return d;
+});
+var existing = binding;
+var entering = binding.enter();
+var exiting = binding.exit();
+// Update any existing elements
+existing.style("fill", "lightgreen");
+// render new elements
+entering.append("circle")
+.classed("circle", true)
+.style("fill", "green")
+.attr("r", r)
+.attr("cy", height/2)
+.attr("cx", function(d) {
+return xScale(d);
+});
+// grey out exiting elements
+exiting.style("fill", "lightgrey");
+}
+
+36 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 36 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Example
+You can see the live example here:
+http://jsfiddle.net/GGDce/2/
+
+37 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 37 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 Transitions
+
+38 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 38 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 Transitions
+So far we've made static changes to our DOM elements, but what if we wanted
+to animate some of those changes? Again, d3 makes this REALLY easy.
+Instead of:
+d3.select("body").style("color", "red");
+
+You can call:
+d3.select("body").transition().style("color", "red");
+
+Optionally, you can control your transition speed:
+d3.select("body").transition().delay(700).style("color", "red");
+
+39 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 39 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 Transitions
+Transitions work on all join selections:
+var bar = svg.selectAll(".bar")
+.data(data, function(d) { return d.key; });
+bar.enter().append("rect")
+.attr("class", "bar")
+… // initialize entering bars
+bar.transition()
+… // transition entering + updating bars
+bar.exit().transition()
+… // transition exiting bars
+.remove();
+
+Read more: http://bost.ocks.org/mike/transition/
+
+40 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 40 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 Transitions
+You can see our circle example with an rendering transitions:
+http://jsfiddle.net/RGAM5/1/
+
+41 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 41 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Even more d3...
+We can't possibly cover all aspects of d3 here, but there are some additional
+elements of it that are incredibly useful:
+
+Layouts - Layouts basically encapsulate the math required to position our
+elements according to some graphical layout.
+For example, a treemap:
+
+https://github.com/mbostock/d3/wiki/Layouts
+
+42 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 42 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Even more d3...
+Working with Arrays - d3 has a huge collection of helper methods that
+help us transform our data so that it can then be visualized. Anything
+from grouping data, to reducing it, to easily applying transformations to
+each data element.
+https://github.com/mbostock/d3/wiki/Arrays
+
+43 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 43 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Even more d3...
+Colors - d3 comes with a collection of color transformation methods that
+easily let us compute color ranges, gradients, lighter/darker colors in RGP,
+HSL and LAB.
+Pre-existing components - while there aren't many bre-baked components
+in d3, there is an axis component that is easy to customize.
+Mapping - there are a lot of facilities in d3 to easily create maps of
+different projections
+Behaviors - supporting zooming/panning/dragging in d3 can be a matter
+of a few lines of code.
+
+44 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 44 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Code Organization in d3
+Creating reusable d3-based assets
+
+45 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 45 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+46 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 46 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Code Organization in d3
+One thing that is challenging to do in d3.js is organize your code. For example:
+http://bl.ocks.org/mbostock/6498580
+Some of the challenges of writing our code like this include:
+Reusing elsewhere means copy & pasting
+Making changes / adding functionality means copy & pasting & changing
+Fixing mistakes may require manual carrying over across all copy &
+pasted instances
+etc...
+That's not sustainable.
+
+47 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 47 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Principals of Reusable Charts
+
+48 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 48 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Repeatable
+Easy to create multiple instances of
+
+49 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 49 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Configurable
+Easy to appropriate for a specific task
+
+50 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 50 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Extensible
+Easy to extend with additional functionality
+
+51 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 51 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Composable
+Easy to combine into other charts
+
+52 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 52 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+http://misoproject.com
+
+53 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 53 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3.chart.js
+Project website (tutorials, examples etc.)
+http://misoproject.com/d3-chart
+
+Project code on github:
+http://github.com/misoproject/d3.chart
+
+54 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 54 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Our circle example:
+http://jsfiddle.net/LHW2T/
+
+55 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 55 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+// define a repeatable chart
+d3.chart("CircleChart", {
+initialize: function(options) {
+// ...
+this.layer("circles", circleGroup, {
+dataBind: function(data) {
+return this.selectAll("circle")
+.data(data, function(d) { return d; })
+},
+insert: function() {
+return this.append("circle")
+},
+events: {
+"update:transition": function() {
+this.delay(500)
+.style("fill", "lightgreen");
+},
+"enter": function() {
+var chart = this.chart();
+this.attr("r", 0)
+.style("fill", "white")
+.attr("cy", chart.height/2)
+.attr("cx", function(d) {
+return chart.xScale(d);
+});
+},
+
+56 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 56 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+"enter:transition": function() {
+var chart = this.chart();
+this.style("fill", "green")
+.attr("r", chart.radius);
+},
+"exit:transition": function() {
+var chart = this.chart();
+this.delay(1000)
+.attr("r", chart.radius)
+.style("fill", "lightgrey");
+}
+}
+})
+},
+transform : function(data) {
+// update the xScale domain once we get data to render
+this.xScale.domain(d3.extent(data));
+return data;
+}
+});
+var chart = d3.select("#vis")
+.chart("CircleChart", {
+width: 400,
+height: 400,
+radius: 5
+});
+chart.draw([1,3,5,10,11,12,50]);
+chart.draw([1,2,5,11,12,30,51]);
+
+57 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 57 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+More d3.chart resources
+Tutorials:
+http://github.com/misoproject/d3.chart/wiki
+Existing Charts:
+http://misoproject.com/d3-chart/charts
+...And growing!
+
+58 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 58 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+d3 & External Tools/Libraries
+d3 has a pretty wide ecosystem of external contributions.
+External charting libraries:
+NVd3 - http://nvd3.org/
+C3.js - http://c3js.org/
+xCharts - http://tenxer.github.io/xcharts/
+Rickshaw - http://code.shutterstock.com/rickshaw/
+
+59 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 59 of 60
+
+Introduction to d3.js
+
+4/3/14, 1:36 PM
+
+Thanks!
+Irene Ros
+Email: irene@bocoup.com
+Twitter: @ireneros
+Github: iros
+Bocoup: http://bocoup.com
+
+60 / 60
+
+http://ireneros.com/conf/nicar/introduction-to-d3.html#1
+
+Page 60 of 60
+
+

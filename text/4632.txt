@@ -1,0 +1,491 @@
+Tools to Handle PDFs
+Getting data out of the ​
+not so
+“Portable Document Format”
+NICAR 2016
+Acton H. Gorton
+University of Illinois at Urbana­Champaign
+actongorton@gmail.com
+A long, long time ago… 22 years to precise… Adobe created the PDF as a way to have a document
+look the same no matter what computer or operating system it was displayed on. This seemingly
+innocent idea has become the pervasive standard solution for governments and corporations to store
+all documents.
+Odds are, you’ve come across some useful bits of data contained within a PDF. Or worse, your local
+government complied with their electronic mandate for open records requests by providing scanned in
+images of spreadsheets embedded into a PDF.
+It’s enough to makes you wonder if PDFs were put on this planet to make your job harder.
+Luckily you’re not alone, and there are now lots of tools available to get organized information out of a
+PDF. And, if need be, we can put a work­flow together to crack some worst case scenarios.
+Some common tools for pulling data out of PDFs:
+Name
+
+Type
+
+Price
+
+Adobe Acrobat Pro
+
+Win/Mac
+
+$14.99 per month
+
+Abbyy FineReader Pro
+
+Win/Mac
+
+$169.99 (Windows), $119.99 (Mac)
+
+Tabula
+
+Win/Mac
+
+Free
+
+CometDocs
+
+Web
+
+Free for IRE members, apply at c​
+ometdocs@ire.org
+
+CometDocs
+Let’s look at a 2013 report on homicides in California:
+https://oag.ca.gov/sites/all/files/agweb/pdfs/cjsc/publications/homicide/hm13/hm13.pdf
+(or also at ​
+http://tinyurl.com/zqxygzu​
+)
+
+There are tables full of information:
+
+Some tables are sideways:
+
+Go to CometDocs.com, create an account if necessary and login, and upload the PDF. Choose
+to convert the document into the Excel format:
+
+Choose to convert to Excel, wait for CometDocs to process, and download the results:
+
+OCR Extraction
+This is a proof­of­concept workflow of converting each page within a PDF into an image, then using
+OCR to convert the image into text. The resulting text can be parsed into a spreadsheet.
+Let’s convert expenditure reports for the city of Champaign.
+Download an expenditure report from here: ​
+http://tinyurl.com/zwua2sl
+1. Click “Cash Outflow Report”
+2. Choose “16.01.29 ­ 16.02.11 Cash Outflow Report.pdf”
+3. Save the PDF to your computer
+The expenditure reports will look like this screenshot:
+
+Get images for each page, upload the PDF to the PDF to Image website: ​
+http://pdftoimage.com/
+
+Download the resulting conversion and open the ZIP file.
+You should have a folder contents that looks similar to this:
+
+Upload to ​
+onlineocr.net​
+:
+
+* with a register account with onlineocr.net, you can convert 16 pages per day.
+Download and open the output file:
+
+Notice how the formatting has been preserved. This is unique to onlineocr.net’s service.
+
+Batch OCR
+The previous example showed what can be done with a single image file. But to make this more
+interesting with OpenRefine, we should go ahead and do five more conversions.
+To do a batch upload, you’ll need to create a Zip Archive of the images and upload the files:
+
+Clicking “Compress 5 Items” should give you a file that looks like this:
+
+You’ll also need to create an account with onlineocr.net and then log in so you can see the
+dashboard:
+
+Click on “Select file” and point towards your “Archive.zip” file that you just created.
+
+Click the CONVERT button to start the process:
+
+After the conversion, you should now have a file containing all of the OCR conversions that you
+can download (the file name may be different from this example):
+
+Click on the filename and save the download to your computer, then open up the Zip file. You
+should have five text files within the Zip:
+
+The results of each file will look the same as the example before.
+
+We want to combine the text files into a single file. There are a few ways to do this, but for this
+example, we’re just going to do the good old fashioned “Copy & Paste”. This wouldn’t be a very good
+solution for hundreds or thousands of files, but it works in our case.
+
+You should now have a big text file with about 306 rows of information:
+
+Now we have something worth the effort of putting into OpenRefine.
+We’ll also be able to more easily identify the repeating headers that are on every page of the PDF
+document, and consequently are in every image and OCR text file that we’ve created.
+
+Cleaning up with OpenRefine
+This is meant as a kind of “bonus” section to the tutorial and meant to demonstrate one way to clean up
+your data after extracting the text. Using OpenRefine is not a requirement, it is merely one way to show
+what a typical work­flow may look like when it used.
+Because we are dealing with some unusually structured data tables, there are lots of little steps
+involved in getting the data ready for analysis. This tutorial also introduces and uses “Regular
+Expressions”, which can look very intimidating at first, but they will q
+​uickly​
+make sense.Regular
+Expressions might look similar to programming language, but they are actually just used for matching
+patterns found in the text. We’ll cover just the basics, but they are very powerful.
+You can download OpenRefine and learn more about it from o
+​penrefine.org​
+.
+Now, let’s assume that you’ve already downloaded, installed, got it up and running and your web
+browser is pointed towards it at localhost:3333.
+Your screen should look like this:
+
+Create a new project and choose the text file saved from onlineocrt.net. Click the “Next” button
+and you’ll have a bunch of options on how to import the text file:
+
+Options to choose:
+● Line­based text files
+● Character encoding should be “UTF­16”
+● Uncheck “Store blank rows”
+● Uncheck “Store blank cells as nulls”
+● Give your project a name, such as “Expenditure Reports”
+Click “Create Project”
+
+Your project should now look like the following:
+
+There can be hard to see “whitespace” that exists before and after each row of information, so let’s use
+a simple tool in OpenRefine to get rid of it. This is important because it helps OpenRefine treat rows
+consistently.
+For example, even if two rows contain “City of Champaign”, if there is white space in and and not in
+another, OpenRefine will treat these differently when searching or faceting.
+Trim the white space by clicking on the dropdown for “Column 1”, then choosing “Edit Cells” ­>
+“Common Transforms” ­> “Trim Leading and Trailing Whitespace”:
+
+You’ll see a prompt that lets you know how many rows of information were affected by this
+action:
+
+We need to get rid of the headers and repeating information that isn’t of much use to us. There are a
+bunch of ways we can do this, but some of the easiest make use of a feature in OpenRefine called
+“Facets”.
+Click on the drop­down menu in “Column 1” and choose “Facet ­> Text Facet”:
+
+On your left, you’ll now see a column containing the various facet groups within the document.
+It will look similar to this:
+
+Let’s sort these results by count so we can see which ones repeat. Click “count” at the top of
+the facet results:
+
+Do you notice how several of the rows are repeated? That looks like the information that gets repeated
+on each page. We want to erase it.
+
+If you hover your mouse over “CHECK”, you’ll see an option appear to “include” the row:
+
+Click “include” on those repeating records listed.
+You should now have a list of rows that look like the following:
+
+From the “All” column, click on the dropdown arrow and choose “Remove all matching rows”:
+
+You should now see a screen with the rows deleted. Don’t worry if you make a mistake, you can
+always trace your steps and undo any changes in the “Undo/Redo” column on the left:
+
+Go back to the “Facet / Filter” view by clicking on it in the left column. Now remove the facet by
+clicking on the x­box in the top­left corner:
+
+And we’ll return to our list of rows:
+
+If you notice at row number 1, it looks like we missed some of the headers. Not to worry, let’s just do
+another step of clean­up and start filtering the records that look like that.
+From “Column 1” dropdown, choose “Text Filter”:
+
+Now we need to make some smart decisions about what the likely headers contain on each page.
+Looking at the rows, it’s probably a safe bet that words such as “Report: CHECKREG” repeat in every
+header.
+
+Put “Report: CHECKREG” into the filter and see what we get:
+
+Voila! We’ve found those words match the repeating headers on five different pages. Let’s choose to
+erase them by clicking on the dropdown in the “All” column and clicking on “Edit Rows” and “Remove all
+Matching Rows”.
+Now do the same for by filtering on “BANK” and “ AMOUNT”.
+When you are finished filtering and removing, click the x­box to close the filter.
+
+Let’s review our records again:
+
+It looks like we’ve removed most of the repeating headers, so let’s do a quick visual scan through the
+pages to see if anything else sticks out. To make this faster, click on “50 rows” at the top of the page.
+Scroll down the page and do a spot check.
+Notice anything interesting? Check out row 36:
+
+Row 36 is blank, and that stuff happens despite our best efforts to remove the rows early on with facets
+and filtering. The likely culprit is some hidden computer code that we can’t see.
+
+A quick facet will reveal how many times it happens:
+
+At the bottom of the list is a line that reads “(blank)”. Let’s take a look at only those records by hovering
+the mouse cursor over the name and click on “include” when it appears.
+From the dropdown menu in the column, choose to remove all matching rows as we’ve done earlier.
+Remove the facet and scan the records again, page by page, until you feel satisfied that we’ve
+removed anything that is repeating or isn’t a part of the final data we want to produce.
+All done? Great!
+Now we want to associate the checks with their itemizations. We can do this by creating “records”.
+A note about “records” and “rows” in OpenRefine: OpenRefine considers a “record” to be a related set
+of rows. For example, the check in our expenditure report is a “row”, but when we associate the
+itemizations with it, then we have a “record”.
+This will make much more sense in a moment.
+
+Create a new column of records by clicking on the dropdown menu in “Column 1” and then
+choosing “Edit Column” ­> “Add Column Based on This Column”:
+
+Name the new column “item” and click on “OK” button:
+
+Now you will have two columns with the same information in each:
+
+Believe it or not, we’re making good progress.
+Now we can really start removing things and associating itemizations with the check. To make the
+filters really zing, we’ll need to use Regular Expressions (regex). Regular Expression queries can get
+really complicated, so we’ll try to keep these basic and simple. An excellent tool for making regex
+queries much more simple to build is a website named r​
+egex101.com​
+.
+Looking closely at the rows with the check numbers, we notice a pattern: each row starts with the
+number one, followed by some space, followed by another series of numbers. But let’s take a closer
+look to make sure we are actually seeing what we think we see.
+If you hover over a row, you’ll see an “edit” option appear. Click on it and you’ll see the actual
+text:
+
+You’re no doubt asking yourself why there appears to be more white spaces in the edit box. Well, this
+goes back to the issue of character and text encodings. Remember when we started the project that we
+chose UTF­16? OpenRefine is trying to display the content correctly, but there is clearly something else
+encoded in the text that neither we or OpenRefine can see clearly.
+If you’re frustrated, you’re not alone. These text­character encodings drive data journalists nuts.
+Let’s see if we can build a regex query to capture that content, so copy the content within the
+edit box and paste it into the “Test String” box on regex101.com:
+
+If we reference the different types of regex symbols listed at the bottom/right of regex101.com, we can
+see how our regex query is constructed.
+The Explanation box to the right of the query explains “^\d\s+\d”, which reading from left­to­right means:
+1. ^ (Carrot Symbol) means to start at the very beginning
+2. \d (backslash and the letter “d”) means to choose a digit
+3. \s (backslash and the letter “s”) means to choose a space
+4. + (plus symbol) means to choose one or more instances of the previous symbol: \s
+5. \d (backslash and the letter “d”) means to choose another digit
+
+We add the “+” symbol after the \s symbol because the space between the numbers is comprised of
+tabs ­ that indentation we create at the beginning of new paragraphs. We don’t care really how many
+tabs are there, so we can use the + symbol to capture if there are more than one.
+Now let’s test our regex query by using it as a filter in OpenRefine:
+
+You should see that 70 rows were matched against this regex query. Scanning through the records
+appears to match only the rows of information that we want: the checks. We’re going to erase all of the
+itemizations from that column so that we are left with only the checks.
+From the dropdown menu in the “All” column, choose “Edit rows” and “Star Rows”:
+
+Now choose to facet by the star from the All column:
+
+Choose “false” from the facet menu that appears at the far left:
+
+Choose “Blank out cells” from Edit Cells ­> Common Transforms:
+
+And OpenRefine will now look like this:
+
+Remove the facet and we’ll now see itemizations for each check:
+
+And if you click on “records” near the top, you’ll see OpenRefine associated the itemizations
+with the checks:
+
+We can get rid of the checks that appear in the “Item” column by faceting on stars again, except
+this time choose “true” instead of “false”:
+
+From the dropdown menu in the Item column, choose Edit cells ­> Common transforms ­> Blank
+out cells. OpenRefine should now look like this:
+
+And if we remove the facet and switch to the “records” view, we’ll see this:
+
+I don’t know about you, but it’s getting a bit tiring looking at the name “Column 1”, so let’s rename
+“Column 1” to “Check”.
+Select choosing “Edit column” and “Rename this column” from the dropdown menu for
+“Column 1”:
+
+Now we need to start parsing the individual columns within our rows and records. We’re going to create
+regex queries for each of these tasks. Remember to refer to the Quick Reference section on
+regex101.com.
+If you’re feeling ambitious, feel free to dig into the nitty­gritty of regular expressions by reading about
+them at ​
+www.regular­expressions.info​
+.
+
+We’re going to build a series of regex queries, so start by copying the original text string from
+the record by hovering your mouse over the row and selecting edit:
+
+Copy the original text, and paste it into regex101.com:
+
+The following screenshots will represent a series of regex queries for identifying each column within the
+row. We can refer to the original record ­ before we ever started doing OCR ­ to identify the column
+names.
+The column names are:
+● Bank (bank)
+● Check # (check_number)
+● Check Amount (check_amount)
+● Check Date (check_date)
+● Vendor # (vendor_number)
+● Address # (address_number)
+● Vendor Name (vendor_name)
+● Check Status (check_status)
+
+How to enter in the regex commands when creating a new columns:
+Take a brief look at this next screenshot before continuing... trust me, this will all be explained.
+
+We need to discuss the Expression you’re seeing because it won’t look exactly like a regex query.
+OpenRefine uses a special language called Google Refine Expression Language, or “GREL”.
+There are a whole bunch of GREL commands, and ways of chaining GREL commands together to do
+some great things with the rows of information.
+The GREL commands we are going to use breaks down like so:
+1. value
+2. match
+3. opening and closing parenthesis ()
+4. slashes
+5. regex query
+6. brackets
+
+value​
+: tells OpenRefine that we are going to do something with the original value in the field we’re
+selecting.
+match​
+: tells OpenRefine that we are going to look for specific text
+opening and closing parenthesis​
+: we are going to place the pattern of the text we want to match within
+the parenthesis.
+slashes​
+: the first / and last / that wrap around our regex query tell OpenRefine that the text in­between
+the slashes is a regex query.
+regex query​
+: this is the specific regular expression query that we are using to match the text string with.
+brackets​
+: in the event that there are multiple regex query matches within the search string, the number
+listed in between the brackets tells OpenRefine which one of the matches to actually select.
+Programming languages start with a zero, so we are telling OpenRefine to select the first match.
+If this all seems confusing, that’s okay… this is a lot to take in at once. For now, just keep using the
+same Expression we’ve already created and replace the content between the slashes within the
+parenthesis with the regex query that we’ve already created.
+We’re going to repeat a series of steps by creating a new column, and then applying a transform on the
+column with the regex query we’ve developed for that specific column.
+
+For example, let’s create a new column for the bank record:
+
+Give the column a name and add the regex query:
+
+Repeat this process for all of the columns.
+Here are a list of the Column Names, Regex Queries and GREL commands to help you along:
+
+Column Name: “bank”
+Regex Query:​^(\d).+
+GREL:​value.match(/^(\d).+/)[0]
+Column Name: “check_number”
+Regex Query: ​
+(?<=\d)\s+(\d+)
+GREL:​value.match(/.(?<=\d)\s+(\d+).+/)[0]
+Column Name: “check_amount”
+Regex Query:​​​
+.+\$(.+?)\s+.+
+GREL:​value.match(/.+\$(.+?)\s+.+/)[0]
+Column Name: “check_date”
+Regex Query: ​
+.+(\d\d\/\d\d\/\d\d).+
+GREL: ​
+value.match(/.+(\d\d\/\d\d\/\d\d).+/)[0]
+
+Column Name: “vendor_number”
+Regex Query:​.+(?<=\/\d\d)\s+(\d+).+
+GREL:​value.match(/.+(?<=\/\d\d)\s+(\d+).+/)[0]
+Column Name: “address_number”
+Regex Query:​.+(?<=\/\d\d)\s+\d+\s+(\d+).+
+GREL:​value.match(/.+(?<=\/\d\d)\s+\d+\s+(\d+).+/)[0]
+Column Name: “vendor_name”
+Regex Query:​.+(?<=\s\d\s)(.+)(?=\s{2}).+
+GREL:​value.match(/.+(?<=\s\d\s)(.+)(?=\s{2}).+/)[0]
+Column Name: “check_status”
+Regex Query:​.+\s([A­Z]+)$
+GREL:​value.match(/.+\s([A­Z]+)$/)[0]
+Let’s go ahead and erase the column named “check” and take a look at our data thus far:
+
+You can see we now have each field from the original column broken up into individual columns.
+
+After you take a moment to finish admiring your work, clean up the columns a little with the following:
+● Remove leading and trailing whitespace in each new column
+○ Edit cells > Common transforms > Remove leading and trailing whitespace
+● Move the “vendor_name” column all the way to the left
+○ Edit column > Move column to beginning
+● Move any other columns where it would be easier to read
+○ Edit column > Move column …
+● Convert the “check_date” column to a date
+○ Edit cells > Common transforms > To date
+● Convert the “check_amount” column to a number
+○ Edit cells > Common transforms > to number
+● Unstar all of the rows
+○ All > Edit rows > Unstar rows
+
+Depending on how you’d like to arrange your columns, OpenRefine should look similar to this:
+
+Now we need to parse the itemizations for each check.
+
+Here are the GREL commands to help you parse the itemizations:
+Column Name
+
+GREL Command
+
+item_ammount
+
+value.match(/(^\d+\.\d+).+/)[0]
+
+gl_account
+
+value.match(/.+\.\d\d\s+([0­9\­]+).+/)[0]
+
+description
+
+value.match(/.+\.\d\d\s+[0­9\­]+(.+)(?=$)/)[0]
+
+Remember to:
+­ Remove the “item” column since it’s no longer needed.
+­ Remove the leading and trailing whitespace
+­ Convert “item_amount” to a number
+So now we have a completely cleaned up dataset and we could go on to use this within Excel or load it
+into a database to make some queries.
+
+Facets
+Notice the keyword “RIBE” in many of the fields listed in “description”. Those are reimbursements.
+When we see something unique about the records, we can add a flag of some kind of the data in order
+to mark that row.
+Let’s add a new column based on the “description” and mark the column with a flag:
+1. Make sure “Show as” is marked as “records”
+2. Create filter on “description” and type in “RIBE”
+OpenRefine should look like this:
+
+Now do the following:
+1. From All, choose Edit rows > Star rows
+2. Remove the “description” facet by clicking on the x­box
+3. From All, choose Facet > Facet by Star
+4. In the facet menu, choose “true”
+5. From “Show as”, choose “rows”
+6. On “vendor_name” choose Facet > Customized Facets > Facet by blank
+7. From the facet menu for “vendor_name”, choose “false”
+8. On “vendor_name” choose Edit column > Add column based on this column
+9. Name the column “reimbursement”
+10. Use the GREL command: value.replace(/.+/,'true')
+11. Switch “Starred Rows” facet to false
+12. On the “reimbursement” column, choose Facet > Text Facet
+13. In the “reimbursement” facet, hover mouse pointer over “(blank)”, click “edit”, write “false”
+14. Remove all of the facets from the left column
+15. From the “All” column, choose Edit rows ­> Unstar rows
+Scan the records to find any other reimbursements.
+It looks like a few are tagged with “REIMB”. If we create a text filter on the column description column
+and write “REIMB”, we can quickly find those matching rows and manually edit the rows by hovering
+the mouse pointer over the “reimbursement” field and choosing “edit”, then changing “false” to “true”.
+Remove the text filter and check the records again.
+Export the results into Excel by clicking “Export” from the top/right of the window, then
+choosing “Excel”:
+
+You can find lots of documentation, including recipes for handling different situations, at:
+https://github.com/OpenRefine/OpenRefine
+
+

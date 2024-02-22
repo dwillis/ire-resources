@@ -1,0 +1,251 @@
+IPUMS – USA
+Online Data
+Analysis
+Data Exercise
+OBJECTIVE: Gain an understanding of how the IPUMS dataset is structured and how it can be leveraged
+to improve your reporting. This exercise will use the IPUMS dataset to explore home ownership in 2010
+and 2012.
+
+Research Questions
+What are the patterns of household ownership in the U.S.?
+
+Objectives
+
+
+Select datasets and variables of interest
+
+
+
+Analyze the data using sample code
+
+
+
+Validate data analysis work using answer key
+
+IPUMS-USA Variables
+
+
+OWNERSHP
+
+
+
+EDUC
+
+
+
+STATEFIP
+
+
+
+METAREA
+
+
+
+OCC1950
+
+
+
+AGE
+
+SDA Code to Review
+Field
+
+Purpose
+
+Row
+
+Represents the primary variable of interest
+
+Column
+
+Divides the analysis of the variable of interest into categories
+
+Control
+
+Creates a separate chart for each category of the control
+
+Selection Filter
+
+Allows you to select cases; ex: year(2000-*) -> all years 2000-onward
+
+Answer Key (page 9)
+
+Getting Started
+ Go to the main IPUMS-USA site. Click "Select Data" and use the drop down menus
+
+(household – economic characteristics) or search function to find the variables you are
+interested in.
+
+o
+
+Find the household variable OWNERSHP
+
+o
+
+Click on the variable name to get to the variable page
+
+ Once on the OWNERSHP variable page, look at the variable description tab. The
+
+description describes the variable.
+
+ Look at the Comparability tab. This tab discusses any issues with comparing the
+
+variable over time.
+
+ What is the universe for OWNERSHP – in other words, which respondents or
+
+households are asked this question?
+
+ For what years is this variable NOT available?
+
+Basic Frequencies
+In a new tab, go to http://usa.ipums.org/usa/sda/, and select the 2012 ACS sample. Log
+in. Enter OWNERSHP in the "Row" field.
+Now we need to select a filter. Selection filters allow you to analyze specific cases.
+Here, the code values should be in parentheses.
+
+1) Go back and look at the Universe tab for OWNERSHP on the IPUMS website. What
+does the universe suggest about what filter(s) should be used for making tables using
+OWNERSHP?
+
+2) In what percentage of households in the IPUMS 2012 ACS sample was the housing
+unit owned by a member of that household?
+
+3) In 2) we have the percentage of households in the 2012 ACS sample that were owned
+by members of that household. However, we are really interested in percentage of all
+U.S. households that own their housing unit in 2012. To get this statistic, we need to
+apply the household weight (HHWT).
+
+What percentage of households in the U.S. owned their housing unit (i.e. did not rent) in
+2012?
+
+4) How does this percentage differ from the un-weighted percentage? Does the sample
+over- or under-represent American home-owning households in 2012?
+
+5) Suppose instead of the proportion of households that were owned you wanted to know
+the proportion of people living in households that own their housing units. For this we
+would need the person weight (perwt).
+
+What percentage of people in the U.S. lived in a household that was owned by a resident
+of that housing unit in 2012?
+
+6) Return to the sample selection screen at http://usa.ipums.org/usa/sda/ and select 2010
+ACS.
+How do rates of U.S. homeownership (that is, households in the U.S. that owned their
+housing unit) in 2012 compare to homeownership rates in 2010?
+
+Crosstabs
+7) What relationship do you see between homeownership rates (that is, percentage of
+households in the U.S. that owned their housing unit) and education level of the
+household head in 2010?
+
+8) How do rates of homeownership vary among states in 2010? Look specifically at the
+difference in ownership rates between New York and North Dakota.
+
+9)Return to the IPUMS-USA web page and find the codes for the variable METAREA.
+Find the codes for New York, Minneapolis-St. Paul and Yuma.
+What are the differences in rates of ownership among these three metropolitan areas?
+
+10) Compare the confidence intervals for each metro area. How and why are they
+different?
+
+Recoding Variables
+11) How do rates of homeownership compare across occupation in 2010?
+There are far too many rows in this table to be useful. In order to make the table more
+manageable, we are going to recode all of the occupation codes into just a few categories.
+Return to the IPUMS-USA website and find the codes for occ1950. Notice the headings
+in all caps on the codes page. These headings are going to be our new occupation
+categories. This recode/collapse is done in the "Row" field on the SDA page.
+In the "Row" field, enter occ1950(r: 0000-200 "Managerial and professional Specialty
+occupations"; 203-389 "Technical, Sales, and Administrative Support"; 405-469 "Service
+Occupations"; 473-498 "Farming, forestry, fishing"; 503-699"Production, Craft, Repair"; 703889"Operators, Fabricators, Laborers"; 905 "Military"; 991-999 "Unemployed, NA")
+12) What relationships between occupation and homeownership in 2010 can you observe from the new
+table?
+
+13) Follow the same procedure to make a table using OWNERSHP and AGE variables.
+What relationship do you observe between age and homeownership in 2010?
+
+Making a Table
+14) Transfer the table from the SDA query interface in your web browser to an Excel
+worksheet using the Firefox with Table2Clipboard installed.
+a) Right click on the table entitled "Frequency Distribution" and choose Table2Clipboard
+-> Copy whole table
+b) Open a blank Excel worksheet, and select the first cell. Use the "Match destination
+formatting" option under Paste
+c) If the numbers show up as a string of pound signs in the spreadsheet,
+select the columns in question, right click and select "Column width…"
+Change the column width to 15
+d) Format the table for readability.
+1. Include a proper title
+2. Make sure labels are properly aligned with the rows and columns.
+3. Make sure all percentages are displaying the same number of
+decimal places
+
+4. Include the source
+5. Remove Ns from the table
+6. Include unweighted Ns at the bottom of the table
+(this will require running another table in the SDA window with the
+weights off)
+
+7. In the View menu, uncheck the box next to "Gridlines." The table
+can now be easily copied and pasted into a Word document
+
+ANSWER KEY
+1) Go back and look at the Universe tab for OWNERSHP on the IPUMS website. What
+does the universe suggest about what filter(s) should be used for making tables using
+OWNERSHP?
+Those living in group quarters are not asked about homeownership. We want to filter
+out all vacant units and group quarters. The values 1-2 for the variable GQ identify
+non-vacant, non-group quarters housing units. Our filter should be gq(1-2).
+
+2) In what percentage of households in the IPUMS 2012 ACS sample was the housing
+unit owned by a member of that household?
+70.1%
+3) What percentage of households in the U.S. owned their housing unit (i.e. did not rent)
+in 2012?
+64%
+4) How does this percentage differ from the un-weighted percentage? Does the sample
+over- or under-represent American home-owning households in 2012?
+The percentage of households in which the housing unit was owned by an
+occupying member in 2012 was higher in the ACS sample than it was for the entire
+U.S. Home-owning households are over represented in the 2012 ACS sample.
+5) What percentage of people in the U.S. lived in a household that was owned by a
+resident of that housing unit in 2012?
+65.5%
+
+6) How do rates of U.S. homeownership (that is, households in the U.S. that owned their
+housing unit) in 2012 compare to homeownership rates in 2010?
+There is a slight decrease in the percentage of home-owning households between
+2010 and 2012.
+7) What relationship do you see between homeownership rates (that is, percentage of
+households in the U.S. that owned their housing unit) and education level of the
+household head in 2010?
+Households where the head had 2 or more years of college education owned their
+housing unit at higher rates than those with less than 2 years of college education.
+8) How do rates of homeownership (that is, percentage of households in the U.S. that
+owned their housing unit) vary among states in 2010? Look specifically at the difference
+in ownership rates between New York and North Dakota.
+The percentage of homes owned in North Dakota is higher than the percentage of
+homes owned in New York.
+9) What are the differences in rates of ownership among these three metropolitan areas?
+Again, New York metro area rates of home ownership are much lower than in
+Minneapolis/St Paul and Yuma.
+10) Compare the confidence intervals for each metro area. How and why are they
+different?
+The confidence intervals around the Yuma estimates are much larger than those
+around the New York and Minneapolis estimates. This is because of the small
+sample size in the Yuma metro area. If you run the table without the weight, you
+will see that there are 661 households total in Yuma in the 2010 ACS sample.
+11) How do rates of homeownership compare across occupation in 2010?
+This table is far too large to be useable.
+12) What relationships between occupation and homeownership in 2010 can you observe from the new
+table?
+
+Rates of homeownership the highest for people in managerial occupations.
+13) Follow the same procedure to make a table using OWNERSHP and AGE variables.
+What relationship do you observe between age and homeownership in 2010?
+Possible recode: age(r: 15-25 "15-25"; 26-35 " 26-35"; 36-45 "36-45"; 46-55 "4655"; 56-65 "56-65"; 66-75 "66-75"; 76-* "76+")
+Rates of homeownership are lower for younger people, especially in their 20s than
+older adults.
+
+

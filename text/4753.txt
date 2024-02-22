@@ -1,0 +1,852 @@
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Command Line Graphics
+@jonkeegan
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Graphical user interface
+PROS
+-
+
+Easy to learn
+All possible functions visible
+Familiar metaphors reinforce purpose
+
+CONS
+-
+
+Slow
+Requires pointing device
+Computationally demanding
+Easy to lose focus
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command line interface
+PROS
+-
+
+Powerful
+Elegant
+Fast
+Light
+Looks very technical, easily impresses people
+
+CONS
+-
+
+Dark, scary void
+All commands hidden
+Requires a lot of memorization
+Feedback can be limited or nonexistent
+Pretty abstract
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+rm -rf
+:(){ :|: & };:
+mv ~ /dev/null
+The command line CAN be very dangerous.
+Take time to learn the basics. And don’t use these.
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Do you use the command line
+regularly in your job?
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Here’s how I have used these tools
+
+@jonkeegan
+
+Command Line Graphics
+http://graphics.wsj.com/avengers/
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+http://graphics.wsj.com/avengers/
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+http://graphics.wsj.com/saturn/
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+http://graphics.wsj.com/saturn/
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+http://graphics.wsj.com/saturn/
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+How is the command line is elegant?
+-
+
+It’s all about chaining commands together
+Pipes ( | ) and standard in & out (STDIN / STDOUT) allow for the results of one
+command flow into the next.
+Example:
+ls -d pill_images/* | gshuf -n 40 > random.txt; convert -delay 10 @random.txt -resize
+
+300x -loop 0 animation.gif
+
+This command lists all of the files in ‘pill_images’, picks 40 random files from that list, saves
+them to a text file. The next command then reads that list of files, resizes the images and
+makes a GIF of those 40 random pill images.
+
+Command Line Graphics
+
+The result
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Tools that I use
+Node.js / npm
+-
+
+Can’t say enough about how helpful node is.
+I only use it for development, not production
+(just what I do– it’s fine for production)
+I use this for so much of my workflow
+Great for looping, reading, writing files
+Cleaning, organizing data
+HUGE ecosystem of add-on libraries (npm)
+
+PHP
+-
+
+Ididorm (https://github.com/j4mie/idiorm)
+-
+
+MySQL
+-
+
+Essential for working with very large datasets
+You need to be able to load, and do basic
+queries with large datasets
+
+Also fine for looping through directories,
+connecting to databases, etc.
+Can execute system commands directly
+I find node has replaced much of this for me
+
+We always use this for interfacing with the
+database.
+Simple, safer than raw mySQL
+
+MAMP
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+ImageMagick
+-
+
+-
+
+Command line photoshop
+Collection of tools: animate, compare, composite, conjure,
+convert, display, identify, import, mogrify, montage,
+stream
+Reads / writes over 200 file formats
+Runs on every platform, every interface (Python, PHP, Java, C, Ruby, etc.)
+It’s been around forever, so huge community supporting it
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+ImageMagick
+Some cool things you can do with it:
+-
+
+Convert between formats
+Resize, crop, rotate
+Append images together to make quilts
+Text annotation
+Read metadata
+Make animated GIFs
+Steganography (encode data in the image itself)
+Compose images in layers (with transfer effects
+like multiply, screen etc).
+Distort and warp images
+
+-
+
+Correct lens distortion
+Compare images to identify differences
+Merge color channels
+Simple computer vision techniques like edge
+detection
+Clipping and masking
+Drawing
+
+And so much more...
+http://www.imagemagick.org/
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+ImageMagick
+Here’s what a simple command looks like:
+convert my_image.png -resize 400x400 my_smaller_image.jpg
+
+@jonkeegan
+
+Command Line Graphics
+
+ImageMagick
+Here’s what a more complex one looks like:
+convert -background '#0008' -fill
+white -gravity center -size 512x90
+caption:' February 6, 2004 '
+all_img/002/N1465009355_1.jpeg
++swap -gravity NorthEast -composite
+new_annotated_images/N1465009355_1.
+jpeg
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+Visual dataset: NIH Pillbox
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+http://pillbox.nlm.nih.gov/developer.html
+-
+
+-
+
+~ 31,000 pills in the database
+Size, shape, color, inscription, active / inactive
+ingredients, RX name, brand name,
+manufacturer
+Around 5,500 of these have photos
+They are beautiful!
+But there’s also a lot of errors, so proceed with
+caution
+
+Possible uses in news:
+-
+
+Talk to drug companies and find out how they
+decide the colors, shapes and inscriptions.
+Analysis: most popular shapes, colors, sizes
+Any doppelgangers that could be dangerous if
+mistaken?
+Could be used to enhance a story about
+Medicare prescription costs
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Visual dataset: NIH Pillbox
+What are we going to do with these images?
+-
+
+Load the data into a database (skip the API)
+Build simple gallery of the images that we can filter. See what’s there!
+Extract histogram of the colors of each pill photo
+Use this histogram data to sort pills by hue, saturation and value
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+Let's start simple, and make smaller thumbnail sized versions of these pills. The original
+images are around 1000 pixels wide.
+This would do the trick (this assumes we are in the directory with the images):
+convert -resize 200x *.jpg
+
+Let's make another directory called `pill_thumbs` of thumbs to keep things simple. And we'll
+append a suffix to the name:
+mogrify -path ../pill_thumbs/ -format "thumb.jpg" -resize 200x *.jpg
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+And as a bonus, let’s just turn that background grey color into an alpha channel in case we
+want these clipped out:
+mogrify -path ../pills_clipped/ -format png -fill pink -fuzz 10% -floodfill
++0+0 '#767676' -shave 1x1 -resize 200x *.jpg
+
+Command Line Graphics
+
+Visual dataset: NIH Pillbox
+So here's a simple
+page to filter the pills,
+and display the
+thumbs.
+Pretty cool, but we
+can do more.
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+The colors in the database are very limited. Let’s extract histogram data of the most
+frequent colors in each image. This will work for one image:
+convert blue_pill.jpg -dither Riemersma -colors 16 -format %c histogram:info:-
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+Here’s what we get:
+This is pretty noisy, and we need to
+sort this. We really just want the
+count, and the hex value of the
+color.
+
+2149: ( 28, 85,111) #1C556F srgb(28,85,111)
+2688: ( 48,115,143) #30738F srgb(48,115,143)
+10595: ( 58,136,163) #3A88A3 srgb(58,136,163)
+24305: ( 81,159,192) #519FC0 srgb(81,159,192)
+60349: ( 81,155,181) #519BB5 srgb(81,155,181)
+99507: ( 86,163,188) #56A3BC srgb(86,163,188)
+38132: ( 90,168,194) #5AA8C2 srgb(90,168,194)
+32832: ( 99,165,188) #63A5BC srgb(99,165,188)
+33876: (104,175,199) #68AFC7 srgb(104,175,199)
+5522: (106,140,154) #6A8C9A srgb(106,140,154)
+1071: (109,125,134) #6D7D86 srgb(109,125,134)
+457662: (118,118,118) #767676 srgb(118,118,118)
+3968: (120,126,126) #787E7E srgb(120,126,126)
+7653: (123,193,214) #7BC1D6 srgb(123,193,214)
+2309: (146,175,185) #92AFB9 srgb(146,175,185)
+3814: (203,203,203) #CBCBCB srgb(203,203,203)
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+Next, let's pipe this into csvkit's
+"in2csv"...First we need a schema
+for our data, so it knows what to
+grab:
+
+convert blue_pill.jpg -dither
+Riemersma -colors 16 -format %c
+histogram:info:- | in2csv -f fixed
+-s histogram_schema.csv
+
+and now we'll pipe the histogram
+data into `in2csv`
+The schema file looks like this:
+column,start,length
+count,0,10
+color,26,7
+
+Command Line Graphics
+
+Visual dataset: NIH Pillbox
+Better! Now, but we still need to sort
+this list…
+Perfect opportunity to use another
+pipe...
+
+count,color
+2149,#1C556F
+2688,#30738F
+10595,#3A88A3
+24305,#519FC0
+60349,#519BB5
+99507,#56A3BC
+38132,#5AA8C2
+32832,#63A5BC
+33876,#68AFC7
+5522,#6A8C9A
+1071,#6D7D86
+457662,#767676
+3968,#787E7E
+7653,#7BC1D6
+2309,#92AFB9
+3814,#CBCBCB
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Visual dataset: NIH Pillbox
+This…
+
+Gives us this…
+
+convert blue_pill.jpg -dither Riemersma -colors
+16 -format %c histogram:info:- | in2csv -f fixed
+-s histogram_schema.csv | csvsort -r -c 1
+
+count,color
+457662,#767676
+99507,#56A3BC
+60349,#519BB5
+38132,#5AA8C2
+33876,#68AFC7
+32832,#63A5BC
+24305,#519FC0
+10595,#3A88A3
+7653,#7BC1D6
+5522,#6A8C9A
+3968,#787E7E
+3814,#CBCBCB
+2688,#30738F
+2309,#92AFB9
+2149,#1C556F
+1071,#6D7D86
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Visual dataset: NIH Pillbox
+This…
+
+Gives us this…
+
+convert blue_pill.jpg -dither Riemersma -colors
+16 -format %c histogram:info:- | in2csv -f fixed
+-s histogram_schema.csv | csvsort -r -c 1
+
+count,color
+457662,#767676
+99507,#56A3BC
+60349,#519BB5
+38132,#5AA8C2
+33876,#68AFC7
+32832,#63A5BC
+24305,#519FC0
+10595,#3A88A3
+7653,#7BC1D6
+5522,#6A8C9A
+3968,#787E7E
+3814,#CBCBCB
+2688,#30738F
+2309,#92AFB9
+2149,#1C556F
+1071,#6D7D86
+
+This is pretty good, but remember the grey / black
+backgrounds on the photos. We need to exclude
+those from our color list.
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Visual dataset: NIH Pillbox
+This…
+
+Gives us this…
+
+convert blue_pill.jpg -dither Riemersma -colors
+16 -format %c histogram:info:- | in2csv -f fixed
+-s histogram_schema.csv | csvsort -r -c 1
+
+count,color
+457662,#767676
+99507,#56A3BC
+60349,#519BB5
+38132,#5AA8C2
+33876,#68AFC7
+32832,#63A5BC
+24305,#519FC0
+10595,#3A88A3
+7653,#7BC1D6
+5522,#6A8C9A
+3968,#787E7E
+3814,#CBCBCB
+2688,#30738F
+2309,#92AFB9
+2149,#1C556F
+1071,#6D7D86
+
+This is pretty good, but remember the grey / black
+backgrounds on the photos. We need to exclude
+those from our color list.
+Adding this will return lines that don’t contain our
+grey and black:
+grep -v -E "#000000|#767676"
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+So let’s look at the final command:
+convert blue_pill.jpg -dither Riemersma -colors 16 -format %c histogram:info:- | grep -v -E
+"#000000|#767676" | in2csv -f fixed -s histogram_schema.csv | csvsort -r -c 1 | csvjson >
+blue_pill.json
+
+-
+
+first, we reduce the number of colors in the image to 16
+then we spit out a histogram: a list of the colors, and their counts
+then we filter that list to exclude any lines with black or grey
+then we turn that into a simplified CSV list of just the 2 columns we need (count and
+color)
+then we sort that data descending on the count
+then we save a JSON file with the quantified colors for each image
+ALL IN ONE LINE!
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+Ok so now what? Let's batch process ALL of the 5,500 images using this one-liner, and save
+all of these top colors to a JSON file, with a unique lookup.
+Our plan:
+-
+
+Use node.js to loop through our directory of pill photos
+grab each filename as a unique ID
+generate the imagemagick command to get the array of colors
+save that color file keyed to the filename
+Sort, then export this list as JSON so our web app can display them sorted by h,s,v
+
+Command Line Graphics
+
+Visual dataset: NIH Pillbox
+node analyze_pills.js > im_commands.sh
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Visual dataset: NIH Pillbox
+Then we need to execute this shell script full of imagemagick commands to generate all that
+JSON…
+sh im_commands.sh
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+node build_sorted_list.js > jumbo_with_dom_sat.json
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+node build_sorted_list.js > jumbo_with_dom_sat.json
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+Saturation
+Value
+Hue
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Image quilts
+This can make your computer run very hot, fans full tilt.
+montage null: *.jpg null: -geometry +0+0 -tile 40x -gravity
+center ~/Desktop/pill_quilt.png
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+ffmpeg
+Command line movie maker
+-
+
+Converts and compresses video
+Splits / analyzes streams
+Works on every platform
+Lets you generate movies from large sequential image sets
+Lets you spit out still frames from videos
+Very, very handy
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Let’s make a movie of all the pills using ffmpeg
+First we need a text file of all of the images and their paths:
+ls -d pill_images/* > all_pills.txt;
+
+ffmpeg needs each line to start with “file “...
+sed -e 's/^/file /' all_pills.txt > video_pills.txt
+
+Here’s the final command
+ffmpeg -f concat -i video_pills.txt -r 30000/1001 -b:v 4000k -minrate 4000k maxrate 4000k -vcodec mpeg4 -pass 1 -preset slow -an pill_movie.mp4
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+5,592 pills in 3 minutes and 44 seconds
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Use ffmpeg to make timelapse movies from sequences
+Here’s our House district
+map on 2014 midterm
+election night as the
+returns came in.
+Screenshots of one part
+of our site, every minute.
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+11 Years of Cassini Saturn Photos in 3 hrs 48 min
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Extracting metadata from images via node
+https://www.npmjs.com/package/exif
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Extracting metadata from images via node
+node parse_exif.js > all_json.json
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+Links to tools and resources
+Command line tools
+-
+
+http://imagemagick.org
+https://www.ffmpeg.org/
+https://www.lcdf.org/gifsicle/
+
+Color tools
+-
+
+http://gka.github.io/chroma.js/
+https://github.com/One-com/one-color
+http://lokeshdhakar.com/projects/color-thief/
+
+Javascript
+-
+
+https://nodejs.org/en/
+http://underscorejs.org/
+http://csvkit.readthedocs.org/
+
+Database tools
+-
+
+http://www.sequelpro.com/
+https://www.phpmyadmin.net/
+
+Other essentials
+-
+
+Homebrew http://brew.sh/
+
+@jonkeegan
+
+Command Line Graphics
+
+http://bit.ly/clgfx-nicar16
+
+@jonkeegan
+
+Thank you!
+Slides: http://bit.ly/clgfx-nicar16
+Code: https://github.com/jonkeegan/command-line-graphics
+More of my work: http://wsj.com/signals
+https://source.opennews.org/en-US/articles/cassini/
+@jonkeegan
+
+

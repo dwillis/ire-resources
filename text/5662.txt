@@ -1,0 +1,342 @@
+W H AT ’ S I N A 9 9 0 ? :
+
+INVESTIGATING
+NONPROFITS
+ANDREA FULLER
+ANDREA.FULLER@WSJ.COM
+@ANFULLER
+
+WHAT ARE NONPROFITS?
+
+501(C)(WHAT?)
+
+990 TYPES
+
+Filing Requirements
+
+990-N – Post Card – over ½ of the 1.7M!
+• Less than $50,000 in Gross Receipts
+• 8 fields….
+990-EZ
+– Short form
+• 990
+• Between– $50,000
+Hospitals and $200,000
+• 4 pages –plus
+Schedules
+Colleges
+990 – Long
+form
+– Traditional
+charities
+• Greater
+than 200,000 in Gross Receipts
+• 990-EZ
+• 12 pages– plus
+SmallSchedules
+charities
+990 PF
+• 990-PF
+• All Private
+Foundations
+regardless of size
+– Private
+foundations
+
+candid.org
+
+SOME INTEL
+• No, you cannot FOIA a non-profit.
+
+• Nonprofits are required to give you their latest 990 …
+which still may be very out of date.
+• There’s no official “shady stuff we do” box. 990s are
+imperfect.
+
+FINDING YOUR 990: GUIDESTAR
+
+FINDING YOUR 990: CITIZEN AUDIT
+
+FINDING YOUR 990: PROPUBLICA
+
+990 BREAKDOWN
+Main Form
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+
+Summary
+Signature block
+Program Services
+Required Schedules
+Other IRS filings
+Governance
+Compensation & Contractors
+Revenue
+Functional Expense
+Balance Sheet
+Reconciliation of Net Assets
+Financial Statements/Reporting
+
+Attached Data Tables
+
+SCHEDULES
+A.
+B.
+C.
+D.
+E.
+F.
+G.
+H.
+I.
+J.
+K.
+L.
+M.
+N.
+O.
+R.
+
+Public Support Test
+Contributors (only released for PFs)
+Political/Lobbying
+Supplemental Financials
+Schools
+Activities outside of US
+Fundraising/Gaming
+Hospitals
+Grants – org/individual
+Compensation
+Tax-exempt Bonds
+Transactions with interesting parties
+Non-cash contributions
+Liquidation/termination
+Catch all
+Related organizations
+
+OV E RV I E W : T H E
+HEADER
+-
+
+Why 2016? That was three
+years ago!
+
+-
+
+Basic information on the 990
+header
+
+PA RT I : W H O A N D
+H OW M U C H
+
+•
+
+Who works there?
+
+•
+
+How much money did it receive in grants? Though other types of programs?
+
+•
+
+How much money did it give out? What did it spend on salaries and staff?
+
+•
+
+What does it have in the bank?
+
+PART III: ACCOMPLISHMENTS
+
+… I mean … technically true
+
+PART IV: CHECKLIST -- YES OR NO?
+
+PART IV: YES OR NO? (CONT.)
+
+PART VI: MOOOOREEE YES/NO
+
+PART VII SEC. A.: OFFICERS
+
+PART VII SEC B.: INDEPENDENT
+CONTRACTORS
+
+MEANWHILE …
+
+PART VIII: REVENUE
+
+PART IX: EXPENSES
+
+SCHEDULE A: WHY IS THIS A
+CHARITY?
+
+SCHEDULE I: GRANTS
+
+GRANTS CONT.
+
+SCHEDULE MANIA!
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+A – Public charity status
+B – Contributors
+C – Politics and Lobbying
+D – Special financial info (for nonprofits with donor advised funds, conservation easements, art)
+E – Schools
+F – Activities outside the U.S.
+G – Fundraising and Gaming
+H – Hospitals
+I – Grants to other organizations
+J – Salaries!
+K – Bonds
+L – Transactions with “interested persons”
+M – Noncash contributions
+N – Dissolving organizations
+O – Other
+R – Related organizations
+
+SCHEDULE J: PERKS
+
+SCHEDULE J: PAY
+
+SCHEDULE L
+
+• Excess benefit transactions
+
+• Loans
+• Grants
+• Business transactions involving interested persons
+
+WSJ GOLD!
+
+THE GREATEST THING I’VE EVER
+FOUND ON A 990: SCHEDULE 0
+
+AND THEN …
+
+NOW ABOUT SCHEDULE B …
+• Not available for Form 990
+• Only available for form 990-PF
+
+• Private foundations:
+– Get most of their revenue from a single source/family
+– Example: the Gates Foundation
+– Have to disclose more
+
+– Are subject to stricter rules
+
+EXAMPLE: SCHEDULE B
+
+REVERSE ENGINEERING MAGIC
+
+990 DATA: A
+STORY
+
+NEW DATA
+
+ALWAYS ASK: WHAT’S MISSING
+• Organizations that file by paper
+• Tiny groups that file a 990-N
+
+• Nonprofits that don’t file at all
+• Forms that haven’t been processed yet
+• Forms processed before 2011
+
+FORMAT: XML
+
+KEY DATA IN TAGS
+
+SCHEDULE B: NONCASH
+
+HOW I DID IT:
+• Use the XML files to find all large non-cash gifts
+• Manually write down the ticker symbols
+
+• Use a database of stock prices to get the prices of the stock on the day of the gift, and the days
+after
+• Use R to join
+• For each gift, calculate the price 20 or 30 days after
+• Look for outliers
+• Monte Carlo?! Cumulative abnormal returns?!
+
+A REALLY, REALLY GOOD TIME TO
+DONATE STOCK
+
+DATA LITE
+
+990 DATA: MASTER FILE
+• Can open in Excel
+• Download by state or by region
+
+• https://www.irs.gov/charities-nonprofits/exempt-organizations-businessmaster-file-extract-eo-bmf
+
+WHAT THE DATA LOOKS LIKE
+
+KEY FIELDS
+• EIN
+• Organization name
+
+• What type of non-profit it is (c3,4,6,etc.)
+• Year it was created
+• Location info
+• Subsection, foundation, other codes
+• Latest assets and income
+
+ANNUAL EXTRACTS
+• https://www.irs.gov/statistics/soi-tax-stats-annual-extract-of-tax-exempt-organization-financialdata
+
+• More data than the business master file
+• Most numerical or binary fields on the Form 990 (no free text data, no schedules)
+
+FORMAT
+• .dat files? What?
+• These can open in a text editor like sublime
+
+• Space delimited
+• A little big for excel. By which we mean a lot big for excel.
+• Space delimited (yeah really)
+
+GROSS, RAW DATA!
+
+KEY FIELDS
+• Donor advised funds?
+• Political activities?
+
+• Fundraising activities?
+• Excess benefit transaction?
+• Loans to officers?
+• Business relationship with officers?
+
+• Revenue broken down by type (contributions vs. programs)
+• Expenses broken down by type (salaries, benefits, legal fees)
+• Detailed assets
+
+OVERWHELMED?
+
+Tipsheet: https://bit.ly/2Y2Djh4
+Hit me up with questions!
+
+

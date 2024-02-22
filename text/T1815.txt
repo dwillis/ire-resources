@@ -1,0 +1,108 @@
+Stored Procedures and Cursors with SQL Server
+Matthew Ericson | matte@nytimes.com
+These are examples from the stored procedures and cursors hands-on session I did
+at the NICAR conference. They should you how you can calculate medians, ranks,
+percentiles, quintiles and crosstabs in Microsoft SQL Server.
+Two data files are used in these samples. Download the Excel spreadsheets here
+and import them into SQL Server.
+sat.xls
+murders.xls
+Calculating Medians
+CREATE PROCEDURE CALC_MEDIAN AS
+declare
+@num_obs int, @value1 real, @value2 real, @middle int
+DECLARE median_cursor SCROLL CURSOR
+FOR select verbal from sat order by verbal
+OPEN median_cursor
+SELECT @num_obs=@@cursor_rows
+SELECT @middle=@num_obs /2
+IF (@num_obs % 2)=0
+BEGIN
+FETCH ABSOLUTE @middle FROM median_cursor INTO @value1
+FETCH NEXT FROM median_cursor INTO @value2
+PRINT 'The median is ' + cast((@value1 + @value2)/2 as varchar)
+END
+ELSE
+BEGIN
+SELECT @middle = @middle + 1
+FETCH ABSOLUTE @middle FROM median_cursor INTO @value1
+PRINT 'The median is ' + cast(@value1 as varchar)
+END
+CLOSE median_cursor
+DEALLOCATE median_cursor
+GO
+Calculating Ranks, Percentiles and Quintiles
+CREATE PROCEDURE CALC_RANK AS
+DECLARE @verbal float, @theCount int, @school varchar(255)
+SELECT @theCount = COUNT(verbal) FROM SAT
+DECLARE SchoolsCursor CURSOR
+FOR
+SELECT school, verbal
+FROM SAT
+FOR UPDATE
+OPEN SchoolsCursor
+FETCH NEXT FROM SchoolsCursor INTO @school, @verbal
+
+SET NOCOUNT ON
+WHILE @@FETCH_STATUS=0
+BEGIN
+
+varchar)
+
+DECLARE @rank int, @pct float, @quintile int
+SELECT @rank = COUNT(VERBAL) + 1 FROM SAT WHERE Verbal > @Verbal
+SELECT @pct = 1 - cast(@rank as float) / cast( @theCount as float)
+SELECT @quintile = @pct * 4 + 1
+PRINT @school + ' ' + cast( @rank as varchar) + ' ' + cast( @pct as
++ ' ' + cast( @quintile as varchar )
+
+UPDATE SAT SET verbal_rank = @rank, verbal_pct = @pct,
+verbal_quintile = @quintile WHERE CURRENT OF SchoolsCursor
+FETCH NEXT FROM SchoolsCursor INTO @school, @verbal
+END
+DEALLOCATE SchoolsCursor
+GO
+Crosstabs
+To use this crosstab stored procedure, you need to provide a query for the data
+to be crosstabbed, the column heading, the row heading, the value for each item
+(usually 1) and the type of function (usually sum). So, for the murders table,
+you'll want to run:
+EXEC XTAB_QUERY 'SELECT * FROM MURDERS', 'RACE', 'SEX', '1', 'SUM'
+CREATE procedure XTAB_QUERY
+@strSQL varchar(8000),
+@ColumnHeading varchar(1000),
+@RowHeading varchar(1000),
+@Value varchar(1000),
+@ValueOperator varchar(1000)
+as
+declare @FieldName varchar(1000), @FieldValue varchar(8000),@RowHeadingValue
+varchar(1000),@OrderByValue varchar(1000), @XTSQL varchar(8000)
+set @XTSQL = 'select ' + @RowHeading + ', '
+exec('declare mycursor cursor for select distinct isnull( ' + @ColumnHeading + '
+, ''NULL'') from (' + @strSQL + ') x order by 1' )
+open mycursor
+fetch next from mycursor into @FieldName
+While @@fetch_status = 0
+begin
+if @XTSQL <> 'select ' + @RowHeading + ', '
+set @XTSQL = @XTSQL + ','
+if @FieldName = 'NULL'
+set @XTSQL = @XTSQL + '[' + @FieldName + '] = ' +
+@ValueOperator + '(case when ' + @ColumnHeading + ' is null then ' + @Value + '
+else '''' end) '
+else
+set @XTSQL = @XTSQL + '[' + @FieldName + '] = ' +
+@ValueOperator + '(case when ' + @ColumnHeading + ' = ''' + @FieldName + '''
+then ' + @Value + ' else '''' end) '
+fetch next from mycursor into @FieldName
+
+end
+set @XTSQL = @XTSQL + ' from (' + @strSQL + ') a' set @XTSQL = @XTSQL + '
+group by ' + @RowHeading
+print @XTSQL
+exec(@XTSQL)
+close mycursor
+deallocate mycursor
+GO
+
+

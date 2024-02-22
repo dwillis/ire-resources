@@ -1,0 +1,370 @@
+Lightening Fast Data Analysis With Tableau Part 1
+Sarah Ryley,
+Data projects editor
+New York Daily News
+sarahryley@gmail.com
+@MissRyley
+Reshaping data in Excel (PC Only):
+• 
+Download Excel data reshaper:
+http://kb.tableau.com/articles/knowledgebase/addin-reshaping-data-excel
+• 
+Open your spreadsheet in Excel (Dispositions)
+• 
+Remove all excess columns and rows
+• 
+Change duplicate categories ("Other")
+• 
+Go to the Tableau tab on the menu bar
+• 
+Select the cell on the axis of the data where you want to reshape
+• 
+Click "Reshape data"
+• 
+Name your columns
+• 
+Name your tab
+• 
+Save
+• 
+Keep open — it will help you for reference
+Parsing out reshaped data in Tableau:
+• 
+Click “Connect to data” in top right panel
+• 
+Select data type (Excel)
+• 
+Select “Dispositions reshaped”
+• 
+Drag the sheet (“Dispositions reshaped” into the data window.
+• 
+Select “extract”
+• 
+Check your column headers to make sure you have the correct data type
+• 
+Change “Year” to string
+• 
+Click “Go to Worksheet”
+• 
+It’s going to ask you where you want to save your extracts. For sanity’s
+sake, make a new folder for these to reduce clutter.
+Dimensions vs. Measures
+• 
+A simple way to think about this is — dimensions are strings or dates
+(including numbers that act as strings, such as unique identifiers, or attributes
+like zip codes). Measures are numbers.
+• 
+Dimensions are independent variables, like the precinct, measures are
+dependent variables or attributes, like the number of crimes in that precinct.
+Another important thing:
+• 
+Backward and forward button — you can undo and redo as much as you
+
+want.
+We’re going to look at the felony conviction rate by precinct to see which ones have
+the highest and lowest conviction rates
+•
+•
+•
+•
+
+
+In the panel on the left hand side, drag “Number” from Dimensions to
+Measures
+
+Drag reporting agency into “Rows”
+
+Drag “Year” into “Columns”
+
+Drag “Number” into the area of the table that you want to populate with
+a number
+
+Now you need to start filtering:
+• 
+First, you know that there is both a whole number and a percentage for
+each year.
+• 
+Drag “N or %” into filters and choose “%”
+• 
+Format this in order to make it easier to read: Right-click “(SUM)Number”
+in the “Marks” panel, select “Numbers” under default, “Percentage”
+• 
+Now drag “Category 1” into filters.
+• 
+Choose only the two convicted categories
+• 
+Now drag “Type” into filters and choose only “Felony”
+• 
+Check against your original spreadsheet to make sure you did the filter
+correctly.
+• 
+If you want to see both the number and percentage, drag “N or %” out of
+filters, then drag it either above or below your “Year” column depending on how
+you want the table structured.
+• 
+Now you can sort the table to identify the highest and the lowest
+conviction rates for felonies.
+• 
+To export the table into an Excel spreadsheet, go to Worksheet in the
+menu bar, click “Export,” “Crosstab to Excel”
+SUBWAY DATA
+• 
+Familiarize yourself with the data. First, note the number of records in
+your data set — 47,943 — this is how you check your work.
+• 
+One very important note is that these crimes are marked by “post,”
+which is roughly equivalent to a platform, not by station. Stations with more
+than one line will have multiple posts. More on this later.
+• 
+Connect to data: MTA Crime
+• 
+Check your data types
+• 
+Choose “extract” and “Go to Worksheet”
+•
+
+
+If you drag “Post” into “Rows,” you will see that there are 479 posts in
+the NYC subway system. There are 421 stations, which means you need to group
+
+•
+•
+•
+
+•
+
+posts into stations.
+
+Drag “Station/ Line” next to “Post” in the “Rows” shelf.
+
+You’ll see that Times Square has multiple posts. We want to look at crime
+by both post and station, so we’re going to group some of them.
+
+You’ll also note (if you know the subway system) that the NYPD’s name
+for these posts are incorrect — for example, there is no longer a 9 train and the
+Q doesn’t stop at West 4th Street. I had to actually find the old map the NYPD
+based its names on (it was from 1998) and manually fix all of these since there
+was no way to confidentially automate the process, given that some lines were
+partially as they are today.
+
+To correct the name, right click on one of the stations and select “Edit
+Alias” and correct the station/ line name.
+
+Grouping:
+• 
+Click on one of the 59 St-Columbus Circle posts, hold the shift key, click
+on the other one, and select “group”
+• 
+Now you’ll see that “Station/Line (group)” has appeared in your
+dimensions panel. Right click the “Station/Line (group)” in the dimensions
+panel and select “Edit Group”
+• 
+If you scroll down, you’ll see your 59th Street/ Columbus Circle station.
+• 
+If you double-click, you can change the name.
+• 
+We’ll create a few other groups in here. Go to 42 St-Grand Central and
+create a group for the 4,5,6,7,S lines.
+• 
+District Offices (Off-System — right click and select “Add to”)
+• 
+14 ST-UNION SQ — to group ones that aren’t adjacent in the list, use
+command instead of shift
+Counting number of records:
+• 
+Remove the group and replace it with “Station names (group)” – I added
+this column to the data for us. After I grouped all the stations, I exported a table
+with the post and the station name and then joined that table with the original
+data by post.
+• 
+Drag “Number of Records” into the table where you want to see the
+numbers — this is just counting the number of records for each station.
+Dates and Time:
+• 
+Now lets filter by date, because this data was only from July 2008 - June
+2013.
+• 
+Drag “Date” in your columns shelf and now you have a crime count by
+year.
+• 
+If you right click on date, you can select the format Year/ Quarter
+Line charts and other views:
+
+•
+
+•
+
+•
+
+
+You can select how to view the data by clicking the “Show Me” window.
+We’re going to mainly be looking at tables, but if you select the line chart, you
+can see a line chart for each station. If you drag “station” out of the rows shelf,
+you can see the total for the entire subway system.
+
+If you drag “Station” back into “color” in the “Marks” panel, you will see
+all of the stations in one chart, which could be useful for quickly identifying
+trends and outliers.
+
+Now if you click the table view under “Show Me,” it will take you back to
+your table.
+
+Time:
+• 
+Clear your view. Now drag “Time” into the rows shelf. Right-click the pill
+and format it to “Hour”
+• 
+If you don’t want to look at military time format, right-click the pill, select
+“format,” and then under “Dates,” select “12-hour.”
+• 
+Now drag “Number of Records” into the sheet and you will see the crime
+by hour.
+• 
+If you view this as a line chart, you can clearly see that the after-school
+hour of 3 p.m. has by far the most crime reports.
+• 
+However, not all crimes are most prevalent at the same hours.
+• 
+Drag “classification” into “color” in the marks panel (note that these
+classifications aren’t grouped – I spent a lot of time doing this based on the
+criminal code.)
+• 
+It’s difficult to see the crimes you want when there are so many, so also
+drag “classification” into filters.
+• 
+Select assault, forcible touching, grand larceny and click ok. You can also
+right-click “Classification” in the filters pane and choose to show the quick filter
+so you can quickly change between views.
+• 
+Now you can see that forcible touching (groping) peaks during the
+morning rush hour. Assault peaks during the after-school hours. Grand larceny
+seems to have several peaks throughout the day, both during the rush hours and
+the hours when the fewest people are on the train.
+
+•
+•
+•
+•
+•
+•
+
+
+Select to view this as a table
+
+Remove hour from the columns shelf and replace it with period. I
+grouped the hours into periods.
+
+Remove classification from quick filter.
+
+In the table area, drag “Morning” to the first column so your time periods
+are in chronological order.
+
+Now you can sort each column and see which crimes are most prevalent
+during each time period.
+
+You could replace “classification” with “Station/Line” and see which
+
+•
+•
+•
+
+platforms have the most crimes during the various time periods.
+
+Now drag “classification” into the filters shelf and choose only forcible
+touching.
+
+Under “analysis” in the menu bar, choose “totals” and “show row grand
+totals.”
+
+Sort by grand total — Grand Central has the most forcible touching
+incidents. We also found that roughly half of the forcible touching incidents in
+the entire subway system were reported along a stretch of the 4,5,6 line in
+Manhattan, which is the most crowded train line in the nation.
+
+Joining tables:
+• 
+In the menu bar, select “data” and “connect to data”
+• 
+Select file type - microsoft excel.
+• 
+Choose “Ridership data.”
+• 
+Drag all your Year columns into Measures — they are a measure
+• 
+In the menu bar, click “data” and “edit relationships.”
+• 
+Click “custom” and “add” and join “tableau station name” and “station
+names (group)”
+Calculating a crime rate per 100,000 riders (We’ll use only 2009-2012 since that’s when
+the data overlaps)
+Creating a calculated field:
+•
+•
+•
+•
+•
+•
+
+•
+•
+•
+
+
+In the data section of the panel, choose your ridership data. Right click
+one of the year columns and select “create calculated field.”
+
+Write a calculation that adds 2009-2012:
+[2009Yr]+[2010Yr]+[2011Yr]+[2012Yr]
+
+Name it Ridership 2009-12
+
+Click Ok
+
+In the data section of the panel, chose your MTA crime data. Right click in
+the measures window and create a calculated field.
+
+Write a calculation that will count the number of times each station
+group comes up in the data set:
+COUNT([Station names (group)])
+
+(You can type COUNT and then double-click “Station Names (group) but
+you have to put parenthesis around the brackets.)
+
+Name it COUNT crime by station
+
+Right click in measures and create a calculated field. We are going to
+divide crimes by 1,000 riders:
+
+[COUNT crime by station]/(SUM([Sheet1 (Ridership data)].[Ridership
+2009-12])/1000)
+•
+•
+•
+•
+•
+•
+•
+•
+
+
+Drag Station Names (Group) in your rows.
+
+Drag dates in the filter shelf and select only 2009-2012.
+
+Drag your crime count and crime rate in the sheet, and from the MTA
+data drag ridership into the sheet, just to check your work.
+
+Format crime rate to see three decimals.
+
+If you want to change your calculation to 100,000 riders, just right click
+the calculated field, select edit, and add two zeros.
+
+Under “analysis” in the menu bar, choose totals and show column grand
+totals, so when you scroll to the bottom you’ll see the citywide average.
+
+Now you’ll see that even though Times Square has the most crimes in the
+system, broad channel has the highest crime rate.
+
+You can filter this as well to see rates per crime type, for example.
+
+

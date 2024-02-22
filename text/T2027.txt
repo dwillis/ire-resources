@@ -1,0 +1,57 @@
+Text Editors for Cleaning Data
+Derek Willis, Center for Public Integrity
+NICAR 2004
+(this handout is also available in MS Word format)
+
+Common UltraEdit Commands
+•
+
+•
+
+•
+
+Find (Control-F or Alt-F3): UE’s Find command has several features that most text editors or
+word processors don’t. Perhaps the most important is the first check box, labeled “List Lines
+Containing String”, which will do exactly that – retrieve each full line in which your search
+criteria is found. This may not sound like much on paper, but give it a try and you’ll see how
+powerful this can be. Once you have a list of lines, you can double-click on any line in the
+smaller box and it will take you to that line in the full file. Very useful for spot editing and
+checking. You can also click the “Clipboard” button and it will copy the contents of the smaller
+box – all the lines that contain your search terms – onto the Clipboard, meaning you can paste
+them into another file.
+Replace (Control-R): UE has all the features you’d expect from a search and replace command,
+but it adds a few more, too. Radio buttons allow you to perform the replace within highlighted
+text or across all open files in UltraEdit, in addition to the currently open file. You can also tell it
+to match only whole words or be case-sensitive.
+Regular Expressions (used in Find or Replace): Regular expressions are powerful tools that can
+help you perform only the find or replace commands that you exactly want, thus not ruining your
+file in order to use it. UE supports traditional Unix regular expression syntax, but you may want
+to start out using the regexp syntax that comes with UltraEdit:
+Symbol Function
+% Matches the start of line - Indicates the search string must be at the beginning of a line
+but does not include any line terminator characters in the resulting string selected.
+$ Matches the end of line - Indicates the search string must be at the end of line but does
+not include any line terminator characters in the resulting string selected.
+? Matches any single character except newline
+* Matches any number of occurrences of any character except newline
++ Matches one or more of the preceding character/expression. At least one occurrence of
+the character must be found. Does not match repeated newlines.
+++ Matches the preceding character/expression zero or more times. Does not match repeated
+newlines.
+^b Matches a page break
+^p Matches a newline (CR/LF) (paragraph) (DOS Files)
+^r Matches a newline (CR Only) (paragraph) (MAC Files)
+^n Matches a newline (LF Only) (paragraph) (UNIX Files)
+^t Matches a tab character
+[ ] Matches any single character, or range in the brackets
+^{A^}^{B^}
+Matches expression A OR B
+^ Overrides the following regular expression character
+^(…^)
+Brackets or tags an expression to use in the replace command. A regular
+expression may have up to 9 tagged expressions, numbered according to their order in the
+
+regular expression.The corresponding replacement expression is ^x, for x in the range 1-9.
+Example: If ^(h*o^) ^(f*s^) matches "hello folks", ^2 ^1 would replace it with "folks hello".
+
+

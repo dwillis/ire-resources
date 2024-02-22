@@ -1,0 +1,214 @@
+Kaas & Mulvad | 8.9.088 | Kapow | Make_robot | Basic steps
+MEMO
+
+What
+Get OpenKapow
+
+Install the program
+Choose a website
+for extraction
+(scraping)
+
+Why
+
+How
+
+OpenKapow is a simple program to build robots to scrape data
+from the web. The program is free to download and use. It is
+in a linux- and windows-version.
+If the link at right is not functioning just search after
+Openkapow and click on download.
+From the webpage you’ll also have access to download
+examples of robots and particpate discussions and get tips.
+All necessary help programs is contained in OpenKapow. Just
+follow the guidelines.
+
+http://openkapow.com/blo
+gs/getting_started/archive/
+2007/10/26/downloadRobomaker-6-3.aspx
+
+The first step in building a robot is to examine the website you Look around.
+want to scrape. Choose data to extract, make notes on formats
+(text, number, date). You can always change, but it’s a good
+idea to use five-ten minutes to get an overview over the
+website before making the robot.
+
+Open Robomaker
+Choose type of
+robot
+
+Save robot
+Insert step
+
+Click on the exe-file.
+
+Click on the programmeicon on the menu-line.
+Start with RSS/Atom feed - click through. No to input-values.
+Now you get a robot with first and last step made – load page
+and return item.
+In RSS-robots it’s demanded to extract something in at least
+title and URL. So we need to have something to put in here.
+The window in the software program has six areas. One in the
+top with the step in the robot, one showing the website in a
+normal format, one with tags, one with the source code of the
+website, one with the actions of the step, which is highlighted
+with green color and one input- and output-values.
+Give the robot a proper name and save it. Robomaker normally
+saves robots in …/programs/…openkapow/project/library.
+Important steps are loop, test tag (conditions), click and
+extract. First decission in a step is to choose, which area of the
+website to work with for the robot.
+You can choose an area by clicking. Expand this by holding altkey down and click in the area in the source-code or tags.
+When you’re satisfied, then right-click, and you can now
+choose what should be done in this step.
+
+©2009 - No duplication without permission from Investigative Reporters and Editors, Inc.
+
+Click on the place on the
+website in the window in
+Robomaker, where you
+want the step to work.
+
+Kaas & Mulvad | 8.9.088 | Kapow | Make_robot | Basic steps
+MEMO
+Loop
+
+Often you have to loop through a table to extract from each
+row.
+Then you decide where in the top and end of the table shouil
+begin and stop (how many rows from first and last).
+The choosen row in the table is now in the next step marked
+with a blue rectangle. By clicking inside here, you can insert
+steps in this row, and it will also be used for the next row.It
+can be conditions, click or extract.
+
+Test tag
+
+Define if the robot need for testing the presence of a specific
+text in html-code or text. Set .* before and after test-words.
+And you can define if the robot shall continue or stop, if the
+content is contained in the choosen area.
+
+Click
+
+Rightclick on the link the robot shall use to open a new
+website and choose click. You can configure loading options
+by unclicking ”Use default options” in action and click on
+configure. Now you can set the robot to wait more than the
+default 60.0 sec(Timeout for Each Attempt), try more than one
+time (Max number of Attempts), you can unclick load frames
+(click in Page Loading) and execute javascript (Javascript
+Execution) to make the robot faster.
+If the website is protected by passwords, you can insert
+passwords under Username and Password.
+
+©2009 - No duplication without permission from Investigative Reporters and Editors, Inc.
+
+Find it on the Action-sheet.
+
+Kaas & Mulvad | 8.9.088 | Kapow | Make_robot | Basic steps
+MEMO
+Extract
+
+Rightclick on the content to be extracted. Define if it’s text or
+number. Choose the field to use for saving this. It can look like
+this:
+
+Edit initial values
+
+If an extracted value should be the same for all rows, the
+easiest way is to click on Edit Initial Values, write the value
+and the click on Apply. Remember then to click on Show
+Values at Step.
+
+Save the robot
+The robot can look like this.
+Test robot
+
+Click on debugger. You can run the whole robot or run it from
+the active place in Robomaker. In the last case it’s the ikon
+with arrow.
+The debugger stops at errors, and you can solve them, until it
+runs without errors. Save the robot before every test in the
+debugger.
+
+Copy
+
+You can mark several steps by pressing the control-key down
+and click on each step. You can mark everything by control-A.
+You can then copy and paste the steps into another place or
+another robot (if you have two Robomaker running).
+Insert ekstra step or
+new branch.
+
+You can insert an extra step by clicking on the empty steps
+with an arrow.You can insert an extra branch in the robot by
+clicking on the empty step below another step. In the picture
+it’s for testing and do different things depending of it’s
+positive or negative.
+
+Next page 1:
+Repeat and Next
+
+Often you need to click through many pages to extract the
+results. This is done in different steps.
+First you insert a blank step. Under Action use Click,and then
+under Loops click firs ton repeat, then insert a branch then
+insert Next.
+
+©2009 - No duplication without permission from Investigative Reporters and Editors, Inc.
+
+Kaas & Mulvad | 8.9.088 | Kapow | Make_robot | Basic steps
+MEMO
+Next page 2:
+Do Nothing
+
+Here we use a step called ”Do Nothing”. This is for testing
+that next page is working properly.
+
+Next page 3:
+Click Next
+
+Before Next insert a step with a click-action. Under Tag finders
+work to define it totally right. Here it’s done by writing
+.*Next.* in Tag Pattern:
+
+In the same way you can use Error Handling to make the next
+page iterator to stop, when it makes an error. It means when it
+don’t find alink with the text “Next”, it stops.
+
+Combine extraction
+in one field
+
+Some times you need to extract more than one information in
+a single field. You do that by breaking it down in several steps.
+First time you extract the first information. Next time you
+extract the second information, add a converter (click +),
+choose advanced extraction and write it like this:
+
+Here in the first step the number 154 is extracted. The new
+extraction is 99%.
+In pattern you writes (.*) – it define the whole input. And in
+Output Expression you writes RSSItem.title+";"+$1 – it
+extract the first extraction, a ; and the new input. It means
+154;99%.You can continue this several times.
+
+©2009 - No duplication without permission from Investigative Reporters and Editors, Inc.
+
+Select a converter:
+Extraction:
+Advanced Extract
+
+Kaas & Mulvad | 8.9.088 | Kapow | Make_robot | Basic steps
+MEMO
+
+Here you see an example on a robot, where we after load page has put a next page iterator (repeat, click og next),
+thereafter a loop over the result. Then some extraction for in the end to click on a link for opening a web-site and
+from extract one more information before all the extraction is returned in a row and the next row begins.
+This model of Robomaker is typically useful when there in every single row is a link you have to open to get specific
+information.
+The main principle is to extract things as early as possible in the robot.
+
+©2009 - No duplication without permission from Investigative Reporters and Editors, Inc.
+
+

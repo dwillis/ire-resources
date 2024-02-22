@@ -1,0 +1,194 @@
+Creative uses
+of Webscraping
+NICAR 2012
+February 25
+
+Dataset from Scraperwiki hack night
+
+Internal
+Federal
+bond
+market to
+agencies
+such as
+the Post
+Office
+
+Normalized data table
+
+Timeline graph (more later)
+
+SELECT
+Date,
+sum(Amount_of_Advance)
+FROM borrowings
+WHERE department='U.S. POSTAL SERVICE'
+GROUP BY date
+ORDER BY date
+
+Technology stack
+Python programming language with
+standard libraries
+SQL (sqlite file)
+HTML/Javascript/JQuery
+
+Java applets
+
+FLASH
+
+hipcool-DB
+
+UN peace-keepers
+By country
+By mission
+By month
+
+PDF Annotator technology
+
+UN peacekeepers by country
+
+Actual scraping code
+
+PDF Annotator technology
+
+Scraper-generated email message
+
+Scraper-generated email message
+
+T
+
+CREATE TABLE swdata
+(month text, country text,
+mission text, people integer)
+
+SELECT country,
+max(people) as max_people
+FROM swdata
+GROUP BY country
+ORDER BY max_people desc
+LIMIT 3
+
+SELECT month||'-15',
+sum(people*(country='India')) as people_india,
+sum(people*(country='Bangladesh')) as people_bangladesh,
+sum(people*(country='Pakistan')) as people_pakistan
+FROM swdata
+WHERE mission='MONUC'
+GROUP BY month
+ORDER BY month
+
+https://views.scraperwiki.com/run/
+un_peacekeeping_statistics_view/
+
+blog.scraperwiki.com
+
+blog.scraperwiki.com
+
+Interactive
+API page
+
+Lots of effort to get baseline reference data
+
+JSONP
+technology
+
+CAN WE JOIN THEM?
+un_peacekeeping_statistics.swdata
+
+* Country
+* #Peacekeepers
+
+* Country
+* #Peacekeepers
+
+country_populations.poptable
+
+* Country
+* #Population
+
+#Population
+
+Top peacekeeping
+countries by
+proportion of
+their
+population
+JSONP
+technology
+
+Scraper complexes
+
+WEB
+
+scraper
+
+SQL DATA
+
+Scrape the data,
+then
+View the data
+
+viewer
+Browser
+
+WEB
+
+scraper
+
+PAGE DATA
+
+parser
+
+When accessing the page
+data is difficult you need to
+copy it out to work on it
+
+SQL DATA
+
+viewer
+Browser
+
+WEB
+
+scraper
+
+PAGE DATA
+
+parser
+
+SQL DATA
+
+n
+io
+s
+s
+
+re
+
+pp
+u
+s
+
+CORRECTIONS
+
+corrector
+viewer
+corrector helps you rewrite page
+data where the parser fails
+
+Browser
+
+PDF Annotator corrector
+
+Scraped data should replace
+original data as source
+Make parsers very strict and make them throw
+useful errors.
+Aim for 110% data accuracy.
+Start with at least one good use of the data.
+
+Internal user dashboard. Could be for people to find each other
+
+Ends
+
+

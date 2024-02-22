@@ -1,0 +1,156 @@
+Hands on with health data
+NICAR 2016
+Charles Ornstein & Ryann Grochowski Jones
+(This tipsheet can be found at ​
+http://bit.ly/nicarhealth​
+)
+For our hands on class, we will be working with three different data sets
+released by the ​
+Centers for Medicare and Medicaid Services​
+(CMS). Medicare is
+the federal public health insurance program for the elderly and disabled.
+Medicaid is a state­federal public health insurance program for the poor.
+The data for this session are available in this folder:
+https://drive.google.com/file/d/0B8gwa39SOFLrTlNLSEdaWElPMkE/view?usp=s
+haring​
+or ​
+http://bit.ly/nicarhealthdata​
+.
+Dataset #1: CMS­Nursing­Home­Health­Deficiencies.xlsx
+These are violations cited by nursing home inspectors against homes
+nationwide. They include citations from the past three inspection cycles (a cycle
+is typically one year). It can be found on this page:
+https://data.medicare.gov/data/nursing­home­compare​
+and specifically at this
+link: ​
+https://data.medicare.gov/Nursing­Home­Compare/Deficiencies/r5ix­sfxw​
+.
+For this particular task, we’ve only selected health deficiencies to analyze (we’ve
+removed fire safety deficiencies to make the table size more manageable.)
+For your reference:
+* Cycle 1 includes the last comprehensive inspection and the prior 12 months of
+all complaint inspections.
+* Cycle 2 includes the 2nd most recent comprehensive inspection and all
+complaint inspections 13­24 months ago.
+* Cycle 3 includes the third prior comprehensive inspection and all complaint
+inspections between 25­36 months ago.
+Full data documentation for all nursing home files is here:
+https://data.medicare.gov/views/bg9k­emty/files/01c5b11d­cb62­4b1e­a0a3­30
+
+492ba8a0cf?filename=DataMedicareGov_MetadataAllTabs_v08.xls&content_ty
+pe=application%2Fvnd.ms­excel%3B%20charset%3Dbinary​
+. For this assignment,
+you want the “deficiencies” tab.
+For this assignment​
+, we will be using pivot tables to glean insights into the data,
+and let you customize your search to your local area.
+Dataset #2: CMS­PartB­2013­InternalMed.xlsx
+In 2014, CMS began releasing data on the services provided by (and payments
+given to) doctors and others in the Medicare fee­for­service program. This data
+was released after the ​
+Wall Street Journal successfully sued​
+to lift an injunction
+that had kept it private for decades. The data is available in the aggregate (i.e.
+total services provided by each doctor and total payments received by that
+doctor) and in a granular fashion (which services and treatments did the doctor
+perform).
+For this task, we’ve selected internal medicine doctors and we’re looking at data
+in the aggregate. The data is from the year 2013. It can be found here:
+https://www.cms.gov/research­statistics­data­and­systems/statistics­trends­and
+­reports/medicare­provider­charge­data/physician­and­other­supplier.html​
+and
+specifically here:
+http://download.cms.gov/Research­Statistics­Data­and­Systems/Statistics­Trend
+s­and­Reports/Medicare­Provider­Charge­Data/Downloads/Medicare_Physician
+_and_Other_Supplier_NPI_Aggregate_CY2013.zip​
+.
+You can find the methodology here:
+https://www.cms.gov/Research­Statistics­Data­and­Systems/Statistics­Trends­a
+nd­Reports/Medicare­Provider­Charge­Data/Downloads/Medicare­Physician­an
+d­Other­Supplier­PUF­Methodology.pdf​
+.
+For this assignment, ​
+we will also be using pivot tables.
+Dataset #3: CMS­Geographic­Variation.xlsx
+Geographic variation in the use of Medicare services. This data set explores
+differences by county (and state) in the use of Medicare fee­for­service
+
+treatments. It can be found here:
+https://www.cms.gov/Research­Statistics­Data­and­Systems/Statistics­Trends­a
+nd­Reports/Medicare­Geographic­Variation/GV_PUF.html​
+.
+For this particular task, we will be using this table:
+https://www.cms.gov/Research­Statistics­Data­and­Systems/Statistics­Trends­a
+nd­Reports/Medicare­Geographic­Variation/Downloads/State_County_Table_All
+.zip​
+. And we have truncated the table to include only 2013 and 2014. The actual
+table includes worksheets for years dating back to 2007. (​
+Important note: This
+does not include data from Medicare Advantage, which is quite popular in some
+areas.​
+)
+For this assignment,​
+we will go over sorting, filtering and VLOOKUP. We’ll also
+talk about the importance of comparing measures over time.
+
+Using lookups in Excel
+One of the most powerful tools in a database manager is the ability to join
+tables. Excel has some tools that allow you to join data from multiple sheets.
+In database #3, we’re going to use a tool called VLOOKUP, which will let us pull
+data from 2013 into our chart for 2014.
+First, we have to get our data ready to join. To do that,
+1) Rename the spreadsheets at the bottom of your workbook. Name
+“State_county 2013” as 2013 and “State_county 2014” as 2014. I did this
+because Excel sometimes chokes on tab names that have spaces in them.
+2) Separately, highlight all rows in each sheet, go to the Home tab, click
+“Merge & Center,” then click Unmerge cells. The reason you want to do
+this is because merged cells make it hard, if not impossible, to sort.
+3) Once you’ve done this, you’ll want to delete Row 1 on both sheets. We
+want to do this so that the column headers are in the first row.
+4) Next, you’ll want to create a unique ID field upon which to match the
+sheets. The State and county FIPS code could have been a unique ID field,
+but as you look at it, you’ll see “.” in place of state and national averages.
+Because there’s more than one “.” you’ll need to create a different unique
+ID. So go to Column A, right click and insert a column on both the 2013
+and 2014 worksheets. Call it “New state and county fips.” ​
+NOTE: It is
+necessary to put your unique key in column A for this to work.
+5) You’ll now want to create your unique ID using an IF statement. Use this:
+=IF(D2=".", B2&" "&C2, D2). Let’s parse that. We’re saying if the “State
+and County FIPS” column (D) has a “.” in it, insert cells B2 and “[space]”
+and C2 in its place. If it does not have a “.”in it, use cell D2.
+6) Finally, once you’ve done this and copied it down for the whole column,
+highlight the column, copy it and paste special with values. You’ll do this
+to get rid of the formula and leave only the values.
+This is what each spreadsheet will look like:
+
+Now you are ready for the VLOOKUP.
+We want to compare MA penetration in 2014 to 2013. They are in different
+sheets. So you want to add a column to the right of column H, “MA Participation
+Rate.” Call it “MA Participation Rate 2013.”
+In cell I2, we’ll add our formula:
+=VLOOKUP(A2, 2013!A$1:I$J3192,8,FALSE)
+Let’s walk through this formula:
+A2​
+is the cell that contains the location ID in the 2014 file.
+2013!A$1:I$J3192 is the range of cells in the spreadsheet called 2013. The dollar
+signs are there because as you copy the formula down, Excel will want to
+increment them. This prevents the formula from changing to A2:C112 and
+A3:C113 and so on…
+
+8​
+is the column that contains the information you want to pull in, in this case
+Medicare Advantage Participation Rate from 2013. The lookup code MUST be
+the first column. You actually need to count the columns and not use the
+column letter.
+False​
+means that your data has to match 100% (remember, nerds in closets
+invented this software – it’s not always intuitive)
+Just like with most formulas, copy it down to the bottom of the spreadsheet.
+Check out what you’ll see.
+
+You can now compare Medicare Advantage penetration in 2014 to the 2013 rate
+without going back and forth among different spreadsheets.
+With thanks to Jennifer LaFleur for the VLookup template.
+
+

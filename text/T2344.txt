@@ -1,0 +1,315 @@
+Hunting for Trends in Data
+Using Microsoft Access
+Data used: hunting.mdb
+
+When Bob Imrie, an Associated Press reporter in Wausau, WI, went searching for information about
+hunting accidents, he ended up right on target. The state filed hard-copy reports on every accident
+detailing information such as weather, topography and the number of pieces of orange the victim was
+wearing. lmry had no way of digging out trends from the voluminous hard-copy reports and he had never
+used a computer database. But with some help over the phone fiom some nerdy colleagues, he created his
+own database to look at trends in hunting accidents in Wisconsin.
+Here's what his database ended up loolung like:
+
+Access Training
+
+The record layout, which is the map to any database, is below. It shows the fields Imry created in the
+database, whether they were characters or numbers and the width of each field:
+Field Field Name
+1 CASE
+2 DATE
+3 TIME
+4 COUNTY
+5 AREA
+6 WOUND
+7 INJURY
+8 TYPE
+9 CAUSE
+10 SAGE
+11 VAGE
+12 FIREARM
+13 FACTION
+14 ALCOHOL
+15 ALCOLEV
+16 WEATHER
+17 TOPOGRO
+18 SEXPER
+19 VEXPER
+20 SGRADUATE
+21 VGRADUATE
+22 SSEX
+23 VSEX
+24 GUNBRND
+25 GUNGUAGE
+26 TEMP
+27 MUZDIS
+28 LAND
+29 VORANGE
+30 GUNSIGHT
+31 VACTIVTY
+32 LOCATION
+33 PRECIP
+
+Access Training
+
+Type
+
+Width
+
+Character
+10
+Date
+8
+Numeric
+4
+Character
+11
+Character
+6
+Character
+6
+Character
+5
+Character
+2
+person)
+Character
+Numeric
+Numeric
+Character
+Character
+Character
+Numeric
+Character
+Character
+Numeric
+Numeric
+Character
+Character
+Character
+Character
+Character
+Character
+Numeric
+Numeric
+Character
+Numeric
+Character
+Character
+Character
+Character
+
+Description
+This is an identifier he created
+Date of accident
+Time of accident
+County of accident
+Region of state (he created the areas)
+Part of body wounded
+Severity of injury
+Self-inflicted, or other (si=self-inflicted, sp=second
+Description of cause
+Age of shooter
+Age of victim
+Type of firearm
+Faction of gun
+Alcohol involved
+Alcohol level
+Weather
+Typography
+Years of shooter's experience
+Years of victim's experience
+Shooter graduate of safety school
+Victim graduate of safety school
+Sex of shooter
+Sex of victim
+Brand of gun
+Guage of gun
+Temperature
+Muzzle distance
+Private or public
+Number of pieces of orange worn by victim
+Open, scope or other
+Victim's activity
+Location of victim
+Precipitation
+
+To bring up the data yourself, go to FILE/OPEN and in the data directory, open a file called Hunting.mdb.
+
+In Access a database may contain several individual data sets called "tables." To open the Deer table,
+select it and click OPEN. Access will open the database to a browse window.
+Interview your data.
+Just as you do with people, you must get to know your data. Study it, look for patterns, look for special
+codes, upper case, lower case: all this will help when it's time to ask questions.
+Just looking at this database triggers many questions. But let's start off with some basic queries.
+Remember, to bring up the query form select INSET/NEW/QUERY. You'll then see the following
+window. Then tell Access you want the DESIGN view.
+
+Let's review the query form because it's the place you'll hang out the most in Access:
+
+1. Field... Select Fields: this is where you pick the pieces of information you want to see
+2. Sort...Put in order: do you want the most at the top, the oldest at the top?
+3. Criteria: Pick the records you want. This allows you to limit your data to just part of
+the records.
+4. Group by Pile up the things that are alike.
+
+...
+
+Access Training
+
+These four steps may seem overly fussy, but if you follow them in more complex queries you can save
+yourself some trouble. Let's practice the first step by doing a query to show the following fields: DATE,
+COUNTY, WOUND and INJURY. Do this by clicking the FIELDS check boxes on the main query
+window. When you choose a field, Access automatically adds an X to the checkbox. This means it will
+show in your result.
+
+Click
+
+from the button bar to run your query.
+
+Access Training
+
+Your result should look like this:
+
+The second step to any query is to sort it. In this case, we could organize the records by DATE. To go
+from your results back to your query window, hit the VIEWIQUERY DESIGN. Or use these buttons to
+toggle between the answer and the query form:
+
+A
+
+A
+
+design table
+To sort the data click in the box right below the field name. In this case, click below date. The query form
+also says "sort" on the left end of this line.
+
+Access will prompt you to specify the order of your sort.
+
+Run the query. Your answer should appear in descending date order.
+
+Access Training
+
+Limit the records
+Step three of any query lets you take a bite out of your data. Say you didn't really care about all the deer
+hunting accidents in Wisconsin, you just wanted to see them for Jackson County. That's where the
+CRITERIA line of the query comes in handy. Click on the criteria line, in the COUNTY field and type:
+Jackson
+Remember, Access is case-sensitive, so if Jackson is upper case -- type it that way in your query.
+Other comparisons:
+If you're screening your data, but you don't know the whole word in a field, Access will let you estimate
+using a *, which is called a "wildcard." A wildcard stands for any combination of letters or numbers.
+Typing this in the cause field would pull out all causes beginning with Careless:
+Careless*
+This would pull out all causes containing the word wife:
+
+Let's get Boolean
+Sometimes you want more from a selection criteria than just one county. You might want the records for
+Jackson and Door counties. That's where OR comes in handy. Type OR between each item. In this case,
+type Jackson OR Door in the Criteria:
+
+Now run the query again. You told Access you wanted all the records where the COUNTY was either
+Jackson or Door. This might be useful if you covered a multiple county area. Using the OR to connect
+criteria is called Boolean logic. Another Boolean word is AND. AND is more restrictive than OR: with
+AND both lines must be true in order for a record to be selected. We could use the AND if we wanted all
+causes containing both the word wife AND careless.
+
+Access Training
+
+This example also uses the *. This is a bbwildcard"that stands for any combination of letters and numbers
+in Access. Careless* stands for any cause starting with Careless. *wife* stands for any cause containing
+the word wife.
+You also can use criteria in two fields at the same time. For example, we might want just self-inflicted
+accidents from Jackson County. Click in the field area below COUNTY and choose TYPE. Then
+EXACTLY LIKE. Then si for self-inflicted:
+
+Practice Exercises
+
+1. Do a query to show all the injuries occuning physically on the body below, and including, the ankle.
+Hint: here's a list of all possible wounds: abdomen, ankle, arm, back, butt, chest, ear, eye, face, finger,
+foot, groin, hand, head, hip, knee, leg, neck, scrotum, shoulder, stomach, thigh, thumb, toe.
+2. Do a query to show all self-inflicted accidents caused by shooters 50 and older.
+
+3. How old was the oldest victim in Jackson County? What wound did they have? How old was the
+youngest? What wound?
+4. How many accidents occurred overall on the first day of deer hunting season in 1994?
+
+Access Training
+
+Answers
+
+1. Do a query to show all the injuries occurring physically below, and including, the ankle.
+
+The answer contains 46 injuries.
+
+Access Training
+
+- - --
+
+2. Do a query to show all self-inflicted accidents caused by shooters 50 and older.
+
+Access Training
+
+3. How old was the oldest victim in Jackson County? What wound did they have? How old was the
+youngest? What wound?
+
+Oldest: 62, thigh Youngest: 14, foot
+
+Access Training
+
+4. How many accidents occurred overall on the first day of deer hunting season last year (November 19,
+1994)?
+
+1abdomn -- I maior
+p ~ . . . i fatat
+
+11/19/94/ Calumet
+.................
+
+..................
+
+-.
+
+............. .
+........
+
+minor
+
+!
+j
+
+abdomn
+
+pal
+
+ii
+
+..j-al.r~ .....................................
+
+.
+
+d
+
+....
+
+f foot
+
+1maia!
+
+......................................
+
+9 injuries
+
+Calculations
+Just as in spreadsheet, sometimes you want to do calculations between columns or "fields." Because a
+database has no cell addresses, you have to use the names of fields. In Access you use the ZOOM window
+to type in a calculation.
+
+To get this window go to a new column on the query form an hit the -SHIFT- key then the F2 key. In this
+database, let's say you wanted to find cases where the shooter is older than the victim and compute their
+age difference. In the zoom window you would type:
+
+sage-vage
+Then click the OK button.
+
+Access Training
+
+

@@ -1,0 +1,855 @@
+Intermediate PDF Manipulation
+Presentation: https://goo.gl/JMMBXm
+Presentation files: https://goo.gl/WxsdCg
+
+Miguel Barbosa
+
+Email: miguel@citizenaudit.org
+Twitter: @MiguelABarbosa
+
+Agenda
+I.
+
+PDF Concepts Review
+
+II.
+
+Manipulating PDFS & Images
+ImageMagick
+
+III.
+
+OCRING
+A. OCRING Simple PDFS (i.e. not many tables)
+B.
+
+Tesseract
+OCRING PDFS with Tables
+Tesseract + Tabula
+
+IV.
+
+Dealing with non-OCR-able pdfs (Mechanical Turk)
+ImageMagick + Mechanical Turk
+
+Let’s set up your computers
+1. Please download these files:
+https://goo.gl/WxsdCg
+2. Place the downloaded files in this directory:
+Desktop/Hands-on Data/PDFs
+3. Open up your terminal and navigate to
+cd Desktop/Hands-on\ Data/PDFs/
+
+Part 1: Pdf Concept Refresher
+
+Types of PDFs
+- Native (aka Text Based): typically the most friendly
+-
+
+Mostly text-based
+Produced from a spreadsheet or other electronic report
+Many can be handled with open-source tools
+
+- Image or Scanned (Aka Image Based): not always friendly
+-
+
+OCR is the way to go
+Can be handled with open source tools, depending on quality
+
+Embedded Text (Combination of Image & Text)
+-
+
+The document has images but there's a layer of invisible text added to the
+document, so you can select text.
+
+Important
+So how do you know what kind of pdfs we are dealing with?
+Simple answer: Open the pdf, can you highlight text? If yes, then native.
+There are other ways to determine if a pdf is native or scanned take a look at
+following resources: Source, Source Source, Source
+
+PDF Processing Checklist
+Before you begin any project you should think things through.
+1.
+
+Take Inventory of your PDFs
+●
+●
+●
+●
+●
+●
+●
+
+How sensitive is the content in your pdfs? Is it locked/encrypted?
+Are your pdfs native or scanned? What language(s) are they in?
+How many pdfs are you trying to convert?
+How large is each pdf?
+Do you need all pages or just a few?
+Are you looking for specific type of field/data/table?
+How accurate do you need to be (fair - extremely accurate)?
+
+2. Determine your budget/constraints (time, money, and computation wise)
+3. Assess your skill level (clueless, command line proficient, can code, superstar)
+4. Select tool & convert pdf (for scanned pfs there will be additional steps)
+
+PDF Processing Workflows
+Understand Documents
+
+Analysis
+
+Checklist
+
+Extract Text From PDFS
+
+Pdf Manipulation
+
+Coherent PDF
+Docsplit
+MuPdf
+PDFBox
+PDFTK
+ImageMagick
+
+Image
+Conversion
+
+Data Capture
+
+ImagMagick
+
+Mechanical
+Turk
+
+Data Entry
+OCR
+
+Tesseract
+
+Do something with the text
+
+Text Post
+Processing
+
+Text Storage
+
+NLTK
+PdfMiner
+PdfPlumber
+Pdftotext
+RegEx
+TIKA
+
+ElasticSearch
+MongoDb
+Neo4j
+PostGres
+
+The PDF Tools Landscape
+There are 3 dimensions for categorizing pdf tools:
+● Native v.s. Scanned Images (non ocr v.s. ocr * group embedded as ocr)
+● Command Line vs User Friendly (command line vs graphic user interface)
+● Free vs Paid (proprietary vs open source)
+
+PDF Tools Landscape
+
+Scanned Pdfs
+‘I Need OCR’
+
+highlighted tools are free!
+
+User Friendly
+‘I’d like to avoid the command line’
+Abby Fine Reader
+AbletoExtract
+Adobe Acrobat Pro or DC
+DocumentCloud
+Captricity, Cogniview
+Tabula
+CometDocs
+Document Cloud
+ILovePdfs
+DataWatch Debenu
+Evernote
+Google Drive
+Microsoft OneNote
+Omnipage, Overview
+Abby Flex Capture
+MathOCR
+Tesseract
+OCRAD
+OCROPUS
+PDFsandwich
+
+Native Pdfs
+‘I don’t need OCR or
+have already OCRD’
+
+PDF Miner
+PDF Plumber
+Tabula Java
+Xfoolabs (PdfToText, Pdf to
+html)
+
+Command Line Based
+‘I’m comfortable with the command line’
+
+More Tools
+Tools to unlock pdfs
+●
+
+Unlocking a pdf
+
+Tools to manipulate pdfs
+●
+●
+●
+●
+●
+
+Coherent PDF
+ImageMagick
+MuPdf
+PDFBox
+PDFTK - Server
+
+Advanced combinations
+●
+●
+●
+●
+●
+●
+●
+
+ImageMagick + Mechanical Turk
+ImageMagick + Tesseract + Mechanical Turk
+ImageMagick + Tesseract + Regex
+ImageMagick + Tesseract + Apache Tika + Elastic Search or SOLR
+Document Cloud & Overview
+Jigsaw
+Captricity
+
+Tools we will use today
+Tools for our Hands On
+●
+●
+●
+●
+●
+
+Image Magick
+Tesseract
+Tabula
+PdfToText
+Mechanical Turk
+
+Why These tools?
+●
+●
+
+Our other session covered other tools
+All are free except Mechanical Turk
+
+Part 2
+Manipulating PDFS & Images
+
+Manipulating Pdfs & Images
+Tasks
+●
+●
+●
+
+Splitting Documents
+Sharpening Images
+Rotating Pages
+
+Tool
+●
+●
+●
+●
+
+ImageMagick (we will be using this today)
+Coherent PDF
+PDFTK
+DocSplit
+
+Manipulating PDFS & Images Installing ImageMagick
+Instructions:
+a. Mac (if you have homebrew installed)
+$ brew install imagemagick
+$ brew install ghostscript
+b. Linux
+sudo apt-get install imagemagick
+sudo apt-get install ghostscript
+c. Windows
+Download & install from here
+
+Hands-on 1: Manipulating PDFs
+The story:
+You are working on a story about the Clinton Foundation’s early years and you are
+reading their Form 990 from 2002. You are particularly interested in page 9.
+“clinton-foundation_2002.pdf”
+Do the following:
+●
+●
+●
+
+Go to the terminal window that you minimized
+Type: convert clinton-foundation_2002.pdf[7] clinton_2002_p9.jpg (hit enter)
+Type: open clinton_2002_p9.jpg (hit enter)
+
+But wait, what about quality of file?
+●
+●
+
+Type: convert -density 800 -scale x800 clinton-foundation_2002.pdf[7] clinton_2002_p9f.png
+Type: open clinton_2002_p9f.png
+
+Hands-on 1 continued
+Let’s recap what we just typed:
+First Command:
+
+convert clinton-foundation_2002.pdf[7] clinton_2002_p9.jpg
+Software
+
+file we want to process specific page
+
+output name
+
+format
+
+Second Command:
+convert -density 800 -scale x800 clinton-foundation_2002.pdf[7] clinton_2002_p9f.jpg
+Software resolution dots per inch image size 800 width filename
+
+specific page
+
+output name format
+
+Hands-on 2: Manipulating PDFs
+The story:
+You are still investigating the Clinton Foundation’s early years and are particularly
+interested in learning about the board of directors from year 2003 which you have
+found in the Form 990 on page 16.
+“clinton-foundation_2003.pdf”
+Do the following:
+●
+●
+●
+
+Go to the terminal window
+Type: convert clinton-foundation_2003.pdf[16] clinton_2003_p16.jpg (hit enter)
+Type: open clinton_2003_p16.jpg (hit enter)
+
+But wait, what about orientation of the file?
+●
+●
+
+Type: convert -density 800 -rotate 90 clinton-foundation_2003.pdf[16] clinton_2003_p16f.jpg
+Type: open clinton_2003_p16f.jpg
+
+Hands-on 2 continued
+Let’s recap what we just typed:
+convert -density 800 -rotate 90 clinton-foundation_2003.pdf[16] clinton_2003_p16a.jpg
+Software
+
+density 800 dpi rotate 90 clockwise file_to_process page output_file
+
+format
+
+Recap: Basic ImageMagick Commands
+PDF to JPG - Simple pdf to jpg
+convert demo.pdf demo.jpg
+PDF to JPG - Single page
+convert demo.pdf[2] demo.jpg
+PDF to JPG - Specifying a page range
+convert demo.pdf[5-10] images/image.png
+Clearing up text so it’s easier to read in output
+convert -density 200 -scale x800 demo.pdf demo.jpg
+
+There are tons of extremely useful commands. Learn about them here.
+I also recommend Fred’s ImageMagick Cleaning Scripts
+
+Part 3
+Ocring PDFs
+
+Optical Character Recognition (OCR)
+OCR software converts images of text into machine-encoded text (i.e. text files)
+
+Used For :
+● Data entry for business documents, e.g depositing money
+● Automatic number plate recognition
+● Extracting business card information into a contact list
+● Quickly make textual versions of printed documents, e.g. book scanning
+● Make images of printed documents searchable, e.g. Google Books
+
+Important: Most OCR software accepts images not pdfs that’s why I taught you
+how to use ImageMagick. You will have to turn pdfs into images which then you
+process using an OCR engine like Tesseract
+
+OCRing Pdfs
+Tasks
+●
+
+Grabbing Text From Scanned PDFS i.e. images
+
+Tool
+●
+●
+●
+●
+●
+
+MathOCR
+Tesseract (we will be using this today)
+OCRAD
+OCROPUS
+PDFsandwich
+
+OCRing Pdfs - Installing Tesseract
+Instructions:
+a. Mac (if you have homebrew installed)
+$ brew install imagemagick
+$ brew install ghostscript
+b. Linux
+sudo apt-get install imagemagick
+sudo apt-get install ghostscript
+c. Windows
+Download & install from here
+
+Hands-on 3: OCRing PDFs
+The story:
+You want to OCR a letter that Bill Clinton wrote to attendees of the National
+Foundation For Infectious Diseases.
+“Clinton_Letter.jpg”
+Do the following:
+●
+●
+●
+
+Go to the terminal window that you minimized
+Type: tesseract Clinton_Letter.jpg Clinton_Letter
+Type: open Clinton_Letter.txt (hit enter)
+
+But Wait, I want it to be a searchable pdf:
+●
+●
+
+Type: tesseract Clinton_Letter.jpg Clinton_Letter -l eng -psm 1 pdf
+Type: open Clinton_Letter.pdf
+
+Hands-on 3 continued
+Let’s recap what we just typed:
+First Command:
+
+tesseract Clinton_Letter.jpg Clinton_Letter
+Software
+
+Input file
+
+Output name
+
+Second Command:
+
+tesseract Clinton_Letter.jpg Clinton_Letter -l eng -psm 1 pdf
+Software
+
+Input File
+
+Output file
+
+language english page mode 1 format
+
+Hands-on 4: OCRing PDFs With Tables
+The story:
+Remember the table with board of directors from the 2003 Form 990.
+“clinton_2003_p16.png”
+Do the following:
+●
+●
+●
+
+Go to the terminal window that you minimized
+Type: tesseract clinton_2003_p16.png clinton_2003_p16 -l eng pdf
+Type: open clinton_2003_p16.pdf (hit enter)
+
+But Wait, we want to extract the table to csv:
+●
+●
+●
+●
+●
+●
+
+Option 1 - Tabula (I will show you this one)
+Option 2 - Tabula Java
+Option 3 - Pdf Plumber
+Option 4 - Use Pdf To Text by Typing: pdftotext clinton_2003_p16.pdf -layout
+Option 5 - Use Abby Fine Reader
+Option 6 - Use PdfMiner
+
+Hands-on 4 continued
+Let’s recap what we just typed:
+tesseract clinton_2003_p16.png clinton_2003_p16 -l eng pdf
+Software
+
+Input file
+
+Output name
+
+language Format
+
+Recap: Basic Tesseract Commands
+Basic image to text : tesseract filename.tiff outputfilename
+More advanced image to text: tesseract input.tif output.txt -l eng -psm 1
+Multiple images to Multiple TXT : for i in *tif; do b=`basename "$i" .tif`; tesseract "$i" "$b" ; done
+Multiple images to Multiple HOCR: for i in *tif; do b=`basename "$i" .tif`; tesseract "$i" "$b" hocr; done
+Turn an image into a searchable pdf: tesseract -l eng input.tif output pdf
+Output HOCR format which is HTML with bounding boxes representing the
+coordinates of each word : tesseract input.tif output.html -l eng -psm 1 hocr
+Important: The Tesseract Documentation is here I recommend it pretty highly
+
+Part 4
+Dealing with non-ocr’able pdfs
+
+How do you Handle Un-extractable Data?
+For Example:
+● Handwritten documents
+● Checkboxes
+● Poor Quality Images & Documents
+Answer: Use Humans. Lot’s of them.
+
+Mechanical Turk
+Mechanical Turk is a microtasking service where you can pay people
+small amounts of money to do very simple tasks. People use it to
+transcribe pdfs, to transcribe audio, fill out surveys, annotate images,
+etc
+Important:
+To use a microtasking service you have to take a project and break it
+into little pieces so many people can work simultaneously on each
+piece.
+
+Sample Problem
+You have a stack of nonprofit fillings you want to find all
+nonprofits that have the following potentially dubious
+characteristics in the state of Louisiana.
+●
+●
+
+Provided grants to officers, directors, key employees
+Party to a business transaction with:
+○ Current or former officer, trustee, director, key employee
+○ Family member of current or former officer, director, trustee, key
+employee
+○ An entity of which a current or former officer, director, trustee, or
+key employee.
+
+Sample Problem: Continued
+
+Recap: The Problem
+Goal:
+Build a list of every nonprofit in Louisiana’s answers to those red
+flag items.
+
+But Remember:
+●
+●
+●
+●
+
+There are 120,000 Form 990s in Louisiana.
+You can’t ocr the documents because people use checkmarks, Y or N, the quality is too poor to recognize any
+markings.
+At 1 Filing per second it would take you 33 hours to annotate everything.
+At 1 Filing per minute it would take you 83 days which at $15 an hour is $30,000
+
+So how do you solve this?
+
+Solution
+ImageMagick + AWS S3 + Mechanical Turk
+● Use ImageMagick to select the specific page & area
+● Upload all images to the “cloud”
+● Hire thousands of workers to transcribe the images.
+
+Approximate Cost: $3,000-$9,000
+
+Setting up Mechanical Turk:
+●
+
+HIT = Human Intelligence Task in our case this is transcribing something
+from an image.
+
+Steps:
+●
+
+●
+
+●
+
+Create Human Intelligence Task (HIT)
+○ Create Title, Description, Keywords
+○ Pricing (i.e. what you are willing to pay)
+○ Select Time Per Task, Expiration of HITs
+Create a Human Intelligence Data Entry Form
+○ Provide a description of what the worker is going to do
+○ Create the Data Entry Form
+○ Run your batch
+Gather and process results
+
+Mechanical Turk Homepage
+
+Mechanical Turk: HIT Details
+
+Mechanical Turk: Data Entry Form
+
+Mechanical Turk: Live Results
+
+Mechanical Turk: Recap
+So that’s how Mechanical Turk works if you are submitting tasks manually.
+Additional Resources:
+●
+●
+
+Guide to Simple Mechanical Turk Projects
+Automating Mechanical Turk
+○ Mechanical Turk, Python Boto
+○ Mechanical Turk Automation Guide 1 (pt 1 & pt 2), Guide 2
+○ Python & Django
+■ Simple Script , MturkPython
+Crowdforge, Crowdlib, Django_Mturk_minimalistic, DjangoM_Turk,
+Djurk, PsiTurk,
+Mega list of Mechanical Turk Tools
+■
+
+●
+
+Bonus: Dealing with Millions of Pdfs
+● Free Tools
+● Paid Tools
+● Build Your Own Tool Chain
+
+PDF Processing Workflows
+Understand Documents
+
+Analysis
+
+Checklist
+
+Extract Text From PDFS
+
+Pdf Manipulation
+
+Coherent PDF
+Docsplit
+MuPdf
+PDFBox
+PDFTK
+ImageMagick
+
+Image
+Conversion
+
+Data Capture
+
+ImagMagick
+
+Mechanical
+Turk
+
+Data Entry
+OCR
+
+Tesseract
+
+Do something with the text
+
+Text Post
+Processing
+
+Text Storage
+
+NLTK
+PdfMiner
+PdfPlumber
+Pdftotext
+RegEx
+TIKA
+
+ElasticSearch
+MongoDb
+Neo4j
+PostGres
+
+PDF Tools Landscape
+
+Scanned Pdfs
+‘I Need OCR’
+
+highlighted tools are free!
+
+User Friendly
+‘I’d like to avoid the command line’
+Abby Fine Reader
+AbletoExtract
+Adobe Acrobat Pro or DC
+DocumentCloud
+Captricity, Cogniview
+Tabula
+CometDocs
+Document Cloud
+ILovePdfs
+DataWatch Debenu
+Evernote
+Google Drive
+Microsoft OneNote
+Omnipage, Overview
+Abby Flex Capture
+MathOCR
+Tesseract
+OCRAD
+OCROPUS
+PDFsandwich
+
+Native Pdfs
+‘I don’t need OCR or
+have already OCRD’
+
+PDF Miner
+PDF Plumber
+Tabula Java
+Xfoolabs (PdfToText, Pdf to
+html)
+
+Command Line Based
+‘I’m comfortable with the command line’
+
+Free Tools
+DataScience Toolkit
+http://www.datasciencetoolkit.org/
+A collection of the best open data sets and open-source tools for data science, wrapped in an easy-to-use REST/JSON API with
+command line, Python and Javascript interfaces. Available as a self-contained Vagrant VM or EC2 AMI that you can deploy
+yourself.
+
+Document Cloud
+https://www.documentcloud.org/
+An open-source software as a service platform that allows users to upload, analyze, annotate, collaborate on and publish primary
+source documents. Since its launch in 2009, it has been used primarily by journalists to find information in the documents they
+gather in the course of their reporting and, in the interests of transparency, publish the documents
+
+DocSplit
+http://documentcloud.github.io/docsplit/
+Docsplit is a command-line utility and Ruby library for splitting apart documents into their component parts: searchable UTF-8 plain
+text, page images or thumbnails in any format, PDFs, single pages, and document metadata (title, author, number of pages...)
+
+Free Tools Continued
+Overview
+https://www.overviewdocs.com/help
+Overview is just what you need to search, analyze and cull huge volumes of text or documents. It was built for investigative
+journalists who go through thousands of pages of material, but it's also used by reasearchers facing huge archives and social
+media analysts with millions of posts.
+
+Paid Tools
+Abby Recognition Server
+https://www.abbyy.com/en-us/recognition-server/
+ABBYY Recognition Server automatically converts paper, image and electronic documents and saves them as compressed
+archive compliant files, such as PDF or PDF/A. It helps organizations of any size optimize business processes while also
+achieving compliance, collaboration and long-term storage goals.
+
+Captricity
+https://captricity.com/
+Data capture software program (and the company that sells it) that uses a combination of machine-learning and human verification
+to perform OCR data capture from hand-filled forms.
+
+Google Cloud Vision
+https://cloud.google.com/vision/
+Google Cloud Vision API enables developers to understand the content of an image by encapsulating powerful machine
+learning models in an easy to use REST API. It quickly classifies images into thousands of categories (e.g., "sailboat", "lion",
+"Eiffel Tower"), detects individual objects and faces within images, and finds and reads printed words contained within
+images. You can build metadata on your image catalog, moderate offensive content, or enable new marketing scenarios through
+image sentiment analysis.Analyze images uploaded in the request or integrate with your image storage on Google Cloud
+
+Build Your Own Tool Chain
+Architecture Overview:
+Task Queue + Image Processing + OCR Engine + Text Processing +
+Entity Extraction/Resolution + Search/Indexing + Storage
+Specific Tools:
+Redis & Redis Que or Celery & RabbitMQ + ImageMagick + Tesseract
++ Tika or PDF Plumber + NLP Tools 1, 2 + Elastic Search or SOLR +
+Postgres + Neo4j
+
+Build Your Own Tool Chain: Continued
+Additional Resources:
+● Tutorial: Apache Nifi + Hadoop + Tesseract
+● Tutorial: Index PDFs at Scale
+● Luke Rosiak’s Library to run Tesseract on EC2 “i.e. build your own
+Document Cloud”
+
+The End
+
+Miguel Barbosa
+
+Email: miguel@citizenaudit.org
+Twitter: @MiguelABarbosa
+
+Part 5. Additional Resources
+
+TIP SHEETS — All IRE tip sheets about pdfs
+Here are some of my favorites:
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+
+Parsing Prickly Pdfs Jacob Fenton & Jeremey Singer Vine
+https://github.com/jsfenfen/parsing-prickly-pdfs
+Busting Data out of PDFS - Tyler Dukes http://ire.org/resource-center/tipsheets/4208/
+PDF Madness - Cheryl Phillips, & Tyler Dukes http://ire.org/resource-center/tipsheets/4207/
+PDF with Tabula - Manuel Aristaran & Jeremy B Merril, Mike Tigas
+http://ire.org/resource-center/tipsheets/4187/
+PDFs to Excel in Windows - Jeff Porter
+FROM PDF to Searchable, Sortable Data - Kevin Schaul
+PDF Utilities - John Perry
+PDF To Text - Chris Milholland
+PDF to Text - Jeff Porter
+
+Best GitHub Repos For PDF Processing
+●
+●
+●
+●
+●
+●
+●
+●
+
+https://github.com/jsfenfen/parsing-prickly-pdfs (Highly Recommended)
+https://github.com/jsvine/pdfplumber
+https://github.com/pdfliberation/OCRToolkit
+https://github.com/pdfliberation/knowledge/blob/master/Resources.md
+(Highly Recommended)
+https://github.com/tmbdev/ocropy
+https://github.com/jbarlow83/OCRmyPDF
+https://github.com/tleyden/open-ocr
+https://github.com/bgshih/crnn
+
+Additional OCR Resources
+Tools built using Tesseract
+Luke Rosiak’s Library to run Tesseract on EC2 “i.e. build your own Document Cloud”
+Python + Tesseract
+Intro
+Examples
+Ruby + Tesseract
+Libraries
+DocSplit
+Regex
+Tutorial
+Interactive Training
+
+

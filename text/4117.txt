@@ -1,0 +1,152 @@
+That 'Dam' Data
+Counting and Summing with SQL + Amazing Puns
+A SQL Refresher:
+
+
+
+
+
+
+SELECT – everything you'd like to get in your query. * means "all fields"
+FROM – what table you're using
+WHERE – conditions (e.g. county = "Arlington")
+ORDER BY – how you want to sort your fields
+
+We'll learn about a new clause:
+
+ GROUP BY – for a field we will use to aggregate or summarize data, for example, counting or summing
+all records associated with one county that appears multiple times in a table
+In English, please?
+Let's say you have the following fruits:
+SQL way of putting fruits into the "category" they belong to.
+
+GROUP BY is just the
+
+So when we write GROUP BY we're essentially categorizing …
+
+So let's say instead of actual fruit, we had this information in a table called fruit.
+fruit_type
+
+cost
+
+apple
+
+$0.50
+
+orange
+
+$0.75
+
+apple
+
+$1.25
+
+banana
+
+$0.35
+
+apple
+
+$0.65
+
+banana
+
+$0.25
+
+orange
+
+$0.95
+
+apple
+
+$0.85
+
+apple
+
+$1.05
+
+To count the fruit types, we'd use the function COUNT(*) in our SELECT statement. Like Excel, SQL is full of
+functions. Our query will return a new column with the counts of each fruit type. We can say COUNT(*) AS
+total_fruit to give our new column the name total_fruit. Again, the * means "all."
+SELECT fruit_type, count(*) AS total_fruit
+FROM fruit
+GROUP BY fruit_type;
+
+And we'd get ….
+fruit_type
+
+total_fruit
+
+apple
+
+5
+
+banana
+
+2
+
+orange
+
+2
+
+What if we want to know the total dollar amounts? Then we use another function SUM(cost) AS total_cost.
+SELECT fruit_type, sum(cost) AS total_cost
+FROM fruit
+GROUP BY fruit_type;
+And we'd get …
+fruit_type
+
+total_cost
+
+apple
+
+$4.30
+
+banana
+
+$0.60
+
+orange
+
+$1.70
+
+Steps to getting to the SQL query window:
+
+
+
+
+
+
+
+
+
+"Create" tab
+Click "Query design"
+Right click the pane
+Click "SQL view"
+Write your query
+Click on the "Design" tab
+Click the "Run" button with the !
+
+ALERT ALERT!
+Watch out for these pitfalls.
+
+ Don't try to put extra stuff in your SELECT statement that's not in the GROUP BY clause. If you bring a
+
+
+
+column into the SELECT clause you MUST use it in the GROUP BY clause. But you do not put functions
+like count(*) and sum(amount) in the GROUP BY clause.
+Watch out for things with the same name (e.g. Arlington County, Tex. and Arlington County, Va.)
+Make sure you use count(*) and not count(something else). NULL fields can mess up a good count query.
+
+About today's data:
+Database name: dams / Table name: dams
+Some key fields:
+ NIDID – the ID for each dam
+ year_comp – the year the dam was built
+ NPDP_Hazard – hazard category based on potential hazard if dam fails
+ NID_Storage – storage area of the dam
+ And a few obvious fields like dam name, state, and county
+
+

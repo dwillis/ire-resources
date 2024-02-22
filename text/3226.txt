@@ -1,0 +1,225 @@
+From database to network
+
+Jaimi Dowdell
+IRE and NICAR
+
+One of the hurdles of using social network analysis software UCINET is figuring
+out the best way to enter or import data. If you want to analyze a small network it’s quite
+simple to get the data into UCINET by entering it, by hand, into the software’s
+spreadsheet application. While this can get the job done, it tends to be very time
+consuming and you’re limited 255 nodes. This also isn’t practical if your data is already
+contained in a table.
+I’ve found the most convenient, consistent and simplest way to get larger files
+into UCINET is to first work with a database manager and then create text files that are
+readable in UCINET. This handout will give a brief introduction to DL files (text files
+readable in UCINET) including creating, importing and displaying them in UCINET.
+Please note that this handout assumes reasonable knowledge of UCINET, Microsoft
+Access or Microsoft FoxPro.
+
+What’s a DL file?
+DL stands for Data Language and is a file type easily imported into UCINET.
+Essentially it is a text file containing a set of numbers – the data – and descriptive
+information about the data that UCINET uses to understand how the network is designed
+and in some cases how it should appear. This information can include the number of
+columns, rows and nodes (or actors) in the network as well as how those nodes should be
+labeled.
+
+1
+
+There are many different types of DL files, but the ones I’ve had the most success
+with are the nodelist formats. This handout will focus specifically on the nodelist1
+format. (Detailed descriptions of these and other formats can be found in the UCINET
+User’s Guide that comes with both the free trial download and full license versions of
+UCINET from Analytic Technologies. I highly recommend becoming familiar with the
+User’s Guide. There are also additional definitions of these file types in Robert
+Hanneman’s online textbook. Links to both can be found on IRE’s social network
+analysis Web page .ire.org/sna.)
+Here’s some information on the nodelist formats from the UCINET 6 User’s
+Guide. This handout will demonstrate how to generate a nodelist1 format from
+Miscrosoft Access and Microsoft FoxPro:
+3.12.1 Nodelists
+A node list consists of a list of nodes that connected to a given node. Two nodelist formats are
+available: nodelist1 and nodelist2. The first is used for square, 1-mode matrices such as
+networks or proximities. The second format is used for rectangular, 2-mode matrices such as a
+case-by-variable matrix or an item-by-use matrix. Both formats are able to accept character
+data. The nodelist1 format looks like this:
+dl n = 4, format = nodelist1
+labels:
+Sanders,Skvoretz,S.Smith,T.Smith
+data:
+1 2 3
+2 1 3 4
+3 1 2
+4 2
+The phrase "format=nodelist1" specifies a format in which the first number in every row of data
+identifies the actor (whom we'll call "ego") whose data the row pertains to. The remaining
+numbers on the row identify the actors that ego is directly connected to (i.e., his alters). For
+example, the third data line says that actor 3 (S.Smith) is connected to Sanders and Skvoretz.
+The order of egos (rows) is immaterial, as is the order of alters within a row. Egos without
+alters are simply left out (but still count in the "n = " phrase and still show up in the list of
+labels).
+
+2
+
+An alternative approach to entering the very same data is to use item labels instead of id
+numbers, as follows:
+dl n = 4, format = nodelist1
+labels embedded
+data:
+sanders
+skvoretz s.smith
+skvoretz sanders s.smith t.smith
+s.smith
+sanders skvoretz
+t.smith
+skvoretz
+
+Other formats include fullmatrix, edgelist, etc. You can find information on those in
+the UCINET 6 User’s Guide. Regardless of the format you choose to use, they all require
+the document begin with “dl” to signify that it is a Data Language file. This is a required
+command and UCINET will not read the data without it. The “dl” is the beginning of
+what’s known as the header information. The header information is where all of the
+descriptive details, or meta-data, are found.
+
+How do you do it?
+Let’s say you have a table of information and you think it’d make sense to
+analyze it in UCINET. For example, I’m going to use federal contracts data from fiscal
+year 2003. This database, from the U.S. General Services Administration, includes all
+federal contracts worth more than $25,000. This data is a good example of readily
+available data with inherent connections or relationships. What this means is that with
+just a little work it’ll be ready for analysis in UCINET.
+In the case of the federal contracts database, the relationship represented is
+between a contractor and a contracting office. I’ve narrowed the data down to include
+only contractors based in Columbia, Mo. Because some contractors will have multiple
+contracts with the same contracting office, I ran a query to county the number and sum
+3
+
+the total amount of all of the contracts between each contractor and contracting office.
+The layout includes four fields: contractor name, contracting office name, number of
+contracts, total dollars. See figure 1 below:
+Figure 1
+
+Each record in this table represents a relationship, or connection, between a
+contractor and a contracting office. We can generate a text file using the nodelist1 format
+that will allow UCINET to translate these connections into lines and nodes.
+From my experience, UCINET likes to work with square, or symmetric data. This
+means that the matrix created in UCINET should mirror itself as if it were folded in half.
+Another way to look at it is to remember that you need to have the relationships going
+both ways. For example, listing a relationship like this shows an asymmetrical
+relationship:
+
+contractor1
+
+contractingoffice1
+
+But if you were to list it like this you’d have a symmetrical relationship:
+contractor1
+contractingoffice1
+
+contractingoffice1
+contractor1
+
+4
+
+CREATING A DL FILE STEP 1 – FOXPRO
+This is really simple to do in FoxPro with the UNION ALL command. Here’s the
+SQL that’ll get our list of connections into the proper format (please note that quotation
+marks must enclose the names of the contractors and the contracting offices for UCINET
+to read them as labels):
+
+SELECT '"'+ALLTRIM(icar_name)+'"', '"'+ALLTRIM(cntroff_na)+'"';
+FROM columbia_con;
+UNION all;
+select '"'+ALLTRIM(cntroff_na)+'"', '"'+ALLTRIM(icar_name)+'"';
+FROM columbia_con
+See Figure 2 for what the query results should look like:
+Figure 2
+
+You then need to save this as an .sdf text file:
+COPY TO c:\jaimiwork\temp\como TYPE sdf
+See Figure 3 for what the text file looks like:
+Figure 3
+
+5
+
+CREATING A DL FILE STEP 1 – ACCESS
+Here are the SQL statements and steps that will walk you through creating a DL file
+(Nodelist1) in Microsoft Access. First create a new query like this (Note: We don’t need
+to add the quotation marks when using Access):
+SELECT trim(icar_name), trim(cntroff_na)
+FROM columbia_con
+UNION all
+select trim(cntroff_na), trim(icar_name)
+FROM columbia_con
+
+Save this query and give it a name – I’m calling mine contract1. Once you’ve saved it,
+you’re going to pull information from this query with a new make table query as shown
+below:
+SELECT * into finalcontract
+FROM contract1
+This query, when run, will create a new table. Once it is created, you need to export it as
+a text file – select the “Text Files (*.txt; *.csv; *.tab; *.asc). Select “Delimited” in the
+export wizard. This will add in commas and quotation marks, the delimiters and text
+qualifiers.
+
+6
+
+CREATING A DL FILE STEP 2
+Open your new text file. Now you need to add the header information to signify that
+this is a dl file. There are five parts to the header information for this file. They are:
+1) dl – need these characters to signify that it is a data language file
+2) n – represents the number of nodes, or unique actors in the network
+3) format – necessary to specify which dl format the data is in (note: we are using
+nodelist1)
+4) label information – need to specify how the labels in the data appear (note:
+because we added quotation marks and used the labels directly in the lists we can
+say that they are embedded)
+5) data: - signifies the beginning of the actual data, or list of connections
+
+The most difficult part of all of this is determining the number of nodes in your
+network. To do this, I simply ran group by queries on the contractor and contracting
+office fields to find the number of unique nodes. My data has 19 unique contractors and
+11 unique contracting offices. That means my total number of nodes is 30.
+
+When you put it all together, here’s what the header should look like:
+
+dl
+n=30, format=nodelist1
+labels embedded
+data:
+Figure 4 shows what it looks like with the information already in the text file:
+Figure 4
+
+7
+
+IMPORTING DL FILES INTO UCINET
+Once you’ve added this information to the top and saved your text file it is ready to be
+imported into UCINET. To do this, open UCINET, click on Data, Import, DL (See
+Figure 5):
+Figure 5
+
+An import window will open. Click on the ellipses button and navigate to your file. Then
+click OK. See Figure 6:
+
+8
+
+Figure 6
+
+An output file will be generated and opened in UCINET. See Figure 7 for an
+example of what it might look like.
+Figure 7
+
+By importing the file, you’ve also created a UCINET file with the same name as
+the input text file. You can use this file (that will have a .##h extension) in UCINET and
+NetDraw. You can also open a dl file directly in NetDraw without importing it.
+To do this, open NetDraw. Go to File, Open, Ucinet dl text file, network (see Figure 8):
+Figure 8
+
+9
+
+Navigate to your file and select open. See Figure 9:
+Figure 9
+
+10
+
+

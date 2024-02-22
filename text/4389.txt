@@ -1,0 +1,115 @@
+Processes, standards and documentation for
+data-driven projects
+NICAR 2015
+Saturday, March 7th
+9:00 AM
+Sample project: ​
+https://github.com/onyxfish/nicar15­process
+
+Intro
+● Why does this matter?
+○ We work on deadlines… and we will make mistakes
+○ We work with teams… and they can’t read our minds
+● Everything in this is optimized for humans: if it sounds slow that’s intentional
+
+Process
+● Automation
+○ Data processing should be 100% automated
+○ Eliminates human error
+○ Ensures every user does it the same way
+○ Maintains a perfect “papertrail” of changes to the data (esp. imp. for
+investigative reporting)
+● BASH scripting
+○ The glue that holds your process together
+○ Allows you to always us the best tool for the job, regardless of programming
+language or format
+○ Simple to interface with batch processing tools (csvkit, ogr2ogr, etc)
+○ Learn about wildcards, pipes and redirecting output
+○ Scripts should be idempotent (start by deleting everything, don’t modify in
+place)
+● Dealing with originals
+○ Scripts should start by copying originals
+○ Treat original files as immutable
+○ Better yet, treat all files as immutable
+○ Every transformation should produce a new file (not modify in place)
+● Naming things
+○ Name from least to most specific: 2015­03­05­foo­bar.txt
+○ When files become cumbersome, slice off a prefix and use it as a directory
+name (2015­03)
+
+○ Makes it easy to update your code when you need to move things around
+● Testing
+○ Validate the original data
+○ Audit your own transformations
+○ Test code that asserts novel facts about the world
+○ Compare outputs to a “manual” process
+● Logging
+○ Scripts should log their process
+○ Use “error” and “warn” to alert yourself to unexpected inputs
+○ There is no penalty for logging to several files
+● Interfacing with databases
+○ Automate database setup and table creation
+○ Import data as a part of the process
+○ Execute queries against the new database
+○ Export results back to neutral formats for publication or further processing
+○ Leave the database in place for exploratory analysis, but fold processing back
+into the automated script
+
+Standards
+● Stick to well­known file formats
+○ csv for tabular data
+○ json for hierarchical data
+○ Convert oddball inputs to good formats
+○ Audit these transformations: are you losing information?
+○ Beware significant formatting, whitespace, lossy transforms
+○ Sometimes you have to process the original
+● Use well­known tools: csvkit, ogr2ogr, jq
+○ Tools should be easy to install
+○ And easy to track what version you need
+● Sharing
+○ Code should be in version control
+○ Data should be stored somewhere more than just you can access it
+● Coding conventions
+○ Stick to best practices for your given programming language (e.g. PEP8 for
+Python)
+○ If you’re working with a team, agree on conventions (Need inspiration?
+http://bit.ly/nprviz­best­practices​
+)
+
+Documentation
+● The README
+
+○ Store your documentation with your code
+○ Always say what it is supposed to do
+○ Source your data
+○ Document how to bootstrap the project
+● Requirements
+○ Include dependencies either via language­specific standards (requirements.txt)
+or as BASH install scripts
+○ Script data downloads if they are too large to include with the code
+● Ticketing
+○ Be a ticketing zealot
+○ When you spot an issue, ​
+don’t fix it​
+, ticket it and continue what you were doing
+○ This the most efficient way for teams to communicate about issue
+● Commenting code
+○ Comment when things are unobvious or intentions are unclear
+○ Comments should not just be a “more human” repetition of the code
+○ If your code is that confusing, rewrite it
+○ Avoid “TODO”; use tickets instead
+
+Further reading
+●
+●
+●
+●
+●
+
+http://blog.apps.npr.org/2014/09/02/reusable­data­processing.html
+http://www.tldp.org/LDP/abs/html/
+http://csvkit.readthedocs.org
+http://www.gdal.org/ogr2ogr.html
+http://stedolan.github.io/jq/
+
+

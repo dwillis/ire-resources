@@ -1,0 +1,72 @@
+What is big data, and where did it come from
+The data that feeds investigative reporting comes in all shapes and sizes, from singletable spreadsheets with 10 columns to multi-table databases with millions of records,
+hundreds of columns and a variety of lookup tables… and all things in between.
+Claims data on a 5% sample of Medicare patients is big because the Medicare
+population is huge. Just 5% means we’re looking at over 2 million patients, which any
+statistician will tell you is a large enough sample size to say some pretty specific things
+about the population and their care without much of a margin of error.
+The EPA’s Risk Screening Environmental Indicators model data is large for a different
+reason: it has incredible granularity. The model estimates the effect of toxic pollution
+down to an 810 m grid. This gives the reporters a lot of power as well when looking at
+how pollution affects different parts of the country.
+Disclaimer: For the Poisoned Places series, CPI and NPR didn’t even end up using the data at that level,
+because it proved to be too much for this particular series. We aggregated the data up to the facility level.
+
+What are the implications of such big data?
+o Takes up a lot of space on your server
+o Requires extra time to import, assess and analyze
+o More fodder for great investigative stories
+
+How to prepare for big data analysis
+Get to know the documentation. Read record layouts, literature, even methodologies
+carefully. If you’re working with a table that has a lot of columns, determine which are
+going to be the most important to your analysis. This seems like a pretty basic
+instruction, but it is really important with big data – the documentation can be more
+tedious and you won’t want to do it.
+Get to know any lookup tables as well. There may be information in there crucial to your
+analysis that you’ll need to pull in sooner rather than later.
+When you’re working with any data, but especially big data, know what values are in
+each column (in particular the ones you’ve deemed crucial to your analysis) and how
+many times those values appear (use a group by query for this). If a column has too
+many unique values to eyeball, do a couple things. Look at the ones used the most.
+Look at the maximum and minimum values, particularly if the values are sequential (for
+example, a date field).
+
+Seek advice. Sometimes it’s hard to make heads or tails of the data you’re looking at,
+and sometimes you don’t have time to poke around. Poking around big data can be a
+time suck; queries take longer to run, and there’s just more real estate to prod. Where
+appropriate, seek advice from someone who is familiar with the data: a professor, a
+researcher, even another data journalist.
+
+Tips for managing your analysis
+Make tables that work with your analysis. Sometimes this means breaking apart large
+tables to isolate the items you’re interested it – whether culling records based on certain
+values, or creating new tables with fewer fields. Sometimes I even grab fields from
+lookup tables to save myself from doing it multiple times in my queries.
+Warning: Be very careful with this tactic. When you leave behind columns and records, you could
+very easily exclude something important and your final numbers could be wrong. Make sure you
+know what you’re doing, through research and/or advice.
+
+Save your queries and their results. Often queries on big data can take a long time
+(especially from a journalist’s point of view). A simple group by query on the billion
+records in RSEI took 20 minutes; a select statement on the main claims table in
+Medicare took an hour. Undoubtedly you will run a query and the results will be useful to
+you in the future, you just don’t know it yet.
+Take notes on your queries. If you use SQL, it’s good practice to use the comment
+function to remind yourself your thinking for a particular query, or summarize what the
+results were when you ran it.
+Mysql /* to begin the comment and */ to end it
+SQLServer -- indicates a comment for the rest of the line
+Leave a paper trail. I can’t emphasize enough that while it seems tedious and annoying
+to keep a log of your analysis while you’re doing it, it will help you in the end. If you make
+a table, write a description of how you made it and why. If you’re writing a lot of queries,
+keep a query log with a description of the query and a summary of the results. Take
+notes on what you’re doing in an analysis, so if you need to come back to it later you can
+retrace your steps easily, or someone else can.
+
+Elizabeth Lucas
+Find me at the NICAR Database Library (we have some big data for you to play with)
+(573) 882-1982
+liz@ire.org
+
+

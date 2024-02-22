@@ -1,0 +1,155 @@
+Life After FactFinder
+Tips and Tricks for ​data.census.gov
+Angeliki Kastanis
+The Associated Press
+akastanis@ap.org
+NICAR Conference
+Newport Beach, CA
+March 9, 2019
+Short link: ​http://bit.ly/2TsArLP
+Session intro: This coming summer, the Census Bureau plans to phase out its
+workhorse search engine,​ ​American FactFinder​ and replace it with a new site,
+data.census.gov​. The new site has been under development for a while, but it’s almost
+ready for prime time now.
+While Ron Campbell (co-panelist) showed you how to look for data on a geography, I
+will focus on some tips and tricks that can be helpful in finding data related to race and
+ethnicity. I will also mainly be focusing on American Community Survey (ACS) data,
+although other Censu data products will also be released on the platform.
+A main focus for me to point out for people that work with data (even pros like you!) is
+that definitions and categories in data are hard lines that someone has drawn - and they
+could have been drawn differently. There are people behind the creation and
+implementation of surveys - so always check in with yourself and note what
+assumptions are behind the categories you are relying on and if they best fit your
+needs.
+
+Know Your Table IDs
+One of my tips when searching for demographic data, especially if you work with ACS
+data often and constantly use similar tables, just at different geographies, years or for
+
+different population groups, is to keep track of your table IDs. There is a system in place
+that can help you fine tune a search before you even navigate to the site.
+If you navigate to the main ACS page (which I show you how to get to from
+data.census.gov​ a bit later) ​https://www.census.gov/programs-surveys/acs/​, there are a
+bunch of goodies on the left hand side that I will reference again later on. For now, we
+will focus on how to understand the Table IDs found here: ​ACS table ID numbers
+explained​.
+
+As you expand each section, the mystery behind table names all but disappears.
+Let’s choose a table to look at:
+● First letter​: Let’s choose a Base Table - the most detailed data available
+● Next 2 digits: Let’s look at the subject of “Hispanic or Latino Origin”
+● Unique ID in subject: 001 is detail on specific origin, but we will look at 002
+○ B03002: HISPANIC OR LATINO ORIGIN BY RACE
+When you get to the search bar for ​data.census.gov​, you can just type in the Table ID
+”B03002” and it will filter out all other tables on the site to get to the one you are
+interested in. After you choose to look at the table, you can select the year and vintage
+of the ACS survey most applicable to your needs in the dropdown menu. You can also
+
+use the “Filter Results” button to select geographies for side-by-side comparisons, using
+the same method that Ron walked through previously.
+
+Filtering
+When you click on “View Table and Customize” you can make some adjustments to the
+table before you download it. You can add margins of error (possibly transpose the
+table) or select the rows that are of particular interest to you. I usually download the
+whole table so that I can ingest it into my data analysis workflow in a similar way each
+time, but it can be useful if you know the data you are interested in keeping. For
+example, let’s say you want to collapse the race and ethnicity categories so that they
+are less granular. You can do that and download the collapsed table.
+
+Clicking on “Filter & Sort” allows you to filter a column using a filtering expression, such
+as keeping all rows with a number greater than XX. This can be useful if you are only
+interested in looking at the largest MSAs by population from a population table, or the
+implementation of some other cut-off point before downloading your table. This can be
+helpful if you predominantly work in Excel and would rather download a limited table of
+what you are interested in.
+
+Race & Ethnicity
+Another trick available when using Table IDs is that if there are iterations across race or
+ethnicity for that specific table, those tables will also populate the table list and you can
+download all of them at the same time. For selected ACS tables, you can add a letter to
+the Table ID and get the same information for the nine major race and Hispanic or
+Latino groups.
+
+So, if we choose a table to look at:
+● First letter: A Base Table
+● Next 2 digits: The subject of “Poverty Status”
+● Unique ID in subject: 001 is detail by age
+○ B17001: POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY
+AGE
+● A-I is the race and ethnicity iteration
+○ Keep in mind, tables `A`-`G` will include Hispanic or Latino households,
+`H` will give you White, non-Hispanic households and `I` will give you
+Hispanic households of any race
+○ B17001D: POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY
+AGE (ASIAN ALONE)
+● For selected tables, you can also add PR to get a table that is specific to Puerto
+Rico
+○ S0601PR: SELECTED CHARACTERISTICS OF THE TOTAL AND
+NATIVE POPULATIONS IN PUERTO RICO
+Although you cannot set them up side-by-side for comparison, you can download all the
+iterations at the same time on the left hand side. “Select Tables to Download” and then
+select each table that interests you.
+Another trick when working with ACS demographic data as it pertains to subpopulations
+by race or ethnicity is to be aware of the granularity available in the data. There are
+certain tables that are available for 416 (!) iteration groups. These include an iteration
+for the:
+● total population
+● all race alone groups
+● race alone or in combination groups
+● Iterations are also available for a number of ​multiple race combination groups​.
+On ​data.census.gov​, you can select groups of interest and set them up side-by-side for
+view and downloading the table.
+The site was a little fussy, but I was able to get there by going to main page and
+selecting advanced search:
+● The table we will be looking at is the Selection Population Profile tables (​s0201​).
+● Enter s0201 in topline
+● Then scroll down to filter by race and ethnicity
+○ Two or more races -> Two races -> can choose combinations
+
+○ Can compare fine-tuned groups instead of aggregate subgroups
+● Selected Population Profiles are available from the ACS datasets only.
+○ The profiles show social, economic, housing, and demographic data.
+○ They are available for over a hundred race, ethnic, tribal, ancestry, and
+country of birth groups.
+○ These are generally only available for areas with a larger population, and
+for population groups that meet a threshold for the geographic area.
+■ For 1-Year estimates, the population group selected must have a
+population of at least 65,000 nationally.
+■ For 3-Year estimates, the population group selected must have a
+population of at least 20,000 nationally.
+■ For 5-year estimates, the population group selected must have a
+population of at least 7,000 nationally.
+○ FYI: 2017 ACS 1-year Selection Population Profiles are the only iterated
+tables in data.census.gov right now, but Tyson did confirm last week that
+there are plans to migrate the 5-year Selected Population Tables and
+American Indian Alaska Native Tables from AFF to data.census.gov
+(hopefully within the next year or so).
+
+Behind the Scenes
+So, lets navigate back to the ​main ACS page​ to unveil some other goodies about the
+data tables that you just found on the new ​data.census.gov​ site. You can get there from
+clicking on the source link below the main table of your choice - `Notes and
+Methodology`. The work of data collection and the implementation of surveys is based
+on people contacting people and asking questions. There are several things that can go
+wrong in the process - data collection can also be affected by real world events. On the
+left hand side, you can see several data quality measures for the ACS. You can find this
+information for other Census products as well.
+Let’s look at sample size. If you select “United States”, you can see in the footnotes that
+some events have impacted the data collection, like the government shutdown in 2013
+and a change in survey implementation in 2005. If you select “Puerto Rico” (a data tip
+that always proves useful - always look at Puerto Rico), you can see that the Hurricane
+Maria had an impact on data collection.
+
+How does that affect the data? In some cases, the margins of error may be higher. In other
+cases, some bias may be reflected in the final estimates, if the non-responding units differ from
+the characteristics of the responding units. There is a whole portal that tells you how the data
+were made and I suggest taking a look to see how reliable the data in your table really is.
+
+Parting Thoughts
+Searching and finding the table you want is just one piece of the puzzle. But it’s big obstacle to
+overcome, so a well-designed, responsive, and flexible search site is a necessary tool to begin
+your project. Just don’t forget to look behind the scenes and check assumptions after finding
+what seems to be the “perfect table.”
+
+

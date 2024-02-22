@@ -1,0 +1,270 @@
+Practical TastyPie
+For the Modern Djangonaut
+
+Friday, February 24, 2012
+
+Here’s the plan.
+
+Friday, February 24, 2012
+
+1. Model resourcefully.
+
+Friday, February 24, 2012
+
+2. URLs are queries.
+
+Friday, February 24, 2012
+
+3. Non-modeled data.
+
+Friday, February 24, 2012
+
+4. When things go awry.
+
+Friday, February 24, 2012
+
+Let’s get this
+party started.
+
+Friday, February 24, 2012
+
+1. Model resourcefully.
+
+Friday, February 24, 2012
+
+models.py
+class Team(models.Model):
+name = models.CharField(max_length=255)
+city = models.CharField(max_length=255)
+...
+class Player(models.Model):
+team = models.ForeignKey(Team)
+first_name = models.CharField(max_length=255)
+last_name = models.CharField(max_length=255)
+...
+class Game(models.Model):
+teams = models.ManyToManyField(Team)
+date_and_time = models.DateTimeField()
+...
+
+Friday, February 24, 2012
+
+OMFG
+CODE
+LOL
+
+Friday, February 24, 2012
+
+models.py
+class Team(models.Model):
+name = models.CharField(max_length=255)
+city = models.CharField(max_length=255)
+...
+class Player(models.Model):
+team = models.ForeignKey(Team)
+first_name = models.CharField(max_length=255)
+last_name = models.CharField(max_length=255)
+...
+class Game(models.Model):
+teams = models.ManyToManyField(Team)
+date_and_time = models.DateTimeField()
+...
+
+Friday, February 24, 2012
+
+api.py
+from tastypie.resources import ModelResource
+from tastypie import fields
+from tastypie.api import Api
+from tastypie.constants import ALL
+from tastypie.constants import ALL_WITH_RELATIONS
+
+Friday, February 24, 2012
+
+api.py
+...
+class TeamResource(ModelResource):
+class Meta:
+queryset = Team.objects.all()
+resource_name = ‘teams’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘name’ : ALL,
+‘city’ : ALL,
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+api.py
+...
+class PlayerResource(ModelResource):
+team = fields.ForeignKey(my_app.TeamResource, ‘team’)
+class Meta:
+queryset = Player.objects.all()
+resource_name = ‘players’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘first_name’ : ALL,
+‘last_name’ : ALL,
+‘team’ : ALL_WITH_RELATIONS
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+/api/v1/players/
+/api/v1/teams/
+
+Friday, February 24, 2012
+
+MEME
+
+Friday, February 24, 2012
+
+Friday, February 24, 2012
+
+2. URLs are queries.
+
+Friday, February 24, 2012
+
+api.py
+...
+class PlayerResource(ModelResource):
+team = fields.ForeignKey(my_app.TeamResource, ‘team’)
+class Meta:
+queryset = Player.objects.all()
+resource_name = ‘players’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘first_name’ : ALL,
+‘last_name’ : ALL,
+‘team’ : ALL_WITH_RELATIONS
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+All players on a team?
+
+Friday, February 24, 2012
+
+/api/v1/players/?team__name=Redskins
+
+Friday, February 24, 2012
+
+api.py
+...
+class PlayerResource(ModelResource):
+team = fields.ForeignKey(my_app.TeamResource, ‘team’)
+class Meta:
+queryset = Player.objects.all()
+resource_name = ‘players’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘first_name’ : ALL,
+‘last_name’ : ALL,
+‘team’ : ALL_WITH_RELATIONS
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+Order alphabetically?
+
+Friday, February 24, 2012
+
+/api/v1/players/?order_by=last_name
+
+Friday, February 24, 2012
+
+Friday, February 24, 2012
+
+3. Non-modeled data.
+
+Friday, February 24, 2012
+
+api.py
+...
+class GameResource(ModelResource):
+teams = fields.ManyToMany(my_app.TeamResource, ‘team’)
+class Meta:
+queryset = Player.objects.all()
+resource_name = ‘players’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘game_date_time’ : ALL,
+‘teams’ : ALL_WITH_RELATIONS
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+api.py
+...
+class GameResource(ModelResource):
+teams = fields.ManyToMany(my_app.TeamResource, ‘team’)
+day_of_the_week = fields.CharField()
+class Meta:
+queryset = Player.objects.all()
+resource_name = ‘players’
+allowed_methods = [ ‘get’ ]
+filtering = {
+‘game_date_time’ : ALL,
+‘teams’ : ALL_WITH_RELATIONS
+}
+ordering = filtering
+...
+
+Friday, February 24, 2012
+
+api.py
+...
+class GameResource(ModelResource):
+teams = fields.ManyToMany(my_app.TeamResource, ‘team’)
+day_of_the_week = fields.CharField()
+...
+def dehydrate_day_of_the_week(self, bundle):
+return bundle.obj.game_date_time.strftime(“%a”)
+
+Friday, February 24, 2012
+
+Friday, February 24, 2012
+
+4. When things go awry.
+
+Friday, February 24, 2012
+
+Or, when you code
+like @jasonbartz.
+
+Friday, February 24, 2012
+
+Avoid
+
+/foo/?limit=0
+
+Friday, February 24, 2012
+
+Avoid
+
+/foo/?non_indexed_field__icontains=foo
+
+Friday, February 24, 2012
+
+Avoid
+
+/foo/?callback=a_long_ever_changing_number
+
+Friday, February 24, 2012
+
+May the power of Bradlee compel you.
+
+Friday, February 24, 2012
+
+

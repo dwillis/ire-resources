@@ -1,0 +1,78 @@
+Don’t Let the Bots Win
+Tipsheet by Liam Andrew (@mailbackwards) & Daniel Craigmile (@x110dc)
+At NICAR you can learn to build bots (Slack bots, chat bots, scripts, crawlers,
+spiders, scrapers, and so on). These are great, but they also leave a trace on
+target sites. What is the experience for sites that are the target of bots­­
+whether they’re search engines, data scrapers, or malicious botnets? How can
+you treat bots as “users” of websites, and help them accomplish their goals?
+How can you build bots that are respectful towards the sites they crawl?
+Bots are substantial users of news websites
+● Our estimate: 50% of requests to the Texas Tribune site come from a bot.
+This is about average for mid­sized sites; larger ones have an even higher
+%.
+● Study: about 60% of these bots are “bad”. That number is steadily rising
+(same rate as human traffic) and they are increasingly difficult to track:
+https://www.incapsula.com/blog/bot­traffic­report­2015.html​
+.
+○ “One malicious non­human for every 2 humans.”
+● Other bots are “good”: search engines, archival bots, health and security
+checkers, analytics services, civic hackers.
+Identifying bots
+● “User­Agent” header­­ crawlers often identify themselves here, but only
+as a courtesy.
+● “Host” headers­­ bots often use the wrong host headers.
+● Cross­reference analytics (which track requests from browsers) with
+access logs (which also include non­browser requests).
+Managing bots
+● /robots.txt​
+­­ can use ‘Disallow’ and ‘Crawl­delay’ directives to manage
+and slow down crawler traffic.
+
+● /sitemap.xml​
+­­ a more advanced and nuanced robots.txt; tells crawlers
+where to find your content.
+● Access logs​
+­­ put server access logs in your analytics rotation. Many
+services exist to help visualize and query your access log traffic, such as
+Scalyr, Logentries, Papertrail, Sumologic, Splunk, Loggly, and Nagios
+● Honeypot​
+­­ put a hidden “nofollow” link on your main site that goes to a
+page disallowed by robots.txt. This will give you a list of bots that disobey
+scraping rules.
+● “Host” headers​
+­­ drop connections from users that aren’t using the right
+hostname.
+● Check for 404s​
+­­ some parts of your site might have dead links that
+crawlers keep finding. These affect both UX and SEO. Consider redirecting
+these 404 pages, or changing them to a ​
+410 Gone​
+status code.
+● Look at Webmaster Tools​
+­­ ​
+Google​
+and ​
+Bing​
+each have dashboards that
+give analytics, identify errors in robots/sitemaps, and allow for some
+control over when and how they crawl.
+
+Building a bot­friendly site
+● Put access logs in your analytics rotation
+● Use good markup to make scraping easier; Google will give tips on this.
+● Use APIs and RSS ­­ API crawlers are beginning to proliferate, along with
+the apis.json standard (a robots/sitemap for API crawling and discovery).
+● Think of the archival bots ­­ pages should be understandable
+out­of­context, including without JavaScript.
+Building a web­friendly bot
+● Use a unique and helpful ​
+User­Agent ​
+header
+● Respect ​
+robots.txt
+● Use a single thread, and spread out the crawl over time
+● Crawl at friendly times ­­ e.g. nights and weekends, for local/regional sites
+● Talk to the host site ­­ they may be able to give you data in an easier
+format
+
+

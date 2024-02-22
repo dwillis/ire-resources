@@ -1,0 +1,267 @@
+Wagging the Dog
+Using Campaign Finance Data to Cover the Midterm Election
+Christopher Schnaars, USA TODAY
+cschnaars@usatoday.com, @chrisschnaars
+This tipsheet will walk you through how to download and analyze campaign finance data downloaded
+from the Federal Election Commission. Specifically, it will show you how to research all contributions
+made by a specific donor, how to find reports for a specific PAC and what to look for in those reports. The
+tipsheet also provides tips on what to look for and gotchas that can trip you up if you’re not careful.
+
+Why Should You Care?
+When I wrote this tipsheet, individuals were limited to giving a candidate’s campaign $5,400 per election
+cycle: half for the primary election and half for the general. Despite this modest amount, the Center for
+Responsive Politics calculates that the 2016 election cost $6.5 billion, which, when adjusted for inflation,
+is slightly less than the $6.3 billion spent in 2012. And these numbers don't include the tens or even
+hundreds of millions of dollars in dark money contributions. Most of the contributions we know about
+come from an elite group of mega-donors who give millions of dollars to Super PACs, which can accept
+unlimited contributions but are not supposed to coordinate with campaigns.
+These donors want something in return for their investments. Let’s look at one of them.
+
+Finding Contributions From a Specific Donor
+Richard Uihlein is a billionaire shipping and packaging magnate – the CEO of Uline – whose family
+founded Schlitz Brewing. He’s a huge supporter of free markets and limited government and gives heavily
+to conservative candidates and causes. He's contributed more than $20 million so far during the 2018
+election cycle, including $19.5 million to Super PACs. He lives in Illinois, but his company is based in
+Wisconsin, where he's spent heavily to support Kevin Nicholson's Senate campaign and had backed
+Scott Walker's bid for the White House.
+Let’s look at his contributions. Note that if you follow along with this tipsheet, you probably will get
+different results because this tipsheet was written in March 2018.
+First, go to https://www.fec.gov/ and then click the dropdown arrow for Campaign finance data. Click the
+button on the right that says, “Look up contributions from a specific donor.” (see screenshot below)
+
+On the next page, type "Richard Uihlein" (omitting the quotation marks) in the "Contributor Name" search
+box and then click the arrow to the right of the box.
+
+You’ll see a list of all the contributions Uihlein has made so far during the 2017-18 election cycle (150 at the
+time of this writing).
+Note that your search is limited to the 2017-18 election cycle. This is one shortcoming of the FEC search tool:
+You can search only one two-year cycle at a time. Most of the time, this is what you want anyway, but if you
+want to go back in time to research a donor's contribution history, you'll have to run several searches. On the
+plus side, you can search for contributions back to 1979, which predates the first electronically filed reports
+by about 20 years.
+Here are the results of our search:
+
+Under each contribution there's a hyperlink you can click to see a summary of how much the PAC has raised
+and spent. If you click the link for House Freedom Action, for example, you'll see that Uihlein has contributed
+$250,000 of the $260,000 this group has taken in since last year. It is not unusual to find Super PACs with just
+one wealthy patron. In fact, there's another Super PAC called Solutions for Wisconsin. Uihlein has given them
+$3.5 million, and he's the ONLY donor so far.
+On the far right of each contribution, you'll see an arrow you can click to see more details about the
+contribution. For example, this is what you'll see if you click the arrow button for the $250,000 contribution
+to House Freedom Action:
+
+From this details page, you can click the "Open original image" button to open a PDF of the actual report:
+
+Back on your search results page, you'll see an export button in the top-right corner. After you click this,
+you'll see a pane with a download button open at the bottom of your screen. Click this button to get a CSV
+file of your data.
+One note of caution here: You can just open the file directly in Excel, but a CSV file is just a comma-delimited
+text file. It does not contain any information about the data type in each column, so Excel must guess, and
+sometimes it guesses wrong. You will lose leading zeros in fields that contain only digits but are really text
+fields, such as Zip codes, and fields with long ID numbers in them will be displayed in scientific notation. If
+you don't care about these fields and just want a quick look at the data, it's fine to just open the file in Excel.
+But if you want to preserve everything, save the file first and open the file in Excel using the Import Wizard,
+which will let you specify the data type of each column.
+You can download a spreadsheet I made to show you how the data looks when it's formatted correctly:
+https://s3.amazonaws.com/nicar2018/uihlein.xlsx
+
+Downloading a Report From a Specific PAC
+For this exercise, we're going to look at John Bolton Super PAC. Richard Uihlein is just one of several
+megadonors who has given to this group.
+From the FEC homepage, click the dropdown arrow for Campaign Finance Data and select "Filings and
+reports."
+
+On the next screen, click either "All filings" or "PAC and party committee reports." If you're ever doing a
+search and you're not sure what to pick, just go with "All filings."
+
+For the committee name, just start to type "Bolton," and you'll get a few choices. Select John Bolton Super
+PAC and all reports filed recently by the Super PAC will show up in the right pane.
+
+On the next screen, you'll see four filings. Starting from the bottom, you'll see the PAC's February report,
+which, in fact, is financial activity from January, and we're going to take a closer look at that in a minute. Then
+there's a document the Super PAC filed with the FEC to let the FEC know they'll file reports monthly in 2018.
+Next is the FEC's acknowledgment of that notice. And finally, there's a 48-hour notice of an independent
+expenditure. An independent expenditure is just money a PAC spends to advocate for or against something.
+It's usually media buys or mailers.
+
+I want to segue briefly on the independent expenditure. If you click the hyperlink that says "48 hour
+notification 2018," you get this screen:
+
+You can see that the Super PAC spent $50,000 to either support or oppose Kevin Nicholson, who is running in
+the Wisconsin Republican primary in August to try to unseat Sen. Tammy Baldwin. Uihlein backs this guy, and
+he's been in the national news lately because his own parents contributed to Baldwin. What's odd about this
+page is you can't tell whether the Super PAC supports or opposes Nicholson. To get that information, you
+must click the download button and pick .pdf. When you do that, you can see the PAC supports Nicholson.
+
+Back on the search results page, where you can see the February monthly report, if you just want to eyeball
+the report, you can click the "February Monthly 2018" hyperlink and drill into the report. But what if you
+want to download the data so you can analyze it in Excel or another spreadsheet program? Well, you can do
+it, but the intuitive way is not the correct way. Let me show you what I mean.
+In the top-right corner of the screen, you'll see an Export button, but that's only going to download the list of
+reports you see on this screen. (Go ahead and try it, if you like.) You're probably thinking that if you click the
+download button for the report, you could download the data as a CSV. You can, but it's a mess. This is what
+the file looks like when you open it in Excel:
+
+The first thing you'll notice is that there are no headers. Why? Well, FEC reports remind me a lot of tax forms
+because there are different schedules filed with each report. Schedule A is for receipts. Schedule B covers
+disbursements and so on. Each schedule has its own set of headers, and there are more than a dozen
+different schedules. That is why you won't find headers here, because they're different for every form and
+every schedule.
+I developed an Excel template a few years ago that allows you to add headers to this data. If you're
+interested in that, you can download the current version (8.2) of the headers here (but spoiler alert: I'm
+about to show you why you probably don't need these templates):
+https://s3.amazonaws.com/nicar2018/fec_headers_template_v82.xltx
+
+For complete instructions on how to use the template, see pp. 14-19 of my tipsheet from 2016:
+https://ire.org/resource-center/tipsheets/4861/download/?fileid=4780
+
+I also have header templates for versions 8.0 and 8.1, though again: you really don't need these templates
+unless you just prefer to work with the raw data:
+https://s3.amazonaws.com/nicar2018/fec_headers_template_v80.xlt
+https://s3.amazonaws.com/nicar2018/fec_headers_template_v81.xlt
+
+When I developed the templates, this was really the only way to look at the data with headers. But the FEC
+has greatly improved its website during the past couple years, and there is now a much cleaner way to get
+the data. You just need to know where to go to get it.
+Go back to the search results screen and click any of the hyperlinks for John Bolton Super PAC in the first
+column. It doesn't matter which one you click. This brings up a summary of the PAC's activities for the twoyear election cycle.
+
+If you now click the "Browse Receipts" button, you'll get a list of all itemized receipts. From here, you can
+click the "Export" button to download all data from Schedule A. If you go back to the Financial Summary page
+with the "Browse Receipts" button and scroll down, you'll also see a "Browse Disbursements" button. If you
+click this button, you'll be taken to another screen where you can export all data from Schedule B.
+Below is a snippet of what the data look like in Excel. You can download a formatted Excel file, which includes
+data for both Schedules A and B:
+https://s3.amazonaws.com/nicar2018/john_bolton_super_pac.xlsx
+
+You'll note that the FEC website exports all data for the election cycle. But what if you just want data from a
+specific time period? Candidly, I'd just download everything and filter it in Excel, but you can hack the
+querystring in the URL to tell the FEC website to give you data for specific dates. (A querystring is the portion
+of the URL after the "?" that passes query parameters to the FEC website, which uses those parameters to
+query its database and spit out the results you want. If that doesn't make sense do you, don't worry about it.
+It's kind of geeky and unnecessary. Just open everything in Excel, sort by the contribution or expenditure date
+field and filter out or delete the data you don't want.)
+If you use the FEC data that already has the headers, you're limited to data from Schedules A and B. If you
+want data from other schedules, such as loans and independent expenditures, you're going to have to either
+eyeball the reports online or the PDFs or you're going to have to work with the messy data that doesn't have
+headers. In those cases, the header templates referenced above will come in useful for you.
+
+So Now What?
+Once you've got the data in Excel with nice, clean headers, what exactly should you look for? Here are a few
+ideas to get you started.
+•
+
+Follow the money: I'll start with the obvious: How much money did the committee get in
+contributions this period? If it's a candidate, look at how contributions compare with those made
+earlier in the election cycle. Is the money raised consistent? Is the candidate faring better or worse?
+You also can compare a candidate's fundraising with that of other candidates. Don't forget cash on
+hand, particularly as the election nears. If a committee or a campaign enters the home stretch with
+little or no money, they're in big trouble.
+
+•
+
+Small donors: For candidate committees, pay attention to unitemized contributions. PACs only must
+itemize contributions of more than $200. At USA TODAY, we routinely look at the percentage of total
+contributions that are not itemized as a crude measure of grassroots support for a candidate. In
+other words: how much of a candidate's money comes from small donors?
+
+•
+
+Large donors: Because of contribution limits, there aren't any megadonors to campaigns. But you
+can look to see how much money comes from out-of-state donors, businesses and organizations
+with special interests. You also can look for Super PACs that are spending heavily on the race and see
+
+who their donors are. Who are the donors, and how many are there? Is it hundreds or thousands of
+people or just one or a handful?
+•
+
+Loans: Check Schedule D to see if a candidate is borrowing money to run the campaign. Is the
+candidate loaning the campaign a ton of his or her own money? In other words: Is the candidate
+trying to buy the election without the financial support of voters?
+
+•
+
+Pick up the phone: Call donors and ask why they gave money. I'm the data geek at USA TODAY and
+work a lot with our campaign finance reporter, Fredreka Schouten. One piece of advice I've heard
+her give other reporters is to never assume someone won't talk to you. Sure, a lot of them won't, but
+many are passionate about their reasons for giving and are eager to talk. Uihlein doesn't call her
+back, but she's been able to interview the Koch brothers.
+
+•
+
+Expenditures: How is the campaign spending its money? If you look in Schedule B, there is a field
+that gives the purpose of the expenditure. A lot of times I'll create an Excel pivot table of these
+expenditure purposes and then try to consolidate them into broad categories such as consulting,
+payroll, travel and media buys. Because Trump has proven adept at enriching himself, we keep an
+eye on how much the campaign spends at Trump properties. We also look at what other candidates
+and groups spend money with Trump companies. It's an easy way to curry favor with the
+administration.
+
+And now the scary part...
+Campaign finance data is messy and awkward. You'll have questions you simply can't answer only by looking
+at the data. And there are places that can trip you up and cause you to make mistakes if you are not careful.
+As always, if something just doesn't smell right, do your due diligence reporting to check it out. Beyond that
+here are a few gotchas to watch out for:
+•
+
+Pay attention to Line Numbers: In all versions of Form 3 (which is what you'll want to look at most of
+the time), all money is counted on specific line numbers within the report, but the line numbers are
+not consistent. House and Senate candidates report their activity on Form F3. Presidential candidates
+use Form 3P. All other PACs, including Super PACs, use Form F3X. If you want to look at bundled
+contributions from lobbyists, they use Form 3L. So information recorded on Line 14 on one form
+might not match what's reported on Line 14 on another form. You can find links to blank forms as
+well as instructions for all forms here: https://www.fec.gov/help-candidates-and-committees/forms
+
+•
+
+Not all contributions are contributions: We had to run a correction once because I missed an $11
+million contribution from a hedge fund manager named Robert Mercer that was recorded on Line
+17. Derek Willis of ProPublica tells me Line 17 is used to record money contributed specifically for
+independent expenditures.
+
+•
+
+Refunds: Watch out for refunds. Sometimes these are reported as negative amounts on Schedule A.
+Often they're reported as disbursements on Schedule B.
+
+•
+
+Seeing double: If you see multiple contributions to the same PAC from the same person, look
+carefully at them to make sure you don't double-count money. There are tons of ways this can
+happen. Here are two of the main ones:
+o
+
+Someone gives more than $5,400 to a candidate's campaign. Some of the money is reattributed to a spouse rather than refunded.
+
+o
+
+A donor gives money through a third party, such as a joint fundraising committee, which
+raises funds for multiple candidates and PACs. So the donor giving the money writes one big
+check to the PAC that is raising the money and might (or might not) designate which
+candidates get money and how much. (This is called an earmark.) The fundraising committee
+turns around and writes one big check to each PAC receiving the money. In the end, the
+receiving PAC will report the money twice: once from the big check and once to itemize the
+contribution from each donor.
+
+•
+
+Watch out for memo codes: One of the last fields is the Memo Code field. If there is an X in this field,
+it means the campaign ignored this row when adding up all the money for that line item. Most of the
+time, you don't want to do this. For example, if a bunch of people gave money to a joint fundraiser,
+the PAC that receives that money typically just counts the single big check and excludes the itemized
+contributions. But you probably want to know where the money ultimately came from, so you'll
+want to count those itemizations and exclude the big check.
+When I work with this data, I typically add an "Include column." I put Y in the field if I want to use it
+in my final analysis and an N if I want to ignore it. In the above example, I'd put an N in the row for
+the big check and a Y in the Include column for all the itemized contributions.
+
+•
+
+Election Cycles: Most of the time, when you look at the top-line numbers of a report, numbers for
+the election cycle, such as total receipts, cover the entire two-year election cycle. For Super PACs,
+the cycle is only one year. So if you want to see how much money a Super PAC has raised during the
+2017-18 election cycle, you need to pull total receipts for the cycle from the report that covers Dec.
+31, 2017, and the total receipts for the cycle for the most recent report for 2018. Then add them
+together.
+
+

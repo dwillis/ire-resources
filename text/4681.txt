@@ -1,0 +1,433 @@
+Data wrangling
+Who we are
+
+
+
+Jackie Kazil (@JackieKazil), author of the O'Reilly book Data Wrangling with Python
+Abe Epton (@aepton)
+
+What we'll cover
+
+
+
+
+Loading data
+Transforming it
+Storing it
+
+How we'll do it
+We'll be working with a dataset, contracts_data.csv in the data/ folder of the python-datawrangling repository. It containscontract data from USASpending.gov from FY 2015 where
+Colorado was the recipient state. We'll use it to answer some real-life questions and provide examples.
+
+Loading data
+Loading from CSVs
+The agate library (formerly csvkit and journalism), by former Chicago Tribune developer Chris
+Groskopf, was built with journalists handling CSVs in mind (here's the documentation). The
+fundamental unit in agate is the table, and there's a one-step method of creating a table from a CSV
+file:
+data = agate.Table.from_csv('data.csv')
+Our data is located in the data/contracts_data.csv file. Let's load it into an agate table and
+check out how the example works. Think about how you'd access a row's data. How would you answer
+a question like "sum up all the values of a column in this spreadsheet?"
+In [ ]:
+import agate
+table = agate.Table.from_csv('data/contracts_data.csv')
+print table
+
+Preview the data
+Now, let's preview a few of the records to see what the data that we are going to be working with looks
+like. For this by iterating over the rows in the table. To access the rows we interate over table.rows.
+Since this is a big file, we are going to return the first few rows by slicing (ie [:3]) table.rows.
+To get all the columns headers, we use row.keys() for the each row. Then we iterate over each of
+those and output the column header, and then the corresponding value through a lookup
+(i.e. row[column]).
+Finally, the last line of dashes (--------------------) is a visual output for us to easily identify
+where one record ends and the next one begins.
+In [ ]:
+for row in table.rows[:3]:
+for column in row.keys():
+
+print '%s: %s' % (column, row[column])
+print '--------------------------------------------------------------'
+
+A quick peek inside the data
+We can use the print_table function to just look at a few rows at a time, and within them, look at a
+few columns formatted to be readable by humans:
+In [ ]:
+table.print_table(max_columns=4, max_rows=10)
+
+Another way to load CSVs
+It's worth mentioning that there's another way to load data from a CSV: csv.DictReader.
+What is the difference between agate & csv libraries?
+ csv is a part of core Python, which means there are no addition libraries to install
+ agate is built on top of csv and adds additional features to handling data
+ csv provides direct access to features such as writing csvs
+ agate handles a few of the processing elements in the background with the ability to
+override, while csv will sometimes require explicit arguments to be passed for a file to load
+ agate provides features for data wrangling, which is why we are using it
+Note: One is not better than the other. They have different uses with overlapping features.
+Even though we are using agate, you should know how to import using the built-in csv library, because
+sometimes you just need to import a csv. To load a csv, we will use the DictReader method, which
+returns a list of dictionaries. Each dictionary is one row (or record) in the csv, with the header row
+(assuming there is one) converted into the dictionary's keys.
+In [ ]:
+from csv import DictReader
+from pprint import pprint # Pprint give you a prettier output
+csv_data = []
+with open('data/contracts_data.csv') as datafile:
+reader = DictReader(datafile)
+for row in reader:
+# each row is now a dict; each column in the CSV is a key in the dict
+csv_data.append(row)
+print 'Found %d lines' % len(csv_data)
+# Let's preview the first record.
+pprint(csv_data[0])
+
+Loading from JSON
+The json module includes two main methods: loads to load JSON data, and dumps to create JSON
+from Python objects. If you haven't worked with JSON before, it's a very convenient way of passing
+around data objects using pure text.
+loads just takes a single string of JSON-formatted data as an argument, and returns a Python object.
+
+data = json.loads('{"foo":"bar"}')
+print data['foo']
+displays bar.
+Let's apply this to our contracts data.
+In [ ]:
+import json
+from pprint import pprint
+with open('data/contracts_data.json') as json_data:
+data = json.load(json_data)
+# Let's preview the 4th record
+pprint(data[3])
+
+Loading data from another sources
+XML, Excel, and other data formats
+There are mant different data formats that exist in the world. We are not going to cover them. Just
+know that there is a library almost all of them. For example to load XML, you might use Element
+Tree or lxml, and to load Excel data, you would use openpyxlor xlrd.
+Sometimes libraries are clunky and horrible to use. For example, let's say you didn't like how the xlrd
+library to import Excel data worked. If you didn't have a lot of sheets in your Excel workbook to export,
+a way around this is to export is manually to CSV first. Besides the manual route, there are a host of
+tools online and on the commandline that convert data formats from one to another.
+Loading from an API
+API stands for Application Programming Interface, but what does that mean? It is basically a end point
+available over the web for you to pick data up from. Before you try to gather data from an API by writing
+your own code, you should search for a library that does it for you. Larger, more well know APIs such
+as Twitter's API has multiple libraries in Python. Sometimes these are written by the provider and
+sometimes by an outside party.
+If nothing exists, then use the Requests library to hit the API end point to gather the data. The data
+will most likely be in one the formats already mentioned (i.e. JSON or CSV). Then you will save that
+locally and continue the loading process.
+API Keys and tokens. Some APIs have keys and also sometimes tokens to limit how much the user
+can pull data from the API and possibly track their usage. While this isn't covered, you will need to add
+a few steps to account for this. See the example below to see how this is done.
+token = #Your Token
+headers = {'Authorization':'token %s' % token}
+r = requests.get(url, params=params, headers=headers)
+USA Spending API. For the work that we have done so far, we have manually downloaded the data
+using this form. However, USAspending.gov offers can API to retrieve the data. This is great when
+you want to lots of data and automate the retrival.
+
+First, check the Internet to see if a library exists to interact with the USA Spending API. If you don't
+find anything, check PyPI the repository for Python libraries. You will find that someone creating one
+for USAspending.gov. At PyPI, you can see how it is used. However, for our example API interaction,
+we are going to use the Requests library, which is more generally applicable.
+USA Spending has 3 APIs:
+1. Contracts
+2. Assistance - FAADS
+3. Sub-Awards
+For our example, we will continue with contracts.
+In [ ]:
+import requests
+# Example URL from API documentation page
+url = 'https://www.usaspending.gov/fpds/fpds.php?detail=b&fiscal_year=2015&st
+ateCode=TX&max_records=10'
+response = requests.get(url)
+print response
+
+In [ ]:
+print(response.content)
+
+In [ ]:
+import xml.etree.ElementTree as ET
+root = ET.fromstring(response.content)
+for child in root:
+print child.tag, '-', child.attrib
+
+In [ ]:
+results = root[1]
+for record in results:
+print record
+
+In [ ]:
+# Let's look at the first record
+for record in results[:1]:
+# Let's iterate over the colummns for the record and pull out the data
+for column in record:
+print column.tag, '---', column.text
+
+XML is a little more complicated to parse, so default to JSON or CSV when possible. This API doesn't
+make it possible.
+
+Transforming data
+Summing up a column of data
+
+As with many tasks in Python, this can be done in several ways. The agate library is great because
+it makes this trivially easy:
+In [ ]:
+table.aggregate(agate.Sum('dollarsobligated'))
+
+It's not much harder to do without agate, however. We can just initialize a counter, loop over each
+row, and update the counter:
+In [ ]:
+counter = 0
+for row in csv_data:
+counter += float(row['dollarsobligated'])
+print 'Total is $%.2f' % counter
+
+You'll notice that we didn't simply do:
+counter += row['dollarsobligated']
+This is because, in contrast to agate - which can automatically detect the column type based on the
+data inside it - DictReaderassumes that every column in the csv file is a string. Adding two strings
+together, even strings only containing numbers, merely combines them:
+In [ ]:
+a = '123'
+b = '456'
+print a + b
+
+Filtering rows of data
+The basic steps we'll take to filter our list of data won't be much different from what we did above, to
+compute the total of the 'dollarsobligated' column. We create a new list to store our results,
+loop through the current list, and when we find a row that matches our criteria, we add it to the new
+list:
+In [ ]:
+filtered_list = []
+for row in csv_data:
+if row['womenownedflag'] == 'Y':
+filtered_list.append(row)
+print 'Found %d rows that match our criteria, out of all %d rows' % (len(filt
+ered_list), len(csv_data))
+
+Of course this would be shorter in agate. But there's a shorter way in vanilla Python as well, using a
+very useful shorthand technique called list comprehensions:
+In [ ]:
+lc_filtered_list = [row for row in csv_data if row['womenownedflag'] == 'Y']
+
+print 'Found %d rows that match our criteria, out of all %d rows' % (len(lc_f
+iltered_list), len(csv_data))
+
+If you don't feel comfortable with list comprehensions, don't worry - they're a useful shorthand, but
+they'll feel more intuitive once you've written enough Python loops to make your fingers bleed. They're
+not really doing anything different from our first example, and while they're cute and compact, they can
+be tricky once you need to do anything more than very basic stuff, like filtering based on a single
+criterion.
+Here's how you would accomplish the same filtering task in agate:
+In [ ]:
+agate_filtered_list = table.where(lambda row: row['womenownedflag'])
+print 'Found %d rows that match our criteria, out of all %d rows' % (len(agat
+e_filtered_list.rows), len(table.rows))
+
+Sorting rows of data
+The sorted function takes a list and returns a sorted version. It expects an iterable, like a list, and by
+default will just compare every element to every other in order to alphabetically sort them.
+You can tell sorted how to compare two elements in the iterable, which allows us to get a version
+of csv_data sorted by vendor name in just one line:
+In [ ]:
+for row in sorted(csv_data, key=lambda row: row['vendorname']):
+print row['vendorname']
+
+The agate version of this is a bit more direct. order_by takes the name(s) of a column and returns
+a table; select filters a table by column(s).
+In [ ]:
+table.order_by('vendorname').select(['vendorname', 'dollarsobligated']).print
+_table(max_rows=10)
+
+Geocoding addresses
+We'll be using the excellent library geopy (docs; run pip install geopy if you don't have it on your
+machine), which provides a common, simple interface to a variety of different geocoding services. It's
+worth noting that not all geocoding services work equally well, and they often have limits on how many
+requests you can make in a short amount of time. So if you're going to geocode a large number of
+addresses, you'll need to figure out which service is best for you.
+To create an instance of a geocoder using a particular service, first import the appropriate class:
+from geopy.geocoders import Nominatim
+
+Then create the instance:
+geocoder = Nominatim()
+Once we have the geocoder instance created, using it is as simple as passing a string containing the
+address we're interested in:
+location = geocoder.geocode("1701 California Street, Denver, CO")
+
+And from there:
+print location.latitude, location.longitude
+Returns 39.7472023 -104.9904179
+
+For instance
+Let's create an instance of the Google geocoder, and use it to find the latitude and longitude of a
+couple of the vendors in our dataset. (Heads up: most geocoding services restrict heavy usage via IP
+addresses, so this classroom might get temporarily blocked and the examples may not work).
+In [ ]:
+from geopy.geocoders import GoogleV3
+geocoder = GoogleV3()
+for row in table.limit(10).rows:
+address = ', '.join([
+row['streetaddress'],
+row['city'],
+row['state'],
+str(row['zipcode'])[0:5]])
+coords = geocoder.geocode(address)
+print 'Before', address
+print 'After', coords.address, coords.latitude, coords.longitude
+print '------'
+
+Comparing dates and date strings
+The standard datetime module and the excellent strftime.org cheat sheet (seriously, bookmark it)
+make Python able to translate between a really delicious variety of date and time formats.
+To work with dates in our data, we first need to convert strings containing dates to actual date objects.
+To see why, let's ask the question: which of these dates comes first?
+In [ ]:
+older = '5-13-1989'
+newer = '2010-06-17'
+if older < newer:
+print "That's what I expect."
+else:
+print "Huh?"
+
+This is because, when Python is comparing strings to each other (and both of the above dates, despite
+looking date-like, are just strings of text) it defaults to comparing them alphabetically. Does the first
+letter of string A come before the first letter of string B? If so, A < B.
+So, we need to tell Python how to convert our string of arbitrary text into a datetime object. Once we
+do that, we get all kinds of superpowers - we can add and subtract time from a date, compare dates
+
+to each other, adjust the timezone of our date, pull out just the month or year, determine what day of
+the week it was, and on and on.
+The datetime module provides several types of date-related classes we can use (in
+particular, date, time and datetime, which combines the first two) but for now we'll just rely
+on datetime. Annoyingly, datetime is both the name of a module, and the name of a class within
+that module, so we have to do dumb stuff like this:
+from datetime import datetime
+
+Or
+import datetime
+datetime.datetime.now()
+I like the first one, myself. If we just wanted, say, date then we'd do:
+from datetime import date
+
+Or
+import datetime
+datetime.date.today()
+Then we need to determine how to understand the date objects we're working with in our data (and
+this is where strftime.org is really useful). We do this by creating a format string, which tells datetime
+how our dates are structured.
+Take older, above. It's date is "5-13-1989": "month hyphen day hyphen 4-digit year". In the format
+string language that datetimeuses, that translates to "%m (month) hyphen %d (day) hyphen %Y (4digit year)". datetime expects that the format string will also tell it about any non-date characters, so
+we also have to include the hyphens in our format string. The end result will look like this:
+format_string = '%m-%d-%Y'
+We then use the strptime function to create a datetime object from a string. We have to pass it
+both the string we'd like to convert, and the format string that tells us how to do so:
+dt = datetime.strptime('5-13-1989', format_string)
+
+For instance
+Let's convert the dates below into datetime objects. For bonus points, try converting them
+into date objects. What did you have to do differently? When might one be preferred over the other?
+In [ ]:
+from datetime import datetime
+newer = '2010-06-17'
+print datetime.strptime(newer, '%Y-%m-%d')
+two_digit_year = '1/20/00'
+
+print datetime.strptime(two_digit_year, '%m/%d/%y')
+# Now you see why Y2K seemed like a big deal (does anyone even remember Y2K?)
+Why does it pick this date to convert to?
+crazy_text_having_variable = '2013 in June on day 12'
+print datetime.strptime(crazy_text_having_variable, '%Y in %B on day %d')
+
+Storing data
+Saving data as a CSV
+This will vary somewhat depending on what type of data you have, and in what form. Generally, I find
+that CSVs are best thought of as lists of dictionaries - each line in the file is an item in the list, and
+each line contains a dictionary's worth of data. For that reason, it's a good idea to coerce your data
+into a list of dictionaries (all with the same set of keys) before writing them to a file.
+We'll start with the non-agate version first, so you can see each step as it's happening. We'll use
+the DictWriter class, much as we used the DictReader class to read data in from a CSV.
+In [ ]:
+from csv import DictWriter
+# First, open the file. Using the mode 'w+' means create the file if it doesn
+'t exist,
+# and if it does exist, delete the file first.
+with open('data/new_file.csv', 'w+') as fh:
+# Next, create a DictWriter object, passing it two parameters: the file y
+ou've opened, and the column names to use
+writer = DictWriter(fh, csv_data[0].keys())
+# Now, make sure to include a header row at the beginning of the file, so
+we can work with it later
+writer.writeheader()
+# Finally, let's write every line in our data to the file
+writer.writerows(csv_data)
+
+As you may have suspected, this is much quicker to write in agate. We really only need one line:
+In [ ]:
+table.to_csv('data/agate_new_file.csv')
+
+Saving data as JSON
+The json module makes it as easy to write JSON as it is to read it. However, since JSON is a very
+verbose format, it can make for very large files. The contracts_data.csv file, above, is 1.4 MB
+(enough to fit on a floppy!) - but the exact same data, stored in JSON, is over three times larger - 4.6
+MB.
+
+So it's worth considering for a moment whether storing data in JSON is what you really want to do. It's
+great for Javascript web apps, for instance, because it's highly flexible and self-documenting, and
+therefore easy for programs to read it and work with it. But, particularly if your data has a large number
+of columns, the size of your JSON files can get very large very quickly (because every single row will
+repeat the name of every single column, plus 4 " characters and a : character).
+Another thing to keep in mind is that some datatypes can't be represented in JSON. For
+instance, datetime objects need to be converted to strings first; you'll get an error if you try to save
+a datetime in JSON directly.
+The dumps method of the json module is the exact opposite of the loads method we used above,
+to load JSON data. Think of dumps as meaning, "DUMP to String" and loads as meaning, "LOAD
+from String". Here, we just want to write one gigantic string to a file,
+In [ ]:
+import json
+with open('data/contracts_data.json', 'w+') as fh:
+fh.write(json.dumps(csv_data))
+
+Once again, this is one line in agate:
+In [ ]:
+table.to_json('data/agate_new_file.json')
+
+Bonus Round: Questions we can ask of this data
+Now, you can start asking questions of this data. What are some interesting questions that this data
+might answer for us, and how would do that?
+ Which congressional districts get the most funding?
+ Which agencies get the most funding in my state?
+ [With the help of additional data] Which congressional committees do congress folk sit on
+and is there a correlation between the committees they sit on and the agencies or
+contractors that are getting contracts?
+ How removed is the location of the contractor vs the place where the work is being
+performed?
+ What interesting things might there be in the walshhealyact, servicecontractact,
+davisbaconact, and clingercohenact columns?
+ What is the distribution of size of vendor to number of contracts and also to the number of
+contracting dollars? Is any vendor an outlier?
+ What are the reasons for non-competed contracts?
+ What percentage of contracts are in each of these categories, and are the numbers
+reflective of the population as a whole:
+ issbacertifiedsmalldisadvantagedbusiness
+ womenownedflag
+ veteranownedflag
+ minorityownedbusinessflag
+ tribalgovernmentflag
+
+
+
+
+
+
+
+ishispanicservicinginstitution
+iswomenownedsmallbusiness
+isecondisadvwomenownedsmallbusiness
+isjointventurewomenownedsmallbusiness
+isjointventureecondisadvwomenownedsmallbusiness
+
+

@@ -1,0 +1,185 @@
+The Bot Emporium
+A selection of parts, platforms, applications and ideas for your
+newsroom
+Justin Myers (@myersjustinc), news automation editor,
+The Associated Press
+
+Automation services
+Websites where you build automated workflows by connecting different services together; for
+example, posting new results of an Instagram search to a Slack channel.
+All of these services have their own ways of letting users share their creations with others, and all of
+them support ​
+webhooks​
+, which let them connect to other internal systems you might have.
+● IFTTT: ​
+https://ifttt.com/
+○ Stands for “If This Then That”
+○ Consumer-oriented (supports lots of consumer electronics and social networks)
+○ All workflows consist of two steps:
+■ A Trigger (“If This”), such as a
+​new post in an RSS feed​
+or ​
+Congress is scheduled
+to vote on a bill
+■ An Action (“Then That”), such as a
+​push notification to your phone​
+or a
+​post to
+your WordPress blog
+○ Calls webhooks the “M
+​aker channel​
+”, in case you’re trying to search for it
+● Zapier: ​
+https://zapier.com/
+○ Business-oriented competitor to IFTTT (supports many payment processors and
+customer relationship management systems)
+○ Many paid features, including better filtering and being able to run multiple actions from
+the same trigger
+○ Has a “code action” that lets you run P
+​ython​
+or ​
+JavaScript,​but it’s less useful than you’d
+think (can’t install libraries, have to run in less than a second)
+● Dexter: ​
+https://rundexter.com/
+○ Drag-and-drop interface (more literally wire components together)
+○ Lets you specify values (e.g., text of an email) a few different ways:
+■ By connecting it to an earlier step (e.g., title of an RSS item)
+■ By specifying it manually (e.g., always using the username “OpinionBot”)
+■ With JavaScript: undocumented, but doable by choosing “Enter the value in
+manually” and starting your value with an equals sign (sort of like Excel formulas)
+○ Supports ​
+bookmarklets,​which could be useful in dealing with content management
+systems
+○ Supports ​
+custom code​
+(JavaScript only), but in a way that actually looks useful
+
+Email alerting services
+Still a type of automated workflow!
+● Google Alerts: ​
+https://www.google.com/alerts
+○ Get emails about new results on Google for a given search query
+○ Also can receive new results in an RSS feed
+● Sqoop: ​
+http://sqoop.com/
+○ Geared toward journalists
+○ Contains federal data:
+■ Filings with the Securities and Exchange Commission
+■ Patents and patent applications
+■ Filings in federal courts
+○ Includes some (buggy) recognition of corporate entities (e.g., “Did you mean ‘Apple
+Inc.’?” for a search of “apple”)
+● ChangeDetection.com: ​
+http://www.changedetection.com/
+○ Emails you with any changes to any Web page you specify
+
+Bot hosting
+If you have custom code and don’t want to run your own servers to host it:
+● Heroku: ​
+https://www.heroku.com/
+○ Meant for hosting Web applications
+○ Deploy code just by pushing to a git repository
+○ Supports ​
+a bunch of languages
+○ Has a free tier
+■ Biggest concern here: Your app has to be inactive for at least 6 hours a
+day—might mean you have to pay in order for ​
+certain kinds of bots to work as
+you expect
+○ Supports scheduling (e.g., “run this script at 5 p.m. each day”)
+● Google Apps Script: ​
+https://www.google.com/script/start/
+○ Share programs with others in Google Drive
+○ Must be written in JavaScript
+○ Has access to a lot of useful Google APIs (including Docs/Sheets)
+■ Well-documented
+○ Potentially useful comparison: Google Docs’ equivalent of Excel macros
+■ In any Google Doc/Sheet: “Tools” → “Script editor…”
+○ Usage example: ​
+Twitter Archiving Google Sheet (TAGS)
+■ Copy a Google spreadsheet
+■ Use it to store results of Twitter searches
+
+Template engines
+There’s a lot of hype around natural language generation, especially from tech companies.
+If you’ve got a massive project, one of these companies might be worth looking into, but otherwise,
+just use a templating system like you’d use for a Web app. It’s a bit of a pain to debug, but it’s hard to
+do any better without spending a ton of money. (If you ​
+do​
+have a massive project, two of the major
+players are ​
+Automated Insights​
+and ​
+Narrative Science.​
+)
+But seriously, just have your developers use whatever they’re comfortable with. ​
+Jinja​
+and ​
+Liquid​
+are
+good starts, if you’re writing Python or Ruby (respectively).
+
+Conversation bot tools
+Bots that listen in Slack, HipChat, Basecamp, etc., and respond to commands.
+These are frameworks/toolkits for programming your own bots. You’ll have to host these somewhere,
+such as Heroku or a server you manage.
+● Hubot: ​
+https://hubot.github.com/
+○ Written in JavaScript (Node.js)
+○ Built by GitHub (the company) to manage GitHub (the service)
+○ Supports ​
+dozens of chat services​
+(not just Slack)
+● Lita: ​
+https://www.lita.io/
+○ Written in Ruby
+○ Otherwise similar to Hubot
+○ Also supports ​
+many chat services​
+(but not as many as Hubot)
+● Botkit: ​
+http://howdy.ai/botkit/
+○ JavaScript framework (Node.js)
+○ Less rigid architecture
+○ Helps keep track of conversations, in case you need to ask follow-up questions
+● Slack-specific:
+○ Incoming webhooks: h
+​ttps://api.slack.com/incoming-webhooks
+■ Send Slack messages (to a channel or to a user) from any application
+■ Just requires a POST request—no weird OAuth or API keys
+○ Slash commands: ​
+https://api.slack.com/slash-commands
+■ Lets users do one round-trip interaction (request/response) with a Web
+application you’ve built
+■ Tutorial (in PHP) available here
+
+Other coding solutions
+Need a bot that doesn’t necessarily need you to talk to it?
+● Huginn: ​
+https://github.com/cantino/huginn
+
+○ Ruby app you host yourself
+○ Sort of a mashup of IFTTT and Dexter: You have actions/triggers, and you connect them
+together in arbitrarily large ways
+○ Albert Sun from The New York Times ​
+wrote about this in Source
+● cron: ​
+http://linux.die.net/man/5/crontab
+○ Task scheduler, to run any script/program you want
+○ Comes standard on Unix-based systems, including Mac OS X
+● forever: ​
+https://www.npmjs.com/package/forever
+○ Sort of the opposite of cron: Leave one script running, and never let it die
+○ Written in Node.js
+■ If your program is in Node as well, you can include it directly
+■ If not, you can use it at the shell anyway
+■ Useful for ​
+long-running Twitter bots​
+, for example
+● RSS Puppy: ​
+https://github.com/buzzfeed-openlab/rss-puppy
+○ Emits Node.js events whenever specified RSS feeds add new items
+○ Released by BuzzFeed Open Lab, which built it to monitor SEC filings
+
+

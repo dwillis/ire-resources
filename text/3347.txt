@@ -1,0 +1,244 @@
+2010 CAR Conference (Phoenix, Arizona)
+
+Using the Google Maps Flash API with Flex
+Jacob Fenton
+CAR Director, Investigative Reporting Workshop
+
+What is Flex?
+Adobe is terrible at naming technologies. Flash is Flash--but the interesting part is known as
+Actionscript. Same for Air. Flex is also Actionscript--but with an xml-based markup (.mxml) that's
+intended to reflect the same division of functionality that web folks are used to:
+javascript:actionscript::html:mxml . Flex actually supports css, to a certain degree--but we're not even
+gonna go there.
+File types: .mxml is a regular text file (though it should be a well-formed xml file). Actionscript can go
+in the .mxml file (inside script tags), or it can be included externally, in .as files (which are actionscript
+files). When flex files are compiled the result is a .swf file (though compressed they are .swz files, and
+as a library they are .swc files). To actually put a .swf on the web it probably needs to be embedded on
+a web page, though some browsers (like firefox) know how to handle .swf files directly.
+
+Why use the flash api for google maps with flex?
+•
+•
+•
+
+Flash costs $700 something. Flex is free. (If you're serious check out flexbuilder / flashbuilder,
+which is targetted at building flex)
+The javascript API will only get you so far
+Polygon rollovers suck in javascript, and openlayers only helps so much
+
+Why shouldn't I use flex with google maps?
+•
+•
+
+Requires knowledge, time
+There's possibly a simpler solution
+
+Where do I get the code?
+Flex (http://opensource.adobe.com/wiki/display/flexsdk/Download+Flex+3) Installation: download
+and unzip. Java must be installed, but it probably already is. More details
+(http://www.adobe.com/support/documentation/en/flex/3/releasenotes_flex3_sdk.html#installation).
+Flex Google Maps SDK.( http://code.google.com/apis/maps/documentation/flash/) Installation: Unzip.
+Need API key (http://code.google.com/apis/maps/signup.html) to deploy, but maps compile locally
+without someone else's. More details
+(http://code.google.com/apis/maps/documentation/flash/intro.html)
+In the NICAR classrooms, the flash code should be installed in 'c:\flex sdk' and the google sdk should
+be in 'c:\sdk' .
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+
+How do I compile .mxml files into .swfs?
+Download this text file: datagrid1.mxml (http://nicarphoenix.s3.amazonaws.com/flex_code/datagrid1.mxml) and save it somewhere on your file system-pretend it's at c:\mydir\datagrid1.mxml . You should be able to compile it with this:
+$ c:\path\to\flexbinaries\bin\mxmlc c:\mydir\datagrid1.mxml
+
+Which should create a file called c:\mydir\datagrid1.swf. You should be able to open it up with firefox
+> file > open file . The application isn't very exciting, so don't hold your breath.
+It's an absolute pain in the butt to type all the full file paths in, so you should probably add mxmlc to
+your PATH variable, which may or may not have been done in the ASU computer labs. (On windows,
+it's something like c > Settings > System > Advanced > Edit environment variables, or something like
+that). Once you've done that, you should be able to instead to:
+$ cd c:\mydir
+$ mxmlc datagrid1.mxml
+
+This stuff should work fine on a mac too, though setting the PATH variable is different.
+
+How do I compile a google map app?
+Get a simple flex file (http://nicar-phoenix.s3.amazonaws.com/flex_code/maptest1.mxml). Download
+it and save it somewhere--maybe c:\mydir.
+Hard way (must all be one line; assumes mxmlc is on your PATH)
+$ mxmlc
+--include-libraries=c:\somewhere\google_maps_sdk\lib\map_flex_1_18.swc
+c:\mydir\maptest1.mxml
+**Note: the flex library version may be slightly different in the ASU lab
+
+A better approach is to just copy the .swc file to the directory where your mxml file lives--then the
+compiler doesn't need to go looking for it.
+$ cd c:\mydir\
+$ mxmlc maptest1.mxml
+
+The result should be something like this file (http://nicarphoenix.s3.amazonaws.com/flex_code/maptest1.swf). You can embed it the same way you'd embed
+anything else--which I've done here (http://nicarphoenix.s3.amazonaws.com/flex_code/maptest1.html). (Note that I'm using swfobject.js
+(http://code.google.com/p/swfobject/) to help; our minimum flash version is 9.0, I believe).
+
+What's actually going on?
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+
+If you open up maptest1.mxml in a text editor, you'll get something like this:
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+layout="absolute">
+<maps:Map xmlns:maps="com.google.maps.*" id="map"
+mapevent_mapready="onMapReady(event)"
+width="100%" height="100%" key="ABQIAAAAD0ng6hhfw1-ZXVHi8_1IRRv5HcETJUCEW5hhlr9a6n0isy03BQAglDfhmjP_DbajVNZDSPVlnpxqQ"/>
+<mx:Script>
+<![CDATA[
+import com.google.maps.MapEvent;
+import com.google.maps.MapMouseEvent;
+import com.google.maps.Map;
+import com.google.maps.overlays.Marker;
+import com.google.maps.overlays.MarkerOptions;
+import com.google.maps.MapType;
+import com.google.maps.LatLng;
+import com.google.maps.LatLngBounds;
+import com.google.maps.controls.MapTypeControl;
+import com.google.maps.controls.ZoomControl;
+import com.google.maps.controls.PositionControl;
+import com.google.maps.InfoWindowOptions;
+private function onMapReady(event:Event):void {
+// Add some basic controls to the map
+map.addControl(new ZoomControl());
+map.addControl(new PositionControl());
+map.addControl(new MapTypeControl());
+map.setCenter(new LatLng(33.44933,-112.0740594), 14,
+MapType.NORMAL_MAP_TYPE);
+var latlng:LatLng = new LatLng(33.44933, -112.0740594);
+var marker:Marker = new Marker(latlng);
+map.addOverlay(marker);
+marker.addEventListener(MapMouseEvent.CLICK,
+function(e:MapMouseEvent):void {
+marker.openInfoWindow(new
+InfoWindowOptions({titleHTML: "<b>Thai Elephant</b>", contentHTML: "20 W.
+Adams<br>Phoenix, AZ<br>phone: 602-252-3873<br>food: Asian<br>meal hours: Lunch
+and Dinner<br>cost: $$"}));
+});
+}
+]]>
+</mx:Script>
+</mx:Application>
+
+If you're a javascript programmer, this should look really familiar--especially if you've built stuff from
+the javascript API. In general, the flash API follows the javascript model really closely. Some obvious
+differences:
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+•
+•
+
+Actionscript is a strongly typed language--so types have to be declared, both for variables and
+for function return types.
+All libraries must be explicitly imported
+
+More complex examples
+Google's documentation is really phenomenal--I'm not gonna try to replicate it, but if you're gonna
+build some maps you'll spend a fair amount of time reading the developer's guide
+(http://code.google.com/apis/maps/documentation/flash/intro.html) and the flash api reference
+(http://code.google.com/apis/maps/documentation/flash/reference.html). Adobe's flex documentation
+(http://www.adobe.com/support/documentation/en/flex/) is labyrinthine and sometimes frustrating, but
+also inevitable.
+I coded up two more complicated examples that do pretty standard map things: they grab an external
+xml file with the data in it, loop through it to add the relevant event listeners etc., and add it to the map.
+The backend code (see Appendix 1 below) would let you do both examples for any state in the
+country--not that you would want to... The points example sets the map bounds automatically, but the
+polygon doesn't--my recommendation is to set this server side. I'm gonna throw them up and use them
+as a jumping off point to talk about general server/client side stuff. Please note these are examples to
+demonstrate coding techniques--NOT DATA PRESENTATION. It's a terrible idea to put 378 markers
+on the map at once with them all crazy-overlapping. Either use clusters, or only show a subset of
+points.
+•
+
+•
+
+•
+
+Points example (AZ CENSUS PLACES):
+o .swf (http://nicar-phoenix.s3.amazonaws.com/flex_code/maptest3.swf)
+o .mxml (http://nicar-phoenix.s3.amazonaws.com/flex_code/maptest3.mxml)
+o source .xml (http://nicar-phoenix.s3.amazonaws.com/testing/AZ.xml)
+Polygons example (AZ COUNTIES):
+o .swf (http://nicar-phoenix.s3.amazonaws.com/flex_code/poly_rollovers2.swf)
+o .mxml (http://nicar-phoenix.s3.amazonaws.com/flex_code/poly_rollovers2.mxml)
+o source .xml (http://nicar-phoenix.s3.amazonaws.com/testing/az_counties.xml)
+More interesting swf file: home sale price history
+o .swf
+(http://projects.mcall.com/media/flash/re_test/for_demo_color_range2.swf?dstring=mu
+ni)
+
+Caveat: for swfs to work on local machines, I had to set a crossdomain file allowing flash files to
+access and use files on nicar-phoenix.s3.amazonaws, otherwise you would get a security violation.
+Fortunately, the crossdomain file is pretty easy to add: crossdomain.xml. (http://nicarphoenix.s3.amazonaws.com/crossdomain.xml)
+
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+
+Architecture
+Scribble on whiteboard about how stuff works; problem with loading everything at runtime.
+
+Appendix 1 - Backend Code
+Running the backend requires a working django server running postgres/postgis. Django zipfile
+(http://nicar-phoenix.s3.amazonaws.com/flex_code/backend/geohacking.zip); county polygon
+shapefile (from census) co99_d00_shp.zip (http://nicarphoenix.s3.amazonaws.com/flex_code/backend/co99_d00_shp.zip); place shapefile ((from census):
+place.zip (http://nicar-phoenix.s3.amazonaws.com/flex_code/backend/place.zip)
+Basic usage: install django app, syncdb, then upload shapefiles at the django shell prompt using
+standard layermapping (http://geodjango.org/docs/layermapping.html) procedure. Befor running the
+scripts, manually set the file path to shapefiles in the scripts (i.e. in map_counties.py and
+map_places.py) I'm calling the app 'nicar'.
+$ python manage.py shell
+> from nicar import map_counties
+> map_counties.run()
+
+And similarly with map_places.py.
+$ python manage.py shell
+> from nicar import map_places
+> map_places.run()
+
+The polygon shapefile is huge, so simplify it using postgis. (Following the suggestions at bostongis'
+simplify page (http://bostongis.org/PrinterFriendly.aspx?content_name=postgis_simplify) I'm
+transforming into a projected space before running the simplification since the map is national I'm
+using srid=2163, which is in meters). Simplifying the tolerance down to a kilometer results in going
+from 800,000 points to about 70,000 for 3,489 counties nationwide.
+=# select sum(ST_NPoints(shapes)) from nicar_county;
+sum
+-------807050
+(1 row)
+=# update nicar_county set shapes =
+transform(simplify(transform(shapes, 2163), 1000), 4326);
+UPDATE 3489
+=# select sum(ST_NPoints(shapes)) from nicar_county;
+sum
+-------
+
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+70085
+(1 row)
+
+The models create a field for encoded polylines and levels, but don't fill it in. Do that with the
+encoding scripts, also at the django shell prompt.
+$ python manage.py shell
+> import encode_county_shape
+> encode_county_shape.run()
+
+Appendix 2 - Flex explorer
+See flex's excellent explorer, (http://nicar-phoenix.s3.amazonaws.com/explorer/explorer.html) with
+code and samples:
+Also see the style explorer
+(http://examples.adobe.com/flex3/consulting/styleexplorer/Flex3StyleExplorer.html#)
+
+http://nicar‐phoenix.s3.amazonaws.com/flex‐presentation.html
+
+

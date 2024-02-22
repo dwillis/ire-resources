@@ -1,0 +1,325 @@
+Mining College Scorecard
+Data
+Andrea Fuller*
+Reporter
+Wall Street Journal
+andrea.fuller@wsj.com
+@anfuller
+
+Annie Waldman
+Reporter
+ProPublica
+annie.waldman@propublica.org
+@AnnieWaldman
+
+*Takes full credit for bad puns in this presentation
+
+Obligatory Data Mining Pun
+
+Why Use Scorecard?
+• Lots of never-before-released data on colleges
+
+• Are students repaying their debt, earning a living wage, or graduating?
+• Can localize to your state or community
+• Many variables are in the raw data files and not on the website look-up!
+
+ADMISSIONS CRITERIA
+
+DEGREES AWARDED
+
+COST & NET PRICE
+
+GRAD RATES
+
+DEFAULT RATES
+
+LOAN REPAYMENT RATES
+
+STUDENT DEMOGRAPHICS
+
+DEBT LOADS
+
+POST-COLLEGE EARNINGS
+
+... AND MORE!
+
+Getting the Data
+• Look up a school at https://collegescorecard.ed.gov/
+• For the full download:
+https://collegescorecard.ed.gov/data/
+• Warnings about the raw data:
+– These files are huge (212 mb).
+– They’re too wide to go into SQL server.
+– ~20 years of data, ~2000 variables, ~7000 schools.
+
+Data Download
+
+Before Using the Data
+• The Department of Education has included some
+excellent resources to help understand what's in
+the data and how to best use it. It's important to
+take a look at this before you start working with
+the data. Find everything on the Scorecard site:
+
+https://collegescorecard.ed.gov/data/
+
+Readings
+• Read the policy paper: Why the Department created the
+Scorecard and what's new in the data. The paper provides
+critical context on the Scorecard data and was created for
+
+the general public, policymakers and the non-technically
+savvy.
+
+• Read the technical paper: The properties and the
+limitations of the data. The paper explains the different
+sources of the data as well as how to best analyze it.
+
+Technical Documentation
+• Review the data documentation: Explains
+the structure of the data, types/classes of
+variables, and how to use the API.
+• Review the data dictionary: Variable names,
+
+labels, sources, API data types and the
+categories of the data.
+
+Data Dictionary
+
+Cohort Map
+
+General Warnings
+• Each record is the year of data, an individual school,
+and about 2000 variables.
+
+• Some of the fields (i.e. earnings) are JUST for students
+who get federal aid. Read the documentation.
+
+• Some data is based on when students ENTER college
+(earnings) and other is based on when they EXIT. Read
+the data documentation.
+
+OPEID vs. UNITID
+• The DOE has two types of IDs. It’s crazy. That also
+means THERE ARE DUPLICATES.
+
+• UNITID:
+– For every CAMPUS. How
+colleges report grad rates,
+enrollment to IPEDS
+– Each record in the data is
+
+for a UNITID.
+
+• OPEID:
+– For every SCHOOL. How
+the government reports
+
+federal aid
+– A campus may have
+several UNITIDS and ONE
+OPEID in the data.
+
+In Other Words
+
+• SELECT DISTINCT ON THE “OPIED6” FIELD
+
+Getting into a Database: Option 1
+• At WSJ, we wrote a python script to cut the
+data in half and separate into two relational
+
+tables. Each table has the year of the data,
+and ID numbers affiliated with the school.
+• Each file is a different year and we combined
+them into the same database.
+
+Python!
+
+SQL!
+
+Getting into a Database: Option 2
+• At ProPublica, we downloaded the raw data and
+created an R script that enables the user to cut
+the data based on desired year(s) and variables.
+
+The script also enabled us to add other IPEDS
+variables that were not part of Scorecard. We
+
+analyzed cut and analyzed the data in R, and
+then exported a file for our news app.
+
+R!
+
+Grad Rates
+
+Pell Grad Rates
+
+Grad Rates (cont.)
+
+Accreditation & Grad Rates
+
+Low Grad Rates & Accreditation
+
+Grad Rates: Need-to-Know
+• Variable names: C150_4, C150_L4, C150_4_POOLED
+
+• Original source: IPEDs
+• Definition: Measures “150% of normal time” – aka 6
+
+years for a 4 year program.
+• Breaking it down: Race and non-resident alien.
+
+Grad Rates: Caveats
+– DO NOT USE grad rates from NSLDS ( e.g.
+COMP_ORIG_YR2_RT).
+– Only for first-time, full-time students who begin school in
+the fall semester. Variables do not include part-
+
+time/transfer/non-fall starting students (which represent
+50% of college students).
+
+Student Loan Payback
+
+Repayment Rates
+
+Lagging Repayment
+
+Repayment Rates (cont.)
+
+Repayment Rates: Need-to-Know
+• Variable names: RPY_1YR_RT, RPY_3YR_RT, etc.
+
+• Definition: students who have not defaulted and have
+paid down at least $1 in the principal balance on their
+loans since leaving school. Includes graduates and dropouts and excludes in-school/military deferments.
+• Time periods: 1, 3, 5 and 7 years after leaving school.
+
+Repayment Rates: Need to Know
+(cont.)
+• Note about cohort time period: if the data is for 2011, that includes
+students who started paying from October 1,2010-September 20,
+2011.
+• Breaking it down: Family income, gender, Pell Grant recipients,
+
+completion status, first generation and dependence status.
+• Note about use: Better than default rate because default rate can
+be manipulated.
+
+Default Rates
+
+Default Rates
+
+Default vs. Repayment
+
+Default Rates: Need-to-Know
+• CDR2, CDR3
+• Measured in for three years out of school,
+formally 2 years
+
+• Repayment rate is better data, but schools
+are judged on their default rates.
+
+Post-College Earnings
+
+Earnings Track SAT … Except at
+Liberal Arts Schools
+
+High Test Scores, Low Earnings
+
+Earning More Than a High School Grad?
+
+Earnings: Need-to-Know
+• Variable names: MD_EARN_WNE_P10, MD_EARN_WNE_P6,
+gt_25k_p6, gt_25k_p10, etc.
+• Definition: the mean/median of student earnings after entry into
+school. Includes graduates, drop-outs and excludes graduate
+students.
+• Time periods available: For 6-10 years after entry.
+• Shape of the data: 10th, 25th, 70th, and 90th percentiles
+
+• Breaking it down: Gender, family income, independent and
+dependent students
+• Most recent data: Latest is measured in 2011 and 2012.
+
+Earnings: Caveats
+• Program-level earnings data is not yet available. Research
+suggests variation across programs within a school may be
+even greater than aggregate earnings across schools.
+• Data includes only Title IV-receiving students, so it may not
+be representative of schools with a low number of Title-IV
+
+students (i.e. Only 3% of Harvard students take on federal
+loans and 10% of their students receive Pell grants).
+
+Student Loan Debt
+
+Rich Schools, High Debt
+
+Debt by Degrees
+
+Soaring Debts
+
+Low Incomes, High Debt
+
+Debt: Need-to-Know
+• Variable names: DEBT_MDN,
+GRAD_DEBT_MDN, LO_INC_DEBT_MDN, etc.
+
+• Definition: Median cumulative debt upon leaving
+school. Includes grads and drop outs.
+
+• Breaking it down: Family income band,
+completers, Pell recipients, first generation,
+
+dependent status.
+
+Debt: Caveats
+– Only includes Title IV loans—no private loans
+
+are included.
+– There are some schools where a lot of
+
+students drop out and the debt levels will be
+reflective of that (i.e. it could be lower).
+– At schools where few students borrow, the
+figure may represent outliers.
+
+Importance of Cohorts
+• Make apples-to-apples comparisons.
+– If you are analyzing any of the Scorecard figures,
+make sure you're not comparing 2-year school
+figures to 4-year school figures. Use PREDDEG
+variable (predominant degree) or IPEDS variable
+for number of years.
+
+Importance of Cohorts (cont.)
+– Additionally, break down data into cohorts to compare:
+
+• Public, Private nonprofit, Private for-profit (CONTROL).
+• States (ST_FIPS)
+• Carnegie Classifications (CCBASIC)
+• HBCUS, Tribal Schools, Hispanic Serving institutions, etc.. (HBCU,
+TRIBAL, HSI)
+• Highly selective schools vs. Not highly selective schools (ADM_RATE)
+• Research universities vs. Small liberal arts schools.
+• Size of school (UGDS)
+• Endowment of school (data source: NACUBO).
+
+Reporting Recipe
+Originally created for college students to help them report
+on student debt at their own colleges, this recipe is a great
+tool for localizing student debt
+http://bit.ly/1RaaCJZ
+
+Other Data Sources
+• IPEDS: https://nces.ed.gov/ipeds/datacenter/Default.aspx
+• Default Rates:
+http://www2.ed.gov/offices/OSFAP/defaultmanagement/cdr.html
+
+• Student Aid Awarded: https://studentaid.ed.gov/sa/about/datacenter/student
+• Accreditation: http://ope.ed.gov/accreditation/
+
+• Endowment: http://www.nacubo.org/Research/NACUBOCommonfund_Study_of_Endowments.html
+• Note: some of these may be more up-to-date than what’s in Scorecard
+
+

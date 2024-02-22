@@ -1,0 +1,641 @@
+Public Use Microdata Sample
+An Introduction
+Richard O'Reilly
+Director of Computer Analysis
+Los Angeles Times
+
+Presented at IRE 2002
+San Francisco, CA
+May 30, 2002
+It is called PUMS and since 1960 it has been the crown jewel of each decennial census.
+After protracted discussions that began in May 2000, and finally ended last December,
+the census user community led by the academics have essentially prevailed over initial
+Census Bureau proposals to cripple the 2000 PUMS release in the name of privacy.
+Why was the Census Bureau so worried about privacy? Because PUMS is the next best
+thing to raw census data itself. It is the answers to each of the long form questions for
+each member of a housing unit. (Although some answers will be somewhat obfuscated to
+protect individual privacy.)
+PUMS is the data that allows you to make all the cross-tabulations that the Census
+Bureau does not provide in its various summary files.
+But there is a BIG limitation and that is geography. There are no counties, places, tracts
+or census blocks in PUMS data. Instead there are PUMAs -- Public Use Microdata Areas
+-- which have a minimum population of 100,000 persons. And new for Census 2000 will
+be the Super PUMA, with a minimum population of 400,000 persons.
+PUMA boundaries can be frustrating to conceptualize and difficult to describe to readers.
+Places and Counties of 100,000 population or greater usually can be identified by either a
+single PUMA or combination of PUMAs. But in rural areas, you'll find that counties are
+combined to create a single PUMA. The boundaries for 2000 PUMAs and Super PUMAs
+are still being determined, in cooperation with local officials in each state. Look for
+Census Bureau boundary files when that work is complete.
+PUMS data is huge and cannot be effectively utilized with Excel or Access software. It
+is much easier with SPSS or SAS.
+
+O'Reilly/IRE 2002
+
+Page 1
+
+PUMS data will come in two flavors, a 1% sample of all households and a 5% sample of
+all households. Because the sample includes everyone in a household (or group quarter),
+these translate into approximately 1% and 5% samples of the entire population.
+That means that nationwide, there will be about 2.85 million records in the 1% sample
+and about 14.25 million records in the 5% sample.
+The record sizes for your area will depend on your state population. For instance, the 5%
+sample for California in 1990 contains 1,456,011 records.
+Because this is sample data, every record has a weight associated with it, and the weights
+vary widely. There is one weight for the household and another weight for each person
+in the household. In 1990 the weights were whole numbers. The need to weight each
+record as cross-tabs are being created is one reason you need powerful statistical software
+that can easily accomplish the task.
+Both sets of PUMS data will contain two tables, one for the household and the other for
+the persons, linked hierarchically by a serial number field. (The easiest way to deal with
+that is to copy the household record onto the person record of each person in the
+household, which wastes disk storage space with repetive data, but simplifies
+computations. My 1990 combined table contained only 124 fields but I left out some
+fields that I thought I would never use.).
+The simple way to think about the differences between the two forthcoming versions of
+PUMS is that the 1% sample will NOT have any limitations on the data contained, but
+the smallest geography will be a Super PUMA of at least 400,000 persons. The 5%
+sample will have generalized answers for race, ancestry, occupation, birthplace, language
+spoken and probably some others for any category for which there are fewer than 10,000
+responses nationwide. But the geography will go down the the 100,000-person PUMA
+level.
+According to Steve Ruggles, Distinguished McKnight Professor at the University of
+Minnesota, head of UM's Population Center, and director of the association of academics
+that lobbied the Census Bureau hard for more data (and mostly won), that could mean the
+loss of about one-sixth of the occupation titles available in 1990, the loss of upwards of
+one-quarter of the birthplaces listed in 1990 PUMs, the loss of up to one-third of the
+languages and the loss of perhaps a fifth of the ancestries available in 1990.
+Detailed income data itemized by various income categories (wage and salary, social
+security, public assistance, etc) will be available, but will be top-coded, just as in the
+Summary File 3 data. That means that above a certain level, the mean statewide income
+of all persons exceeding that level will be substituted for actual income.
+Paul Mackun of the Census Bureau, who wrote the December 20, 2001 paper titled The
+U.S. Census Bureau's Plans for the Census 2000 Public Use Microdata Sample Files
+(http://www.census.gov/population/www/cen2000/pums.html), said that current
+
+O'Reilly/IRE 2002
+
+Page 2
+
+projections are for the 1% sample to be released at the end of this year and the 5% sample
+to be released by the end of 2003. He said specific content coding decisions have not yet
+been made. Mackun also said that technical documentation for PUMS data will not be
+released until the data itself.
+Sampling Error: The ugly side of PUMS is that it is a sample and thus subject to
+sampling error. In 1990, the Census Bureau devoted an entire 17-page chapter in the tech
+doc to explaining how to calculate the sampling error. Tables were provided for
+determining error margins, as well as formulas for making more exacting calculations.
+Naturally, the bigger the sample size, the lower the error margin.
+As a rule of thumb, Ruggles said social scientists seldom try to publish anything where
+the sample size is less than 1,000. "But I much prefer it when I have 50,000 or 60,000
+persons in my sample," he added.
+That means that looking at subsets of data within a single PUMA can get dangerous. But
+even a sample size of only 200 or 300 persons can translate into a weighted sample of
+10,000 to 15,000 persons and sampling errors in the 3% to 4% range, which can be
+tolerable. (See examples of size and error margin effects below).
+The reality is that your focus should be regional findings rather than local. And for
+smaller circulation newspapers that's going to mean the MSA/PMSA instead of the
+hometown.
+You can do some great stories with the big picture, however.
+In early 1993, shortly after release of the 1990 PUMS data we were able to publish two
+page one stories on racial and gender inquities in worker pay. We documented how
+Whites were better paid than minorities at every comparable education level. We also
+detailed how men were better paid than women in virtually every line of work including
+waitpersons, secretaries and hairdressers.
+(See clip images at end of paper.)
+
+DATA EXAMPLES: California Journalists in 1990
+To illustrate some of the virtues and vices of PUMS data, I took a look at various
+characteristics of Californian's who identified themselves in the 1990 Census as
+journalists -- the Census occupation category of editors and reporters:
+
+O'Reilly/IRE 2002
+
+Page 3
+
+Households
+HOUSEHOLD TYPE
+Sample Weighted Percent Margin +/Married couple family
+959
+18,828
+50.6
+1.4%
+Male householder family
+59
+1,146
+3.1
+0.5%
+Female householder family
+120
+2,498
+6.7
+0.7%
+Male living alone
+185
+4,614
+12.4
+0.9%
+Male not living alone
+174
+3,737
+10.0
+0.8%
+Female living alone
+171
+3,913
+10.5
+0.8%
+Female not living alone
+113
+2,491
+6.7
+0.7%
+Total
+1,781
+37,227
+100.0
+
+TENURE
+Own, with mortgage
+Own, no mortgage
+Rent, cash rent
+Rent, no cash rent
+
+Households
+Sample Weighted Percent Margin +/867
+16,819
+45.2
+1.3%
+128
+2,533
+6.8
+0.7%
+774
+17,668
+47.5
+1.4%
+12
+207
+0.6
+0.2%
+Total
+1,781
+37,227
+100.0
+
+Households
+LANGUAGE SPOKEN AT
+Sample Weighted Percent Margin +/HOME
+English
+1,449
+30,624
+82.3
+1.0%
+Spanish
+123
+2,439
+6.6
+0.7%
+Other Indo-European lang.
+104
+2,066
+5.6
+0.6%
+Asian, Pacific Islander lang.
+88
+1,762
+4.8
+0.6%
+Other language
+17
+306
+0.9
+0.2%
+Total
+1,781
+37,197
+100.0
+
+EDUCATIONAL
+ATTAINMENT
+Less than high school diploma
+High school diploma
+Some college
+Bachelor degree
+Advanced degree
+Total
+
+O'Reilly/IRE 2002
+
+Persons
+Sample Weighted Percent Margin +/60
+117
+459
+925
+297
+1,858
+
+1,328
+2,361
+9,603
+19,852
+6,032
+39,176
+
+3.4
+6.0
+24.5
+50.7
+15.4
+100.0
+
+0.5%
+0.6%
+1.1%
+1.3%
+1.0%
+
+Page 4
+
+AGE
+18 or younger
+19 to 24
+25 to 34
+35 to 44
+45 to 54
+55 to 64
+65 or older
+
+Persons
+Sample Weighted Percent Margin +/21
+452
+1.2
+0.3%
+169
+3,717
+9.5
+0.8%
+599
+13,110
+33.5
+1.2%
+532
+11,109
+28.4
+1.2%
+263
+5,429
+13.9
+0.9%
+151
+2,898
+7.4
+0.7%
+123
+2,491
+6.3
+0.6%
+Total
+1,858
+39,206
+100.0
+
+Median age = 36
+Persons
+USUAL HOURS WORKED
+Sample Weighted Percent Margin +/Did not work in 1989
+124
+2,508
+6.4
+0.6%
+20 hours or less weekly
+179
+3,532
+9.0
+0.8%
+21-35 hours weekly
+181
+3,939
+10.1
+0.8%
+36-40 hours weekly - full time
+770
+16,357
+41.8
+1.3%
+41-50 hours weekly
+414
+8,810
+22.5
+1.1%
+51-60 hours weekly
+145
+3,019
+7.7
+0.7%
+61-80 hours weekly
+36
+830
+2.1
+0.4%
+More than 80 hours weekly
+9
+181
+0.5
+0.2%
+Total
+1,858
+39,176
+100.0
+Median Hours Worked = 40
+Persons
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/No income in 1989
+299
+6,054
+15.5
+1.0%
+Up to $20,000
+621
+13,254
+33.8
+1.3%
+$20,001 to $40,000
+548
+11,525
+29.4
+1.2%
+$40,001 to $60,000
+247
+5,414
+13.8
+0.9%
+$60,001 to $80,000
+67
+1,421
+3.6
+0.5%
+$80,001 to $100,000
+37
+746
+1.9
+0.4%
+Above $100,000
+39
+762
+2.0
+0.4%
+Total
+1,858
+39,176
+100.0
+Median Income = $21,000
+
+O'Reilly/IRE 2002
+
+Page 5
+
+SAN FRANCISCO ONLY
+Persons
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/No income in 1989
+10
+192
+8.5
+3.1%
+Up to $20,000
+32
+764
+33.7
+5.2%
+$20,001 to $40,000
+37
+823
+36.3
+5.3%
+$40,001 to $60,000
+14
+337
+14.9
+3.9%
+$60,001 to $80,000
+4
+86
+3.8
+2.1%
+$80,001 to $100,000
+1
+21
+0.9
+1.1%
+Above $100,000
+2
+46
+2.0
+1.5%
+Total
+100
+2,269
+100.0
+Median Income = $25,000
+
+FRESNO COUNTY ONLY
+Persons
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/No income in 1989
+1
+26
+4.9
+4.9%
+Up to $20,000
+10
+258
+48.7
+11.4%
+$20,001 to $40,000
+7
+140
+26.4
+10.0%
+$40,001 to $60,000
+5
+106
+20.0
+9.1%
+$60,001 to $80,000
+0.0
+0.0%
+$80,001 to $100,000
+0.0
+0.0%
+Above $100,000
+0.0
+0.0%
+Total
+23
+530
+100.0
+Median Income = $17,250
+
+O'Reilly/IRE 2002
+
+Page 6
+
+TESTING SAMPLE SIZE EFFECT ON MARGIN OF ERROR
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/Up to $20,000
+32
+764
+36.8
+5.5%
+$20,001 to $40,000
+37
+823
+39.6
+5.6%
+$40,001 to $60,000
+14
+337
+16.2
+4.2%
+$60,001 to $80,000
+4
+86
+4.1
+2.3%
+$80,001 to $100,000
+1
+21
+1.0
+1.1%
+Above $100,000
+2
+46
+2.2
+1.7%
+Total
+90
+2,077
+100.0
+INCREASE OF 1,400 PERSONS IS SOME IMPROVEMENT
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/Up to $20,000
+52
+1,242
+26.0
+3.3%
+$20,001 to $40,000
+57
+1,268
+26.6
+3.3%
+$40,001 to $60,000
+34
+818
+17.2
+2.9%
+$60,001 to $80,000
+24
+516
+10.8
+2.4%
+$80,001 to $100,000
+20
+420
+8.8
+2.1%
+Above $100,000
+22
+506
+10.6
+2.3%
+Total
+209
+4,770
+100.0
+WEIGHTED SAMPLE OF 10,000 OR MORE BEGINS TO BE USEFUL
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/Up to $20,000
+114
+2,731
+26.0
+2.2%
+$20,001 to $40,000
+125
+2,789
+26.6
+2.3%
+$40,001 to $60,000
+75
+1,801
+17.2
+1.9%
+$60,001 to $80,000
+53
+1,135
+10.8
+1.6%
+$80,001 to $100,000
+44
+924
+8.8
+1.4%
+Above $100,000
+48
+1,113
+10.6
+1.6%
+Total
+460
+10,494
+100.0
+WEIGHTED SAMPLE OF 100,000 OR MORE IS NO PROBLEM
+WAGE AND SALARY, 1989 Sample Weighted Percent Margin +/Up to $20,000
+1,584
+37,818
+36.8
+0.8%
+$20,001 to $40,000
+1,832
+40,750
+39.6
+0.8%
+$40,001 to $60,000
+693
+16,682
+16.2
+0.6%
+$60,001 to $80,000
+198
+4,257
+4.1
+0.3%
+$80,001 to $100,000
+49
+1,029
+1.0
+0.2%
+Above $100,000
+99
+2,277
+2.2
+0.2%
+Total
+4,455 102,812
+100.0
+
+O'Reilly/IRE 2002
+
+Page 7
+
+O'Reilly/IRE 2002
+
+Page 8
+
+O'Reilly/IRE 2002
+
+Page 9
+
+O'Reilly/IRE 2002
+
+Page 10
+
+O'Reilly/IRE 2002
+
+Page 11
+
+

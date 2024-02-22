@@ -1,0 +1,66 @@
+Covering the Affordable Care Act
+Using numbers to help make sense of Obamacare
+Meghan Hoyer, USA TODAY mhoyer@usatoday.com @meghanhoyer
+Federal exchange plan data: Premium costs, deductibles and co-pays for the thirty-seven states that use
+healthcare.gov for signups: https://www.healthcare.gov/health-plan-information-2015/ Make sure not
+to miss the three states whose files are separate from the pack.
+Some caveats: The individual marketplace data does not use FIPS codes or a unique key for each
+county. And if you want to compare one year’s data to the other, not all county names are the
+same from year to year – create a separate crosswalk to clean up county names and join census
+data or uninsured population data to the file. Propublica’s ACA dataset has a crosswalk built in
+under its ACA Plan Compare Data: https://projects.propublica.org/data-store/
+Don’t just look at premiums! Although a lot of consumers will choose a plan based solely on
+premiums, deductibles + copays can play a big role.
+The second highest Silver plan in each county is used to help determine individual subsidies, and
+is usually seen as the benchmark plan. To identify these benchmarks with SQL:
+- Use the RANK() OVER function to rank the silver plans and find the second-highest.
+DENSE_RANK accounts for ties and gives you consecutive rankings.
+- You don’t want a rank of all plans across the country, though – you want a rank of all silver
+plans in each locale. To group the rankings by state and county use PARTITION BY.
+RANK() OVER (PARTITION BY FieldToGroupBy, FieldToGroupBy ORDER BY FieldYouareRanking)
+AS Rank
+- My code:
+SELECT B.*
+FROM (SELECT DENSE_RANK() OVER (partition by State, County ORDER BY
+Premium_Adult_Individual_age_40) AS BenchPlan, *
+FROM QHP_2015_Individual_Medical
+WHERE Metal_level='silver' and Premium_Adult_Individual_Age_40>0) B
+WHERE B.BenchPlan=2
+State Exchange data: Thirteen states + DC have their own exchanges. This data should be available
+through the state insurance commissioner offices.
+Others collect this data, which often isn’t in the same format as the federal exchange data:
+- McKinsey on Healthcare:
+http://healthcare.mckinsey.com/2015-individual-exchange-filings-0
+- Robert Wood Johnson Foundation’s HIX compare (silver plans only):
+http://www.rwjf.org/en/library/research/2014/03/breakaway-policy-dataset.html
+
+Enrollment data: HHS puts out enrollment “snapshots” on its blog weekly during the enrollment period:
+http://www.hhs.gov/healthcare/facts/blog/index.html
+
+The Assistant Secretary for Planning and Evaluation office puts out more detailed information
+periodically, including (at times) zip-code and county-level enrollment data and end-of-theenrollment period reports: http://www.aspe.hhs.gov/
+SHADAC collects state exchange reports. (SHADAC also has lots of data on insurance coverage,
+health care access and costs at a state-by-state level and is willing to share with reporters)
+http://www.shadac.org/content/insurance-marketplace-enrollment-reports
+Web developer Charles Gaba collects state and federal exchange enrollment data and includes
+projections that are remarkably accurate: http://acasignups.net/
+
+Who are the uninsured, and where are they?
+The potential enrollee pool for ACA health coverage through the exchanges isn’t the same as the
+American Community Survey’s tallies of the total uninsured population for a state or region. Potential
+enrollees in the health care exchanges must be legal residents. They generally have to have incomes at
+100% of the poverty level or above. They must not have access to insurance through their work.
+Best potential enrollee data models:
+By state - Kaiser Family Foundation State Health Facts: http://kff.org/health-reform/stateindicator/marketplace-enrollment-as-a-share-of-the-potential-marketplace-population-2015/
+In smaller areas (zips, counties, MSAs) - Enroll America and Civis Analytics (you have to call and
+ask but they are generally helpful): http://www.enrollamerica.org/blog/2014/10/updating-ourdata-model-to-find-the-uninsured/
+
+The best think tank and research (and sometimes data) resources:
+- Kaiser Family Foundation: http://kff.org/uninsured/
+- Price Waterhouse Health Research Institute: http://www.pwc.com/us/en/healthindustries/health-research-institute/aca-health-reform.jhtml
+- The Commonwealth Fund: http://www.commonwealthfund.org/topics/affordable-care-actreforms
+- The Urban Institute: http://www.urban.org/health_policy/
+- The Robert Wood Johnson Foundation:
+http://www.rwjf.org/en/library/research/2014/03/breakaway-policy-dataset.html
+
+

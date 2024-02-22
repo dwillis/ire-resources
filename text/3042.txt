@@ -1,0 +1,137 @@
+Tisha Thompson
+Investigative Reporter
+WTTG-TV Fox 5 News
+Washington, DC
+tisha.thompson@foxtv.com
+Investigating Subprime Lending & Foreclosures
+
+HMDA Data
+Federal Home Mortgage Disclosure Act database
+http://www.ire.org/datalibrary/databases/databases.php
+Subprime = Spread
+To find subprime loans, you will need to focus on the “Spread” field. The Spread is the
+“difference between the annual percentage rate and the Treasury Yield if it is greater or
+equal to 3 percentage points for a 1st lien, 5 points for a subordinate lien.”
+In super basic terms for HMDA data, that translates to: For a first mortgage, if the
+“Spread” number is equal to or greater than 3, than it is subprime. For a second or third
+mortgage, the “Spread” is any number that is equal to or greater than 5. Prime loans
+are then less than the number 3 or 5, depending on what kind of loan you’re interested
+in.
+The Update Function
+To “count” how many subprime loans you have, you will need to create a new column
+and do what is called an “Update Function.”
+1. Create a new column in your main table and call it “Prime”
+2. Open a new query
+3. Choose “Update Query” under “Query” list on the main menu bar
+4. Type in the following to find which loans are “subprime conventional first
+mortgages for single-family homes”
+Field:
+Table:
+Update to:
+Criteria:
+
+Prime
+DC_06
+1
+
+Spread
+DC_06
+
+Lienstatus
+DC_06
+
+Prop_Type
+DC_06
+
+Loan_Type
+DC_06
+
+>=3
+
+1
+
+1
+
+1
+
+st
+
+New Column
+
+“1 Mortgage”
+
+“Single-family home” “Conventional Loan”
+
+For “subprime conventional second/third mortgages for single-family homes.”
+Field:
+Table:
+Update to:
+Criteria:
+
+Prime
+DC_06
+1
+
+New Column
+
+Spread
+DC_06
+
+Lienstatus
+DC_06
+
+Prop_Type
+DC_06
+
+Loan_Type
+DC_06
+
+>=5
+
+2
+
+1
+
+3
+
+“2nd Mortgage”
+
+“Single-family home” “Conventional Loan”
+
+You can also use the Update function to find out how many minorities received
+subprime loans, this time using the “APP_ETH” and “APP_RACE” fields. First,
+create a new column called “minority.” To put a “1” in any time the first applicant is
+listed as a non-white race code, type in this SQL code:
+UPDATE 04HMDA SET [04HMDA].MINORITY = '1'
+WHERE ((([04HMDA].APP_RACE1)="1" Or ([04HMDA].APP_RACE1)="2" Or ([04HMDA].APP_RACE1)="3" Or
+([04HMDA].APP_RACE1)="4") AND (([04HMDA].APP_ETH)="1"));
+
+You can continue to use Update Functions to divvy up the Income field (using census
+data as a guide) to find out if income makes a difference.
+After you’ve “updated” everything, start doing counts to see if blacks, Latinos,
+women, etc. were more likely to receive a subprime loan. You can also use the
+“Tract” and “County” fields to find out if certain neighborhoods received a higher
+number of subprime loans.
+
+Helpful Sources:
+Consumer Federation of America
+http://www.consumerfed.org/topics.cfm?section=Housing&topic=Mortgages
+
+Well respected studies that you can use to model your own research off of.
+Allen Fishbein is a gold mine of information and a particularly helpful contact
+there.
+Federal Reserve http://www.federalreserve.gov/consumerinfo/mortgages.htm
+You are going to have to learn what conventional, lien, escrow, interest-only, 228, etc. means – this is the official government source for all things HMDA
+Acorn http://www.acorn.org/
+There’s quite a lot of difference between different chapters – they definitely
+have an “agenda” – but they can be a terrific source for finding homeowners
+State Attorney General http://www.oag.state.md.us/Consumer/foreclose.htm
+Type in “Maryland Attorney General foreclosure” and you will get a wonderful
+list of non-profit groups whose only mission in life is to help people going into
+foreclosure. Contact these organizations to find homeowners and “experts” on
+what is really happening.
+State Licensing Board http://www.dllr.state.md.us/finance/mortfore.htm
+Find out if your state even regulates or licenses mortgage brokers or has a law
+against “mortgage fraud.” Many states do not.
+
+

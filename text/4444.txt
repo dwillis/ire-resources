@@ -1,0 +1,94 @@
+Deep Dives at Sunday, 10am
+Short link to this document: ​
+http://bit.ly/car15_cedric
+Document prepared by Cedric Sam (​
+@cedricsam​
+/​
+http://cedric.sam.name/​
+)
+
+Occupy Lapse
+● Save data, just in case you need it one day
+● http://multimedia.scmp.com/occupylapse/
+● First days of Occupy Central (aka ​
+#UmbrellaRevolution​
+)
+https://plus.google.com/u/0/photos/+CedricSam/albums/6123524346221392161/6123524344095
+916210?pid=6123524344095916210&oid=115548251496452444999
+● And then this happened:
+○ http://youtu.be/SKUzBf24tes?t=1m35s
+○ http://www.scmp.com/news/hong­kong/article/1604461/top­10­moments­occupy­central­so
+­far
+● In the meanwhile:
+○ https://plus.google.com/u/0/photos/+CedricSam/albums/6123524346221392161/61235243
+45976924546?pid=6123524345976924546&oid=115548251496452444999
+● When you develop on iPad:
+
+●
+
+●
+
+●
+●
+
+○
+Quick end products for ​
+our live blog​
+:
+○ https://www.youtube.com/watch?v=afAp6umV9QQ
+○ http://giphy.com/gifs/hong­kong­causeway­bay­scmp­ToMjGpDtusLMFf6Rqz6
+Sometimes, the govt releases good datasets, which we can re­purpose:
+http://www.gov.hk/en/theme/psi/datasets/trafficsnapshot.htm
+○ Example image in Causeway Bay shopping district:
+http://tdcctv.data.one.gov.hk/H203F.JPG
+Archiving webcam images: ​
+wget​
+, wrapped in a bash script that checks ​
+stat
+Takes up lots of space:
+
+○
+● Stitch up using ​
+ffmpeg​
+to create timelapses automatically. Basically:
+○ find img ­name ${c}_\* ­type f ­cmin ­${minsstart} ­cmin
++${minsend} | sort > ${DIR}/${f}.txt
+○ ffmpeg ­f image2 ­i ${DIR}/${f}/frame%04d.jpg ­r 60
+${DIR}/out/${f}_60fps.nobrand.mp4 > /dev/null 2> /dev/null
+● Google Fusion Tables interface:
+https://www.google.com/fusiontables/DataSource?docid=1D1e­IPQ7hfo_ggrVaniUjn9vTHek8uWl
+Q1sRcnN2#map:id=3
+● Interesting views inside Occupy Lapse:
+○ 1st night in Causeway Bay (Sept 28):
+http://multimedia.scmp.com/occupylapse/#/H203F/20140929­1600
+○ 1st night on Queensway, Admiralty:
+http://multimedia.scmp.com/occupylapse/#/H109F/20140929­1600
+○ When the tear gas hit outside of Tamar:
+http://multimedia.scmp.com/occupylapse/#/H214F/20140929­1600
+○ The short­lived “Occupy Tsim Sha Tsui” (Oct 1):
+http://multimedia.scmp.com/occupylapse/#/K121F/20141002­1600
+○ Nathan Road closed all the way to Lai Chi Kok Rd (Oct 2):
+http://multimedia.scmp.com/occupylapse/#/K205F/20141003­1600
+○ When traffic reopened on Queensway (Oct 14):
+http://multimedia.scmp.com/occupylapse/#/H109F/20141015­0400
+○ When the police reopened traffic on Yee Wo St, Causeway Bay (Oct 14 at 5am):
+http://multimedia.scmp.com/occupylapse/#/H203F/20141015­0400
+
+Occupy Streets / Streets of Occupy
+● Reuse, reuse, reuse
+● http://multimedia.scmp.com/occupystreets/
+● Original site: ​
+http://streetstories.protest.net/
+○ Made at Canvas hackathon at Al­Jazeera in Doha by @designhawg, @rabble,
+@BassamAlasad, @Yanazure and @hariananth
+● Built over a mini­CMS on Google Docs:
+https://github.com/cedricsam/Utilities/tree/master/streetstories_minicms
+○ Our data:
+https://docs.google.com/spreadsheets/d/1ure7af4zsHwJSU_DAH7Cdx9J26mf1c1n9mb_B
+SDXdFI/edit#gid=1829890192
+● Tweaks
+○ Added, consolidated media types
+○ Restricted levels of freedom: removing overhead map
+○ Using user­generated photo bubbles
+
+

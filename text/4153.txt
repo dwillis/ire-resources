@@ -1,0 +1,327 @@
+STOP DROWNING IN DATA. START MAKING SENSE!
+Or
+An Introduction To SQLite Databases
+(Data for this tutorial at www.peteraldhous.com/Data)
+You may have previously used spreadsheets to organize and analyze data.
+These classes aims to take your skills to the next level, by introducing
+databases and the language used to query them. Databases can handle larger
+datasets, and with practice are more flexible and nimble for filtering, sorting,
+grouping and aggregating data.
+Databases also allow you to join multiple data tables into one, or match
+records across different datasets, if they have common fields – which can be
+a powerful tool. We’ll work with data used in reporting this story, about the
+drug company Pfizer’s payments to doctors.
+We will work with SQLite, stripped-down but still powerful database
+software that can be managed using a free add-on to the Firefox browser.
+(Firefox uses SQLite to store information including your bookmarks. Using
+the SQLite Manager add-on, you can manage any SQLite database.)
+First, download and install SQLite Manager. In Firefox, select Tools>Addons and type SQLite Manager in the search box at top right. You should
+now see the add-on under the Available Add-ons tab:
+
+Click Install and restart Firefox.
+Open SQLite Manager by selecting Tools>SQLite Manager in Firefox. You
+should see a screen like this:
+
+Now open the database pfizer.sqlite, which you can download from here, by
+selecting Database>Connect Database. Navigate to the database file, and
+click Open.
+
+After the database opens, select the table pfizer in the panel to the left, and
+click the Browse and Search tab in the right-hand panel. You should now be
+able to see the first few rows of the data in the table:
+
+Notice that it looks much like a spreadsheet, except columns and rows are
+not designated by letters and numbers in a coordinate system.
+Instead, the column names, called “fields” in a database, are fixed, and each
+row or “record” has a unique ID number, created by SQLite as a “Primary
+Key” when the data was imported. (We’ll do this later with a new table.)
+Notice also that the field names are fairly short and have no spaces. This will
+keep things succinct when we write database queries. SQLite Manager also
+color-codes the fields by the type of data they contain: here numbers have a
+light green background and text fields are light blue
+
+Database queries
+1. Filtering and sorting data
+To extract information from our database, we need to ask for it in the
+language that databases understand: Structured Query Language, or SQL.
+Don’t panic: the logic of SQL is very easy to follow – it’s the closest that
+computer code comes to plain English.
+Learning SQL is very useful, because (with small variations in syntax), most
+databases use the same language. So in this tutorial, you won’t just be
+learning how to use SQLite, but also starting to acquire skills that can be
+transferred to other database software, from Microsoft Access to advanced
+databases such as PostgreSQL and MySQL.
+Click on the Execute SQL tab and notice that Enter SQL box contains the
+statement SELECT * FROM tablename. Replace tablename with pfizer,
+and click Run SQL. That should return the entire table, because * is a
+wildcard that tells SQLite to return information from every field in a table.
+The query will return all 10,087 records, because we haven’t asked for the
+data to be filtered in any way.
+OK, now let’s run a more useful query, filtering the data to make a list of all
+doctors in California who were paid $10,000 or more by Pfizer to run
+“expert-led forums,” lecturing other doctors about using the company’s
+drugs. Paste or type this query into the Enter SQL box:
+SELECT first_plus, last_name, city, state, category, total
+FROM pfizer
+WHERE state = "CA" AND category LIKE "Expert%" AND total >=
+10000
+ORDER BY total DESC;
+
+Click Run SQL and you should see the following results:
+
+Let’s break this query down:
+SELECT first_plus, last_name, city, state, category, total
+FROM pfizer
+WHERE state = "CA" AND category LIKE "Expert%" AND total >=
+10000
+ORDER BY total DESC;
+The first two lines tell SQLite to select the named fields from the pfizer
+table, with each field separated by a comma.
+
+SELECT first_plus, last_name, city, state, category, total
+FROM pfizer
+WHERE state = "CA" AND category LIKE "Expert%" AND total >=
+10000
+ORDER BY total DESC;
+The WHERE clause applies a filter to select only certain records from the
+table.
+When filtering text fields, the search string should be put in quote marks.
+The second text field filter uses the operator LIKE to perform a fuzzy
+match, and is used with wildcard characters: the % wildcard takes the place
+of any number of characters, while the _ wildcard is used to represent single
+characters only. Here the % wildcard is simply saving us from having to
+type Expert-Led Forums in full, but such queries can be very useful to
+return data entered in slightly different ways. (LIKE also matches
+irrespective of case, whereas = requires the case to be exactly as typed.)
+Our query also includes a number filter, here telling SQLite to return records
+only when the total is greater or equal to 10,000. Try experimenting with
+different operators, such as =, < (less than), and <> (not equal to).
+In this query, each part of the WHERE statement is linked by AND, which
+ensures that records will only be returned if all the stated criteria are met.
+WHERE statements obey Boolean logic; see what happens if you replace
+the first AND with OR.
+SELECT first_plus, last_name, city, state, category, total
+FROM pfizer
+WHERE state = "CA" AND category LIKE "Expert%" AND total >=
+10000
+ORDER BY total DESC;
+The final line of the query sorts the results in descending order by the total
+paid. See what happens if you remove DESC. The semi-colon simply marks
+the end of the query. See what happens if you change the end of the query to
+the following:
+ORDER BY total DESC
+LIMIT 20;
+
+Now let’s run the following query, which extends the search for doctors paid
+$10,000 or more for running Expert-led forums to New York, as well as
+California:
+SELECT first_plus, last_name, city, state, category, total
+FROM pfizer
+WHERE (state = "CA" OR state = "NY") AND category LIKE "Expert
+%" AND total >= 10000
+ORDER BY total DESC;
+Now remove the brackets surrounding the first part of the WHERE clause
+and see if you can work out what’s going on. Hint: think algebra!
+By now you should be starting to get the hang of SQL, so let’s try a couple
+more queries to filter and sort the data.
+The 20 doctors across the four largest states (CA, TX, FL, NY) paid the
+most for Professional Advising:
+SELECT first_plus, last_name, city, category, state, total
+FROM pfizer
+WHERE (state = "CA" OR state = "TX" OR state = "FL" OR state =
+"NY") AND category LIKE "Prof%"
+ORDER BY total DESC
+LIMIT 20;
+All payments for speaking at Expert-Led Forums or for Professional
+Advising, arranged alphabetically by doctor (last name, then other names):
+SELECT last_name, first_plus, city, category, state, total
+FROM pfizer
+WHERE category LIKE "Expert%" OR category LIKE "Prof%"
+ORDER BY last_name, first_plus;
+
+2. Saving and exporting queries
+OK, let’s save the last of these queries, so we can return to it later. Select
+View>Create View from the top menu, give the view a suitable name (e.g.
+speak_advice), and paste the SQL for the query into the box:
+
+Click OK, and at the next dialog box click Yes. Double click on Views in
+the left panel and select the newly created view. The results of the query
+appear in the Browse & Search tab.
+Now click on the Structure tab, which should look like this:
+
+By creating views, you can keep a record of the queries you have run, which
+is good practice in data journalism.
+
+You may also want to export the results of your queries, so now click
+Export, and fill in the options in the wizard as follows:
+
+I often use the Pipe symbol (|) to separate the fields in the exported data, as it
+is unlikely to appear in the data itself. Tab is another good option. Click OK,
+and you will save the data in CSV format, a simple text file that can easily
+be imported into spreadsheets and other data analysis software.
+
+3. Grouping and aggregating data
+Now let’s calculate the total payments made in each state. Click on the
+Execute SQL tab, and run the following query:
+SELECT state, SUM(total) AS state_total
+FROM pfizer
+GROUP BY state
+ORDER BY state_total DESC;
+Click Run SQL and you should see the following results:
+
+Again, let’s break this query down:
+SELECT state, SUM(total) AS state_total
+FROM pfizer
+GROUP BY state
+ORDER BY state_total DESC;
+The first two lines return data for state and total, with the totals added up
+using the function SUM and the field renamed AS state_total. See what
+happens if you replace SUM with AVG, MAX, MIN or COUNT.
+SELECT state, SUM(total) AS state_total
+FROM pfizer
+GROUP BY state
+ORDER BY state_total DESC;
+The third line is crucial, telling SQL how to group the data to calculate the
+subtotals. In GROUP BY queries like this, fields that are selected but aren’t
+being aggregated (using SUM, AVG etc) must also appear in the GROUP
+BY clause.
+Now let’s total by state just for payments made for Expert-led forums, using
+this query:
+SELECT state, SUM(total) AS expert_total
+FROM pfizer
+GROUP BY state, category
+HAVING category LIKE "Expert%"
+ORDER BY expert_total DESC;
+
+Click Run SQL and you should see the following results:
+
+This query introduces the HAVING clause:
+SELECT state, SUM(total) AS expert_total
+FROM pfizer
+GROUP BY state, category
+HAVING category LIKE "Expert%"
+ORDER BY expert_total DESC;
+HAVING does the same filtering job as WHERE for a GROUP BY query;
+fields that appear in the HAVING clause must also appear under GROUP
+BY.
+We can also aggregate data by more than one field at a time. For example,
+this query calculates the total payments by state and by category:
+SELECT state, category, SUM(total) AS subtotal
+FROM pfizer
+GROUP BY state, category;
+4. Running queries on queries
+We can run queries on queries we have previously saved as views. Let’s do
+that on our saved list of all payments for Expert-led Forums or Professional
+Advising, returning the total payments for these two categories for each
+doctor:
+SELECT first_plus, last_name, city, state, SUM(total) AS sum_total
+FROM speak_advice
+GROUP BY first_plus, last_name, city, state
+ORDER BY sum_total DESC;
+We could obtain the same result in one step, without saving as a view, using
+a subquery. This is given in brackets and highlighted below, and is run first:
+SELECT first_plus, last_name, city, state, SUM(total) AS sum_total
+FROM (SELECT first_plus, last_name, city, category, state, total
+FROM pfizer
+WHERE category LIKE "Expert%" OR category LIKE "Prof%")
+GROUP BY first_plus, last_name, city, state
+ORDER BY sum_total DESC;
+
+Each of these queries should give the following results:
+
+5. Creating a new data table
+Now we’re going to import the data in the file fda_warning.csv, which you
+can download from here. It details warning letters sent by the Food and Drug
+Administration to doctors because of problems with their conduct of clinical
+research. The data is in a CSV file with Pipe separators. The first few rows
+look like this when imported into a spreadsheet:
+
+First we need to create a table into which to import the data. Select
+Table>Create Table, and fill in the dialog box as follows:
+
+The first field will be automatically created when the data is imported,
+giving a unique ID number to each record. For this field, make sure to select
+INTEGER for Data Type, and to check the Primary Key and Autoinc
+boxes. The other column names match those in the data; VARCHAR means
+a text field of varying length; DATETIME is used for the issued date.
+Click Yes at the next dialog box, which shows the SQL code being used to
+create the table:
+
+Now we can import the data, by clicking the Import icon:
+Fill in the Import Wizard as follows, and select OK at the subsequent
+prompts:
+
+With the new fda table selected in the left panel, select the Browse &
+Search tab to view the imported data:
+
+Notice that empty values, called NULLS, are color-coded in pink.
+
+6. Running queries using dates
+Date values are colored the same as text, and when used in queries should be
+put in quote marks, as for text. However, for dates we can use operators that
+we previously used for numbers.
+For instance, this query returns all records from the fda table with issue
+dates from Jan 1, 2005 onwards:
+SELECT *
+FROM fda
+WHERE issued >= "2005-01-01"
+ORDER BY issued;
+This query uses the strftime function to extract the year from dates, and then
+counts the number of letters issued per year:
+SELECT strftime("%Y", issued) AS year, COUNT(id) AS count_letters
+FROM fda
+GROUP BY year
+ORDER BY year;
+This query illustrates other some other date functions, to return all the fields
+in the FDA table, with a new column showing how many days have elapsed
+since each letter was issued:
+SELECT *, (julianday(date("now")) - julianday(issued)) AS
+days_elapsed
+FROM fda
+ORDER BY issued;
+The julianday function returns the Julian day – the number of days since
+noon in Greenwich on November 24, 4714 BC, allowing you to subtract one
+date from another; "now" returns the current date and time, and date
+extracts just the date from this timestamp. See what happens if you run the
+same query without the date function.
+See here for more on querying dates, including other periods that can be
+extracted from dates/times.
+
+7. Querying across joined data tables
+Now we’re going to run a query across our two data tables, so we select
+doctors paid by Pfizer to run Expert-led forums who had also received a
+warning letter from the FDA for problems with their conduct of clinical
+research.
+To find doctors who may be the same individual, we need to match them by
+both first and last name. Here is how to achieve that using SQL:
+SELECT *
+FROM fda JOIN pfizer ON fda.name_last = pfizer.last_name AND
+fda.name_first = pfizer.first_name
+WHERE pfizer.category LIKE "Expert%";
+When working with more than one table, both the table and the field can be
+specified, separated by a period.
+Take some time to understand the logic of the highlighted FROM clause,
+which performs a JOIN linking the two tables, ON the fields specified.
+This query should return the following results:
+
+This type of query is a staple of investigative reporting, allowing reporters to
+match individuals across two datasets: school bus drivers and convicted sex
+offenders, for instance. In such cases, further reporting is needed to confirm
+that individuals with matching names are actually the same person!
+SQLite can also perform a LEFT JOIN, which return all of the entries from
+the first mentioned table, plus matching entries from the second table. See
+what happens when you run this query:
+
+SELECT *
+FROM fda LEFT JOIN pfizer ON fda.name_last = pfizer.last_name
+AND fda.name_first = pfizer.first_name;
+This isn’t a particularly informative query for this data, but LEFT JOINS can
+be useful. For instance if you have a table of counties, and another table
+giving data for some of those counties, you can use LEFT JOIN to create a
+single table for all of the counties, showing NULLS for counties for which
+there is no data.
+**
+This tutorial will get you started with SQL and SQLite, but there is much
+more to learn. Here is a reference for SQL, as understood by SQLite.
+
+

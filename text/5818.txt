@@ -1,0 +1,363 @@
+The NICAR Hitchhiker's Guide To Web APIs
+David Eads, ProPublica
+Adapted by Roberto Rocha, CBC
+March 2019
+
+In this hands-on session, you’ll use Postman to explore a web application programming
+interface (API) and get useful data.
+Why does a person need to explore a web API? In journalism, this is quite frequently to get
+data for reporting purposes. A lot of people are talking about crime in Chicago right now,
+so for our example, we’d like to know about how violent crime in Chicago in 2018
+compares to other years.
+It turns out a little API know-how goes a long way in answering that question (and many
+similar ones).
+It also just so happens that this is my first time using Postman! OK, that’s not true
+anymore, but it was when I wrote the first draft of this lesson. Consider this a highly
+edited diary of my own process in learning a new tool to work with APIs.
+The main reason this is presented as a diary is because I believe that the thinking
+process and mental model is as important as the mechanics when learning about things
+like web APIs. Next time, it won’t be crime in Chicago, it will be cold storage facilities in
+New Mexico or a politician’s Tweets. ​The fundamental pattern -- HTTP requests sent to
+structured URLs -- will remain the same, but the details will vary a lot​.
+Hopefully you’re going to learn something about APIs. You will also learn if you want to
+keep using Postman. People on Twitter told me try it out and a few of my teammates used
+it to test some of their work during the 2016 election season, so I have a sense it’s going to
+be OK, but I’m no more sold on Postman than you.
+Beginners are welcome. This lesson is for anyone who has used the web and spent some
+time thinking about what exactly goes into the location bar of their web browser.
+
+Crime in Chicago
+It seems like everyone has an opinion on crime in Chicago these days, which means you
+might wind up having to do a story about it. To tell that story, it would be useful to know
+how violent crime in 2018 compares to previous years.
+A quick search for “Chicago crime data” takes you to ​this page​. I’ve been doing this long
+enough that I recognize the interface as Socrata, a solid platform for hosting open data.
+It's not obvious on the page, but it has an API, which can be found through the "Export"
+menu.
+
+Looks like this could save a lot of time in the long run! We’ll return to this example once
+we’ve talked about API basics and worked a bit with Postman. Time to get our tool for the
+job and start figuring it out.
+
+Getting Postman
+You'll need to get Postman. The Chrome extension is easy and fast.
+
+Download it here.
+
+A web API is just the web
+An application programming interface (API) is just a standardized way of talking with a
+piece of software. A web API is basically just the web: At a very abstract level, the web
+takes a URL as an input and sends files back as output.
+There's tons of technologies underlying the web, but the HTTP request-response cycle is
+the one you need to worry about here. It works a bit like the postal service, if the postal
+service could move messages at 4/7th the speed of light.
+It’s also a little different than the postal service in that practically all of your instructions
+for the response you’d like to get back need to be included in the address itself.
+Imagine that when you type a URL into your browser, your browser writes the URL as the
+address on an empty envelope along with some information about yourself, sends it
+across the internet sea, and waits for someone to send back an envelope with a message
+in reply. Once you receive the message, you may need to decode it to transform it into
+something human-readable.
+
+Does Postman do what we expect?
+This fundamental concept provides us with a very simple first test of Postman. Let’s put a
+URL for a regular old web page in there and see what happens.
+Why do I want to put a URL in there when I don’t even know what “in there” is? M
+​ y
+understanding is that Postman is a machine that makes HTTP requests and shows you
+what was sent back in a more structured and data-centric way than a web browser would.
+In a web browser, you don’t see the envelope or the raw instructions to build a web page.
+Conceptually, I figure Postman and Firefox or Chrome are pretty similar in the sense that
+they all take a URL and make HTTP requests for me. But I also assume the output is going
+to be pretty different. So I expect that there’s going to be a box for me to put “npr.org” into
+Postman and a way to see the raw data that a web browser turns into a rich, compelling,
+hyperlinked multimedia news extravaganza.
+So let’s get my former employer’s website, h
+​ ttp://www.npr.org​ by pulling up Postman. If it
+asks you to register or whatever, just skip that stuff. (Why would I give someone my email
+
+address if I don’t know anything about their tool? They're gonna have to sell me first.)
+Once you’re on Postman’s clean and nice-looking home screen, you’ll see there’s a lot
+going on. But I still only care about one thing: where to put the URL.
+Turns out that’s not terribly hard to find, nor is the way to send the request.
+
+Once you find the URL bar, type in “http://npr.org” and hit the send button, you see the
+raw HTML from NPR’s homepage...
+
+...and now you are a web programmer. Don’t worry, you’ve always been one and just didn’t
+know it. You commanded the web to get the html for npr.org, and it did.
+Now let’s deconstruct a URL.
+
+Deconstructing a URL (API theory)
+An API is just a standardized way of talking with another piece of software. A web API is
+a way of talking to another piece of software using the technology of the internet and
+web.
+Requesting ​http://npr.org​ is this concept in its most basic form, but one might hope and
+expect that using the web to query and access data would be a little more expressive. In
+this case, we want to be able to express a specific question: how many violent crimes
+were recorded by police in Chicago in 2016 and previous years. And we want to get the
+answer back in a data format we can use with familiar tools like Excel.
+
+So how can I talk with a piece of software over the internet? It’s all about the requests like
+the one you just made. That means it’s about all the specific instructions that are
+encoded in the structure of a URL. Let’s step back and deconstruct a web API call I found
+in some code from NPR’s 2016 election liveblog.
+Take a look at this:
+https://api.twitter.com/1.1/statuses/oembed.json?id=507185938620219395
+What can it tell us? Let’s break it down, piece by piece.
+
+https://api.twitter.com​/1.1/statuses/oembed.json?id=507185938620219395
+Maybe it’s obvious, but the first thing we can learn is that Twitter has an API that
+conveniently is hosted at api.twitter.com.
+
+https://api.twitter.com​/1.1​/statuses/oembed.json?id=507185938620219395
+The second thing we see is that there’s a notion of versioning encoded in this URL.
+
+https://api.twitter.com/1.1​/statuses​/oembed.json?id=507185938620219395
+The third thing we see is that the API has a way of a
+​ ccessing statuses​ (e.g. Tweets):
+
+https://api.twitter.com/1.1/statuses/​oembed.json​?id=507185938620219395
+
+The fourth thing we see is that there’s what we might call an endpoint. In this case, it
+provides the oEmbed definition of the Tweet in JSON format. Don’t worry about what that
+means -- it’s just a data standard for embeddable content. Just call it “the oembed thing”
+for now because it’s the pattern that matters.
+We call this the endpoint because everything before the question mark defines the t​ ype
+of data we want to access (in this case, the oEmbed representation of a status as defined
+in version 1.1 of Twitter’s API; aka “the oembed thing”).
+
+​https://api.twitter.com/1.1/statuses/oembed.json​?id=507185938620219395
+If everything before the question mark defines ​what type​ of data we want to access, the
+part after the question mark defines ​which one​ we want to get. You call that a parameter.
+Imagine ordering something at a restaurant. You could ask by name (“tacos al pastor”), or
+ask to hear what the restaurant has that features an ingredient (“which ones come with
+salad?”), or by price (“what’s cheap?”).
+
+Let’s paste this URL into Postman, just like we did for NPR:
+
+In the area underneath where I entered the request, I can see the response. It looks a lot to
+me like structured data that represents a Tweet to me! I don’t know necessarily know or
+
+even care what all this means; what I do care about is that I now know the pattern for
+getting this data for any Tweet ID I want.
+Let’s move on to a more real-world task.
+
+Get yearly crime data for the city of Chicago
+Let’s go back to our original questions and try to get the number of violent crimes per
+year in Chicago. As a reporter, this level of aggregation lets me compare trends over time,
+gives my reporting nuance, and let’s me ask smart questions.
+I’ve heard that Socrata, the open data portal that powers Chicago’s crime data and the rest
+of its public data, has an API. In fact, I worked with an old version of it many years ago.
+I’ve heard it’s much better now. But basically, I’m a noob.
+I started by clicking around on the data portal until I found the “​Crimes - 2001 to present​”
+page. A web search for “Chicago crime open data” turns it up as well.
+
+I found that by clicking “export” but only after checking out “More Views” and “About”
+before I found the API information.
+
+https://data.cityofchicago.org/resource/6zsd-86xi.json
+
+So what happens if we just stick that URL into Postman and hit send?
+
+That looks like a list of structured data representing individual crime incidents to me!
+The API exists, it seems to work… we can work with this!
+Back in the tab with the data portal, there’s a link to the data documentation:
+https://dev.socrata.com/foundry/data.cityofchicago.org/6zsd-86xi
+I glance at the docs -- the docs seem correct and complete, which is awesome. Note how
+there's a descriptor for each column, complete with examples on how to query on that
+column.
+Expand the box for the year column. Right away it shows you an example of using the API
+to filter by year:
+https://data.cityofchicago.org/resource/6zsd-86xi.json?year=2011
+
+Does this look familiar? Try it on Postman using different years.
+What if we want to filter on multiple columns, like year AND crime type? Let's consult the
+docs a bit more. Poking around the page a bit more, we find the section on filtering:
+https://dev.socrata.com/docs/filtering.html
+And look at that, looks like we can add multiple filters by separating them with &
+Try this in Postman:
+https://data.cityofchicago.org/resource/6zsd-86xi.json?year=2018&primary_type=HOMICI
+DE
+Now try this yourself: Get all the robberies in ward 21 in 2017.
+Let's go deeper! Time to do some aggregations. Go to the section on doing more advanced
+queries:
+https://dev.socrata.com/docs/queries/
+Again, the docs seem pretty complete. Still, it looks a little confusing; it seems they’ve
+made a SQL-like language on top of querystring parameters.
+You should get used to this. Even really well-documented APIs won’t immediately make
+sense, and a lot of APIs aren’t very well documented. There are patterns for developing
+APIs, but lots of particulars specific to every individual API.
+In all events, if the first thing we want to do is group by year… maybe we should try out
+the parameter called $group. I skimmed the ​documentation for $group​ but got impatient,
+so I just took the original URL and add ?$group=year to it.
+
+Well shit.
+How do I debug this? Well, the error message isn't very helpful. Let's go back to the docs.
+After reading a bit more about the $group function, we learn that "$group must be used in
+conjunction with $select to provide the aggregation functions you wish to use."
+And it gives us an example:
+ttps://soda.demo.socrata.com/resource/4tka-6guv.json?$select=region,MAX(magnitude)&
+$group=region
+That gives us a pattern we can use to create our own aggregation request. Stay with me
+here, we’ll unpack this in a minute (if it works).
+There’s a relationship between ​$select​and ​$group​
+, and this example has showed us
+how to find the maximum value of another column as well. We don't need the max, but
+
+the count of crimes per year. Well, it just happens that "count" is a valid aggregator. So
+for my case, I think I need a ​$select​parameter like “​year, count(*)​
+” to go with my
+grouping parameter.
+In all events, let’s try it in Postman by adding ​$select​and ​$group​params in the
+interface:
+
+Boom! Yearly crime counts.
+Boom but also whoa! That was a lot, so let’s unpack it.
+Let’s go back to our core concepts and think about this request in terms of the
+fundamental patterns of the web and ordering tacos. Here’s how I would read this:
+The HTTP request (putting a URL into Postman or your browser and clicking send) is like
+deciding that you want tacos and going to the taqueria to get them. The first question we
+might want to ask at the taqueria is what kinds of tacos they have.
+
+The ​$select​parameter seems to represent the act of choosing what you’d like to know
+about the tacos. Imagine the taqueria has a couple kinds of special tacos -- variations on
+a key ingredients like avocado or steak.
+The ​$group​parameter is a bit like asking the worker at the taqueria to tell you all the
+tacos they have, grouped by the ingredient.
+Where this metaphor breaks down a bit is the count. When your goal is eating tacos, it
+would be absurd to simply ask how many kinds of chicken tacos the restaurant has on
+the menu. But it’s not absurd to ask how many crimes there were in Chicago in 2016 (and
+2015, 2014, … etc).
+In all events, if the API endpoint were a taco-delivery machine and not a crime-data
+delivery machine, it might look like:
+https://api.tacos.com/tacos.json?$select=keyingredient,
+count(*)&$group=keyingredient
+The output of that request, I would hope, would be something like:
+[
+{
+keyingredient: ‘chicken’,
+count: 3
+},
+{
+keyingredient: ‘bistek’,
+count: 5
+}
+]
+
+It’s worth noting that the docs note the relationship between $
+​ select​ and ​$group​, I just
+didn’t quite understand it and got impatient: “​SoQL also provides a limited amount of
+aggregation functionality through its $
+​ group​ parameter. ​$group​ must be used in
+conjunction with ​$select​ to provide the aggregation functions you wish to use.”
+
+Tangent: Can you get the data as CSV?
+We haven’t talked much about the JSON format so far, but it’s a common data format for
+APIs. But it’s not the only one, and there’s a good chance the person in your newsroom
+
+who needs this data (maybe it’s you) would be more comfortable exporting these results
+to CSV. Let’s put on our pattern recognition caps and take a stab in the dark.
+Our root URL looks like h
+​ ttps://data.cityofchicago.org/resource/6zsd-86xi.json​. So what if
+we changed the “​.json​
+” to be “​.csv​
+”? The worst that could happen is that we fail. The
+best that could happen is that we get a sweet CSV we can import into Excel. It certainly
+can’t hurt to try.
+Change the URL to h
+​ ttps://data.cityofchicago.org/resource/6zsd-86xi.csv​ and hit send:
+
+Hey, it worked! That’s what we’re looking for! This is the fine art of being an API detective:
+Digging through docs, finessing parameters and patterns until the machine on the other
+end gives up the goods.
+
+Filtering only violent crime
+So far, you’ve managed to develop an API call that gets a count of all crime reports,
+grouped by year. That’s exceptionally cool, but the crime data includes all kinds of crazy
+stuff, including crimes that aren’t even crimes such as lost passports. We want to know
+about violent crime.
+This is where you’ll need to put your reporter hat on.
+First, what is “violent” crime? There are lots of ways a person might define violent crime,
+but as the handy dandy IRE guide to crime reporting will tell you, the FBI has a coding
+system and way of defining such crimes. A 2013 F
+​ BI crime report​ states “violent crime is
+composed of four offenses: murder and nonnegligent manslaughter, rape, robbery, and
+aggravated assault.”
+It turns out that the Chicago crime API has a (very buried) link in the “FBI Code” column
+that will help us out. How did I figure this out? My colleague Alyson Hurt found it after
+some searching.
+
+Originally, I had used the “Primary Type” column and tried to map the FBI’s definition to
+the available types, but the ​Chicago Police Department listing of classifications​ seems
+likely to be more accurate.
+
+And check it out, they have the codes for violent crime:
+
+Running our query
+I’m going to guess we want to use the ​$where​parameter. If we read the API docs about
+$where​, my instinct was correct. To get all violent crime, we are going to want a $
+​ where
+clause that captures all the FBI codes that correspond with violent crime:
+fbi_code = '01A' or
+fbi_code = '02' or
+fbi_code = '03' or
+fbi_code = '04A' or
+fbi_code = '04B'
+That translates into this unbelievably nasty URL:
+https://data.cityofchicago.org/resource/6zsd-86xi.json?$group=yea
+r&$select=year, count(*) as total&$where=fbi_code = '01A' or
+fbi_code = '02' or fbi_code = '03' or fbi_code = '04A' or
+fbi_code = '04B'&$order=year
+While that may be nasty, it’s easy enough to use Postman’s “params” to make this at least
+a little easier.
+
+Hot damn, that’s the answer we were looking for!
+And now we have all the pieces to make all kinds of queries.
+Tangent: Be a good reporter and pick up the phone
+When I first made this lesson, there was some ambiguity in what query would match
+violent crime as defined by the FBI. Now, with my colleague’s help, likely to be a lot more
+accurate. And ambiguity shouldn’t stop us from an initial analysis of the data. But even
+with what seems like a clear way to count crime, before you ​publish​ anything, you should
+ask an expert. This could be the police department’s data officer, someone at a university
+who studies crime for a living, or even another journalist. But you need to find out and,
+when you do publish, need to be transparent about where your numbers came from.
+Save query
+
+We don’t have time to talk about Postman’s advanced features in this lesson, partly
+because I have no idea what advanced features Postman has! But one that seems pretty
+clear is the ability to save a query.
+Even as a Postman newbie, this is an obviously useful feature -- remembering and
+recreating this same query next year is trivial if it can be saved.
+
+Expanding to other web APIs
+This was one of hundreds of datasets available on the City of Chicago open data portal.
+There are thousands of datasets that can be accessed through the Socrata API. And there
+are thousands more web APIs, for everything from getting Tweets to financial data.
+But if you understand how to deconstruct the URL and can reason about what’s
+happening, you can start making simple tests, building up complex API calls piece by
+piece, and troubleshooting when you run into problems.
+
+What’s next?
+Here is a short but incomplete list of things we did not get to cover in this lesson:
+●
+●
+●
+●
+
+●
+
+HTTP headers: Other things that go on the envelope, like cookies, browser
+identification, etc
+HTTP encryption and security
+Data formats: There’s a lot more worth knowing about JSON, CSV, XML, and the
+many other formats a web API might use.
+Authentication: Many APIs require a special token that allows the API provider to
+track and control usage, or require some form of login for security using a
+technology like oAuth.
+More Postman: There’s a lot more I’d like to understand about Postman, such as:
+○ Collections
+○ Tests
+○ Scraping
+
+

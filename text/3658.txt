@@ -1,0 +1,458 @@
+Data Tables: Step-by-Step Basic Instructions
+You can use a jQuery plug-in called DataTables to quickly display searchable, sortable data on
+story pages published through your CMS. This article will explain how to create a basic data
+table. You do not need any special skills, just a text editor (i.e., Notepad) and the ability to cut
+and paste. The entire process can be completed in less than 20 minutes.
+
+Step 1: Create directory
+Create a directory on your network to house your DataTable files. You're going to create three
+files: an .htm file to hold your data table, an .ssi (Server Side Include) file to link the story page
+in your CMS with your data table and a JSON file to house your data.
+Hint: Give all your files the same name with different file extensions (i.e., SuperPACs.htm,
+SuperPACs.js and SuperPACs.ssi).
+
+Step 2: Create .ssi file
+Copy and paste the following code into a text editor:
+<iframe src="http://(full-path-to-your-htm-file-once-it's-published-to-yourweb-server).htm" width="624" height="460" marginheight="0" marginwidth="0"
+frameborder="0" scrolling="no"><p>Your browser does not support iframes.</
+p></iframe>
+
+For the src attribute, you need to point to the url where your .htm file will sit on your web server.
+If you're not sure about this, ask a web developer at your news organization. You'll also need to
+find out whether you should even use an .ssi file to link your story page with a data table. And
+you'll need to adjust the width and height attributes above to make sure they are compatible with
+your CMS. These dimensions specify the width and height of the <iframe> that will house your
+data table.
+Save and close the file. Make sure it has an .ssi extension rather than .txt.
+
+Step 3: Create JSON file
+Next, you'll create a JSON file for your data table. JSON data is just a text file that houses all
+of your data as a series of arrays. Your data table will display JSON data served up by this file
+rather than make a database call. Example:
+[
+["AK","Anchorage","291,826","40.1%","39.9%",0.2],
+["AL","Auburn","53,380","55.6%","59.1%",-3.5],
+... (more JSON data
+here) ...
+]
+
+Please note: Your source data must look exactly as you want it to appear online. You can't
+include extra columns, and the columns must be in the correct order. You need column headings
+but it doesn't matter what they are. You will set the headings manually in the .htm file and
+overwrite what you have here.
+Also note: Text data in a JSON file is enclosed in double quotation marks. If you have any
+quotation marks in your data, you'll need to replace them with: &quot; (This is the HTML code
+for double quotation marks.)
+If you have a column of numbers that has formatting in it (such as commas to separate thousands
+or a percent sign), you'll need to make sure quotation marks are around the data in the column.
+(The template includes functions that sort these columns as numbers rather than text.)
+If you use the Mr. Data Converter website (see below) to create your JSON file, you can trick the
+site into recognizing a column as text by inserting a dummy row between your column headings
+and the first row of your data and just typing some random data in each cell. For columns with
+special formatting, just type some text (i.e., xxx) rather than a number or percentage. Mr. Data
+Converter now will correctly put quotation marks around all data values for that column.
+If your data is in Excel or .csv format, you can use Mr. Data Converter (http://
+www.shancarter.com/data_converter/index.html) to convert your data to JSON. Copy and paste
+your data into the top pane, select "JSON-Row Arrays" from the dropdown menu, then copy the
+JSON data displayed in the bottom pane and paste it into a text file. Save this file as a flat text
+file, but change the file extension from .txt to .js.
+If you want to test the validity of your JSON file, go to http://jsonlint.com and paste your JSON
+into the pane. You must do this before you proceed to Step 4.
+
+Step 4: Modify JSON file
+Open your JSON file in a text editor and make the following three modifications:
+At the very beginning, type: formatData=
+At the very end, make sure there is a semicolon (;)
+Do a Search and Replace: Replace & with &amp; (This is HTML encoding necessary to
+make sure ampersands display correctly.)
+Note: Pay attention to the capitalization of formatData! When you're done, your file should look
+like this:
+●
+●
+●
+
+formatData = [
+["AK","Anchorage"," 291,826 ","40.1%","39.9%","
+0.2 "],
+["AL","Auburn"," 53,380 ","55.6%","59.1%"," -3.5 "],
+JSON data here) ...
+
+... (more
+
+];
+
+Step 5: Create .htm file
+Create a new file in a text editor, copy and paste the following code into this file and save the file
+with an .htm extension:
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
+www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<title>USA TODAY</title>
+<!-- CSS -->
+<link href="http://i.usatoday.net/_common/_styles/_datatables/data-tablesmaster.css" rel="stylesheet" type="text/css" />
+<!-- JS links -->
+<script type="text/javascript" src="http://i.usatoday.net/_common/
+_scripts/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="http://i.usatoday.net/_common/
+_scripts/jquery.dataTables-1-8-2.min.js"></script>
+<!-- JSON object -->
+<script type="text/javascript" src="your-json-file-here-NO-PATH.js"></
+script>
+<script type="text/javascript" charset="utf-8">
+// configure console to work on all browsers
+try { console.log('console ready'); } catch (e) { var console = {
+log: function () { } }; }
+// Variable declarations
+var oTable;
+var aDataSet = [];
+// doc ready
+$(document).ready(function () {
+initHeadDataTable();
+});
+// formatted number sorts
+jQuery.fn.dataTableExt.oSort['formatted-num-asc'] = function (x, y) {
+x = x.replace(/[^\d\-\.\/]/g, '');
+y = y.replace(/[^\d\-\.\/]/g, '');
+if (x.indexOf('/') >= 0) x = eval(x);
+if (y.indexOf('/') >= 0) y = eval(y);
+return x / 1 - y / 1;
+}
+jQuery.fn.dataTableExt.oSort['formatted-num-desc'] = function (x, y) {
+x = x.replace(/[^\d\-\.\/]/g, '');
+y = y.replace(/[^\d\-\.\/]/g, '');
+if (x.indexOf('/') >= 0) x = eval(x);
+if (y.indexOf('/') >= 0) y = eval(y);
+return y / 1 - x / 1;
+}
+function initHeadDataTable() {
+
+var dt = document.getElementById('dynamic-table');
+dt.innerHTML = '<table cellpadding="0" cellspacing="0" border="0"
+class="display" id="datatable"></table>';
+// table
+oTable = $('#datatable').dataTable({
+sDom: 't<if>',
+sScrollY: "340px",
+bPaginate: false,
+aaData: formatData,
+aaSorting: [[0, "asc"]],
+aoColumns: [
+{ "sTitle": "Col1", "sClass": "highlight" },
+{ "sTitle": "Col2", "sClass": "left shadowtext" },
+{ "sTitle": "Col3", "sClass": "left normaltext" },
+{ "sTitle": "Col4", "sClass": "right
+normaltext", "sType": "formatted-num", "asSorting": ["desc", "asc"] },
+{ "sTitle": "Col5", "sClass": "center normaltext" },
+{ "sTitle": "Col6", "sClass": "left
+smalltext", "bSortable": false }
+]
+});
+}
+</script>
+</head>
+<body>
+<div id="dt_example">
+<div id="container">
+<div id="introtext" class="tableIntro">
+<p>Type your intro text here</p>
+<p class="tablet-instructions">Tap the chart, then use two
+fingers to scroll.</p>
+</div>
+<div id="dynamic-table">
+</div>
+<div id="sourcenote" class="tableSource">
+<p>Source: xxx</p>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+Note: At the top of your .htm file, under <!-- JS links -->, you'll see references to two files:
+jquery-1.6.4.min.js and jquery.dataTables-1-8-2.min.js. These files are housed on USA Today's
+web servers, and while you're free to point to them, there's no guarantee we won't move them or
+take them down later. If your page can't find these files, it won't work, so you should download
+them to your own web server and change these links. You only have to do this one time for all
+data tables. You can find them under Downloads by going to http://www.datatables.net and http:/
+/jquery.com.
+You'll also see a link to our CSS. Again, you should develop your own styling for data tables
+and house it on your own web server, but you can use the USA TODAY styling as a basis for
+CSS that will more closely mirror the styling of your news organization's website. As with
+downloading the jQuery and datatables files, once you download these files to your web server
+and modify your template, you won't have to do this again for a data table unless you upgrade to
+a newer version of the jQuery or datatables software. All your data tables can share this one set
+of files.
+
+Step 6: Point .htm file at JSON file
+Open the .htm file in Visual Studio or a text editor. On lines 11 and 12, you'll see:
+<!-- JSON object -->
+<script type="text/javascript" src="your-json-file-here-NO-PATH.js"></script>
+
+Change the src attribute on the second line to specify the name of your JSON object. DO NOT
+INCLUDE A PATH. You don't need a path because your three files will be housed in the same
+directory. Example:
+<script type="text/javascript" src="SuperPACs.js"></script>
+
+Step 7: Add descriptive text
+At the bottom of your file, you'll see just a few lines of HTML. Among these, you'll see
+placeholders for introductory text near the top and a source line near the bottom:
+<body>
+<div id="dt_example">
+<div id="container">
+<div
+id="introtext" class="tableIntro">
+<p>Type your intro text
+here</p>
+<p class="tablet-instructions">Tap the chart,
+then use two fingers to scroll.</p>
+</div>
+<div
+id="dynamic-table">
+</div>
+<div id="sourcenote"
+class="tableSource">
+<p>Source: xxx</p>
+</
+div>
+</div>
+</div>
+</body>
+</html>
+
+Enter both pieces of information, being sure to place all your text between the <p> and </p> tags.
+If you need to force your text to another line (i.e., you're entering both a footnote and a source
+line), use a <p> tags:
+...
+<div id="sourcenote" class="tableSource">
+<p>Note: Percentages do not add
+up to 100 due to rounding.</p>
+<p>Source: Census Bureau data analysis by
+Paul Overberg</p>
+<p>By Christopher Schnaars</p>
+</div>
+
+...
+
+If you need to add a headline above your data table, you can do it by adding a <div> like this:
+<body>
+<div id="dt_example">
+<div
+id="container">
+<div>
+<h1>Your headline goes
+here</h1>
+</div>
+<div id="introtext"
+class="tableIntro">
+<p>Type your intro text here</
+p>
+<p class="tablet-instructions">Tap the chart, then use
+two fingers to scroll.</p>
+</div>
+<div id="dynamictable">
+</div>
+<div id="sourcenote"
+class="tableSource">
+<p>Source: xxx</p>
+</
+div>
+</div>
+</div>
+</body>
+
+You can create smaller headlines by replacing the <h1> tags with <h2> through <h6>.
+
+Step 8: Specify data table columns
+We need to specify some information about each of the columns in our data table (formatting,
+alignment, sortability and data type). The sample code you copied above has six sample
+columns. Add or delete columns so you have exactly the number you need. Note that each
+column is enclosed in curly braces, and make sure you put a comma after the closing curly
+brace of each column (other than the last one). You also need to make sure all your column
+definitions are enclosed in a single set of square brackets. (In the sample code, those brackets are
+on separate lines to help make sure you don't accidentally delete them.)
+If you want to use the sample columns as a reference, just make as many copies as you need and
+delete the samples after you've finished specifying your own columns.
+Here's the full code of the table; we're interested in aoColumns. Pay attention to where quotation
+marks, curly braces and colons are needed:
+oTable = $('#datatable').dataTable({
+sDom: 't<if>',
+sScrollY: "300px",
+bPaginate:
+aaData: formatData,
+aaSorting: [[0, "asc"]
+aoColumns:
+
+false,
+],
+[
+
+{ "sTitle": "Col1", "sClass": "highlight" },
+{ "sTitle": "Col2", "sClass": "left
+shadowtext" },
+{ "sTitle": "Col3", "sClass": "left
+normaltext" },
+{ "sTitle": "Col4", "sClass": "right
+normaltext", "sType": "formatted-num", "asSorting": ["desc", "asc"]
+},
+{ "sTitle": "Col5", "sClass": "center
+normaltext" },
+{ "sTitle": "Col6", "sClass": "left
+smalltext", "bSortable": false }
+]
+});
+
+Now let's go through each column and set the properties.
+Tip: If, when you test your data table, you only see your chatter and source line but no data,
+there's a good chance there's a problem with your column definitions. Some things to check:
+●
+●
+
+Do you have the same number of columns in your code as you do in your JSON file?
+Do you have a comma after each column definition (but not the LAST definition)?
+
+●
+●
+●
+
+Do you have curly braces around each definition?
+Do you have extra curly braces in the middle of a column definition? (I've seen this
+happened a lot when people cut and paste. Be careful!)
+Do you have double quotes around each heading property and each value?
+
+Column headings
+You need to give each column a heading (enclosed in double quotes) that will be displayed in
+the data table. To do this, set the sTitle property for each column. The headings should clearly
+explain what data is in the column but should be as short as possible. Regardless of what you
+type, headings are displayed in ALLCAPS.
+The headings do NOT need to match the column headings in your data source. (In fact, if you
+check your JSON file, you'll see that it doesn't even include the column headings for your data.)
+In your code, the column headings presently are set as Col1, Col2 and so on. Here are two
+examples. Note that the second example uses a <br /> tag to force a line break in the heading.
+"sTitle": "State","sTitle": "Population<br />(2010)",
+
+Format data
+Next, you'll specify styles that have been set up to format the data in your table in a variety of
+ways. This information is specified using the sClass property, and you'll note that most of the
+columns in the sample data have two styles: one style to specify how the text is aligned (left,
+right and center) and a second style that handles settings such as font size and whether the text is
+in boldface (normaltext, smalltext, shadowtext and highlight).
+Note: These styled are specified in the USA TODAY .css file. You can create the same or
+similar styling in your own CSS.
+In terms of text alignment, you generally want to use left for text and right for numbers so that
+decimal points, commas and percentage signs line up.
+You do not need to specify an alignment for the highlight style, which is centered by default.
+This class is a good choice for something like a rank column. It will print text with a bold,
+shadowing effect, and the text will be much larger than text in other columns, so use it sparingly.
+Besides highlight, there are three text modes available: normaltext, smalltext and shadowtext.
+The first two choices appear just as you'd expect. Shadowtext is slightly bold-faced. The text is
+not nearly as large as in the highlight class.
+Generally speaking, you'll want to use normaltext. You can use shadowtext for columns that
+have text you want to stand out slightly and where the text in that field isn't too long, since text
+with this style will take up more space. The smalltext class is useful for longer text fields, like
+notes or some kind of description. Here are some examples:
+"sClass": "highlight",
+"sClass": "left smalltext",
+"sClass": "right normaltext",
+
+Identify numeric strings
+Sometimes you'll have numbers that technically are strings. For a column to be treated as a
+number, it can only contain digits, negative signs and decimal points. If it has a comma for the
+thousands place, a currency symbol such as $ or a percentage sign, it's a string. You also might
+
+have your column set as a string if you want to preserve a trailing zero after a decimal point.
+If you have any of these columns, you have to specify this information in the column definition.
+This is necessary so the column will be sorted properly if the user chooses to sort on this column.
+(If you don't do this, 89.9 would come before 9.0 when the column is sorted, 2 will come before
+1,000,000,000 and so on.
+For these columns (and only these columns), add this property:
+"sType": "formatted-num",
+
+Technical note: Adding this property calls a function (which is already in the code you copied
+above) when the data is sorted. This function strips out all non-digits from the data in the column
+and sorts the resulting data in numeric order.
+Set sorting options
+By default, users can sort data by clicking arrow icons that appear to the right of each column
+heading. By default, all columns are sortable and will be sorted in ascending order when clicked
+once and in descending order if clicked a second time. If this is the behavior you want for all
+your columns, you don't have to do anything.
+For numeric columns, however, you probably want the data sorted in descending order (from
+largest to smallest) the first time the column heading is clicked. For these columns, add this
+property:
+"asSorting": ["desc", "asc"],
+
+You also can turn off sorting for some columns. There really isn't any practical reason to do
+this, as you're essentially hampering interactivity, but you might think this makes more sense for
+columns that are just long strings of text, such as notes and descriptions. To turn off sorting, add
+this property:
+"bSortable": false,
+
+Note: There are no quotation marks around the word false. This is because true and false are
+treated as a special data type called Boolean (similar to yes/no, on/off and so on).
+And that's all there is to setting up your data columns! If you still have sample columns, go ahead
+and delete them. You also should eyeball the text to make sure you're not missing any commas,
+brackets or curly braces.
+
+Step 9: Set default sort order
+It's a good idea to set up a default sort order so you can control how the data will appear the first
+time the user loads the page.
+Just above the aoColumns property that defines all the columns, you'll see an aaSorting property.
+(Note the subtle difference from asSorting used for individual columns.) The aaSorting property
+is used to specify the default sort order when the data is first loaded:
+aaSorting: [[0, "asc"]],
+
+This means that when the data is loaded, it will be sorted by the first column in ascending order.
+Columns are zero-based, which means the first column is really Column 0, the second column is
+Column 1 and so on.
+You can sort by multiple columns like this:
+
+aaSorting: [[2, "asc"],[1,"desc"]],
+
+This means the data will be sorted by the third column in ascending order, then by the second
+column in descending order.
+
+Step 10: Test your data table
+Save and close your .htm file, then double-click your .htm file to open it in your Web browser.
+If you set everything correctly, your data will be displayed. Make sure your data is sorted the
+way you specified, that the data sorts the way you intended when you click column headings and
+that text in the table displays using the styles you want. Also make sure your column headings,
+source line, intro text and headline (if you chose to include one) display correctly.
+DO NOT SKIP THIS STEP!!! One mistake in your code (even just a missing semicolon or
+comma) can cause the table to display incorrectly or not at all.
+Note: Loading your page here tests only whether you set the data table properties correctly. It
+does not test whether the data table will fit in the box on the Web page. We're going to use a test
+page a little later to check these settings and adjust the height to make sure it fits properly.
+If your data table does not display or does not display properly, make sure your JSON file is in
+the same directory as your .htm and .ssi files and that you spelled the JSON file name correctly at
+the top of your .htm file (Step 6). You also can open your JSON file in a text editor to make sure
+your data is there, and you can go to http://jsonlint.com/ if you want to test your JSON to make
+sure it is valid. (However, you'll have to remove formatData= from the beginning of your file
+and the semicolon (;) from the end of your file before you test it.)
+If you see your chatter and footnotes but not data, the problem most likely is in your column
+definitions. Go back to Step 8 for tips on what to look for when your data won't display.
+
+Step 11: Wire your data table to a story page
+You'll need to publish your three data tables files to your web server, then wire your data table to
+a story page. You'll need to work with your web producers to determine how to do this with your
+CMS.
+
+Step 12: Adjust data table height
+By default, the box that contains your table, intro text and source note is 460 pixels deep, and
+340 pixels are reserved for the table. If your introductory text and source text each are two
+lines, this should be fine. Again, open the test page in as many browsers as possible. (I've found
+Internet Explorer and Chrome to be the most likely browsers to cut off the bottom of my data
+table, so I always test in those browsers first.) If your table displays correctly on the test page,
+you can skip to the next step. You also need a little extra space for tablet computers because of
+special instructions that display only when your data table is viewed on a tablet.
+If your table is getting cut off at the bottom, open your .htm file and adjust the table depth, which
+is specified on this line:
+sScrollY: "340px",
+
+After you change this setting, save the file, republish it to your web server and test again. Check
+with your web folks, but chances are you will not need to republish the story page. Because of
+caching, you may need to wait a few minutes for your change to show up.
+
+And that's it!
+
+

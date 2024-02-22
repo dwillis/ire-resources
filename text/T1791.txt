@@ -1,0 +1,82 @@
+Simple FoxPro Programs
+2003 NICAR Conference – Charlotte, NC
+MaryJo Sylwester, USA TODAY
+msylwester@usatoday.com or mjsnews@yahoo.com
+(703) 854-3634
+
+When to use a program:
+1) Repetitive tasks, such as importing numerous files with the same format either at one time or at
+various points in time
+2) Data manipulation, such as appending numerous files together or adding new fields
+3) Mass data “updates.” Adding new fields and populating it with values (especially if you have a
+series of fields or if you need to do the same updates on different data repeatedly). There is an easy
+way to write this code using Excel.
+4) Creating new tables en masse from one or more existing tables
+5) Run a series of queries
+Common commands:
+Set directory to – establishes where your data files and work product are stored
+Use -- either opens or closes a file
+Select – used in conjunction with name of file or location of file (slot number)
+Copy structure to – copies blank structure of a DBF file
+Append from – append data to an existing DBF (if file you are appending from is not a DBF, need to
+specify how it is delimited. See Fox help for assistance)
+Alter table – indicates that you are going to make changes to the structure of a table
+Add column – used in conjunction with alter table to add a new column
+Replace all – used to populate a field with certain values
+Close all – closes all open files
+Adir -- sets up a temporary array
+For…EndFor – Used with a loop to specify which actions should be done repeatedly on all files
+identified in the temporary array
+Loop – tells the program to loop back and repeat what it just did
+Into Table – use in conjunction with a query to save the query results into a new table
+PROGRAM 2:
+close all
+clear all
+gcSourceDir = 'c:/xxxx/'
+gcStrucDir = 'c:/xxxx/yyyy/'
+set directory to (gcSourceDir)
+=adir(temparray, "*.txt")
+For a=1 to alen(temparray,1)
+teamname = left(alltrim(temparray(a,1)),at(".",temparray(a,1))-1)
+use (gcStrucDir) + 'struc1'
+copy structure to (gcSourceDir) + (teamname)
+use
+use (teamname) in 2
+select 2
+append from (temparray(a,1)) delimited with blank
+
+alter table (teamname) + '.dbf';
+add column team c(50)
+replace all team with (teamname)
+loop
+ENDFOR
+close all
+PROGRAM 3:
+close all
+clear all
+gcSourceDir = 'c:/xxxx/'
+gcStrucDir = 'c:/xxxx/yyyy/'
+set directory to (gcSourceDir)
+use (gcStrucDir) + 'struc2.dbf' in 0
+copy structure to (gcSourceDir) + 'ALLMLB'
+use
+use 'allmlb' in 1
+=adir(temparray2, "*.dbf")
+For a=1 to alen(temparray2,1)
+teamname2 = left(alltrim(temparray2(a,1)),at(".",temparray2(a,1))-1)
+append from (temparray2(a,1))
+loop
+endfor
+select team, count(*);
+from allmlb;
+group by 1;
+order by 2 desc;
+select team,date, att01, ytd01, avg01, att02, ytd02, avg02;
+from allmlb;
+order by team, date;
+nowait;
+into table 'finalmlb'
+close all
+clear all
+
+

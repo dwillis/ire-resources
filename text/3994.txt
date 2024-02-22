@@ -1,0 +1,321 @@
+Data Cleaning
+with Text Editors
+Jon McClure
+jon.r.mclure@gmail.com | jonm@ire.org
+@jonrmcclure
+
+Liz Lucas
+liz@ire.org
+@eklucas
+
+Intro to
+Regular
+Expressions
+
+Regular Expressions
+(aka Regex)
+
+- Identify patterns of words or characters in text.
+- Can be used to overcome typographical and
+structural errors in data.
+
+Regex Tools
+Online Regex Testing Tools
+
+rubular.com
+- Regex metacharacter Quick Reference
+- Sandbox environment to test regular expressions
+regexpal.com
+
+Regex Tools
+Text Editors
+Any text editor that has advanced find and replace options for Perl
+Regular Expressions should work. This functionality should be listed in
+the features of any text editor online. For the sake of the examples in this
+presentation, we used:
+
+UltraEdit - $90
+Sublime Text 2 - freeware
+
+See our Intro to Text Editors tipsheet for more info on text editor options.
+
+Regex Terms
+
+Literal
+Literally what you're searching for.
+Basic text editor find function.
+
+Search Expression: "The cat in the hat."
+Target Text: "The cat in the hat."
+
+Regex Terms
+
+Metacharacter
+A higher order character which represents a class of
+literal characters.
+\w - word character (letter, number, underscore)
+
+Regular Expression: "The \wat in the \wat."
+Target Text: "The cat in the hat."
+
+Basic Metacharacters
+\w - a word character (letter, number, underscore)
+\d - a digit character, eg 1,2,3.
+\s - a whitespace character (space, tab, newline, etc.)
+
+Regular Expression: "\d-cornered\s\wat."
+Target Text: "The cat in the 3-cornered hat."
+
+Basic Metacharacters
+\W - NOT a word character (letter, number, underscore)
+\D - NOT a digit character, eg 1,2,3.
+\S - NOT a whitespace character
+
+Basic Metacharacters
+. - A period matches any single character, essentially
+the wildcard of regex.
+
+Regex: "The.Wa. of 1.12"
+Target Text: "The War of 1812"
+
+Basic Metacharacters
+Repetition Operators
+
+{3} - exactly 3
+{3,} - 3 or more
+{3,5} - between 3 and 5
+
+Regex: "\w{3}"
+Target Text: "The cat in the hat."
+
+Basic Metacharacters
+Repetition Operators
+
++ - one or more
+* - zero or more
+? - zero or one
+Regex: "J\w+n"
+Target String: "John and Jon"
+
+Regex Pattern Matching
+Target Text:
+Jon McClure
+John McClure
+John MacClure
+Jan McCleod
+Jane McClure
+Jean McClure
+
+Regex:
+Jon McClure - literal search
+Jo\wn - Matches "John"
+J\w+n - Matches "Jon" & "John"
+Jo\w*n - Also "Jon" & "John"
+J\w+\s - Matches all first names
+J\w+\sM\w*cC\w+ - Matches all names
+
+Basic Metacharacters
+Character Sets (aka Character Classes)
+You may also define a Character Set, which matches
+any character included in the defined set.
+[aeiouAEIOU] - Matches all vowels
+[1-8] - matches all digits 1-8 eg, 1298483
+[a-zA-Z] - matches all upper and lowercase characters
+in the English alphabet
+
+Basic Metacharacters
+Anchoring Operators
+^ - Beginning of line anchor
+$ - End of line anchor
+Useful for finding leading column data, eg, unique keys.
+See the Committee.txt cleaning exercise at the end of this presentation.
+
+Regex: "wood$"
+"^could"
+Target text: "How much wood
+could a woodchuck chuck
+if a woodchuck could chuck wood"
+
+Basic Metacharacters
+Whitespace Operators
+
+\t - tab
+\n - newline/line feed (Unix line-ending format)
+\r - newline/carriage return (Windows line-ending format)
+Regex: "\tThere"
+"Nantucket\nwho"
+Target text: "___There was an old man from Nantucket
+who kept all his cash in a bucket"
+Because line formats can vary between files based on OS preferred formats, the following
+regex is a good catchall to capture newline formats from any OS: \r?\n?\r?
+
+Committee.txt
+... an exercise in advanced data cleaning with regex.
+
+Use the Committee.txt file located at:
+https://raw.github.com/hobbes7878/Regex_NICAR2013/master/Committee.txt
+
+Open in your regex text editor of choice.
+
+This file is a sample record of individual contributors who donated over
+$200 to political committees in the 2012 election cycle kept by the FEC.
+The errors we'll be fixing were introduced for instructional purposes but
+are of types commonly encountered in government data.
+
+Committee.txt
+The first step in approaching a data file is always
+verifying a record count. In this case, we know there
+are 11,788 records in this data.
+That's our target number. Our goal is to fix the structure of the
+data so there is one record per line, ie, formatted correctly such
+that we can load the file into our database manager of choice.
+
+Committee.txt
+Notice the Committee ID that appears to begin each line, eg, "C00000042".
+This will be our key to determine whether our data is structured correctly,
+because we can expect every record in the set to lead with this ID.
+We can access this ID using the following regex:
+
+Regex: ^C\d
+Find the count of this regular expression.
+Is it 11,788? No. Something is wrong in the
+structure of our data.
+*Remember to turn the advanced option for regular expressions on in your text editor's
+find/replace box. If the option is available, also select Perl compatible regex.
+
+Committee.txt
+So what is wrong? First we should check to make sure every record does
+have a Committee ID. To do so we need a regular expression that can
+count the instances of the ID, independent of where they appear. We say
+independent because we suspect there may be an issue with the line
+breaks in the file, so we don't want to anchor the expression at the
+beginning of the line anymore.
+
+To construct our regex, we use the pattern
+"C" followed by 8 digits followed by a pipe
+delimiter, which we observed in the data.
+BUT...
+
+Committee.txt
+Escaping Metacharacters
+... But the pipe is a reserved metacharacter in regex (an "or" operator). To use the
+pipe in our expression, we need to tell regex that we want to use the pipe as a
+literal, not as a metacharacter. The notation for that is called "escaping" a
+metacharacter.
+
+Adding a backslash before a reserved metacharacter
+tells regex to search for it as a literal.
+
+Regex: "\$\d\.\d{2}"
+Target Text:"The coffee cost $5.00."
+
+Committee.txt
+Count the following regular expression:
+
+Regex: C\d{8}\|
+
+Do we get 11,788?
+Yes, which matches the number of records we know
+we should have. Now we know we are using the right
+key. Our goal is to get each line in our data to lead with
+this Committee ID.
+
+Regex Replace
+To get each line to lead with the Committee ID we're
+going to use regex find and replace to add a newline
+before each ID. To do this, though, we need to
+understand how to group our metacharacters and
+literals for replacement.
+
+Regex Replace
+Take the following text strings from a hypothetical web
+scrape of a raw html file:
+" Little Rock&nbspAR
+Louisville&nbspKY
+Kansas City&nbspMO "
+We want to replace the non-breaking space, &nbsp, with a comma. In
+regex we use parentheses to declare groups of literals and
+metacharacters that we want to use in a replace expression.
+
+Regex Replace
+Regex: ([LK]\w+\s?\w*)&nbsp(\w{2})
+To describe this expression, we are looking for a string that begins with either an
+"L" or a "K", followed by one or more word characters, followed by zero or one
+whitespace, followed by zero or more word characters (for Kansas_City and
+Little_Rock), followed by a literal string ("&nbsp") and finally followed by 2 word
+characters.
+With the parentheses, we create two groups that capture both the regular
+expression for the city and for the state, respectively, which we will use in the
+replace expression.
+
+The regex gives us the following groups:
+1) Little Rock
+2) AR
+Louisville
+KY
+Kansas City
+MO
+Hint: If you're testing in rubular, you'll notice the "Match Group" box shows these groupings.
+
+Regex Replace
+In the replace expression, we simply reference our groups
+with a backlash and their group number.
+
+Replace: \1, \2
+Which gives us:
+Little Rock, AR
+Louisville, KY
+Kansas City, MO
+
+Committee.txt
+Now use a grouping with your Committee ID regex to
+add a newline (\n) before each Committee ID.
+
+Regex: (C\d{8}\|)
+Replace: \n\1
+
+Committee.txt
+Now we have all our Committee ID's leading lines, but
+because we added a newline before IDs that were
+already leading lines as well as those that weren't, we
+have a lot of extra blank lines. The following regex
+removes these extras.
+
+Regex: \n\n
+(Hint: A non-blank line would have characters between line breaks.)
+
+Replace: \n
+There is one blank line that won't be replaced with this expression: The
+first line of the text file, which is blank. Looking at our regex you should
+be able to see why this line wasn't captured.
+
+Committee.txt
+Now check your line count, which at this point we'd hope would match
+our expected record count. But of course, it doesn't.
+Again, we use regex to help suss out the problem. The following
+expression finds cases where a line is being led by a pattern that doesn't
+match our Committee ID, in this case two or more non-digit characters.
+(Remember Committee ID pattern is a single non-digit followed by digits: C00000042)
+
+Regex: ^\D{2,}
+Using this find expression to walk through our txt file, we see there are
+several lines where a line break seems to have been inserted in the
+middle of a record, splitting it incorrectly into two records. We can fix this
+problem with regex.
+
+Committee.txt
+The following regex reconciles those split records on a
+single line, just as we like them.
+
+Regex: \n^(\D{2,})
+Replace: \1
+Check your line numbers. We've hit our target. Our
+data is now structured correctly and ready to be put in
+a database for analysis.
+
+For more Regex:
+Interactive lessons are available at: http:
+
+//regexone.com
+
+

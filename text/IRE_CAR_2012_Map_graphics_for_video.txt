@@ -1,0 +1,309 @@
+SOFTWARE
+Unfortunately, to do
+high-quality video effects, you’ll
+need to spend some money.
+
+Video editor (always needed)
+• iMovie (Included with Mac OSX)
+–If you have to, but limited control
+
+• Final Cut Pro ($300)
+–Price jump from iMovie, but cheaper than it used to be
+–Fairly intuitive, but a price jump from iMovie
+–Beware the new version (Final Cut Pro X)
+
+•Avid Studio ($170)
+–More common in broadcast newsrooms/Gannett
+–Less intuitive – not sure easy to learn on your own
+
+•Adobe Premiere (Part of $1,700 package, $800 standalone)
+–Everything old is new again – has buzz with the cool kids
+
+•Blender (Free)
+–Designed for 3D, but has a non-linear editor built in
+
+Google Earth Pro
+• $400/year
+• Export HD movies with good photo imagery
+• Anything you put in KML format can be an overlay
+• Not as much control over movement as you'd like
+• Will have to do some overlay work in video editor, Photoshop or
+After Effects
+• Will always look like Google
+–Don’t forget to keep the credit in there
+
+Google Earth Pro example
+
+Adobe After Effects
+• $999 to buy, ~$50/month to rent
+• Front-line video effects software for broadcast
+• Lots of control over output
+• Ability to import vector imagery, lots of Photoshop stuff
+• Has decent 3D
+
+After Effects example
+
+Apple Motion
+• $50(!!!) A pretty great deal
+• Not as linear as After Effects
+• More organic: Set up physics, let world run itself
+• Has decent 3D (can’t import 3D objects)
+
+Cinema 4D
+• Expensive ($3,000+, if you have to ask …)
+• Premium 3D software for broadcast
+–Often used for title packages at networks, etc.
+
+• Great for modeling, texturing
+• Can do highly accurate 3D terrain
+•Does more than most of us will ever need
+
+Cinema 4D/After Effects example
+
+Open-source options
+• Jahshaka
+–Meant as open-source After Effects
+–Not ready for prime time, maybe new version
+
+Open-source options
+
+• Blender
+–100% free!
+–Fully featured 3D AND a nonlinear video editor
+–Sometimes a little more granola than Cinema 4D
+–Interface is more difficult to learn
+–Like QGIS: blink and it has gotten better
+–Lots of great tutorials and community support
+
+Blender example (quickish)
+
+Adobe Illustrator
+• Vector is your friend in video
+• Useful for lining geometries up, testing colors
+• Very useful for passing spatial information to After
+Effects (more on that in a bit)
+
+Other useful software
+● Adobe Photoshop
+● Quantum GIS
+● Mapnik
+
+Yikes! How do I get software cheaper?
+• Educational discount?
+• Nonprofit discount?
+• Does a broadcast partner have a machine you can
+borrow?
+• Local university or tech college with a broadcast dept.?
+• Is renting worthwhile for your situation?
+
+WELCOME
+TO VIDEO
+There's some things
+you should know.
+
+Plan before you start working
+• How does this fit into the rest of the video?
+– Audio matching
+• Makes a big difference between pro and amateurseeming
+• Record audio track first, match animation to final track
+– By necessity, video effects are finalized late in the
+process
+• Don’t surprise your producer!
+
+Mis en place
+• From cooking: “Everything in place”
+• What data do I need to make sure I have beforehand?
+• What technical format is the video?
+—Never start without knowing your destination format, and
+always work in that final format (exception: It's for web, but you
+might want to broadcast later)
+
+Video technical specs
+• Choose your own adventure
+–Video for the web?
+• Congratulations, your life just got much easier
+–Video for broadcast?
+• Take a deep breath
+
+Video technical specs
+
+• Aspect ratio: 16:9 or 4:3?
+
+Broadcast tech specs: NTSC
+
+• NTSC
+–Old-school 4:3 video, 720x480 pixel resolution
+–Anamorphic (pixels that aren’t actually square)
+
+Broadcast tech specs: HD (but which?)
+
+Broadcast tech specs: Interlacing
+● Interlaced video shows smoother motion
+● Less sharpness
+● If they want it interlaced, ask which field first (They'll
+say upper/lower or odd/even)
+Not interlaced (progressive)
+
+Interlaced
+
+Broadcast tech specs: Title-safe area
+
+Yes, you do have to (sorry)
+
+Broadcast tech specs: Color and sound
+There are FCC standards for the minimum and maximum color
+and audio levels you can legally use.
+Get a pro to do this for you.
+
+Web technical specs
+● Balancing size, speed and quality
+● Be aware of limits of web video
+● Preview text at the size it will be viewed
+
+Aesthetic considerations: Color
+● Can the viewer read everything they need to read?
+● Are any colors distracting attention from something
+important?
+
+Aesthetic considerations: Texture
+Adding terrain or some other texture is an unobtrusive way to
+make the effect more professional, look like it's fully done.
+
+VS.
+
+Aesthetic considerations: Type sizes
+Think about where your viewers will be watching your video.
+For Web, be careful below 40px font.
+
+STEP-BY-STEP
+Now comes the actual mappy part.
+
+First: What do you want it to look like?
+
+• Goals
+–Be visually pleasing
+–Be accurate!
+–Move story along
+
+1. Plan before you start working
+• Storyboard your map effect with your video
+editor/video producer
+
+2. Data mis en place - shopping list
+● Imagery of nuclear plant:
+○ Aerial photography? NAIP or DOQ (Earth Explorer)
+○ Terrain? SRTM (Earth Explorer)
+○ How much resolution do I need for closest I want to
+show?
+● Detailed cutout shapefile for California shoreline
+○ Try National Atlas
+● Coordinates of anything you'll be layering on top
+○ In this case, fault line vector shapefiles from USGS
+○ More coordinates specific to story from a source
+
+3. Build a master spatial file
+● 1st ask yourself: Do I need real GIS functionality?
+○ If you're just placing a city or a few markers on a map at
+the state level, you can just as quickly do this right in
+your effects program
+● If it's more complex, I start with a project in QGIS
+○ Allows you to easily combine vector and raster imagery
+○ Can do some color testing
+○ Can see quickly if all data is in the right projection
+● Reprojecting
+○ Vector: QGIS or PostGIS
+○ Raster: GDAL (QGIS plugins available)
+
+What if I don't have good spatial data?
+● Vector
+○ indiemapper
+■ Several good projections
+■ Choose pre-built geometries or import your own
+○ Census (TIGER data)
+○ Natural Earth
+● Raster
+○ USGS Earth Explorer
+■ Bulk downloader, many datasets
+○ Natural Earth
+
+What is the right projection, anyway?
+2D effects
+● Depends on scale
+○ Local or smaller states: Nearest UTM
+■ Especially important if you want to show a circular
+radius around something
+○ Regional/National: U.S. National Atlas Equal Area (SRID
+2163)
+○ Global: Try Robinson
+3D effects: Good 'ol SRID 4326 (WGS 84)
+
+Working with raster data
+● GDAL is your friend. Incredibly powerful, incredibly free.
+○ Most raster data is in tiled format, so you'll need GDAL
+to stitch stuff together and re-project
+○ Can use shapefile to cutout precise boundaries for
+isolating states, etc.
+● Build in time for downloading, data processing
+● Optimize for how much/how little data you need
+○ How high-rez do you need? Adds to time
+required exponentially
+○ Make yourself reusable imagery for common tasks
+
+4. Move from GIS to graphics format
+● You can't directly import GIS data in After Effects
+○ Upload vectors to indiemapper, export a layered SVG
+
+5. From Illustrator to After Effects
+● Open layered SVG in Illustrator
+○ Release clipping masks if you want to see whole
+geometries
+○ "Release to layers" in layer flyout menu so you can work
+with one layer at a time in After Effects
+○ Make sure all layers you want access to are on top level
+● Save as .AI
+● Import inside After Effects project as "Composition"
+○ Be sure to check "Continuously rasterize" in layers
+○ Turn on motion blur before final rendering
+
+Tips for After Effects
+● If you want to animate paths themselves, you'll need to
+paste them in from Illustrator separately
+○ Use your imported .AI as reference for lining up
+
+● Parent all your shape layers to one layer, control
+scale/position with that
+● Move transform point to the center of your action
+● Paste as paths, not masks for familiarity's sake
+● If you're adding raster imagery, have an Illustrator layer with
+vector outline, line up inside After Effects
+● Don't forget to factor in render time
+● Avoid images over 10,000 pixels wide or tall: AE will freak
+
+More After Effects tips
+● Make layers 3D, add a light for more interest
+● A circular vignette effect adds a little drama
+
+3D with a light
+
+6. Render to file, deliver to editor
+● Render video in your destination format
+● Hand over the file
+● Wait for edits (oh, there will be edits)
+
+Final sample animation
+
+Other workflows to consider
+● Google Earth with KML overlays
+> Photoshop for titles
+> video editor
+● Mapnik - Do separate render with same BBox for each layer
+you want to fade in
+> Change sizes/opacity in video editor
+
+Get in touch
+Michael Corey
+Center for Investigative Reporting
+mcorey@cironline.org
+mikejcorey.com
+
+

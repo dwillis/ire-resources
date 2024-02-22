@@ -1,0 +1,227 @@
+Working with big geodata
+(without messing up)
+Dhrumil Mehta & Reuben Fischer-Baum
+FiveThirtyEight
+
+@datadhrumil
+@ReubenFB
+
+The data
+Uber was expanding in the NYC market, and the mayor was considering limits on
+the company’s growth. We had:
+●
+●
+●
+●
+
+4.4 million Uber pickup lat/longs and times covering April-September 2014,
+received through FOIL
+Another 89 million taxi pickup lat/longs covering the same period
+Eventually, another 14.3 million Uber pickups for Jan-June 2015.
+Another 43 million tai pickups from April-June 2015.
+
+The stories we published
+●
+●
+●
+●
+
+Uber Is Serving New York’s Outer Boroughs More Than Taxis Are
+Public Transit Should Be Uber’s New Best Friend
+Uber Is Taking Millions Of Manhattan Rides Away From Taxis
+Is Uber Making NYC Rush-Hour Traffic Worse?
+
+Our first task
+● We needed to geocode 93 million lat/long pickups, counting the number that
+fell into each New York Census tract.
+
+● Editors wanted to turn the story around quickly
+● We had not done this before, and we did not turn it around quickly
+● Learn from us!
+
+Mistake #1: Wrong tools
+●
+●
+●
+
+We wrote a python script!
+It “worked” but would have taken weeks to run
+LESSONS
+○ Know when your data calls for a
+database
+○ Estimate how long your code will take to
+run by testing a small chunk and
+extrapolating (there are libraries for this)
+
+Mistake #2: Tried to reinvent GIS
+●
+
+LESSONS: The tool you need
+probably already exists
+
+What eventually worked(ish)
+●
+●
+●
+
+Generated shapefiles in QGIS
+Put them into PostGIS and assigned each point a census tract
+Exported PostGIS data back into QGIS for mapping
+
+Mistake #3: Projection sloppiness
+Initial projections were sloppy, and did not match up between QGIS and PostGIS.
+Lots of pickups placed in the ocean.
+LESSONS:
+●
+●
+●
+
+Be really careful with projections. Learn how they work in all your tools.
+Take the time to understand projections if you’ve not worked with geospatial
+data before
+Visually validate your data!
+
+Mistake #4: Know how your tools work
+Some more dead ends we went down;
+Ingesting data into database:
+→ python script
+→ parallelized python script
+→ PGCOPY
+Converting shapefiles to PostgreSQL
+→ ogr2ogr
+→ shp2pgsql
+Mapping in QGIS – at a certain point should have switched to scripting (d3)
+
+Mistake #5: Didn’t index (at first)
+●
+●
+
+Indexing makes queries faster
+If your data model is bad, and you keep changing it, you have to index over
+and over, and that is frustrating.
+
+Mistake #6: So much corner cutting
+In the interest of time, we ...
+●
+●
+●
+●
+●
+●
+
+Didn’t normalize taxi and uber data formats
+Didn’t normalize yellow and green taxi data formats
+Never combined all the months into a single table – lots of duplication.
+Ignored some messy datetime formatting.
+Deleted columns we didn’t care about.
+Didn’t organize the project structure in QGIS even a little bit
+
+None of this affected our first analysis
+
+1st Story: Uber Is Serving New York’s Outer Boroughs More Than Taxis Are
+
+Next steps
+●
+●
+
+●
+
+Built model to find demographic
+differences between taxi /Uber pickups.
+Pulled data on income, race, subway
+access, distance from city center, car
+ownership, and more!
+No interesting results really! Uber zones
+pretty much == taxi zones.
+
+2nd Story: Public Transit Should Be Uber’s New Best Friend
+
+Editorial lesson #1: Beware sunk costs!
+●
+●
+●
+
+Big data analysis take time, but that doesn’t mean you get a strong result
+More and more effort poured into post to get something out of it
+Maybe should have walked away earlier
+
+Editorial lesson #2: Mind sample sizes
+●
+●
+●
+
+Maps in first story emphasized Uber’s
+share of rides on NYC’s edge
+But there are very few rides there!
+When we didn’t map share, clearer that
+taxis and Ubers were more or less the
+same
+
+A twist! More FOIL’d data comes in
+●
+●
+●
+
+14.3 million Uber picks from January to June 2015.
+Now we could compare 2014 to 2015.
+Could finally answer the big question: Was Uber increasing total pickups in
+NYC, or just replacing cabs?
+
+Too bad about all those corners we cut!
+●
+
+LESSONS
+○ Structure your data for any question you might
+want have, not just your first question.
+○ Name things meaningfully, and have fewer,
+more uniform files.
+
+PostGIS queries
+Should have look like this:
+
+3rd Story: Uber Is Taking Millions Of Manhattan Rides Away From Taxis
+
+Result here was much cleaner!
+
+But what if we looked at hour of day?
+●
+●
+
+●
+
+Should be a simple task!
+Not when your data is
+spread across many
+tables, and your
+datetimes are messed
+up.
+Look at this query ------>
+
+Bad formatting → bad results
+●
+●
+●
+
+Some rides around midnight
+were being misclassified.
+Error caught again by visually
+validating.
+“14H 5M 35S” vs. “5M 24S”
+
+4th Story: Is Uber Making Rush-Hour NYC Traffic Worse?
+
+And then we rested (until this week)
+
+BIGGEST LESSONS
+
+1. Structure your data for any question you might have,
+not just the first question
+2. Normalize your data
+3. Know the right tool for the job and spend time
+learning the basics
+4. You probably don’t have to invent something new
+5. Beware sunk costs in analyses that aren’t panning
+out
+6. Visually validate your data
+
+

@@ -1,0 +1,303 @@
+csvkit
+CAR 2012
+Christopher Groskopf / @onyxfish
+Anthony DeBarros / @anthonydb
+
+csvkit is a suite of utilities for converting to and
+working with CSV, the king of tabular file
+formats.
+It is inspired by pdftk, gdal and the original csvcut
+utility by Joe Germuska and Aaron Bycoffe.
+— http://csvkit.rtfd.org
+
+We're going to move fast. If you
+like what you see go to...
+http://csvkit.rtfd.org
+...and read the tutorial.
+
+How do I get it?
+On Linux or OSX:
+● easy_install pip
+● pip install csvkit
+● (You may need to use sudo.)
+On Windows:
+● Add to PATH:
+○ C:\Python27
+○ C:\Python27\lib\site-packages\
+○ C:\Python27\Scripts\
+● Install setuptools and pip
+● pip install csvkit
+
+What's included?
+Input
+
+Output & Analysis
+
+● in2csv
+
+● csvjson
+● csvlook
+● csvsql
+● csvstat
+
+Processing
+● csvclean
+● csvcut
+● csvgrep
+● csvjoin
+● csvsort
+● csvstack
+
+What if I don't have a CSV?
+$ in2csv input.xls output.csv
+● Converts Excel, JSON and fixed-width files to CSV
+● A library of fixed-width schemas: https://github.com/onyxfish/ffs
+○ Census Bureau
+○ Federal Election Commission
+○ Bureau of Labor Statistics
+○?
+● Usually works
+
+ltbarber_clean.csv
+(registered Texas barbers)
+
+What is this thing?
+$ csvcut -n ltbarber_clean.csv
+1: type
+2: license_num
+3: business_county
+4: business_name
+5: license_expire
+6: owner_name
+7: mailing_address
+8: mailing_address2
+9: mailing_city_state_zip
+10: mailing_address_code
+11: mailing_county
+12: mailing_zip
+13: owner_tele
+14: license_subtype
+15: continuing_edu
+
+What is the "type" column?
+$ head ltbarber_clean.csv | csvcut -c 1,4
+"Barber, Class A","SHIREY, ELLIS E"
+"Barber, Class A","WOODS, SAM"
+"Barber, Class A","GONZALES, ABEL"
+"Barber, Class A","SAMPLE, MASON"
+"Barber, Class A","BERGERON, ALVIN"
+"Barber, Class A","EBERHART, H B"
+"Barber, Class A","HARRIS, BLANCHE A"
+"Barber, Class A","VILLARREAL, ADOLFO"
+"Barber, Class A","AYALA, LOUIS G"
+
+Can't you make that easier to read?
+$ head ltbarber_clean.csv | csvcut -c 1,4 | csvlook
+-----------------------------------------| type
+| business_name
+|
+-----------------------------------------| Barber, Class A | SHIREY, ELLIS E |
+| Barber, Class A | WOODS, SAM
+|
+| Barber, Class A | GONZALES, ABEL |
+| Barber, Class A | SAMPLE, MASON
+|
+| Barber, Class A | BERGERON, ALVIN |
+| Barber, Class A | EBERHART, H B
+|
+| Barber, Class A | HARRIS, BLANCHE A |
+| Barber, Class A | VILLARREAL, ADOLFO |
+| Barber, Class A | AYALA, LOUIS G |
+------------------------------------------
+
+What other values are there for "type"?
+$ cat ltbarber_clean.csv | csvcut -c 1 | csvstat
+1. type
+<type 'unicode'>
+Nulls: False
+Unique values: 6
+5 most frequent values:
+Barber, Class A: 13876
+Barber Manicurist: 366
+Barber Hair Braiding Specialist: 180
+Barber Instructor:
+170
+Barber Technician: 17
+Max length: 31
+Row count: 14611
+
+What is the missing 6th value?
+$ csvcut -c 1 ltbarber_clean.csv | sort | uniq -c
+13876 "Barber, Class A"
+180 Barber Hair Braiding Specialist
+2 Barber Hair Weaving Specialist
+170 Barber Instructor
+366 Barber Manicurist
+17 Barber Technician
+1 type
+
+Who are the "Weaving Specialists"?
+$ csvgrep -c 1 -m "Barber Hair Weaving Specialist" ltbarber_clean.csv | csvcut -c 3,4 |
+csvlook
+-----------------------------------------------| business_county | business_name
+|
+-----------------------------------------------| DALLAS
+| MUIRU, ANGELICAH WANJIKU |
+| DALLAS
+| NGOKE, BARILE C
+|
+------------------------------------------------
+
+Are any barbers named "Barber"?
+$ csvgrep -c 4 -r "BARBER" ltbarber_clean.csv | csvcut -c 3,4 | csvlook
+-------------------------------------------------| business_county | business_name
+|
+-------------------------------------------------| HARRIS
+| BARBER, PAUL IVAN
+|
+| DALLAS
+| BARBER, PERRY LOUIS
+|
+| DALLAS
+| BARBER, MELVIN TROY
+|
+| DALLAS
+| BARBER, KELVIN WARREN
+|
+| DALLAS
+| BARBER, JAMES
+|
+| TARRANT
+| BARBERENA, JESUS ALEJANDRO |
+--------------------------------------------------
+
+What are the sublicense types?
+$ cat ltbarber_clean.csv | csvcut -c 14 | csvstat
+1. license_subtype
+<type 'unicode'>
+Nulls: False
+Unique values: 6
+5 most frequent values:
+BA: 13876
+MA: 366
+HB: 180
+TE: 170
+BT: 17
+Max length: 2
+Row count: 14611
+
+Five minutes later...
+$ csvlook sublicense_types.csv
+-----------------------------------------------| license_subtype | license_subtype_name
+-----------------------------------------------| BA
+| Class A
+|
+| HB
+| Hair Braiding Specialist |
+| HW
+| Hair Weaving Specialist |
+| MA
+| Manicurist
+|
+| RG
+| Registered
+|
+| SO
+| Shop Owner
+|
+| TE
+| Instructor
+|
+| BT
+| Technician
+|
+| WG
+| Wig Specialist
+|
+------------------------------------------------
+
+|
+
+Can I join them?
+$ csvjoin -c 14,1 --outer ltbarber_clean.csv license_subtypes.csv > joined.csv
+$ head joined.csv | csvcut -c 16,17 | csvlook
+-------------------------------------------| license_subtype | license_subtype_name |
+-------------------------------------------| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+| BA
+| Class A
+|
+--------------------------------------------
+
+Can I get JSON for my webapp?
+$ csvgrep -c 17 -m "Hair Weaving Specialist" joined.csv > weavers.csv
+$ csvjson -i 4 -k license_num weavers.csv
+{
+"641155": {
+"business_county": "DALLAS",
+"mailing_zip": "75230",
+"owner_tele": "2103612642",
+"owner_name": "NGOKE, BARILE C",
+"mailing_county": "DALLAS",
+"mailing_address": "10702 STONE CANYON RD APT 206",
+"mailing_city_state_zip": "DALLAS TX 75230-5916",
+[...]
+
+Can I query the data?
+$ createdb licenses
+$ csvsql --db postgresql:///licenses --insert weavers.csv
+$ psql -q licenses -c "SELECT owner_name FROM weavers";
+owner_name
+-------------------------MUIRU, ANGELICAH WANJIKU
+NGOKE, BARILE C
+(2 rows)
+
+Can I get an audit trail?
+#!/bin/bash
+# Join license types to data
+csvjoin -c 14,1 --outer ltbarber_clean.csv license_subtypes.csv > joined.csv
+# Filter dataset to hair weavers
+csvgrep -c 17 -m "Hair Weaving Specialist" joined.csv > weavers.csv
+# Create a local database
+createdb licenses
+# Copy the data over
+csvsql --db postgresql:///licenses --insert weavers.csv
+# Run our query
+psql -q licenses -c "SELECT owner_name FROM weavers";
+
+Other stuff
+● Unicode and alternate encodings supported
+● Automatic detection of common csv dialects
+● csvstack: combine sequential data files
+● csvsort: reorder data without losing headers
+● csvclean: attempts to fix "broken" csv files
+● Open source and accepting patches/contributions
+
+Thanks!
+
+Questions?
+http://csvkit.rtfd.org
+
+

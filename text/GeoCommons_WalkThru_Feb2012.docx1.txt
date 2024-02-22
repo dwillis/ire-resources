@@ -1,0 +1,75 @@
+Paul Monies (@pmonies)
+USA TODAY
+NICAR 2012: St. Louis
+Basic mapping in GeoCommons
+Prerequisites:
+1. You’ve created a free account at GeoCommons
+2. You know how to unzip files
+3. You know how to delete columns in a spreadsheet, filter records and write basic Excel formulas for
+subtraction and percent change
+Let's build a tract map from some of the 2010 census data. We'll use the IRE census (http://census.ire.org)
+site for the data. Let's look at the Hispanic population by tract in Sedgwick County, Kansas. To get an
+idea of the type of data we'll be looking at, look at this example for Tract 7 in Sedgwick County. (http://
+census.ire.org/data/20173000700.html#) This breaks down the non-Hispanic and Hispanic population counts in
+that tract.
+Getting the data ready
+1. Go to the IRE census site and select "Download Bulk Data." You should be at the "Download Bulk Census
+Data as CSV" page. Look for the drop-down menus and select "Kansas" from the State menu and "Census
+Tract (140)" from the Summary Level menu. Then select "P5. Hispanic or Latino Origin by Race" from the
+Table menu. Now click on the "Download CSV" button.
+2. Open the file in your spreadsheet so we can pull out only the tracts in Sedgwick County. To do this, you’ll
+need to filter by the "County" code for Sedgwick County, which is "173."
+3. Open a new file and copy and paste the filtered tract-level data for to the new file. Save it as a new .csv
+file. It should have 125 rows, including the column names. For ease of use and so we don’t clog up the popups on our eventual GeoCommons maps, we’ll delete the columns we don’t need. Keep these columns:
+>> geoid
+>> sumlev
+>> name
+>> The two columns that start with "P005001" (P005001, P005001.2000) for the Total population
+>> The two columns that start with "P005002" (P005002, P005002.2000) for Not Hispanic/Latino population
+>> The two columns that start with "P005010" (P005010, P005010.2000) for Hispanic/Latino population
+
+4. Now we’ll do some quick calculations for raw change (subtract the old from the new) and percent change
+(Reminder: That formula is ((new-old)/old)*100). Insert two new columns after the P005001.2000 column.
+I called the new columns P005001.delta and P005001.pct_change, but you can call them whatever. Repeat
+this for P005002 and P005010 and do the calculations all the way down the sheet. Now convert the percent
+change columns to Number data type and choose how many decimals you want. Save the .csv file again.
+5. Now you'll need to find the census tract boundaries for Sedgwick County, Kansas. Thankfully, these
+shapefiles are at IRE’s Census page (They’re also at the Census Bureau’s website at http://www.census.gov/
+cgi-bin/geo/shapefiles2010/main). On the IRE Census page, use the drop-down menus to select Kansas and
+Census Tract, then click on the “Download Shapefile” button. A dialog box should appear asking you to
+download a compressed file called tl_2010_20_tract10.zip. Unzip the file, and you should see five separate
+files. (Note: this file gives you the tracts for the entire state; we’ll be putting data on just one of the counties
+
+in this walk-through.)
+Working in GeoCommons
+6. Log in to GeoCommons and click on the "Upload Data" button at the top of the page. Select "Upload files
+from your computer." Upload four of the five geographic files you unzipped (no need for the .xml file). When
+it’s finished processing, click “Next Step.” On the next screen, select "Use the existing geographic data in the
+file you uploaded." Make sure it loaded correctly on the next screen and click "Finish." (Pay special attention
+to the GEOID field, since you'll need that later.)
+7. Describe your geographic data by filling in as many details as you can on the next screen. Click "Save."
+8. Now upload the .csv file to GeoCommons by clicking "Upload Data" again at the top of the page. Then
+click "Next" and, on the screen that follows, "Next step." On the Geolocate page, select "Join with a boundary
+dataset." In the search box, type one of the tags you used earlier to find the map layer file you just created.
+9. Now we'll join the shapefile layer to the .csv layer. Click on the "GEOID" field from the .csv file
+and "GEOID10" from the map layer. GeoCommons will look at the data and see if it matches. It should take a
+few seconds, and you'll then see the "Success! 124 out of 124 features match" message. Click "Continue."
+10. On the next screen, review the combined data to make sure it all joined correctly. Then describe and fill
+out the metadata information on the next page. You can also edit the data at this point and rename some of
+the fields to a more user-friendly description. Then click "Save."
+11. Now you're ready to map the combined data. When you're ready, click "Map Data."
+Tweaking your map
+12. Click the green Edit button at the upper right to set data values for your tracts. For this map, we'll look at
+Hispanic/Latino percent change from 2000 to 2010, so in the "Style" box in the left corner, select "Theme"
+under the Color Theme section. Then choose the calculated column for P005010 percent change as the
+Attribute and Equal Interval as the Interval. Then choose your color palette. Let's leave it at the default
+number of Classes (in this case, five). Click "Done" and check out your map. Zoom in and click around the map
+to see the values for each tract.
+13. If you want, you can also change the basemap by clicking on the "Change" button under the "Basemap"
+section of the box on the top right. I selected Microsoft Road just to give it a different look.
+14. Now click the green "Edit details" button in the upper right corner and fill in some additional details, a
+description and tags for the map.
+15. To share, just copy and paste the URL. Alternatively, you can embed the map on your own website by
+clicking the green "Share" button. You can copy and paste either the HTML embed code or the iFrame link.
+
+

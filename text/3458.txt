@@ -1,0 +1,356 @@
+Tipsheet #3458
+
+For	  the	  ﬁrst	  part	  of	  this	  presenta)on	  see:	  	  
+hCp://www.peteraldhous.com/CAR/Aldhous_CAR2011_RforStats.pdf	  
+This	  presenta)on	  is	  available	  at:	  	  
+hCp://jacobfenton.s3.amazonaws.com/automate-­‐r.pdf	  	  
+
+R	  for	  sta)s)cs:	  automate	  your	  
+analysis	  
+Jacob	  Fenton	  
+CAR	  Director	  
+Inves)ga)ve	  Repor)ng	  Workshop,	  
+American	  University	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+What’s	  this	  about?	  
+• R	  does	  great	  things	  with	  stats	  and	  graphics.	  But	  
+some)mes	  you	  don’t	  have	  1	  dataset—you	  have	  2,000.	  
+Must	  feed	  the	  newsapps	  beast.	  
+• R	  is	  itself	  a	  programming	  language.	  You	  could	  just	  write	  
+a	  loop,	  of	  course.	  	  
+• Data	  management	  across	  plaXorms	  is	  hard.	  
+• ‘Reproducibility’	  is	  key:	  editors	  want	  to	  rerun	  month-­‐
+long	  analysis	  with	  diﬀerent	  assump)ons.	  The	  day	  
+before	  deadline.	  Dude,	  where’s	  my	  temp2.txt	  ﬁle?	  
+• Integra)ng	  R	  with	  the	  rest	  of	  your	  data	  ‘system’	  may	  be	  
+easier	  if	  you	  reuse	  the	  same	  tools:	  databases	  to	  keep	  
+data	  and	  scrip)ng	  languages	  to	  ‘do’	  stuﬀ	  .	  That	  way	  you	  
+don’t	  have	  to	  remember	  R’s	  for	  loop*	  syntax!	  	  
+*	  for	  (x	  in	  c(1:10))	  print((x))	  
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Disclaimer	  
+• Remember	  Peter’s	  slide	  about	  running	  with	  
+scissors!	  This	  isn’t	  an	  example	  of	  wise	  use	  of	  
+sta)s)cs—it’s	  an	  example	  of	  integra)ng	  R	  with	  
+a	  complex	  dataset	  I	  cooked	  up	  for	  this	  talk.	  	  
+• I’m	  gonna	  whip	  through	  an	  example	  process	  
+to	  get	  to	  the	  automa)on.	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Danger:	  95%	  conﬁdence	  =	  5%	  wrong	  
+• Running	  enough	  a	  test	  at	  the	  95%	  conﬁdence	  
+interval	  will,	  about	  5%	  of	  the	  )me,	  produce	  
+‘wrong’	  answers.	  	  
+• Consult	  an	  expert.	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Example:	  ACS	  5-­‐year	  tract	  es)mates	  	  
+• Complex.	  But	  available	  in	  handy	  2.6	  Gig	  zipﬁle	  
+via	  hp:	  
+hCp://www2.census.gov/acs2009_5yr/
+summaryﬁle/	  !	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Tracts:	  A	  few	  educa)onal	  aCainment	  
+tables	  
+• B15002:	  SEX	  BY	  EDUCATIONAL	  ATTAINMENT	  FOR	  
+THE	  POPULATION	  25	  YEARS	  AND	  OVER	  -­‐-­‐-­‐	  
+Universe:	  	  Popula)on	  25	  years	  and	  over	  
+• B20004:	  MEDIAN	  EARNINGS	  IN	  THE	  PAST	  12	  
+MONTHS	  (IN	  2009	  INFLATION-­‐ADJUSTED	  
+DOLLARS)	  BY	  SEX	  BY	  EDUCATIONAL	  ATTAINMENT	  
+FOR	  THE	  POPULATION	  25	  YEARS	  AND	  OVER	  -­‐-­‐-­‐	  
+Universe:	  	  Popula)on	  25	  years	  and	  over	  with	  
+earnings	  
+• Note	  the	  slight	  universe	  mismatch.	  Sigh.	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Process	  Slide:	  Pull	  data,	  import	  to	  R	  	  
+• My	  process	  is	  pull	  data	  into	  a	  database	  from	  raw	  
+summary	  ﬁles,	  muck	  with	  it	  in	  sql,	  then	  dump	  it	  to	  a	  
+text	  ﬁle:	  	  copy	  nicar_demo	  to	  	  ‘/nicar_demo.txt'	  with	  
+text	  delimiter	  =	  e'\t'	  null	  as	  '';	  
+• I’m	  using	  a	  suite	  of	  tools	  for	  extrac)ng	  ACS	  census	  data	  
+from	  the	  summary	  ﬁles	  directly	  into	  a	  database	  
+• For	  this	  example,	  I	  computed	  tract-­‐wise	  rates	  for	  
+residents	  with	  less	  than	  a	  hs	  diploma	  or	  a	  ba	  or	  higher,	  
+for	  both	  men	  and	  women,	  as	  well	  as	  the	  ra)o	  of	  men	  
+to	  women,	  and	  the	  ra)o	  of	  men’s	  median	  income	  to	  
+women’s.	  It’s	  not	  the	  best	  stat,	  but	  it	  works	  for	  a	  demo.	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Quickie	  Slide:	  import	  to	  R,	  add	  names	  
+It’s	  good	  to	  conﬁrm	  we	  imported	  the	  number	  of	  
+rows	  we	  expected—it’s	  easy	  to	  do	  so	  with	  
+nrow()	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Summarize	  the	  data	  
+• Summary()	  will	  summarize	  the	  data.	  	  
+• “Variance	  is	  interes)ng”	  –	  Phil	  Meyer	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Tight	  normal	  distribu)on—not	  as	  
+interes)ng	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+A	  simple	  R	  graph	  
+>	  Alabama	  <-­‐	  subset(a,a$state=="1")	  
+>	  nrow(Alabama)	  
+[1]	  1082	  
+>	  hist(Alabama$mi/1000,breaks=c(10*0:10,1000),	  xlim=c(0,100),	  freq=TRUE,	  
+xlab="Median	  income,	  $000",	  main="Median	  income	  in	  Alabama	  Census	  
+Tracts")	  
+
+For	  more	  complex	  
+graphics,	  try	  using	  
+ggplot2	  and	  or	  the	  site	  
+Peter	  men)oned	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Print	  charts	  en	  masse	  
+• There	  are	  many	  ways	  to	  do	  this,	  but	  as	  an	  example	  I’m	  scrip)ng	  the	  
+process	  with	  a	  python	  library	  called	  RPy2	  and	  a	  script	  called	  
+write_graphs.py.	  To	  make	  the	  script	  work,	  you	  need	  to	  set	  ﬁle	  paths	  
+correctly	  on	  your	  own	  machine.	  Python	  makes	  adding	  state	  names	  
+much	  less	  painful.	  
+Test	  data	  (large	  ﬁle!):	  
+hCp://jacobfenton.s3.amazonaws.com/nicar-­‐raleigh/
+nicar_demo.txt	  	  
+Script:	  
+hCp://jacobfenton.s3.amazonaws.com/nicar-­‐raleigh/
+write_graphs.py	  
+Sample	  output:	  
+hCp://jacobfenton.s3.amazonaws.com/nicar-­‐raleigh/graphs/NC.png	  	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Disclosure:	  python	  
+• I’m	  working	  with	  python’s	  RPy2	  library.	  
+Easy_install	  rpy2.	  	  
+• It	  appears	  there’s	  similar	  ruby	  code	  at	  rsruby:	  
+hCp://rubyforge.org/projects/rsruby/	  .	  No	  
+idea	  if	  it	  works.	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Simple	  python	  R	  interac)on	  
+import	  rpy2.robjects	  as	  robjects	  
+##Write	  R	  code	  in	  python,	  and	  execute	  it	  in	  R.	  
+rcode0="""	  
+a	  <-­‐	  read.table('nicar_demo.txt',	  header=FALSE,	  
+sep="\t",	  quote='');	  
+"""	  
+robjects.r(rcode0)	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Correla)on	  Matrix	  
+• Transform	  the	  data	  into	  a	  matrix	  (turns	  out	  it’s	  
+been	  a	  data	  frame	  this	  whole	  )me…)	  
+b=data.matrix(a)	  
+Write	  the	  correla)on	  table	  out	  	  
+write.table(cor(b,	  use="complete.obs"),	  
+ﬁle=“correla)ons.txt",	  sep="|",	  eol="\n”,	  
+row.names=TRUE)	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Correla)on	  matrix	  excerpt	  
+• Here’s	  a	  few	  selected	  columns.	  
+
+• Dd	  
+• Mi_fmra)o	  is	  the	  median	  income	  of	  women	  
+divided	  by	  the	  median	  income	  of	  men.	  
+Frac_male	  is	  the	  frac)on	  of	  men	  in	  a	  tract.	  
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Test	  correla)on	  uncertainty	  
+>	  cor.test(a$mi,	  a$mi_fmra)o,	  use="complete.obs")	  
+	  Pearson's	  product-­‐moment	  correla)on	  
+data:	  	  a$mi	  and	  a$mi_fmra)o	  	  
+t	  =	  -­‐53.9061,	  df	  =	  64655,	  p-­‐value	  <	  2.2e-­‐16	  
+alterna)ve	  hypothesis:	  true	  correla)on	  is	  not	  equal	  to	  0	  	  
+95	  percent	  conﬁdence	  interval:	  
+	  -­‐0.2147560	  -­‐0.2000030	  	  
+sample	  es)mates:	  
+	  	  	  	  	  	  	  cor	  	  
+-­‐0.2073913	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Run	  it	  by	  state	  
+• We	  can	  pass	  data	  back	  from	  R	  to	  python	  too:	  
+	  rcode3	  =	  """cor.test(t1$mi,	  t1$mi_fmra)o,	  
+use="complete.obs")"""	  
+	  	  	  	  result	  =	  robjects.r(rcode3)	  
+This	  will	  allow	  us	  to	  compute	  correla)on	  coeﬃcients	  by	  
+state	  as	  well	  as	  their	  uncertain)es*,	  and	  dump	  them	  to	  
+a	  text	  ﬁle.	  	  
+See	  example	  script:	  	  
+hCp://jacobfenton.s3.amazonaws.com/nicar-­‐raleigh/
+write_state_correla)ons.py	  	  
+*	  We	  leh	  out	  ini)al	  uncertain)es,	  so	  this	  isn’t	  super	  meaningful…	  
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Script	  results:	  meaningful?	  
+• Is	  this	  meaningful?	  
+• Also,	  we	  leh	  out	  
+uncertain)es	  at	  the	  
+outset.	  
+• hCp://
+jacobfenton.s3.amazo
+naws.com/nicar-­‐
+raleigh/graphs/
+state_correla)ons.txt	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+But	  wait,	  there’s	  more 	  	  
+• This	  is	  just	  a	  very	  simple	  demo	  of	  RPy2.	  
+There’s	  a	  lot	  more	  complex	  interac)ons	  
+available.	  It’s	  possible	  to	  load	  data	  from	  a	  
+script	  directly.	  That’s	  less	  useful	  for	  large	  data	  
+sets,	  but	  helpful	  in	  other	  contexts.	  For	  
+instance,	  train	  an	  algorithm	  on	  a	  sample	  data	  
+set,	  then	  feed	  data	  to	  it	  by	  script	  for	  
+classiﬁca)on.	  Etc.	  	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Appendix	  (added	  aher	  talk)	  
+• R	  libraries	  that	  talk	  directly	  to	  databases!	  
+• For	  mysql	  see:	  RmySQL:	  
+hCp://cran.r-­‐project.org/web/packages/RMySQL/
+index.html	  	  
+• For	  postgresql	  see	  RpgSQL:	  
+hCp://cran.r-­‐project.org/web/packages/RpgSQL/
+index.html	  
+• There’s	  also	  RpostgreSQL,	  but	  as	  of	  this	  wri)ng	  
+no	  binaries	  were	  known	  to	  be	  available…	  
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Peter’s	  email	  about	  mysql	  
+Hi	  all,	  	  
+	  	  
+This	  issue	  came	  up	  in	  the	  Q&A.	  
+	  	  
+Here’s	  the	  documenta)on	  for	  the	  RMySQL	  package	  that	  allows	  you	  to	  connect	  R	  to	  a	  MySQL	  database:	  hCp://cran.r-­‐project.org/web/packages/RMySQL/RMySQL.pdf	  
+	  	  
+And	  here’s	  the	  equivalent	  for	  the	  RPostgreSQL	  package:	  hCp://cran.r-­‐project.org/web/packages/RPostgreSQL/RPostgreSQL.pdf	  
+	  	  
+I’ve	  experimented	  with	  the	  former,	  and	  some	  sample	  code	  is	  below.	  Using	  MySQL	  Server	  5.1,	  I	  had	  to	  replace	  the	  libmysql.dll	  ﬁle	  with	  an	  older	  version	  to	  sidestep	  an	  error	  message,	  but	  
+once	  I’d	  done	  this	  everything	  seemed	  to	  work	  OK.	  Some	  notes	  on	  this	  glitch	  here:	  hCp://tolstoy.newcastle.edu.au/R/e2/help/07/10/28442.html	  and	  here:	  
+hCp://www.stat.berkeley.edu/users/spector/s133/RMySQL_windows.html).	  
+•
+	  	  
+•
+Sample	  code	  (entries	  in	  square	  brackets	  need	  to	  be	  replaced	  with	  speciﬁc	  code	  for	  your	  database	  and	  queries,	  minus	  the	  brackets):	  
+•
+	  	  
+•
+#	  Make	  the	  connec5on	  to	  the	  MySQL	  server	  
+•
+con	  <-­‐	  dbConnect(MySQL(),	  user="[user]",	  password="[password]",	  dbname="[databasename]")	  
+•
+	  	  
+•
+#	  show	  available	  databases	  
+•
+dbGetQuery(con,	  "SHOW	  DATABASES")	  
+•
+	  	  
+•
+#	  select	  database	  
+•
+dbGetQuery(con,	  "USE	  [databasename]")	  
+•
+	  	  
+•
+#	  show	  the	  tables	  in	  the	  database	  
+•
+dbGetQuery(con,	  "SHOW	  TABLES")	  
+•
+OR	  
+•
+dbListTables(con)	  
+•
+	  	  
+•
+#	  List	  ﬁelds	  in	  table	  
+•
+dbListFields(con,	  "[tablename]")	  
+•
+	  	  
+•
+#	  Run	  query	  
+•
+dbGetQuery(con,	  "[SQL	  query]")	  
+•
+	  	  
+•
+#	  Close	  connec5on	  
+•
+dbDisconnect(con)	  
+•
+	  	  
+•
+This	  came	  up	  during	  a	  discussion	  of	  the	  main	  limita)on	  of	  R:	  the	  fact	  that	  the	  en)re	  session	  is	  stored	  in	  RAM,	  which	  can	  lead	  to	  memory	  problems	  when	  dealing	  with	  large	  datasets.	  
+Pulling	  in	  data	  from	  a	  database	  as	  required	  and	  removing	  objects	  from	  the	  session	  as	  soon	  as	  you’re	  done	  with	  them	  is	  one	  approach	  to	  dealing	  with	  this	  limita)on.	  	  
+•
+	  	  
+•
+If	  you’re	  s)ll	  hi†ng	  problems	  with	  R’s	  memory	  barrier,	  you	  might	  want	  to	  experiment	  with	  commercial	  sohware	  developed	  to	  address	  the	  “big	  data”	  problem	  by	  Revolu)on	  Analy)cs,	  see:	  
+hCp://www.revolu)onanaly)cs.com/products/enterprise-­‐big-­‐data.php.	  
+•
+	  	  
+•
+Cheers,	  
+•
+	  	  
+©2011 - Duplication
+prohibited without permission from Investigative Reporters and Editors, Inc.
+•
+Peter	  	  
+•
+	  	  
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Jacob’s	  email	  about	  PostgreSQL	  
+• FWIW,	  on	  Mac	  OS	  X	  with	  PostgreSQL	  I	  found	  it	  much	  easier	  
+to	  install	  RpgSQL	  (	  
+hCp://cran.r-­‐project.org/web/packages/RpgSQL/
+index.html	  )	  rather	  than	  RPostgreSQL,	  because	  there	  are	  
+binaries	  available,	  so	  you	  don't	  have	  to	  build	  from	  source.	  
+According	  to	  the	  CRAN	  page	  there	  are	  no	  RPostgreSQL	  
+binaries	  available	  for	  windows	  either,	  but	  they	  may	  just	  be	  
+elsewhere...	  	  
+The	  process	  of	  installing	  RpgSQL	  is	  a	  bit	  annoying	  because	  it	  
+depends	  on	  the	  java	  postgres	  driver,	  but	  it	  turns	  out	  making	  
+that	  work	  is	  as	  simple	  as	  pu†ng	  the	  .jar	  ﬁle	  (	  available	  here:	  
+hCp://jdbc.postgresql.org/download.html	  )	  in	  a	  place	  
+where	  R	  is	  looking	  for	  it...	  
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+

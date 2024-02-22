@@ -1,0 +1,87 @@
+Simple Access Forms
+MaryJo Sylwester
+USA TODAY Sports Database Editor
+msylwester@usatoday.com or mjsnews@yahoo.com
+2003 NICAR Conference -- Charlotte
+
+The Toolbox:
+This bar is usually planted along the left side of your screen, but you can pick it up and move it anywhere
+you need. It will only appear when the form is in Design View. This allows you to add new items to your
+form, ranging from text boxes to pictures and navigation buttons.
+
+From left to right, the buttons on the lower level are:
+Label: Use for text that will only appear on your form. It’s not saved into the tables.
+Text Box: Displays text that is stored in a field in a table.
+Option Group: Establishes a multi-choice answer block. (data entry primarily)
+Toggle Button: Use for a yes-no type of response (data entry primarily)
+Option Button: Use for a yes-no type of response. (data entry primarily)
+Check Box: Use for a yes-no type of response. (data entry primarily)
+Combo Box: Allows you to create a pull-down list based on either another table or query or a pre-set value
+list. You can display one thing in the form and store another in the table. For example, your form could
+show the full name of a state and the table could house either the postal abbreviation or the FIPS code. For
+data entry this is your best bet for ensuring standardized data.
+List Box: Similar to a combo box, except it’s based on a short list that is not housed in a table or query.
+You have to type in the list when it’s created.
+Command Button: Use to place navigation or “go” buttons on your form. Can launch queries, open other
+forms, make a “find” button, make buttons to go to the next or previous record, button to add a new record.
+Image: Add a picture or other image in jpg, tiff, gif, etc.
+Unbound Object Frame: Use to insert an object other than an image (Excel worksheet, etc)
+Bound Object Frame: Use to insert an item that would be stored into the database (mug photos are a good
+example here)
+Page Break: Establishes a page break on your form.
+Tab Control: If you have a form with multiple pages (for the same record) you can use this to create a
+“tab” to easily flip from one page to the other (like the tabs in an Excel workbook).
+Subform/SubReport: Subforms are most often used when dealing with one-to-many relational tables. The
+subform would allow you to input multiple records into the “many” table and maintain the proper
+relationship to the “one” table.
+Line: Draw a line on your form.
+Rectangle: Draw a rectangle on your form.
+More Controls: There’s a long list here of advanced options that you’ll likely never use.
+
+Properties Box:
+Every field and label on a form has a properties dialog box behind it that designates everything from color
+and size to where it’s contents are stored in the database. This is where you’ll need to go to customize a
+form created with a wizard (or to build your own without the wizard). Properties boxes are slightly
+different depending on the type of object on your form (for example, properties for a combo box are more
+complex than a simple text box). Below we’ll hit the highlights of a text box.
+
+The tabs at the top indicate these deal with the data itself. Here are the key ones you’ll deal with most
+often:
+• Control Source: from the pull-down list you can pick the field in the underlying table where the
+data will be stored.
+• Input Mask: Use this to limit the format of the information going into the field. Example: if you
+have a text field and you want it to be a telephone number that looks like (555)-555-5555.
+• Locked: If you want people to view this field, but not make any changes through the form set this
+to Yes.
+
+The Format section is where you can mess with the colors, fonts, sizes, etc. Back color lets you choose
+from a color pallette for the background color of the field (the default is usually white). Font size, weight,
+name are where you can adjust the font properties. Remember, this particular properties box is just for the
+text box for one field. You can change similar formats for the entire form (like the background color for the
+whole form) by right-mouse clicking on the background of the form itself and pulling up the dialog box.
+
+Setting up a combo box:
+If you’re starting from an existing text box, right-mouse click on the box (in design view) and choose
+“Change To……Combo Box”. Then switch into the properties box and you’ll see something like this:
+
+We’re going to assume you have a lookup table with all of the UCR codes and you want the form to display
+the words describing the code and the table to house the numeric code. Your table has a field called “UCR”
+and it’s set as a numeric field. You also have a separate table, called “UCRCodes” with two columns: the
+first is the numeric code, the second is the written description.
+Control source: set this to the field in your main table where you want to house the numeric code.
+Row Source Type: Your choices are “Table/Query”, “Value List” or “Field List”. To work off an existing
+table, you choose “table/query”.
+Row Source: Here you choose (from a pull-down) which field from your lookup table has the text you
+want to display in the form.
+Column Count: here you tell it how many columns are in the “row source” table – in this case the “ucr
+codes” table has 2 columns, so we would change it to 2.
+Column Widths: this designates the widths of the columns in the “row source” table as they appear in your
+pull-down menu on the form. So in this case we only want to the 2nd column to appear.
+So we would type: 0”;1”
+That means the first column is 0 inches (or not visible) and the second column is 1” wide. You can
+make this whatever value you want. If you have long descriptions, you might need to go 2” or more.
+Bound column: This is where you designate which column from your “row source” table has the value that
+will ultimately be stored in your main table (in the control source field). In this case we would leave it on 1
+because the ucr code is in the 1st column in our “ucr codes” table.
+
+

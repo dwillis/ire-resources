@@ -1,0 +1,293 @@
+IRE Conference
+June 24, 2017
+Phoenix, AZ
+
+Jonah Newman
+The Chicago Reporter
+@jonahshai
+
+Why police misconduct lawsuits?
+●
+●
+●
+●
+
+To investigate police misconduct not only as a racial and social justice
+issue but as a fiscal accountability issue.
+Lawsuits create a data and document trail that is publicly available but not
+easily accessible.
+They often tell great stories
+There are trends and patterns that can be discovered from police lawsuits
+but Chicago isn’t looking for them (ignoring best practices and, now, the
+DOJ).
+
+Lifecycle of a police misconduct lawsuit in Chicago
+2 year
+statute of
+limitations
+
+Incident of alleged
+police misconduct
+
+File lawsuit in
+federal or state
+court
+
+Verdict, settlement
+or offer of
+judgment
+
+If amount is
+< $100,000
+
+Posted on law
+department
+website
+
+Paid by
+comptroller
+
+If amount is
+$100,000 or
+more
+
+City council
+approval
+
+Where we started
+STRUCTURED DATA
+
+Where we started
+UNSTRUCTURED DATA
+
+Data entry
+FORM DATA
+
+Where we ended up
+RELATIONAL DATA
++-------------+
++-------------+
++--------------+
++--------------+
+|payments
+|
+|cases
+|
+|casecops
+|
+|cops
+|
++-------------+
++-------------+
++--------------+
++--------------+
+|id
+|
+|id
+|<----+
+|id
+|
++---->|id
+|
+|case_no
+| <---------- |case_no
+|
+|
+|
+|first_name
+|
++---- |case_id
+|payee
+|
+|incident_date|
+|cop_id
+|-----+
+|middle_init
+|
+|amount
+|
+|location
+|
+|cop_first_name|
+|last_name
+|
+|payment date |
+|narrative
+|
+|cop_last_name |
+|badge_no
+|
+|disposition |
+|reporter
+|
+|cop_badge_no |
+|appointed_date|
++-------------+
+|notes
+|
+|flag
+|
+|resign_date
+|
++-------------+
+|matched_by
+|
+|rank
+|
++--------------+
++--------------+
+
+Problem: officer matching
+DIRTY DATA
+
+Solution: officer matching
+Link each casecop record to a cop record--obtained from CPD through FOIA
+(h/t to @matt_kiefer)
+●
+
+●
+●
+
+Automate the process, using
+available information: first
+name, last name, star numbers
+Use logic to remove possible
+false positives
+If there’s only one possible
+match, call it a success
+
++--------------+
++-----------+
+|casecops
+|
+|cops
+|
++--------------+
++-----------+
+|id
+|
+|
++----> |id
+|case_id
+|
+|last_name |
+|
+|cop_id
+| <----+
+|first_name |
+|cop_first_name|
+|middle_init|
+|cop_last_name |
+|appt_date |
+|cop_badge_no |
+|res_date
+|
+|flag
+|
++-----------+
+|matched_by
+|
++--------------+
+
+Available at: https://github.com/thechicagoreporter/cop-matcher
+
+Solution: officer matching
+When in doubt, ask a human
+
+Analysis
+Look for patterns in:
+●
+●
+●
+
+Officers
+Types of complaints
+Location
+
+Follow the money:
+●
+●
+●
+
+How much is the city spending overall?
+Where does the money come from?
+What else could it be spent on?
+
+Compare to civilian complaints
+
+What we learned
+●
+
+A tiny cohort of officers are defendants in multiple lawsuits:
+○
+
+●
+
+There are patterns that point to systemic problems
+○
+○
+○
+
+●
+●
+
+2,396 officers were named in at least one lawsuit that settled from 2011-16. 56
+officers—less than half of one percent of the force—were named in more than 3 lawsuits.
+45 of those officers are still on the force.
+Nearly half of the lawsuits claim that officers filed false reports—and sometimes
+committed perjury on the witness stand—to cover up their misconduct.
+Nearly one-third allege that some officers on the scene could have but didn’t intervene to
+prevent misconduct.
+In one-quarter of excessive force lawsuits, the person who alleged police abuse was also
+charged with either resisting arrest or assault of a police officer.
+
+Despite years of spending tens of millions of dollars, the city still doesn’t
+budget enough, so they borrow to pay for these lawsuits
+Even when the city admits liability in a lawsuit, officers are rarely
+disciplined
+
+What we learned
+About creating a database of police misconduct lawsuits...
+Things we did well:
+●
+●
+●
+
+Stories are powerful
+Tags make it easy to explore the data
+Make it shareable
+
+Things we could have done better:
+●
+●
+●
+
+Figure out what’s important early to save time later
+Talk to lawyers early
+Talk to your audience early about how they might use it
+
+What we learned
+About creating a database of police misconduct lawsuits...
+●
+●
+
+It’s time consuming
+It’s expensive
+
+To learn more:
+●
+
+Settling for Misconduct:
+projects.chicagoreporter.com/settlements
+
+●
+
+Our website:
+chicagoreporter.com
+
+●
+
+The Chicago Reporter is on Github
+github.com/thechicagoreporter
+
+

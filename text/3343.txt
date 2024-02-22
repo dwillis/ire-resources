@@ -1,0 +1,145 @@
+2010 CAR Conference (Phoenix, Arizona)
+
+NICAR 2010 talk: Good habits
+Brian Boyer
+
+This is a script for a talk I’ll be delivering shortly, with Jacob Fenton’s assistance, at NICAR 2010 in
+Phoenix. Readers may find it similar to, though more complete than, my ONA talk, a few posts back.
+Consider this version better.
+For more frequent updates on what I’m up to, visit the News Apps Blog
+(http://blog.apps.chicagotribune.com/) .
+UPDATE: The smiley face next to my little Rails joke wasn’t strong enough, added a bit, plus a link.
+We’re here to talk about some boring stuff. Get‐more‐fiber‐in‐your‐diet kind of stuff. It’s titled
+“Development Techniques” on the schedule, but this talk might be better to call it “Best Practices in
+Software Engineering”, or “Good Habits When Making Software”, or “Ass‐saving Shit That Some
+Other Smart People Figured Out, Because Your Problems Aren’t New.”
+My favorite metaphor for explaining programming to non‐coders is that it’s like carpentry. You can
+put together a chest of drawers with nails and glue, and it’ll fall apart in a year, or you can build
+something lasting and use dovetail joints. We’re not plumbers providing a utility, but neither are we
+artists. It’s nice if our work is beautiful, but it also must be durable. We’re craftsmen
+(http://en.wikipedia.org/wiki/Software_craftsmanship). We make things that people use.
+The point of all this is that craftsmanship matters. So, I’m here to ask you to change your ways, to
+consider adopting some processes, not because they’re fun, but because they’ll save your ass, and
+help you do better work. And once you’re in the habit, of writing tests and deployment scripts, of
+tracking your defects and versioning your code, you’ll wonder how you ever went without.
+So, we’re trying something new today. I’m gonna run through these concepts fairly quickly, and in‐
+between, Jacob will reflect on his work adopting many of these practices. It shouldn’t take very long,
+and at the end we’ll take questions.
+Version Control
+Version control software is both a safety net and a collaboration tool. It’s a place, usually away from
+your machine, where you store your code. And when you write new code, it hangs on to your
+previous versions. Even on a one‐person project, version control is essential. When your hard drive
+crashes, you don’t lose your work. And, when you’re working with others on a common codebase, it
+acts as a central repository to help coordinate everyone’s changes.
+We use Git (http://git‐scm.com/). Other folks like Mercurial (http://mercurial.selenic.com/).
+Subversion (http://subversion.tigris.org/) would also be a fine choice, though it’s no longer the cool
+kids’ favorite.
+
+http://hackerjournalist.net/2010/03/13/nicar‐2010‐talk‐good‐habits/
+
+2010 CAR Conference (Phoenix, Arizona)
+
+Task Tracking
+It may sound bossy, but task tracking is not about micromanagement, or at least it doesn’t have to
+be. In my experience, on any project, you’ll only really know how deep in the weeds you are if you
+can see all the tasks, listed out. Also, I find that forgetting to do something is extremely embarrassing.
+So, you can track tasks in a text file or in a spreadsheet on your desktop, but I’ve found thats teams
+work better if the TODO list is out in the open. So, go low‐tech and use 3×5 cards pinned to the wall
+— or go high‐tech and use one of many software packages designed for the purpose.
+We use Unfuddle (http://unfuddle.com/). Trac (http://trac.edgewall.org/) is also a fine choice. If
+you’re using GitHub (http://github.com/) for hosted Git version control, it comes with issue tracking,
+but I haven’t heard many people express their love for it. That said, it might be worth a shot.
+Defect Tracking
+When you find a defect, log it. Take a screenshot, and type up sufficient details to reproduce the
+problem. This may seem heavy‐handed, but defects are your unplanned tasks, they must always be
+addressed — either by fixing them, or explicitly choosing to let them slide. Known defects are totally
+okay. But unknown defects, on the other hand, are the devil. So, always, always, please record your
+defects, even if you’re going to fix them immediately. One of these days, you *will* get distracted
+half‐way through a fix. And you *will* forget. Unlike tasks, I’d say always take the high‐tech route
+with defects. They’re best tracked with software.
+We use the same system to track our tasks and defects, Unfuddle (http://unfuddle.com/). Usually you
+do it that way. Another catchall option that might work for you is FogBugz
+(http://www.fogcreek.com/FogBUGZ/).
+Staging Environment
+Similar to defect tracking, your staging environment is there to reduce uncertainty. It’s an
+environment — servers, your databases and applications, everything — that you run in parallel to
+production. It should be identical to your production system. (If you’re using Amazon EC2, this is
+pretty much as simple as copying your production instance!) Your goal is this: knowing that, if your
+application works in staging, it will work in production. You can execute load tests and performance
+tests against your staging environment, as well as test your deployment scripts, and, as a bonus, it
+can host your work for demos, etc.
+We use Amazon EC2 for our hosting, and keep carbon‐copy instances running in staging and
+production at all times. We’ve written about how to set up your own EC2 environment on our team
+blog (http://bit.ly/awxkyo).
+Load Testing
+The Tribune news apps team learned an important lesson in February, when Illinois voters went to
+vote in the primaries, and our Election Center (http://elections.chicagotribune.com/) app was put to
+the test. We had thought our production setup was great. The harder we abused it, the more load we
+http://hackerjournalist.net/2010/03/13/nicar‐2010‐talk‐good‐habits/
+
+2010 CAR Conference (Phoenix, Arizona)
+
+threw in our tests, it just kept performing. “Great!”, we thought, “This system is gonna work
+awesome.” Well, you can probably guess where I’m going with this.
+We crashed and burned on election day. The Election Center was useless. (For the server nerds in the
+audience — our top was pegged well over 100.) Luckily, a few Google searches gave us a way to route
+around the bottleneck (using the awesome pgpool (http://pgpool.projects.postgresql.org/)), and we
+were back up and running after only a half hour or so. The lesson we learned was this: A good test
+must fail. You need to know your breaking point. Make the servers effing cry. Because they *will* cry.
+And if you don’t know your limits, you’re asking for trouble. We got very lucky. There was a readily‐
+googleable, turnkey fix for our problem. We might not be so lucky next time.
+We use ab to make our servers cry.
+Push‐button Deployment
+When everything is running smoothly, a multi‐step deployment process (gather the code, FTP it all to
+the server, restart apache, etc.) doesn’t seem like so much of a hassle. But when the shit hits the fan,
+your editor is breathing down your neck, and you’ve gotta fix that bug, fast — let’s say, on an
+important election day — you’ll screw up. You’ll forget something, and your minor bug will become a
+nightmare. Everything will break, and you’ll be even more freaked out.
+Push‐button deployment won’t fix your bugs, but it will help you keep your cool. It will also saves you
+from the tedium of redeployment, and act as a guide when you need to redeploy your project
+months or years down the line. If you’re running an identical staging environment, you’re even better
+off, because you can develop your deployment script for staging, use it a few dozen times, and then
+when it’s time to roll to production, you know it’ll work.
+You can write deployment scripts on your own but there are lots of great tools out there, built to
+make deployment dead‐easy. We use Fabric, and have written about our scripts in great detail
+(http://blog.apps.chicagotribune.com/2010/02/10/refactoring‐fabric/). If you’re into Ruby, I’m pretty
+sure that Capistrano (http://www.capify.org/index.php/Capistrano) is the current state of the art.
+Web Frameworks and Agility
+Making websites used to be slow work. Web frameworks make you fast. If you’re fast, you can,
+obviously, turn around projects in a more timely fashion. But, the maybe less obvious advantage of
+high‐speed development tools is that they enable you to fail fast. And what I mean by that is, it used
+to be that you’d have to write code for a month before you had anything you could show off. Using
+frameworks, you can create something interesting very quickly, in days or hours, and the faster you
+create, the faster you can be critiqued. We never go more than a day or two between show‐and‐tell
+sessions with reporters, and when we’re working on a long‐running project, we hold reviews with our
+stakeholders every Friday afternoon. Frameworks enable us to learn from our mistakes and correct
+course very quickly. They enable us to be agile.
+We use Django (http://www.djangoproject.com/), a web framework with deep roots in the news
+industry. There are people here who will tell you to instead use Ruby on Rails
+http://hackerjournalist.net/2010/03/13/nicar‐2010‐talk‐good‐habits/
+
+2010 CAR Conference (Phoenix, Arizona)
+
+(http://rubyonrails.org/). They are not to be trusted. I kiiid. Check out Aron Pilhofer’s post, How Not
+to Choose a Web Framework (http://www.aronpilhofer.com/2009/12/21/how‐not‐to‐choose‐a‐web‐
+framework).
+Testing
+Automated tests kick ass. It’s not immediately obvious, but ‘testing’ is about more than merely
+ensuring correctness. Tests can help you write code faster, and they can save you six months down
+the road when you’ve half‐forgotten about your project. But before they can save you, you’ve gotta
+write ‘em. The tests I most commonly write are called ‘unit tests’. A unit test is a bit of code that
+checks if another bit of code you’ve written works properly. For example, let’s say you’re writing a
+web application that calculates people’s income tax obligations. There are a lot of special cases that
+vary on how much money you make, if you’re paying a mortgage, etc. To test your calculations, you
+could visit the web page you wrote, over and over again, typing in each special case you can think of.
+If you’re especially thorough, you might even keep a spreadsheet to check off correct numbers. This
+would be thorough, but insane. Instead, you should write unit tests — code that exercises each
+special case automatically, by testing your calculations directly. First, you won’t waste countless
+hours reloading a web page, and second when, six months later, they update the laws and you’ve
+gotta fix your code, you can test all the permutations again at a keystroke.
+Most web frameworks include a rig for easily testing your work
+(http://docs.djangoproject.com/en/dev/topics/testing/) .
+
+http://hackerjournalist.net/2010/03/13/nicar‐2010‐talk‐good‐habits/
+
+

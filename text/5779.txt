@@ -1,0 +1,885 @@
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+R: Models for Clustered and Correlated Data
+Presented at NICAR 2019
+Mary Ryan
+
+@Marym_Ryan
+github.com/maryryan
+www.ics.uci.edu/~marymr
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+http://bit.ly/nicar19-cluster
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+1/36
+
+1
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+What's wrong with linear regression?
+"Essentially, all models are wrong, but some are useful" - George
+Box, Empirical Model-Building and Response Surfaces, pg. 424
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+2/36
+
+2
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+What's wrong with linear regression?
+"Essentially, all models are wrong, but some are useful" - George
+Box, Empirical Model-Building and Response Surfaces, pg. 424
+Other iterations:
+"Remember that all models are wrong; the practical question is how wrong do
+they have to be to not be useful"
+useful" (Empirical Model-Building and Response
+Surfaces, pg. 74)
+"The most that can be expected from any model is that it can supply a useful
+approximation to reality:
+reality: All models are wrong; some models are useful"
+(Statistics for Experimenters, pg. 440)
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+3/36
+
+2
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+What's wrong with linear regression?
+Regular linear regression assumes each datapoint is independent of each other
+What if we have multiple datapoints for each person/school/hospital/location
+we're measuring?
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+4/36
+
+3
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+What's wrong with linear regression?
+Regular linear regression assumes each datapoint is independent of each other
+What if we have multiple datapoints for each person/school/hospital/location
+we're measuring?
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+5/36
+
+3
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Random Intercepts and Slopes
+
+Random Intercepts:
+Intercepts: an add-on intercept that differs by each cluster, that will align
+with whether a cluster begins above/below the population intercept
+i.e., good test-takers will have exam intercepts above the general population
+intercept, but their exam scores may change the same as other test-takers
+Random Slopes:
+Slopes: an add-on slope that will allow each cluster to have their own
+variation on the population slope
+i.e., some people are more receptive to a drug treatment than others, and
+improve more sharply
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+6/36
+
+4
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+7/36
+
+5
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Ordinary Least Squares (OLS)
+If we have data
+through:
+
+and response
+
+Implement this using the
+
+, we can nd our regression coef cients
+
+function
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+8/36
+
+6
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Iteratively Reweighted Least Squares (IRLS)
+Put a weight on the equation that estimates our coef cients
+Accounts for the fact that we are no longer dealing with completely
+independent data points
+
+Implement this using the
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+function from the
+
+package
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+9/36
+
+7
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Happy little data analyses
+
+Regular linear regression is like painting with distinct lines:
+everything is neat and separate
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+10/36
+
+8
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Happy little data analyses
+
+Regular linear regression is like painting with distinct lines:
+everything is neat and separate
+
+GEEs are more like painting in realism:
+you can blend colors (information) to get a more realistic view
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+11/36
+
+8
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+12/36
+
+9
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+The
+
+Function
+
+gee stands for Generalized Estimating Equation
+Like with the
+
+function, there are several arguments we need to ll in:
+
+Formula:: this is the same formula you would plug in for
+Formula
+
+, of the form
+
+id:: this is a variable in your dataframe that identi es your clusters.
+id
+If I have 12 patients with 3 datapoints each, each datapoint needs to have
+something that tells us which patient it is coming from. Usually this is done as
+the very rst column of your dataframe, where the id can be a number or a
+string.
+data:: like with
+data
+
+, this is the name of your dataframe
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+10
+
+13/36
+
+5/30/2019
+
+The
+
+R: Models for Clustered and Correlated Data
+
+Function
+
+family: the default for this argument is “gaussian”, which just means Normal. We
+family:
+generally won’t put anything in for this argument unless we’re dealing with binary
+data (we’ll see this later).
+corstr:: this tells the function how we want to do our weights.
+corstr
+There are 3 main options for this:
+1. “independence”: this is the default and will get us
+2. “exchangeable”: this gives us random intercepts
+3. “AR-M”: this gives us random slopes and random intercepts. With this though,
+we also need to specify a “Mv” argument, which will be 1.
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+11
+
+14/36
+
+5/30/2019
+
+The
+
+R: Models for Clustered and Correlated Data
+
+Function
+
+family: the default for this argument is “gaussian”, which just means Normal. We
+family:
+generally won’t put anything in for this argument unless we’re dealing with binary
+data (we’ll see this later).
+corstr:: this tells the function how we want to do our weights.
+corstr
+There are 3 main options for this:
+1. “independence”: this is the default and will get us
+2. “exchangeable”: this gives us random intercepts
+3. “AR-M”: this gives us random slopes and random intercepts. With this though,
+we also need to specify a “Mv” argument, which will be 1.
+
+Side note: two other popular functions for modeling longitudinal data are lme()
+from the nlme package, and lmer() from the lme4 package. These work
+similarly to the gee() function but have slightly different synatx and technically
+require stronger statistical assumptions to use. I generally stick to gee().
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+11
+
+15/36
+
+5/30/2019
+
+Side Notes!
+
+R: Models for Clustered and Correlated Data
+
+Evidently RStudio on the conference computers will not load some packages if
+you type in
+Please run all the script in the LOAD PACKAGES portion of your script, without
+the spaces between the arguments and the parentheses
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+12
+
+16/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Median Housing Value in Texas
+Housing dataset (select variables)
+: ID number for each county
+: Name of county
+: Number of years since 2009
+: Median housing value in county
+: Population 18 years or older
+: Population 18 years or older with at least a Bachelors
+: Percentage of population 18 years or older with at
+least a Bachelors
+53 unique counties
+420 unique observations
+8 years of data
+Question: how does the percentage of Bachelors-holders in a distrct affect mean
+housing value?
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+13
+
+17/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Random Slopes and Intercepts
+Forest plot: represents what the intercepts and slopes would be if we performed
+individual lm()s on the data from each subject separately
+If the data were truly independent, all the lines would be overlapping
+If plot on left shows non-overlapping lines: case for random intercepts
+If plot on right shows non-overlapping lines: case for random slopes
+
+Note: Type install.packages("nlme") and library(nlme) into your consoles -- I
+originally forgot to include this package in the code le
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+14
+
+18/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Random Slopes and Intercepts
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+15
+
+19/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Random Slopes and Intercepts
+Helps us determine what kind of correlation structure we want to use in our
+model
+No overlapping on either plot Independence structure
+(
+)
+Overlapping on left but not on right Exchangeable correlation structure
+(
+)
+Overlapping on both left and right AR-1 correlation structure (
+)
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+16
+
+20/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Modeling with Independent
+Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+17
+
+21/36
+
+5/30/2019
+
+Example 1:
+
+R: Models for Clustered and Correlated Data
+
+vs
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+18
+
+22/36
+
+5/30/2019
+
+Robust Variance
+
+R: Models for Clustered and Correlated Data
+
+Sometimes different clusters/groups will have different variances
+Robust variance is a post-model x-em-up to account for different cluster
+variances
+If the variances really don’t differ by cluster, you’ll get something pretty close
+to the regular varaince
+If they do differ, then this will help x the variance
+Robust variance doesn't perform well when there are fewer than 50 clusters
+If you have fewer than 50 clusters, it’s safer to go with the regular variance
+because at least we know why it’s wrong
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+19
+
+23/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Modeling with Exchangeable
+Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+20
+
+24/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 1: Modeling with AR-1 Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+21
+
+25/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 2: California API Scores
+API dataset (select variables)
+: County/District/School code
+: Record Type: (D=District, S=School, X=State)
+: District name
+: Base API score
+,
+,
+: Percentage of African American, Asian, and
+Hispanic students
+: Percent English learners
+: Percentage of Students Tested that are eligible for Free or Reduced
+Price Lunch Program
+1047 unique school districts
+7178 total observations
+7 years of data
+Question: how does charter status affect district API score?
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+22
+
+26/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 2: Forest Plot
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+23
+
+27/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 2: Modeling with Exchangeable
+Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+24
+
+28/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Childhood Wheezing and
+Maternal Smoking
+Ohio dataset
+: an indicator of wheeze status (1=yes, 0=no)
+: a numeric vector for subject id
+: a numeric vector of age, 0 is 9 years old
+: an indicator of maternal smoking at the rst year of the study
+537 unique subjects
+2148 total observations
+Question: how does maternal smoking affect wheezing?
+
+Note: Type "data(ohio)" into your console to access this data -- your code le has
+"data( ohio )" and that evidently fails to call the data
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+25
+
+29/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Method
+
+Binary response, so using logistic regression
+binary response transformed using logit function:
+regression tells us about variables changing the log-odds of response, instead
+of the mean
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+26
+
+30/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Method
+
+Binary response, so using logistic regression
+binary response transformed using logit function:
+regression tells us about variables changing the log-odds of response, instead
+of the mean
+
+This means
+will be the odds ratio:
+If
+, then the response is
+increased by one unit
+If
+, then the response is
+increased by one unit
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+% more likely to occur when
+
+is
+
+% less likely to occur when
+
+is
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+26
+
+31/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Modeling with Exchangeable
+Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+27
+
+32/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Modeling with Exchangeable
+Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+28
+
+33/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Modeling with AR-1 Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+29
+
+34/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Example 3: Modeling with AR-1 Structure
+
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+30
+
+35/36
+
+5/30/2019
+
+R: Models for Clustered and Correlated Data
+
+Thanks!
+More Resources
+
+package documentation on CRAN
+Center for Multilevel Modeling: http://www.bristol.ac.uk/cmm
+These blogposts from Dr. David Lillis
+PennState Stat 504 (heavy on the stat theory)
+
+These slides can be found at http://bit.ly/nicar19-cluster
+
+@Marym_Ryan
+github.com/maryryan
+https://maryryan.github.io/R_clusteredCorrelatedData19/presentation_ninja#1
+
+Mary Ryan
+
+R: Models for Clustered and Correlated Data
+
+NICAR 2019
+
+31
+
+36/36
+
+

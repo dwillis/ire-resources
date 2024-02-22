@@ -1,0 +1,98 @@
+Scraping PDFs with
+Tabula
+@manuelaristaran
+@jeremybmerrill (The New York Times)
+@mtigas (ProPublica)
+
+tabula.nerdpower.org — @TabulaPDF
+
+•PDF is the worst possible format
+for information exchange.
+
+•“Portable Document Format” is electronic paper,
+meant to be rendered the same way regardless
+of the device.
+
+•PDF cares about the form, we just
+care about the content.
+
+But PDFs are regularly used for
+publishing important information.
+
+Why?
+
+Ignorance
+
+Malice
+
+“The crime stats are subject to being corruptible in an
+excel sheet. They have been changed in the past by
+persons unknown and this affects the veracity of the
+original data posted. If stats are posted on-line in a
+PDF format, this reduces the risk of contamination.
+[...] Effective immediately the stats should just be
+posted in a PDF format.”
+-Minneapolis Police Department
+
+http://www.minnpost.com/data/2013/09/update-minneapolis-police-department-restores-accessible-data-format
+
+Extracting tables from PDF files is a pervasive
+problem in data journalism.
+
+•This data is trapped in a PDF.
+•To reproduce the information, we need to
+break the PDF down and analyze it.
+
+tabula.nerdpower.org
+
+Free as in freedom. Free as in beer. Always.
+http://github.com/jazzido/tabula
+
+• Tabula is making an ambitious claim.
+•Tabular information can be represented in many
+different ways.
+Very heuristic problem, lots of edge cases.
+Story of our lives.
+$ grep -r "heuristic" tabula* | wc -l
+27
+
+Types of PDFs
+● “Text-based” files
+○ Can select text inside the file.
+○ PDF stores the exact page position of every single
+character, so it looks the same everywhere.
+● Scanned files
+○ Just a collection of images.
+○ PDF format doesn’t actually know anything about the
+underlying information.
+○ Tabula can’t do anything about this unless maybe if the file
+is processed with OCR software first.
+
+Two Algorithms
+1. “Original”:
+● Ignores lines
+● Only uses text positions, specifically “rivers” of white space
+where there are no characters
+● Don’t select “spanning” headers!
+
+Two Algorithms
+1. “Original”:
+● Ignores lines
+● Only uses text positions, specifically “rivers” of white space
+where there are no characters
+● Don’t select “spanning” headers!
+2. “spreadsheet”:
+● uses only lines, ignores characters
+● uses computational geometry to construct cell locations from
+the lines.
+● can find spanning cells
+
+Download: http://github.com/jazzido/tabula
+
+¡Muchas Gracias!
+@tabulaPDF
+@manuelaristaran
+@jeremybmerrill
+@mtigas
+
+

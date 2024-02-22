@@ -1,0 +1,282 @@
+Demystifying Web Scraping
+IRE 2012
+Ted Han & Sean Sposito
+
+Welcome to the Internet
+publishing platform for the masses
+
+Everything is published
+to the Internet
+Well, not everything, but a lot.
+
+WHAT YOU CAN SCRAPE
+Government Databases
+Crowd sourced content (IMDB,
+Wikipedia, Reddit)
+Blogs
+Newspaper Websites
+Non-profit disclosures
+●
+●
+
+●
+●
+
+All this data is available if
+you speak HTTP+HTML
+(well, or if you have tools that speak
+HTTP+HTML)
+
+Tools that Speak HTTP+HTML
+● Web Servers
+● Web Browsers and their web inspectors
+● Software tools such as, Google Docs, Outwit
+Hub or browser plugins
+● Programming libraries like jQuery,
+Mechanize, Scrapy, and many more.
+
+Translating the Internet
+Or, a user's guide to web scraping and
+crawling tools.
+
+Cultural Context
+What you should know about the world of
+
+Hypertext
+Like text, you know, but hyper
+
+HTTP
+Hyper Text Transfer Protocol
+(e.g. how web browsers and servers
+communicate)
+
+Clients make requests
+Requests are made in the form of a URL +
+some additional information
+
+URLs specify what is
+being requested
+
+scheme / protocol
+
+Path
+
+http://ire.org/conferences/
+
+Domain
+
+Domain
+
+Protocol
+
+Path
+
+https://www.google.
+com/search?
+q=investigative+reporters
++%26+editors&hl=en
+Query
+
+Protocol
+
+Path
+
+https://twitter.com/#!/knowtheory
+
+Domain
+
+Fragment Identifier
+
+HTML
+Hyper Text Markup Language
+(The language websites are expressed in)
+
+It's a markup language
+Conceived of as a tool to annotate text
+
+It's nested / tree-like
+And we can point to branches in the tree
+with tools like CSS selectors, or XPath
+
+DOCS OVERVIEW
+Google Docs is a suite of easy and powerful applications for the office, and this
+tip sheet will explain how to import data from sources on the Internet into a
+spreadsheet.
+While Google Docs cannot currently compete with more powerful scripting
+languages such as Python or Rails, users of all skill levels are attracted to the
+service for its ease with creating and launching full featured applications.
+●
+
+Beginning data workers will find plenty of tutorials within the documentation
+for adding basic functionality to their spreadsheets and mashing data up in
+new ways.
+
+●
+
+Experienced users of spreadsheet software such as Microsoft Excel will
+appreciate the fluid crossover of services and the familiar workings of
+various spreadsheet functions.
+
+●
+
+Advanced users versed in programming or scripting languages can
+harness the most powerful features of Google Docs and Apps Scripts for
+RESTful interaction with websites and creating rapid prototypes of software
+applications.
+
+Three Functions
+ImportFEED
+ImportHTML
+ImportXML
+
+=importFEED
+
+=importHTML
+
+=importXML
+
+FAKE XML
+A typical book might be represented in XML like so:
+<xml>
+<book type="fiction">
+<title>The Great Gatsby</title>
+<author>
+<firstName>Francis</firstName>
+<lastName>Fitzgerald</lastName>
+</author>
+<yearPublished>1925</yearPublished>
+</book>
+<book type="fiction">
+<title>Huckleberry Finn</title>
+<author>
+<firstName>Mark</firstName>
+<lastName>Twain</lastName>
+<firstName type="real">Samuel</firstName>
+<lastName type="real">Clemens</lastName>
+</author>
+<yearPublished where="England">1884</yearPublished>
+<yearPublished where="United States">1885</yearPublished>
+</book>
+</xml>
+
+THE BREAK-DOWN
+To break this down:
+●
+
+<book> is an element; all elements must have a beginning and an ending
+and elements can be “nested” within other elements.
+The nested elements are sometimes referred to as existing within a “tree”
+- each nested element representing a tree branch.
+
+●
+
+type=”fiction” is an attribute; this describes something about the element.
+There can be several attributes within an element, and any name can be
+given depending on the Document Type Definition or other user defined
+rules.
+
+●
+
+text is contained between the elemental tags; this is represented by the
+name of the book (The Great Gatsby), the author (Fitzgerald) and year
+published (1925).
+
+XPATH
+Docs uses a language called XPath which
+addresses parts of an XML document
+Now, if we use our Fake XML above and want to retrieve all of the information contained within the book element, we would type
+an XPath as the following:
+//book
+That will pull in all of the details: title, author, year of publication; but what if we just want to query the titles for the books?
+//book/title
+This will retrieve only the specific elements labeled as “title”: The Great Gatsby, Huckleberry Finn
+Maybe there are elements containing information we don’t want, so we look for an attribute one element has but another does not.
+Our XML contains several years identifying publication, but we want to know the publication dates for books published in England:
+//book/yearPublished[@where=”England”]
+
+Google Docs
+In Docs we would use a the importXML query to bring in the data:
+
+=importxml(FAKEXMLURL,"
+//book/yearPublished[@where='England']")
+●
+●
+●
+●
+●
+
+// – this means select all elements of the type<
+//book – this means select all book elements
+/yearPublished -- this means select all yearPublished
+[@where=''] – this means only select those elements that meet the criteria
+given – Example: look for yearPublished
+//book/yearPublished[@where='England'] – this means only select
+elements that look like:book yearPublished where=”England”
+
+source: Distilled
+
+THE WEATHER EXAMPLE
+
+DOCS RESOURCES
+●
+
+A quick link to the underlying scripts functions and tutorials that powers Google Docs
+○
+http://code.google.com/googleapps/appsscript/articles/appengine.html
+
+●
+
+A primer for learning about and referencing the XML based query tool: XPath.
+○
+http://www.w3schools.com/xpath/
+
+●
+
+How to make sense of JSON
+○
+http://json.org/
+
+●
+
+Firebug is a very popular browser add-on for exploring web pages in depth and seeing how information is organized within
+a web page. It makes creating XPath queries easier.
+○
+http://getfirebug.com
+
+●
+
+A tutorial for importing using ImportXML and XPath
+○
+http://www.distilled.net/blog/distilled/guide-to-google-docs-importxml/
+
+●
+
+Sending notifications when changes occur to Google Doc’s Spreadsheets
+○
+http://www.labnol.org/internet/monitor-web-pages-changes-with-google-docs/4536/
+
+●
+
+App Sumo: Google Docs Unleashed ($25 to learn awesome stuff)
+○
+http://www.appsumo.com/googledocsunleashed/
+
+MORE LINKS
+The Simple Way to Scrape an HTML Table: Google Docs (Via EagerEyes.Org)
+SCRAPING DATA FROM A LIST OF WEBPAGES USING GOOGLE DOCS
+(Via OnlineJournalismBlog.Org)
+A MUCH BETTER SLIDE SHOW AND TUTORIAL ON GOOGLE DOCS WEB
+SCRAPING FROM
+Via: SEER Interactive
+AND:
+
+The ImportXML Guide for Google Docs
+XPATH GENERATOR FOR GOOGLE CHROME!!!!
+
+Even more links and resources
+● FDA Import Refusal scraper
+● FDA Import Refusal Scraper in ScraperWiki
+● The Google Chrome Scraper plugin
+● Another xpath tutorial
+
+

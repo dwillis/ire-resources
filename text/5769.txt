@@ -1,0 +1,398 @@
+Building a Data Library
+in your Newsroom
+Brant Houston, University of Illinois
+Meghan Hoyer, The Associated Press
+Acton H. Gorton, Tribune Publishing
+
+Follow along with us...
+
+goo.gl/SFJqmH.
+
+Brant Houston
+Knight Chair for Investigative Reporting,
+University of Illinois at Urbana-Champaign
+
+Overview of Creating Data Libraries
+The idea of a data library is:
+-
+
+The databases will get repeated use for stories, tips, context and references
+
+-
+
+The databases are worth updating and generally provide a story with the
+update on change over time
+
+-
+
+The databases meet the needs of the newsroom.
+
+Houston
+
+Principles and Specifics of Data Libraries
+-
+
+Relevant data
+Easy to use formats
+Necessary (just enough) data cleaning has been done
+A synopsis makes clear the time period the database covers, notes limitations
+and defects of the data, and cites stories for which it has been used.
+Databases are collected with keeping key fields in mind that could link to
+other databases
+Includes databases built by the newsroom
+Links to relevant online databases
+
+Houston
+
+Principles and Specifics of Data Libraries
+Lessons from the NICAR data library
+Made decisions on which national databases to acquire by assessing
+-
+
+Whether they could be sliced and diced to local levels
+Whether they will be worth updating
+Whether they provide information on things that collide, fall, or die
+(Cars, planes, trains, bridges, dams, drugs, deaths, disease, etc.)
+Whether they provide information on government spending
+(Salaries, budgets, grants, etc.)
+
+Houston
+
+Houston
+
+NICAR DATA LIBRARY
+
+Houston
+
+NICAR DATA LIBRARY
+
+Meghan Hoyer
+Data Editor
+Associated Press
+
+Hoyer
+
+Don’t Do It!
+Data libraries are HARD. Before you go down this path:
+-
+
+Identify the exact data you want to share.
+-
+
+-
+
+Is it high-value enough that multiple reporters need access?
+Is it relevant enough that it could inform a number of stories?
+What’s the value you’re adding?
+
+What’s your promotions plan to make sure reporters + editors know it’s there?
+What’s your maintenance plan?
+-
+
+How often is this data updated?
+What steps do you have to take to acquire the data?
+What cleaning needs to be done? Are there different outliers and edge cases each year?
+
+Hoyer
+
+Instead, Maybe This?
+-
+
+Identify your pipelines — if news breaks and you need to cover topic X, how
+will you get that data?
+Reproducible workflows are key
+Know your APIs
+Create stub code or full ETL scripts to ingest + clean certain datasets
+Can you set up other tools or apps to help reporters get specific data more
+easily? (i.e., Slackbots, email alerts, Klaxon, standalone searches?)
+
+Hoyer
+
+OK, fine, so you need to share data
+Some considerations:
+-
+
+Documentation needs to accompany the data; reporters should have a clear
+idea of what they can or can’t do with some datasets
+A data dictionary is a must
+The right sharing tool of least friction might differ from newsroom to newsroom
+Training is a must
+
+Hoyer
+
+Data libraries + sharing with data.world
+Data.world: AP uses it to share data and documentation with members
+Benefits:
+-
+
+Low maintenance
+Documentation, dictionaries and discussion stay with the project
+Supports SQL querying in the browser
+Supports discussion + automatic notification when a new dataset is published
+Hooks in to our R workflow, Google spreadsheets, exports to Jupyter
+notebooks, R and a host of other workflows (can even be used as a backend
+for interactives)
+
+Hoyer
+
+Acton H. Gorton
+Newsroom Product Engineer
+Tribune Publishing
+
+Libraries have a long history of dealing with this
+
+… and they can teach us a
+lot about what we need to
+think about ...
+
+Gorton
+
+After you win the lottery….
+Who will inherit your data? .
+
+Gorton
+
+How do we describe our data?
+Metadata (Data about Data)
+-
+
+Who, What, When, Where, and Why?
+What is the format of the data? (CSV, TSV, Excel, FoxPro, DB2)
+Where and when did it originate?
+What stories or projects has it been used for?
+What reporters were involved in the collection of the data?
+
+This is what search engines initially look for, and the quality of the metadata will
+directly affect the quality of the search results, and it’s future usage.
+
+Gorton
+
+Quick Overview of Metadata Standards
+Libraries needed a way of knowing what they had
+The traditional card catalog was revolutionary for it’s time … but there weren’t
+exact standards for how to describe documents and books.
+As libraries grew, so did their archives, across many industries … museums, art
+galleries, government documents, and so forth.
+Eventually libraries needed to let other libraries know what they had, and an
+interchange was born.
+And since the advent of digital data, there has been a total explosion in metadata.
+
+No Single Metadata Schema to Rule Them All
+Library of Congress lists Schemas for:
+●
+●
+●
+
+Resource Description Formats: 8 versions
+Digital Library Standards: 6 versions
+Information Resource Retrieval: 3 versions
+… outside of LoC, there are countless more ...
+
+Why so many?!?!
+Agreeing on how to describe something and anticipating all
+of the ways those descriptions will get used is hard.
+
+Gorton
+
+… and if you work in public broadcasting ...
+PBCore Metadata Schema:
+Not just text and photos…
+HUGE archives of audio and
+video, some of which has
+never been used.
+Unique challenges within the
+news industry.
+
+Gorton
+
+I’m not going to offer a “15th” metadata standard
+Err on the side of:
+“It’s better to have and not need, than to need and not have”.
+
+I recommend, Dublin Core: easy and great coverage.
+Contributor
+
+Description
+
+Publisher
+
+Subject
+
+Coverage
+
+Format
+
+Relation
+
+Title
+
+Creator
+
+Identifier
+
+Rights
+
+Type
+
+Date
+
+Language
+
+Source
+
+… more
+
+Gorton
+
+“The Reinhart-Rogoff Error”.
+.. or ...
+“How not to Excel at Economics”.
+Gorton
+
+“Growth in a Time of Debt” — Reinhart-Rogoff
+-
+
+Harvard economists published groundbreaking academic paper in 2010
+Described severe economic repercussions based on debt to GDP
+Politicians, commentators, and activists of every stripe cited it
+Caused fundamental impacts on U.S. economic policy
+… just one small problem …
+
+-
+
+Performed statistical analysis using Excel
+Critical functions were not visible in cells and changed the underlying results
+
+What “The Reinhart-Rogoff Error” Teaches Us
+CYA!!!!
+Provenance (The Digital Data Life Cycle)
+-
+
+What is the original format of the data, before you touched it?
+What changes have you made to the data?
+How did you “clean” the data before you used it?
+Can the new data format be accessed by future software?
+Who else has touched the data?
+Can your results and analysis be independently recreated?
+
+Gorton
+
+Don’t forget, You’ve Won the Lottery!!!
+After you’ve finished with your data, it may still have life left to give.
+Another desk within your newsroom may want to use your data.
+How do you ensure editors and reporters that the data wasn’t changed?
+What about updating existing data for evergreen stories?
+What about when you haven’t looked at the data in three years?
+
+Gorton
+
+Considerations for the
+Corporate “Digital” Newsroom.
+
+Gorton
+
+Considerations for the “digital newsroom”
+If we don’t know it exists, how do we know to look for it?
+-
+
+An easy search interface (kiss)
+
+-
+
+Quality metadata (evergreen usage)
+
+-
+
+A known destination (data.thing.com)
+
+-
+
+Consistency (change is bad)
+
+How do we appease our corporate overlords?
+-
+
+Controlling Access (rogue reporters)
+
+-
+
+Costs (user licenses, maintenance)
+
+-
+
+Ownership (intellectual property rights)
+
+-
+
+Flexibility (is it a one trick pony?)
+
+-
+
+Corporate Compliance (legal issues)
+
+-
+
+Security (are there backdoors?)
+
+Gorton
+
+CKAN as a solution
+Why We Chose It
+-
+
+Very powerful (yet can be a very a heavy lift)
+Fine-grained and technical control
+No limits, extensible, do anything platform
+Compliance meets our corporate needs
+Serious backing and ongoing development
+Relatively low costs with resources
+A known future road map
+Vendors come and go
+We keep the data
+
+Who Else Chose It
+-
+
+Data.gov (U.S. Government)
+Local governments
+Foreign governments
+Data Refuge
+Researchers
+Academic Institutions
+Libraries
+
+Gorton
+
+Questions?
+
+Links to Resources
+CKAN: data management system that makes data accessible by providing tools to streamline
+publishing, sharing, finding and using data.
+
+https://ckan.org
+
+data.world: modern catalog for data and analysis.
+
+https://data.world
+
+Dublin Core: The Dublin Core Metadata Initiative, or "DCMI", is an open organization supporting
+innovation in metadata design and best practices across the metadata ecology.
+
+http://dublincore.org
+
+NICAR Data Library: a collection of databases maintained by NICAR that are ready for your
+newsroom.
+
+https://www.ire.org/nicar/database-library
+
+Library of Congress: a list of data standards used for describing data and ensuring those
+descriptions can move seamlessly throughout various digital libraries.
+
+https://www.loc.gov/librarians/standards
+
+PBCore: a cataloging standard for the description of audiovisual content, a data sharing tool, and
+much more.
+
+https://pbcore.org/
+
+

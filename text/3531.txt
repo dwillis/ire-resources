@@ -1,0 +1,102 @@
+IRE Hands On:
+Public Spending Data in Tableau
+Getting the Data
+1. Open the file Seattle City Budget.csv on your desktop
+a. If there is no file… go to: http://data.seattle.gov/dataset/2011-2012Proposed-Budget-Expenditures-Allowance-b/55z8-f4gi
+i. Click Export (CSV)
+2. Open Tableau Public (Icon on your desktop)
+3. Select Data -> Connect to Data -> Text File
+4. Browse and select the data you just opened, click OK
+
+Creating the first sheet
+1. Select “Department” and “Proposed 2011 Expenditure” using CTRL + Click and
+then click “Show Me”
+
+2. Click Pie
+3. Click “Show Me” again – Select Bar
+4. Click to swap rows and columns
+5. Click to sort
+
+6. Right click on Proposed Expenditure allowance (Under “Measures” on the left
+hand side) and go to Field Properties ->Number Format
+i. Change the type to currency
+ii. Decimal Places
+
+7. Click and drag Expenditure allowance onto Label
+8. Click on the blue box to the right of Color and select orange
+9. Change Name of Sheet to “Expenditures by Department” by double clicking on
+the “Sheet 1” at the bottom
+10. Make the bars slightly larger by dragging the slider to the right
+11. Add borders by clicking on the word “Color” and selecting a shade of grey in that
+menu
+
+Creating the detail…
+1. New sheet (click on the workbook button
+on the bottom)
+2. Drag Departments and BCL Names to Rows (one at a time)
+3. Drag 2011 Expenditure to Text
+4. Name the Sheet Expenditure by Type by double clicking on “Sheet 2” at the
+bottom of the view
+5. Sorting…
+a. If we sort on department, it will sort by department
+
+b. BUT, sorting by BCL name does the same- it sorts regardless of
+Department
+6. Use CTRL + Click to select Department and BCL Name at the same time
+a. Right click
+b. Create Set
+7. Drag between Department and BCL
+
+8. Sort by clicking on the drop down on the Set
+a. Select Sort
+b. Descending by the Sum of Proposed 2011 Expenditure
+9. Click on the drop down on Set again
+a. Select Show Header
+
+Percent of Total
+1. New sheet – Percent of Total
+2. Drag Proposed 2011 Expenditure onto rows
+3. Lets disaggregate by dragging Department on Level of Detail
+4. Click on the drop down on 2011 Expenditure and select “Quick Table
+Calculation”
+a. Select % of total
+b. Use CTRL to click and drag this from Rows to Label (this will copy)
+c. Click on Label and Select Highlight
+5. Turn on borders and color to orange (just like we did in the first sheet)
+6. Sort Department Descending on % of Total
+
+Combing the three together
+1. Create a new Dashboard by clicking on the dropdown in the top left hand corner
+
+2. Change the size of the dashboard to Exactly-> 600X800 by clicking on the blue
+Edit button at the bottom left hand corner
+3. Double click on Expenditures by Department (top left hand corner)
+4. Drag and drop Expenditures by Type underneath it
+5. Drag and drop Percent of Total to the right of expenditures
+6. Click on Expenditures by Department and then use the drop down at the top to
+select “Fit height”
+
+a. Select fit width for Expenditures by Type
+7. Click Edit->Actions-> Add Action -> Filter
+a. Uncheck Expenditures by Type and Percent of Total under Source Sheets
+b. Check only Expenditures by Type under Target Sheets
+c. Click “Select” under Run Action On
+
+8. Click Edit->Actions-> Add Action -> Highlight
+a. Uncheck Expenditures by Type and Percent of Total under Source Sheets
+b. Check only Percent of Total under Target sheets
+c. Click “Select” under Run Action On
+9. Double click on the titles to format them
+10. Click Edit->Tooltips to change them
+11. Double click on Title under Objects
+
+Save to the web & publish
+1. Save to the web
+2. Main menu: File Æ Tableau Public Æ Save to web
+3. Follow the prompts
+4. Do not select “show sheets as tabs.”
+5. Publish
+6. Click “Share” in the lower left
+7. Copy the embed code and paste into your web page
+
+

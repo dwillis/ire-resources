@@ -1,0 +1,182 @@
+The Wonderful World of Microdata
+Ronald Campbell
+714/425-5169
+campbellr@verizon.net
+Spend enough time in Census-land, and you'll notice something unsettling. People -academics, government bureaucrats, even a few journalists -- are finding information that
+doesn't seem to exist in any table anywhere.
+How do transportation planners know that 500 software engineers are carpooling into your
+town each morning? How exactly did the federal government figure out that there are 2,000
+Spanish-speaking construction workers in your county without health insurance? And how did
+that reporter you met in the bar last night win the Philip Meyer Award?
+Was it all a conspiracy? No. It was microdata, the secret sauce of the Census.
+The Census Bureau asks millions of people dozens of carefully crafted questions every year.
+It boils down the answers into thousands of tables - the same tables, laid out the same way
+for every state, county and city in America. By and large these tables -- age and sex, family
+income, commute time, etc. -- serve most users very well.
+But some people need more. And that's where microdata comes in.
+Each year, the Census prepares a slice of raw survey data (minus the respondents' names
+and exact addresses), representing a 1 percent portion of all housing units. That may not
+seem like much. But given the gargantuan size of the American Community Survey, the
+microdata sample is vastly larger than any ordinary poll. For example, the 2010 Public Use
+Microdata Sample for Maryland contains information about 23,805 housing units. Using
+microdata, a researcher can assemble his or her own custom tables to answer questions that
+the Census never thought to pose.
+Suppose, for example, that you're working on a story about employment. You want to see if
+hours worked last year in the Baltimore metro area varied depending on a person's race.
+Simple question, right? In FactFinder it's easy to select the Baltimore metro area. With a little
+more work you can find the correct table for hours worked, B23022 ("Sex by work status in
+the past 12 months by usual hours worked per week in the past 12 months"). So far so good.
+But the moment you add the criterion "Race" to FactFinder, you get an error message:
+
+1
+
+By now you are probably pounding your head on the desk or throwing things at your
+computer. Census KNOWS these things, you're saying. The information MUST be there
+somewhere. And you're right. The information does exist. It just isn't in a table. It's in
+microdata.
+The best source for microdata is IPUMS-USA (https://usa.ipums.org/usa/) at the University of
+Minnesota. Registration is free. Its vast archives include microdata for every census going
+back to 1850. Related sites cover the Current Population Survey (IPUMS-CPS) and maps
+(NHGIS).
+There are a couple of ways to deal with microdata from IPUMS. One way is to download the
+data and analyze it yourself. For that you'll need a statistics package such as SPSS, which
+costs about $1,500, or an open-source stats package such as PSPP (gnu.org/s/pspp/) or R
+(www.r-project.org). A gentle warning: Stats packages are devilishly hard to learn; if you
+thought Excel was hard, please understand that learning Excel was a gentle stroll in the park
+while learning a stats package is a triathlon.
+But oh yes, I did say there was a second way to deal with microdata from IPUMS. That's
+analyzing it online.
+
+There are a lot of benefits to analyzing data online in IPUMS. The biggest is that you don't
+need to learn statistical software. Next is that sometimes you can find particularly obscure
+data faster in IPUMS than you can in FactFinder. And if you're looking for data predating 2000
+and don't want to mess with the Census FTP site, IPUMS is your best friend.
+There are a couple of downsides, however:
+2
+
+
+
+
+
+Numerical variables such as income are wide open. If there is a way to compute a
+median, I haven't found it. However, the online tool lets you create custom variables to
+split numerical variables into ranges. By trial and error you can approximate the true
+range.
+Coded variables often are not fully documented in the online tool. If you are going to
+use a coded field, first look up the variable on the home page (lefthand column under
+Documentation - Variables) to find what's missing from the online tool.
+
+Begin by clicking on "Analyze Data Online" on the IPUMS home page. That will take you to a
+page where you'll be asked to choose the samples you want to use. As you can see, there's a
+lot to choose from. For this lesson, we'll be taking the broadest choice: United States, 18502012.
+
+After choosing your sample, IPUMS asks you to sign in. Then it's time to begin analyzing the
+3
+
+data. It's helpful to envision what we want in advance: We want to know hours worked by race
+in the Baltimore metro area; and we'll pick three years as our benchmarks: 1990, 2000 and
+2010. Notice that we are doing two things that FactFinder cannot -- we are crosstabbing
+hours worked by race and including data from 1990.
+At this point you need to understand a vital distinction about microdata. All microdata records
+concern either households or persons. Since they are samples, these records are weighted to
+represent all households or all persons in a given geography. But -- and here's the tricky part - certain variables, such as the year a survey was taken or the geography it concerns, apply
+to both households and persons; those variables typically are found among the household
+variables in the online tool.
+Let's start by picking the year. Remember, our sample is every year from 1850 to 2012, but
+we need only three years: 1990, 2000 and 2010. Here's how we'll get what we want.
+
+In the variable column on the lefthand side, we'll click on "Household - Technical", then click
+on "Year - Census year" to select it. That moves it to the Selected box at top left. Click on the
+Col box to move it to the Column box. Now we add the following (without the quote marks):
+"(r:1990;2000;2010)". This command tells IPUMS to take a range comprised of the years
+1990, 2000 and 2010.
+Next let's pick the geography - the Baltimore metropolitan area. We've already discovered
+from inspecting variables on the home page that 072 is the federal code for the Baltimore
+metro area. Good thing we checked because we can't find that code in the online tool. So
+click on "Household - Geographic", click on "Metarea" and move it to Filter. As you do, notice
+that it appears there like this: metarea(). Type the number "72" (without the quotation marks)
+between the parentheses. The field is numeric, so the leading zero is unnecessary. Why use
+Filter? Because this will filter out all results other than those from the Baltimore metro area;
+it's analogous to the "where" clause in a database query.
+Now it's time to add some meat to the bones. Click on "Person - Work", scroll down and you'll
+find two variables that appear on topic: "Wkswork1 - Weeks worked last year" and "Wkswork2
+- Weeks worked last year, intervalled". One of the nice things about the online tool is that you
+4
+
+can preview variables. Simply click to select, click the View button, and a window opens
+displaying a frequency table. Wkswork1 has 54 values ranging from 0 to "No Data" while
+Wkswork2 has just seven values, again ranging from 0 to "No Data". We'll make Wkswork2
+our Row variable.
+At this point we have a crosstab of weeks worked by year. But we also want to see the data
+arranged by race. We can do that in IPUMS using race as a Control. That will produce similar
+tables for each race, making comparisons easy. Click on "Person - Race, Ethnicity and
+Nativity", then on "race - race" and click again on "Ctrl" to make race the Control.
+In Table Options make sure percentages are set on for column. Click on confidence intervals.
+Also click to display the Z-statistic. Here is what the program will look like before you run the
+table:
+
+Go ahead. Click that button. Run the table.
+5
+
+What you get is a bunch of data. Let's take a few minutes to unpack it, first in broad outline
+and then in detail. We have separate tables for each race - white and black (together the
+overwhelming majority in Baltimore), American Indian, Chinese, Japanese, Other Asian or
+Pacific Islander, Other race, Two major races, Three or more major races and finally
+"Statistics for all valid cases". We're going to look at stats for all valid cases -- the universe if
+you like -- and compare that with whites and with blacks.
+But before we do that, let's dive into the details. Here's a closeup look at the top of the table
+for whites:
+
+Each cell contains four numbers: the column percent, the confidence interval, the Z-statistic
+and weighted N. The column percents within each table add up to 100 percent. The
+confidence interval is a measure of the statistic's reliability; in the case of the 2010 statistic,
+the chances are 95% that between 41.4% and 42.8% of Baltimore residents aged 16 to 64 did
+not work the previous year. We'll come back later to the Z-statistic and the cell colors, which
+are related. "Weighted N" is the number of people in the real world that the column percent
+represents.
+Now let's look at the bigger picture. The "Statistics for all valid cases" shows that the
+percentage of full-time workers, those working 50 to 52 weeks in the previous year, grew
+slightly form 39.4% in 1990 to 41.2% in 2010. But when you compare the white and black
+tables you'll see big differences. The percentage of whites employed full-time grew from
+42.6% in 1990 to 44.3% in 2010 while the black percentage lagged far behind, growing from
+31.3% in 1990 to 35.8% in 2010. This is a story we could not have found in Census tables.
+What about the color coding? And what is a Z-statistic? The answer is that they are designed
+to tell us how unusual the data is. One of the key ideas in statistics is that values tend to
+converge on the mean. Statisticians have come up with several tools to measure how close or
+far values range from the mean; one of the most common is the standard deviation. The Zstatistic, or more commonly the Z-score, is the number of standard deviations a value is from
+the mean. This is supremely useful if you're measuring, say, school test scores. But here
+IPUMS is just measuring deviations from a made-up number: mean number of weeks worked
+6
+
+over a 20-year span. You don't always get everything you want with online tools.
+OTHER SOURCES OF MICRODATA:
+The Current Population Survey, jointly compiled by the Census Bureau and the Bureau of
+Labor Statistics, is especially valuable for labor and economic reporting. The monthly
+unemployment rate is the best-known product of the CPS but far from the only one. Each
+March since the mid 1960s, CPS has conducted a special survey variously known as the
+"March Supplement" and the "Annual Social and Economic Supplement" (ASEC). Because of
+its long track record -- nearly 50 years -- it's been a gold mine for economics, sociologists
+and, in recent years, a few journalists.
+ASEC has one big problem -- sample size. In 2013, the sample was 387,876: mighty hefty by
+Gallup standards, but way too small if you're looking for statistically reliable results for, say,
+Baltimore. As a general rule, ASEC is useful only if you're looking at the entire country or at
+one of the largest states such as California, Texas or New York or at a multi-state region such
+as the Southeast.
+You can get raw microdata from ASEC and from the monthly CPS surveys here:
+http://thedataweb.rm.census.gov/ftp/cps_ftp.html
+But you should avoid this route unless
+you're skilled at programming; skilled programmers already have tamed the data for you at
+other sites.
+There are three better options:
+ IPUMS-CPS (https://cps.ipums.org/cps/): Simply excellent. Download and analyze on
+statistical software or use the online tool. Your choice.
+ CPS Table Creator (http://www.census.gov/cps/data/cpstablecreator.html): This menudriven tool lets you create tables from the past seven years worth of ASEC microdata.
+It has two key limitations: The selection of variables is limited, though it should be
+enough for the vast majority of users; more troublesome, you will have to cut and paste
+results into a spreadsheet since there is no download option.
+ DataFerrett (http://dataferrett.census.gov/): No one will ever say DataFerrett is intuitive.
+But it gives you access to so much good stuff, including CPS microdata.
+
+7
+
+

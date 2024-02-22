@@ -1,0 +1,277 @@
+2010 CAR Conference (Phoenix, Arizona)
+
+WEB SCRAPING - Jacob Fenton
+
+Useful tools
+•
+•
+•
+•
+
+•
+
+firebug (http://getfirebug.com/) Uber-useful firefox plugin
+urlparams (https://addons.mozilla.org/en-US/firefox/addon/1290) firefox plugin displaying
+GET and POST parameters in the sidebar
+Live Httpheaders (https://addons.mozilla.org/en-US/firefox/addon/3829) firefox plugin
+showing all http headers in real time
+wget (http://www.gnu.org/software/wget/) Command line tool for bulk downloads. Use -r for
+recursive retrieval (http://www.gnu.org/software/wget/manual/wget.html#Recursive-RetrievalOptions). Also available for windows (http://gnuwin32.sourceforge.net/packages/wget.htm).
+cURL (http://curl.haxx.se/) Command line tool. Standard on OS X. Supports "FTP, FTPS,
+HTTP, HTTPS, SCP, SFTP, TFTP, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP,
+POP3 and RTSP. curl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading,
+HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest,
+NTLM, Negotiate, kerberos...), file transfer resume, proxy tunneling"
+
+Simplest Case: Repeated Downloads
+Any programming language will do, though perl's support for regular expressions is best. Perl is built
+into Mac and Unix/Linux systems; it's also available for windows for free
+(http://www.activestate.com/activeperl/). Below, we're using the "system" command to execute cURL
+at the command line. Having an idea of what you're trying to download helps, too
+my $command = "curl http://google.com > google.html";
+system($command);
+
+If the above text were in a file named get.pl, we'd call it from the command line like this:
+$ perl get.pl
+
+The result, which should have been downloaded into google.html, is actually this:
+<HTML><HEAD><meta http-equiv="content-type"
+content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+
+In the above, we should have used http://www.google.com.
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+
+We can download many files at once
+my @searches = ("banana.com", "apple.com", "pineapple.com");
+my $searchterm;
+foreach $searchterm (@searches) {
+my $command = "curl http://$searchterm >
+$searchterm-downloaded.html";
+print "Executing: $command\n";
+system($command);
+}
+
+Note how we're using the redirect operator to print the output to a file (in this case to banana.comdownloaded.html, apple.com-downloaded.html and pineapple.com-downloaded.html.
+This technique is a lot stronger than it looks, especially when we take into account that the web is built,
+mostly, on GET and POST requests, which cURL supports. Searching google for "Larry Wall" is
+really just a web request for http://www.google.com/search?q=larry+wall. Post parameters aren't
+visible in the URL, but cURL can send them anyways using the -F switch. The manual page
+(http://curl.haxx.se/docs/manpage.html) has all the gory details.
+Consider, for instance, the United Airlines Flight status page
+(http://www.ua2go.com/flifo/FlightInput.do). Noodling around, we notice that it uses get parameters,
+and some aren't really needed; i.e. this seems to work:
+http://www.ua2go.com/flifo/FlightSummary.do?date=20100312&fltNbr=199. (Note that the UA
+servers only keep data around for a day or two--so try using the current date if this isn't working.
+We can find out a lot about how flights did yesterday with something like this:
+my $date = "20100312";
+my $fltNbr = 1;
+for ($fltNbr=0; $fltNbr<1000; $fltNbr++) {
+my $command = "curl http://www.ua2go.com/flifo/FlightSummary.do
+-g -d date=$date -d fltNbr=$fltNbr -o \"$fltNbr.html\"";
+print "Executing: $command\n";
+system($command);
+# Be nice to their servers though.
+sleep(1);
+}
+
+Notice that in the above I used the -d option to encode parameters, the -g option to tell cURL to use a
+GET post and the -o option to output it to a file.
+Though I'm just asking for every page I can think of, there are plenty of situations where I know a little
+bit about what I want ahead of time--or, I have a list of ids in a database that I want more info on--so
+we're not just getting a bunch of "page not found" responses.
+Although cURL looks like a very simple tool, it's actually quite complex, and supports things like
+cookies, authentication etc. However, it doesn't necessarily help us out with what we actually want,
+which is getting piece of data out of the page--not the whole page itself.
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+
+Scraping with libraries
+There are lots and lots of perl libraries to help you process html. Two of the most useful are
+WWW::Mechanize and toke parser. Installing perl libraries can be a pain, though activestate perl's
+package manager can help, as can the cpan module. For more on installing libraries--including their
+dependencies, see: here (http://triopter.com/archive/how-to-install-perl-modules-on-mac-os-x-in-4easy-steps/). Once we've got cpan insalled (for windows or Mac) and updated, it's basically a process
+of running a command (with administrator permissions) and clicking yes whenever queried.
+Conveniently, dependencies are installed, which is helpful.
+$ sudo perl -MCPAN -e 'install WWW::Mechanize'
+$ sudo perl -MCPAN -e 'install HTML::TokeParser'
+
+I believe Mechanize got rolled into ActiveState perl as of version 5.9 or 5.10 (see here
+(http://docs.activestate.com/activeperl/5.10/lib/WWW/Mechanize.html) but I couldn't swear to it; for
+more on installing packages with activestate see here (http://code.activestate.com/recipes/502297installing-perl-modules-on-windows/). Looks like TokeParser
+(http://docs.activestate.com/activeperl/5.10/lib/HTML/TokeParser.html) is also available.
+The goal of mechanize is to replicate web browsing in a perl program. The caveat, however is that stuff
+loaded with javascript (i.e. by your browser executing client side javascript after a page is downloaded)
+won't show up. If you have lots of free time you might be able to replicate javascript requests, but that's
+really a whole 'nother story.
+#!/usr/bin/perl -w
+use strict;
+use WWW::Mechanize;
+# The file where we're gonna save what we download to
+my $outfile = "corps_search.html";
+open OUT, ">$outfile" or die("Couldn't open outfile\n");
+my $page_to_get =
+"https://www.corporations.state.pa.us/corp/soskb/csearch.asp";
+# Initialize the robot
+my $agent = WWW::Mechanize->new();
+# retrieve the page
+$agent->get($page_to_get);
+# Save it to a file.
+print OUT $agent->content();
+
+Here's what the page (https://www.corporations.state.pa.us/corp/soskb/csearch.asp) looks like.
+You can do much more with mechanize than just get pages of course. Here's a campaign finance
+search page (http://www.campaignfinance.state.pa.us/ContributionSearch.aspx).
+#!/usr/bin/perl -w
+use strict;
+
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+use WWW::Mechanize;
+my $outfile = "search_results.html";
+open OUT, ">$outfile" or die("Couldn't open outfile\n");
+my $page_to_get
+="http://www.campaignfinance.state.pa.us/ContributionSearch.aspx";
+my $agent = WWW::Mechanize->new();
+my $results;
+print "Getting page";
+$agent->get($page_to_get);
+# Pick the first form as the one we want to complete
+# Note that this is 1-indexed, not zero indexed.
+$agent->forms(1);
+# ID the fields by viewing source.
+# Mechanize handles hidden fields, which is really nice!
+$agent->field("txtSearchContributor", "Asher");
+$agent->field("txtSearchBeginDate", "1/1/2008");
+$agent->field("txtSearchEndDate", "12/31/2008");
+# With drop down menu, note we're using the value, not the text
+# which in this case is descending order of amount
+$agent->field("ddSortOrder","7");
+#Pick the button to click by name
+$agent->click_button("name", "btnSearch");
+$results = $agent->content( base_href => undef );
+print OUT $results;
+
+And the page I got back is this (http://nicar-phoenix.s3.amazonaws.com/search_results.html).
+But notice what I really want are "all"--so I can follow that link programmatically too. And the pain
+with using this search is you can only search one year at a time. That's no problem either. The result is
+this:
+#!/usr/bin/perl -w
+use strict;
+use WWW::Mechanize;
+
+my @years = ("2002", "2003", "2004", "2005", "2006", "2007", "2008");
+my $year;
+foreach $year (@years) {
+my $outfile = "search_results-$year.html";
+open OUT, ">$outfile" or die("Couldn't open outfile\n");
+my $page_to_get
+="http://www.campaignfinance.state.pa.us/ContributionSearch.aspx";
+my $agent = WWW::Mechanize->new();
+my $results;
+print "Getting page";
+$agent->get($page_to_get);
+
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+# Pick the first form as the one we want to complete
+# Note that this is 1-indexed, not zero indexed.
+$agent->forms(1);
+# ID the fields by viewing source.
+# Mechanize handles hidden fields, which is really nice!
+$agent->field("txtSearchContributor", "Asher");
+$agent->field("txtSearchBeginDate", "1/1/$year");
+$agent->field("txtSearchEndDate", "12/31/$year");
+# With drop down menu, note we're using the value, not the text
+# which in this case is descending order of amount
+$agent->field("ddSortOrder","7");
+#Pick the button to click by name
+$agent->click_button("name", "btnSearch");
+
+my @links = $agent->follow_link(text => "All");
+$results = $agent->content( base_href => undef );
+print OUT $results;
+}
+
+But again, all we want is some of the data--not all the files. There are many ways to do this--and a fair
+amount of creativity is involved--but HTML::TokeParser makes it considerably easier.
+use WWW::Mechanize;
+my @years = ("2004", "2005", "2006", "2007", "2008");
+my $year;
+my $results_file = "parse_results.txt";
+open RESULTS, ">$results_file" or die("Couldn't open outfile\n");
+foreach $year (@years) {
+print "Processing $year\n";
+my $page_to_get
+="http://www.campaignfinance.state.pa.us/ContributionSearch.aspx";
+my $agent = WWW::Mechanize->new();
+my $results;
+print "Getting page";
+$agent->get($page_to_get);
+# Pick the first form as the one we want to complete
+# Note that this is 1-indexed, not zero indexed.
+$agent->forms(1);
+# ID the fields by viewing source.
+# Mechanize handles hidden fields, which is really nice!
+$agent->field("txtSearchContributor", "Asher");
+$agent->field("txtSearchBeginDate", "1/1/$year");
+$agent->field("txtSearchEndDate", "12/31/$year");
+# With drop down menu, note we're using the value, not the text
+# which in this case is descending order of amount
+$agent->field("ddSortOrder","7");
+
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+2010 CAR Conference (Phoenix, Arizona)
+#Pick the button to click by name
+$agent->click_button("name", "btnSearch");
+
+$agent->follow_link(text => "All");
+my $content = $agent->content();
+my $stream = HTML::TokeParser->new(\$agent->{content});
+
+while (my $token = $stream->get_tag("td")) {
+# pull token attributes that we care about
+my $bgcolor = $token->[1]{'bgcolor'};
+my $width = $token->[1]{'width'};
+my $valign = $token->[1]{'valign'};
+my $colspan = $token->[1]{'colspan'};
+my $align = $token->[1]{'align'};
+if ( ($bgcolor =~ m/F7F7F7/) and ( $width =~ m/70%/ )
+and ( $colspan =~ m/2/ ) ) {
+my $text = $stream->get_trimmed_text("/td");
+if ($text !~ m/Contributor/) {
+print "Found contributor td: $text\n";
+print RESULTS "$text|";
+}
+}
+if ( ($bgcolor =~ m/F7F7F7/) and ( $width =~ m/15%/ )
+and ( $valign =~ m/top/ ) and ( $align =~ m/Center/ )) {
+my $text = $stream->get_trimmed_text("/td");
+print "Found date td: $text\n";
+print RESULTS "$text|";
+}
+if ( ($bgcolor =~ m/F7F7F7/) and ( $width =~ m/15%/ )
+and ( $valign =~ m/top/ ) and ( $align =~ m/right/ )) {
+my $text = $stream->get_trimmed_text("/td");
+print "Found amount td: $text\n";
+print RESULTS "$text\n";
+}
+}
+}
+
+The result is a bar delimited file of contributors, contribution dates, and contribution amounts.
+(http://nicar-phoenix.s3.amazonaws.com/parse_results.txt)
+
+http://nicar‐phoenix.s3.amazonaws.com/scraping‐presentation.html
+
+

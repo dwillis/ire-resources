@@ -1,0 +1,459 @@
+Cyber Security
+for Journalists
+!
+
+Mike Tigas
+(@mtigas)
+News Applications Developer, ProPublica
+
+IRE Watchdog Workshop, CUNY
+January 24, 2014
+
+bitly.com/irenysecurity
+
+I’m a developer/journalist, working on news apps and interactives and stories, but with a strong interest and background in some of these issues, primarily
+in anonymity and censorship circumvention. I work on Onion Browser (an iPhone web browser that uses Tor) as a side project.
+
+Threat Modeling
+
+I’m going to just quickly recap threat modeling with a few quick notes.
+
+Threat Modeling
+• Why might you be targeted? 	
+
+• Who are your enemies?	
+
+• What might be used against you?	
+
+• What could go wrong in your day-to-day?	
+
+• What does secure mean, exactly?
+
+Threat modeling forms the cornerstone of how you should approach security. If you’re a beginner in journalism, you’re usually told that you should answer
+the 5 W’s — or at least consider them. In other fields you similarly have a framework for much of the work.
+
+!
+
+This isn’t a comprehensive version of threat modeling, just my own simplification of the idea.
+
+Threat Models & Threats
+• Technical
+
+• hacking, intercepted communications, code-breaking	
+
+
+• Legal
+
+• legal protections, lawsuits, subpoenas, detention	
+
+
+• Social
+
+• phishing, "social engineering," exploiting trust	
+
+
+• Operational
+
+• mistakes happen, do you have a backup plan?	
+
+
+• Physical
+
+• theft, network taps, torture
+
+So, threat modeling is basically a framework for thinking about your security: What should I worry about and what can I do about it? And it makes
+answering that *overall* question easier by breaking down the situation.
+
+https://www.flickr.com/photos/73648871@N00/3023756556/
+
+I’m mostly going to talk about *technical* protections from here on out. But you should understand that tools are only part of the puzzle. Encryption is like
+locking your door. Locking your door doesn’t solve everything: most of the time you assume there are legal protections that deter break-ins and you may
+have insurance for your belongings (operational security!). These all work in tandem to protect you.
+
+1: Basic Protection
+• Software updates 	
+
+• Antivirus / antispyware	
+
+• Disk encryption	
+
+• Deleting files securely	
+
+• Passwords
+This is really “step zero” since these represent low-hanging fruit that can help A LOT.
+
+Software updates,
+Antivirus/antispyware
+• If your system is compromised, no
+
+password, no communication tool, and no
+encryption can help you. Assume all is lost.	
+
+
+• Security holes in Windows, Mac, Linux —
+and most software in general — are
+discovered on a near-daily basis.
+
+(lost to random hackers, government entities, corporate spies, shady subjects you’re reporting on)
+
+Full Disk Encryption
+• Protects your files when your computer is
+turned off.	
+
+
+• Operating systems come with this now:
+FileVault (Mac), BitLocker (Windows),
+dm-crypt (Linux)	
+
+
+• Other solutions:
+
+TrueCrypt (Windows)
+
+People think about e-mail encryption, encrypted phone calls, etc. but that just protects data “in motion”. You need to also protect that data “at rest”.
+
+!
+Without full-disk encryption, someone can rip the hard drive out of your computer, plug it into another computer, and copy everything over.
+!
+Full disk encryption is great, because it’s relatively easy to set up these days *and* it rarely results in noticeable slowdowns.
+!
+
+As long as your computer is shut down, it prevents someone from turning your computer on and copying your hard drive. Access to your files is
+impossible until you enter your password. Even if you’re not concerned about specific threats, you should do this to protect yourself if your laptop is stolen
+at random.
+
+Secure Deletion
+• “Delete” normally means “delete from the
+table of contents”: data is still on the hard
+drive until something else needs to use
+these unused parts of your drive.	
+
+
+• Secure Delete files
+
+Eraser (Windows), srm (Linux),
+and it’s built-in on Mac	
+
+
+• Wipe unused space
+
+Disk Utility (comes with Mac), CCleaner
+
+If you have FDE, this is less of an issue, but every bit helps. This also affects thumb drives, in case you were transporting something sensitive.
+
+!
+
+Wiping unused space helps if you didn’t delete
+
+Passwords
+• Stop using the same password everywhere.
+
+Not every website is as secure as your bank
+or your work e-mail account.	
+
+
+• Every other website has an “I forgot my
+
+password” feature that e-mails you.Your
+e-mail password is the key to the kingdom.
+
+Two things to remember about passwords.
+
+Password Managers
+• Let you generate truly random passwords
+(like “0d1Tc1G60y84gPQ5s”) for every
+website, remembers it, fills it for you.	
+
+
+• 1Password (Mac, iOS, Windows)	
+
+• KeePass (multiplatform)	
+
+• LastPass (web based, multiplatform)
+I’m not going to go over these, but you should look into them. Most of them sync online, either via Dropbox or via a third-party service -- generally
+assumed to be safe since the password manager encrypts everything. I personally use 1Password.
+
+!
+
+You’ll need to make sure that the password you choose to lock *this* up is something that you’ll remember and something that’s secure.
+
+Using four or more words, even all lower-case, even without numbers or symbols, is stronger than most “hard” passwords.
+
+Password Managers	
+
+(low tech)
+• Diceware — roll dice to pick words from a
+very big dictionary.	
+
+
+• Write it down if you have to. Really.
+
+(Destroy once you have it memorized.)
+
+Don’t be afraid to write down a password.
+
+!
+
+Writing down an incredibly strong password and keeping it in your wallet (until you have it memorized) is better than giving up and using “12345”. Just
+don’t stick it up next to your monitor.
+
+Communications
+• Tor	
+
+• OTR (“off the record”) encryption for
+instant messages	
+
+
+• Encrypted voice calls	
+
+• PGP encryption for e-mail & files
+
+Public Key Encryption
+• You and a person you are communicating
+
+with can generate a secret encryption code
+known to only you two.	
+
+
+• Non-technical explanation of public key
+encryption math:
+https://bitly.com/pubkeyvid
+
+Tor
+• Anonymizes your internet connection so
+websites don’t know where you are	
+
+
+• Bounces your web traffic through other
+computers before it actually hits the
+internet
+
+Tor
+
+https://www.torproject.org/about/overview
+
+“How Tor Works” video | Interactive "Tor & HTTPS Demo"
+
+Tor
+• Windows/Mac/Linux
+
+torproject.org
+“Tor Browser Bundle” is a special version
+of Firefox that connects through Tor.	
+
+
+• Android
+
+orbot (Guardian Project)	
+
+
+• iOS
+
+Onion Browser
+(disclosure: I work on this)
+
+OTR Encryption
+• Uses an instant messaging program to
+
+encrypt communications between you and
+another person over an existing instant
+messaging service (like Google Chat).
+
+Anybody use Adium/Pidgin? Trillian or AOL instant messenger or ICQ back in the day? OTR basically uses a chat program on top of an existing chat
+network like Google Chat.
+
+Note that the metadata (who I’m are talking to and when the message are sent) are still known by Google.
+
+!
+
+OTR also doesn’t anonymize if you’re using an existing account with your name on it.
+
+OTR Encryption
+• Mac:
+
+Adium	
+
+
+• Windows, Linux:
+
+Pidgin + OTR plugin	
+
+
+• You can use Google Talk, AIM, MSN
+Messenger, Yahoo Messenger, etc.	
+
+
+• Or register a Jabber/XMPP account on any
+provider: http://www.jabber.org/
+
+Encrypted Voice Calls
+• Most systems similar to OTR, but for voice
+calls on both computers and cell phones.	
+
+
+• Ostel, a Skype-like voice chat provider
+operated by the Guardian Project	
+
+
+• Supports software for computer
+
+platforms, Android, iOS, and Blackberry.	
+
+
+• RedPhone (Android)	
+
+• Silent Circle ($, multiplatform)
+
+PGP
+• Also known as GPG — for “GnuPG”, the
+
+most popular software that implements this
+type of encryption	
+
+
+• Identity verification & tamper-protection	
+
+• Encryption
+
+PGP stands for “pretty good privacy” and is currently the gold standard for e-mail encryption. It’s been around since the mid-90’s and has been wellstudied for security flaws, and because of this it’s well-regarded in cyber security circles.
+
+PGP
+• Mac:
+
+GPGTools' GPG Suite + Thunderbird +
+Enigmail	
+
+
+• Windows:
+
+GPG4Win + Thunderbird + Enigmail	
+
+
+• https://bitly.com/enigmail-howto
+
+https://bitly.com/freepress-pgp
+https://bitly.com/cryptoparty-pgp
+
+Advanced Topics
+• Tails secure operating system	
+
+• Tor hidden services
+• SecureDrop
+
+SecureDrop is an example of a Tor hidden service — a software package now maintained by the Freedom of the Press Foundation
+
+Tails
+• https://tails.boum.org/	
+
+• A totally isolated operating system that
+
+uses Tor for all network activity, comes with
+many secure communication tools, and
+leaves no trace of use on the computer
+when you’re done.	
+
+
+• Download, then burn onto a DVD or install
+onto a USB.
+
+Tor Hidden Services
+• Anonymous websites that use Tor in such a
+way that the website is also difficult to
+trace. All traffic stays within Tor, providing
+maximum protection to both parties.	
+
+
+• Instead of “example.com” addresses are 16
+random characters and “.onion”.
+(“3g2upl4pq6kufc4m.onion”)	
+
+
+• WikiLeaks, “Silk Road” drug market
+Onion site listed is a hidden service mirror for the DuckDuckGo search engine.
+
+SecureDrop
+https://pressfreedomfoundation.org/securedrop
+
+• Tor hidden service.	
+
+• Whistleblower-to-Journalist messaging and
+submission system.	
+
+
+• Maintained and supported by the Freedom
+of the Press Foundation.	
+
+
+• Used at The New Yorker, Forbes, others
+The proliferation of SecureDrop installations is a good indicator of journalists and security professionals collaborating.
+
+Nothing is
+perfectly secure.
+!
+
+Everything can be
+broken eventually.
+While I can vouch for most of the tools I’ve listed off here (and linked — if you’ve downloaded these slides), things change very rapidly in technology and
+especially in the security space.
+
+!
+
+New breakthroughs in computer hardware and cryptographic math can render these technologies obsolete very quickly.
+
+Humans are insecure
+
+http://xkcd.com/538/
+
+Cryptography and security can’t help you if you’re in a situation where you can be coerced to hand over your stuff.
+
+!
+
+But outside of security, humans are also insecure in a lot of other ways that break security.
+
+“Only amateurs attack
+machines; professionals
+target people.”	
+
+— Bruce Schneier
+
+Humans are insecure
+
+Sources are insecure. In many cases, if a sensitive source needs to contact you, whatever puts them in hot water has already happened.
+
+!
+
+Be responsible and don’t overpromise based on the tools you’re using.
+
+Other things to
+think about
+• Do you need to communicate electronically
+or over the phone in the first place?	
+
+
+• Everything electronic is logged in some way;
+your computer, ISP, website, telephone
+provider, chat provider, e-mail provider, etc.	
+
+
+• Cell phone behavior, burner phones	
+
+• When in doubt, store nothing.
+Think about the threat model before you start thinking about the tools. Technical, legal, social, operational, physical aspects.
+
+Resources
+• EFF “Surveillance Self Defense” Guide	
+
+• Security-in-a-Box	
+
+• CPJ Journalist Security Guide	
+
+• Freedom of the Press Foundation
+“Encryption Works” guide	
+
+!
+
+bitly.com/irenysecurity
+
+CPJ = Committee to Protect Journalists
+
+

@@ -1,0 +1,81 @@
+9/30/2016
+
+NICAR 2015 The New Ecosystem of Health Care Data ­­ Dan Keating Handout on Medicare Part B and LDS Patient­Level Data.docx
+
+NICAR 2015 The New Ecosystem of Health Care Data ­­ Dan Keating Handout on Medicare Part B
+and LDS Patient­Level Data.docx
+NICAR 2015
+The New Ecosystem of Health Care Data
+Dan Keaĕng, Washington Post @dtkeaĕng dan.keaĕng@washpost.com hĥp://bit.ly/1KSW1iB
+Medicare Part B Payment to Doctors – pulling apart the details
+Data released April 2014 and likely to be released every year
+hĥp://www.cms.gov/Research‐Staĕsĕcs‐Data‐and‐Systems/Staĕsĕcs‐Trends‐and‐Reports/Medicare‐Provider‐Charge‐
+Data/Physician‐and‐Other‐Supplier.html
+Data has procedure codes. There is a Relaĕve Value Unit formula that shows the reimbursement calculaĕon for each
+procedure as set by CMS. The payment formula is made up of three components:
+● doctor work
+● facility overhead
+● malpracĕce premium reimbursement
+You can download the procedure price spreadsheet with instrucĕons on calculaĕons at
+hĥp://www.cms.gov/Medicare/Medicare‐Fee‐for‐Service‐Payment/PhysicianFeeSched/index.html
+total‐amount = (doctor‐share + facility‐overhead + malpracĕce ) * price‐conversion factor.
+To pull apart the amounts paid to doctors, we do not need the conversion factor. The payments listed in the Part B data
+can be parsed by proporĕons
+Doctor‐work
+_____________________________
+doctor‐work + facility‐overhead + malpracĕce
+
+= doctor percentage
+
+You can then mulĕple the doctor‐percentage for that procedure to the payment for that procedure to get the doctor‐pay
+for that procedure. You can do the same thing with the overhead and malpracĕce porĕons.
+Complicaĕons:
+Facility overhead varies depending on whether it was done in a facility (hospital) or doctor oﬃce. The Part B data has an F
+or an O to indicaĕon facility or oﬃce. So the formula needs a branch that selects whether to use the facility rate or the
+non‐facility‐rate.
+There’s a geographic adjustment for all three, called gcpi. You have to link to the geographic table (in the download) and
+mulĕply each of the factors by the appropriate gcpi so it becomes
+Doctor‐work*doctor‐gcpi
+
++
+
+overhead*overhead‐gcpi
+
++
+
+mp*mp‐gcpi
+
+Taking those complicaĕons into account, calculaĕng the doctor share ends up like this
+case when place_of_service = 'O' then procedure_payment*(
+(work_rvu*workgpi)/(work_rvu*workgpi + trans_nonfac_pe_rvu*pegpi + mpgpi*mp_rvu)
+)
+when place_of_service = 'F' then procedure_payment*(
+(work_rvu*workgpi)/(work_rvu*workgpi + trans_fac_pe_rvu*pegpi + mpgpi*mp_rvu)
+)
+else 0 end as doctorwork
+You get the proper rvu values by linking on the hccps code in the rvu table
+If you ﬁnd no facility value, then the money is for some other special service that is not calculated as a doctor service,
+such as ambulance fees, drugs and some high‐tech tesĕng.
+https://docs.google.com/a/ire.org/document/d/153aegLrmWx5ac­_o­BVPP9IKXaZCm8voEoP8_sjcyJo/pub
+
+1/2
+
+9/30/2016
+
+NICAR 2015 The New Ecosystem of Health Care Data ­­ Dan Keating Handout on Medicare Part B and LDS Patient­Level Data.docx
+
+CMS Limited Data Set Patient­Level Data
+Get the applicaĕon at
+hĥp://www.cms.gov/Research‐Staĕsĕcs‐Data‐and‐Systems/Computer‐Data‐and‐Systems/Privacy/DUA_‐_LDS.html
+Lists of LDS Datasets
+hĥp://resdac.advantagelabs.com/cms‐data/search?f[0]=im_ﬁeld_privacy_level%3A43
+Documentaĕon
+hĥp://www.cms.gov/Research‐Staĕsĕcs‐Data‐and‐Systems/Files‐for‐Order/LimitedDataSets/StandardAnalyĕcalFiles.html
+
+Published by Google Drive – Report Abuse – Updated automatically every 5 minutes
+
+https://docs.google.com/a/ire.org/document/d/153aegLrmWx5ac­_o­BVPP9IKXaZCm8voEoP8_sjcyJo/pub
+
+2/2
+
+

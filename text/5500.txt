@@ -1,0 +1,160 @@
+Creating an interactive map
+with Leaflet.js
+Slides: bit.ly/nicar18-leaflet
+Files: bit.ly/nicar18-lucio
+
+What is Leaflet?
+Leaflet is an open-source JavaScript library for developing interactive web maps.
+-
+
+Lightweight
+Simple
+Mobile friendly
+Flexible
+Very popular
+Well documented
+Tons of resources exist!
+
+Let’s make a map!
+-
+
+Open index.html file in Sublime Text
+
+Contains
+-
+
+Default HTML
+Leaflet JavaScript library
+Leaflet CSS
+Empty div element to hold map
+Empty script tag for your JavaScript code
+
+Creating map size
+Let’s give our map some size dimensions. Place the following CSS within the
+<style> element:
+
+#map {
+width: 100%;
+height:500px;
+}
+
+Initialize the map!
+Add the following (in red) within the <script> tag, save and open the index.html file
+in a Chrome browser.
+
+<script>
+var map = L.map('map');
+</script>
+
+Adding tiles
+Leaflet does not provide map tiles so we have to load them either from a paid
+service like Mapbox or open-source locations.
+Add the command to load open-source tiles, save and refresh index.html file:
+<script>
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+map.setView([41.8781, -87.6298], 9);
+</script>
+
+Adding an interactive marker
+Lets create a marker:
+<script>
+var myIcon = L.icon({
+iconUrl: 'https://cldup.com/jsXu-OReqo-3000x3000.png',
+iconSize: [50,50],
+iconAnchor: [24,50]
+popupAnchor: [1,-50]
+});
+</script>
+
+Lets load the marker on the map:
+<script>
+var myMarker = L.marker([41.8781, -87.6298], {
+icon: myIcon
+}).addTo(map);
+</script>
+
+Make the marker interactive with a pop-up
+<script>
+myMarker.bindPopup("Hi. I'm a popup. <br> Customize me.");
+</script>
+
+Save and reload page.
+
+Loading GeoJSON
+File named neighborhoods.geojson (from City of Chicago data portal) contains the
+neighborhood boundaries of Chicago.
+Add var neighborhoods = to the beginning of the neighborhoods.gejson file.
+
+Lets load the neighborhoods.geojson file to the map and display the name of the
+neighborhood name on click:
+var layerGroup = L.geoJSON(neighborhoods, {
+onEachFeature: function (feature, layer) {
+layer.bindPopup('<h1>'+feature.properties.community+'</h1>');
+}
+}).addTo(map);
+
+Create styles for the boundaries:
+
+function setStyle(feature) {
+return {
+opacity: 1,
+weight: 1,
+color: "#333",
+fillOpacity: 0.2
+}
+}
+
+Apply styles to boundaries:
+var layerGroup = L.geoJSON(neighborhoods, {
+onEachFeature: function (feature, layer) {
+layer.bindPopup('<h1>'+feature.properties.community+'</h1>');
+},style: setStyle
+}).addTo(map);
+
+Making your own data!
+So you have a CSV with addresses and you want to map it out but it contains no
+latitude and longitude data...
+Google Sheets Geocode Cell add-on to the rescue!
+-
+
+It automatically converts addresses to Latitude and Longitude coordinates
+using Google Maps API.
+
+Watch, its magic!
+
+Converting Google Sheet to JSON
+-
+
+Another Sheets add-on
+Or this site: http://shancarter.github.io/mr-data-converter
+
+Displaying markers with pop-ups from JSON file
+Lets load the JSON file
+
+<script src="places.json"></script>
+
+JavaScript Loop
+for (var num = 0; num < places.length; num++) {
+var place = places[num];
+var place_lat = place["Lat"];
+var place_long = place["Lng"];
+var marker = L.marker([place_lat, place_long]).addTo(map);
+var popup_html = '<div>Latitude: ' + place_lat + '</div>';
+popup_html += '<div>Longitude: ' + place_long + '</div>';
+marker.bindPopup(popup_html);
+}
+Save and refresh index.html
+
+Some Resources
+-
+
+Tutorials from Leaflet.js site
+Leaflet.js Documentation
+Open-source tiles
+Mapbox
+Small introduction to geography
+CSV to JSON converter
+
+

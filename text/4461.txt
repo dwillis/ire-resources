@@ -1,0 +1,125 @@
+Stories from voting and election data
+Ted Mellnik, The Washington Post
+NICAR 2015
+
+I’d like to talk about some possibilities for stories using election and voting data. Why should you could
+be interested?
+First, and I don’t mean to sound like your first grade piano teacher, but think about the day when
+suddenly you have a shot at a great story, and you think you can get some great leverage on it using
+data Do you really want to be pulling out your NICAR training notes, for the first time in who knows how
+long? No. You need to practice, now, for that day. And you can get solid data experience with election
+data. Making maps, joining and summarizing data, using Census stats, and looking for relationships and
+patterns.
+Second, opportunities. There is a market for good stories on voting and elections. And there is plenty of
+material. You have elections every year.
+You might ask, isn’t this election stuff boring. After somebody wins, what else is there? Good question.
+One answer is how. Not who won. How. How did they win, or lose? How did voters act differently? This
+question is always fresh.
+Or to put it another way, do more than make a dumb map. There area lots of dumb election maps, and
+their equivalent stories. Here’s one you may have seen.
+
+Lots of detail here. Maps are great for that. But there’s no sense of what the story is. That’s what I mean
+by a dumb map, it doesn’t speak, it doesn’t tell a story. No dumb maps.
+Most maps start out like this. They show a jumble that hides broad patterns. To get at how, you need to
+find pattern in the jumble by simplifying and summarizing.
+You can do that by creating groups. You combine areas that share some characteristic. You make
+subtotals for your groups.
+For an example, let’s start with this dumb Virginia county map from 2013. Clear who won, much less
+how?
+
+No. We can get a somewhere better sense of the story looking at the county vote margins represented
+by symbols that are sized by the numbers. I have cheated a little here, by fading the red squares, but
+even without that I think you can see that the candidate represented by blue was the winner, and
+there’s a potentially interesting pattern.
+
+Still a bit complicated, though. One way to know when you’re done summarizing in something like this is
+to try to come up with two sentences you could put in a story that would describe what you have. Not
+done yet.
+Let’s try making some groups. Geographic regions are the most basic group. Here are the VA regions.
+
+We take all those 143 little squares and reduce them to the six regions. Hopefully that makes it easier to
+see and to describe the pattern.
+
+I think you could readily come up with two sentences now. They could be about political polarization,
+the dominance of parties within their own regions, and about the ballooning influence of Northern
+Virginia.
+It helps to work with a simple measure like winning vote margin. Here, for margins you’re just
+subtracting Democrat minus Republican, or the other way around, just so you’re consistent. You can
+simply add them up to get summaries for groups, and they reflect the relative role that each group plays
+in the statewide outcome.
+How do you make this work? You make a master list of counties, with a common ID for the county and
+with its region designation. When election results come in, you use the county ID to join, or match, the
+election results with the county regions, and subtotal results for the regions. Basic CAR.
+What else works for election groupings? Demographic attributes from Census. For counties, the place to
+start is urbanization. Make groups based on how much of a county’s population lives in urban or rural
+areas.
+Other possibilities are: Population (big -middle-small). Whether counties are in a metropolitan area or a
+micropolitan area or are rural. Or some combination of these.
+Here’s a look at the election night results of the 2014 Maryland governor’s race in through urbanization.
+Two sentences. A strong swing of suburban voters produced an unexpected Republican win over a
+Democrat and sitting lieutenant governor. Also, there was a lack of excitement in heavily minority urban
+areas for a candidate who would have been the state’s first African American chief executive.
+
+Notice how small the maps are. And how easy it is to compare regions and time.
+Let’s go local. Just as for counties, geographic or political regions are a good place to start. For
+example, subtotals for city council districts or wards. Here’s a comparison of winning margins in
+D.C.’s eight city council wards for the city’s new mayor, shown in blue, for both 2014’s primary
+and general elections.
+
+Two sentences could tell how the pattern of her support flipped. The areas she lost in the
+primary are the ones that made her win November.
+Precincts, because of their size, offer a great opportunity for grouping with neighborhood
+demographics from Census. Among the strongest candidates are often race and income.
+Race. For redistricting after each decennial Census, the Census Bureau publishes stats for
+precincts, aka voting districts. However, precinct boundaries often change when other districts
+are redrawn, so those stats may be outdated.
+
+You can recreate precinct breakdown for stats like race by going back to the block-by-block data
+that Census publishes and adding up the block counts for precincts in your latest map.
+How do you make this work?
+Get block maps. Download files for your desktop GIS program from Census.gov. Search for
+TIGER/Line Shapefiles.
+Get block data. Download block-level data from American FactFinder at Census.gov. You want a
+table like the 2010 SF1 table P11. It’s a race and Hispanic breakdown for the voting age
+population.
+Join the block data to the blocks. Overlay the blocks on your precinct map, and capture the
+precinct that each block falls in. Sum the block data for precincts.
+Here’s a look at results of that same mayor’s race using three race groups based on Census data.
+Don’t forget to visualize the subtotals, as well as the maps.
+
+Two sentences: The winning candidate built up a large margin in predominantly black
+neighborhoods. She stayed competitive enough across the rest of the District to prevent an
+opponent from building a winning margin there.
+Notice how the graphic above includes stats for each group. It’s not enough just show where the
+groups are. If you leave out the group stats, it’s a dumb map.
+Income. Similar process, except:
+1) Block groups are your small geography, and your matching numbers will come from the
+American Community Survey 5-year data.
+2) Instead of simple summing for precincts, you make a weighted mean of median
+household income. For each block group, multiple MHHI by number of households. Sum
+that product and sum households for each precinct. Then divide those two.
+
+Who votes and how often?
+Voting history and registration data typically includes each voter’s age, party, precinct, date of
+registration and elections voted. If it doesn’t include race, you can estimate from their precinct
+makeup.
+Here’s a summary voting by age group for the two D.C. mayor’s elections. Two sentences.
+The number of voters 25 to 34 doubled, going from one of the smallest to the largest voter age
+group. Seniors, the perennial heavy voters, were outnumbered.
+
+You might wonder what factors could be behind this surge in young voters. Population growth
+probably played a small role. It also happened that the second election included a referendum
+on legalizing marijuana. Here’s an idea for showing in a map whether the patterns of young
+voters and of support for marijuana were related. These maps appear almost identical, and show
+a close relationship that would also appear in a scatterplot.
+
+There are many more ways to use voting and election data for stories that go beyond who.
+Finally, here’s an idea to use of voter history data to look forward, at future scenarios. It’s a
+screen shot of an interactive that gives a user sliders to adjust support among three voter groups,
+and then see, based on race and ward turnout patterns from the previous election, how the
+balance of votes shifts as a result.
+
+Ted.mellnik@washpost.com
+@tmellnik @postgraphics
+
+

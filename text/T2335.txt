@@ -1,0 +1,295 @@
+MaryJo Sylwester
+St. Paul Pioneer Press
+Database Editor
+Mjsylwester1971@yahoo.com
+
+Revised: March 2005
+
+My Favorite (Excel) Things
+Month-Day-Year:
+This is one of my all-time favorite tricks. It works in both Excel and Access. It allows you to grab
+just one piece of a date. So if you have a series of dates and you want a new field that just gives
+the year. Or if you want a new field to just list the month.
+=Year(Datefield)
+=Month(Datefield)
+=Day(Datefield)
+So if you have 4/3/04, here’s what you’ll get with each formula:
+Year: 2004
+Month: 4
+Day: 3 (it gives the date, as in the 3rd day of the month)
+
+Weekday:
+This works much the same way as the above formula, but instead it returns the actual day of the
+week (Monday, Tuesday, etc). However the results come out as 1 (for Sunday), 2 (for Monday).
+=Weekday(Datefield)
+Here’s what the answers look like for one week in January:
+
+Note: If you want the 1 value to represent Monday (then 2 for Tuesday, 3 for Wednesday, et), add
+a 2 on to the formula like this:
+=weekday(datefield,2)
+
+Rank:
+Instead of simply sorting your results to put them in “order”, this is a more sophisticated way to
+rank your records and to account for ties.
+=RANK(This Number, $Start Range$:$End Range$, Order)
+• This Number should be the cell where your data starts.
+• Start Range should be the cell where your data starts. Anchor with dollar signs.
+1
+- -
+
+•
+•
+
+End Range should be the last cell of your data. Anchor with dollar signs.
+Order is either a 1 (smallest value will get assigned #1) or a 0 (largest value will get
+assigned #1).
+
+Example: =RANK(B2,$B$2:$B$100,1)
+
+DateValue:
+If you imported some data and your Date field stayed as text and is not being recognized as a true
+date (which is necessary for proper sorting), here’s how you can fix it. The date has to appear like
+a real date --- in other words, either 3/4/04 or March 4, 2004 or 4-March-2004 or one of the other
+recognized date formats. You can tell that Excel is not recognizing it as a date if the text is pushed
+all the way to the left of the cell. See picture:
+
+=DATEVALUE(String)
+The String that goes inside the parentheses is the cell where your data starts.
+Example: =DATEVALUE(b2)
+
+Datedif:
+Useful for calculating ages from birthdates. It gives you the difference between two dates in
+whatever unit of measure you specify.
+=Datedif(Date 1, Date 2, Unit of Measure)
+Units of Measure:
+“y” --- years
+“m” ---months
+“ym” ---number of months since the last year
+You can use the TODAY() function to refer to today’s date. Or you could put a specific date in
+there (with quotes around it)
+Examples:
+=Datedif(b2,today(), “y”)
+=Datedif(b2, “1/1/2004”, “y”)
+
+String Functions:
+These are extremely handy tools that you can use for data cleanup (particularly splitting names)
+or during analysis. They allow you to grab only a piece of the information in a field based on
+certain criteria. These functions are also available in Access, however there are a couple slight
+variations in syntax. Once you know one, learning the other is a breeze.
+LEFT: This tells the computer to start at the first byte on the left side of the field. Then we have
+to tell it how many bytes (or characters) to take.
+Syntax: LEFT(celladdress, number of bytes to take)
+2
+- -
+
+Example: LEFT(B5, 5) --- this will extract the first 5 characters of the contents of cell B5
+MID: To use this function, you have to tell the computer which cell to do its work, where to start
+and where to stop. If you want to take everything that remains in the field, just put a really big
+number in that will likely encompass all possibilities.
+Syntax: MID(celladdress, byte number to start at, number of bytes to take)
+Example: MID(B5,10,4) --- this will start at the 10th byte and take 4 bytes.
+SEARCH: This works as a sort of search tool to tell the computer to either start or stop taking a
+“string” at a certain character (or space). This is how we can tell the program to split a name field
+at the comma, for example. For this type of work, it is used in conjunction with the MID function.
+The character you what to find should be enclosed in quotes.
+Syntax: SEARCH(“character we want to find”, celladdress)
+Example: SEARCH(“,”,B5)
+You can combine this with Mid to explain that you either want to start or stop at a certain
+character (even if the character isn’t located at the same byte in every record).
+EXAMPLE: MID(b5, search(“,”, b5), 100)
+**the above example uses the search function to find the “start” position, then tells the
+computer to take 100 bytes from there.
+EXAMPLE: MID(b5, 10, search(“,”, b5))
+**the above example uses search to find the “end” position.
+**Note: If you don’t want to include the character that you searched for in your result, use a –1 or
++1 just after the search phrase to either go back a space (-1) or move forward and start a space
+farther (+1). Here’s an example that will start at the comma, then move one space forward and
+take 100 bytes from there:
+=mid(b5, search(“,”,b5)+1, 100)
+There is also a RIGHT function, which starts at the first byte on the right side of the field and
+then you can tell it how many bytes to take. (it isn’t as useful as the others, however)
+
+IF Statements:
+The functions I’ve listed above are essentially a menu of things you can do within the power of an
+IF statement. It gives you an impressive range of possibilities!
+A basic IF statement consists of:
+1) What we’re going to measure as being either true or false
+2) What to do if it’s true
+3) What to do if it’s false
+=IF(criteria, true, false)
+So here’s an example from a list of football games. We want to identify whether the visiting team
+or the home team won the game.
+
+3
+- -
+
+This formula will insert the word “Visit” in the G cell if the measurement is true and will insert
+“Home” if the measurement is false.
+
+You can also have it grab information from other cells, instead. This will put the VisitAbbrev (i.e.
+“NYJ”) in the H column if the measurement is true and will grab the HomeAbbrev if it’s false.
+
+Using IF to copy down blank columns:
+I use this quite frequently when I get data that lists a team name as a title, then all the players or
+all the game dates below that. But I want to apply the team name to each record. The trick is that
+you need to have a pattern to follow. In the below example, the pattern is that the B column is
+always blank on the lines where the team name is listed. And it’s not blank anywhere else.
+
+So this formula is going to look to see if the B cell is blank:
+4
+- -
+
+=IF(b2= “”, a2,c2)
+Then it’s going to put the contents of A2 (in this case, “Arizona Cardinals”) in the field if it finds
+it to be true. If it’s not true, it looks to the cell directly above (c2) to essentially copy down the
+team name.
+
+Combining other functions:
+Now that you know the basics of an IF statement, you can jazz it up with all kinds of other
+functions. You just place the function as either the criteria, the true part or the false part. Of
+course, you can use multiple functions in the same IF statement if necessary.
+Examples (I’ve just made these up!):
+If a date (located in b2) is for a Monday, then put the word Monday in a new cell, otherwise do
+nothing:
+=if(weekday(b2)=2, “Monday”, “”)
+If a date (located in b2) is equal to another date (located in c2), then put the word “Same” in the
+new field, otherwise calculate the difference in months:
+=if(b2>c2, “Same”, datedif(b2,c2, “m”))
+
+Using a wildcard search:
+You can use the SEARCH function to look for a word or symbol contained within other text,
+however it gets a little tricky to make it work properly. You have to add the ISERROR function.
+If you want to get in this deep, I recommend checking out the help file on these functions.
+Otherwise, here’s a quick hit to get you started:
+
+This example assumes you have a list of
+cities and states and you want to flag all of the ones that are in Texas. In this case, the state name
+is written out in full.
+So if it finds Texas, this formula instructs it to put an X in the C column, otherwise leave it blank.
+=IF(ISERROR(SEARCH("*Texas*",B4,1)>0)=FALSE, "X","")
+The criteria part of this stretches from the ISERROR all the way to the FALSE. The ISERROR is
+necessary because it will give you an error message if it doesn’t find the word. It’s the only way
+you can instruct the computer to do something in the false portion of your answer (even if that
+means just leaving it blank).
+The following portion:
+SEARCH(“*Texas*”, b4, 1)
+5
+- -
+
+If used alone, this portion will return a 1 if it finds the search term and an error message if it
+doesn’t. So then you need to add the IF portion to give it two options. By adding the ISERROR
+and the =FALSE, you can sidestep the error message.
+
+Nested IF statements:
+Once you understand basic IF statements, then you can really do some complex stuff with nested
+IF statements. In other words, we can say: if something is true, then check to see if something
+else is true. If both are true, do this. If the first is true, but the second is not, then do this. If both
+are false, then do this. You can nest multiple statements (I’m not sure if there’s a limit).
+
+The above example contains the point spread (used for betting and set before the game is played)
+and the resulting game scores. In this case, the spread is based on the home team (positive
+meaning the home team is favored by that many points, negative meaning they are the
+underdogs).
+To demonstrate how a nested IF function works, I’d like to fill the last column with “Underdog
+Won” for any records where the spread was negative and the home team won the game. And
+“Favorite Won” if the spread was negative and the home team lost the game. (we’ll do the rest
+later)
+The first IF statement is this:
+=if(c2<0
+The second IF statement represents the TRUE portion of the first one:
+=if(f2= “won”
+Then you need a TRUE and FALSE portion for the second IF statement. In this case the true
+portion is “Underdog Won”, the false portion is “Favorite Won”.
+Then you need a comma and the FALSE portion of the first IF statement. In this case, a blank set
+of quotes to indicate do nothing (we’ll revise this in a minute)
+6
+- -
+
+Here’s the full formula and below that what each chunk represents:
+=if(c2<0, if(f2= “won”, “Underdog Won”, “Favorite Won”),””)
+=if(1 criteria, 2 criteria, 2 true, 2 false), 1 false)
+
+As you can see, it only gave results for those with a negative spread. That’s because the
+first IF statement dictates whether it goes on to the second one or not. In the case of the
+positive spread games, Excel jumped straight to the end where we told it to do nothing as
+the FALSE portion of the first IF statement.
+So let’s go back into the formula and add another set of nested IF statements to tell it
+what to do in case of a positive spread.
+Remove the double quotes at the end of the formula and put a new IF statement there.
+This becomes the False portion of the first IF statement. It looks to see if the spread is
+positive:
+=IF(C2<0,IF(F2="Won","Underdog Won","Favorite Won"),IF(C2>0,
+
+Then we need the TRUE and FALSE portions of this new IF statement we just added. In
+this case we want “Favorite Won” if it’s true and “Underdog Won” if it’s false.
+=IF(C2<0,IF(F2="Won","Underdog Won","Favorite Won"),IF(C2>0,IF(F2="Won","Favorite
+Won","Underdog Won")
+Not quite done yet. We still need the FALSE portion of the Third IF statement (the one that looks
+to see if C2>0). Basically this will only be used if the first IF statement is false (C2<0) and the
+third IF statement (C2>0) is false — in this case, only if C2=0.
+
+The final formula (the bold section is the new one):
+=IF(C2<0,IF(F2="Won","Underdog Won","Favorite Won"),IF(C2>0,IF(F2="Won","Favorite
+Won","Underdog Won"),"No Favorite"))
+7
+- -
+
+=IF(1 criteria, IF(2 criteria, 2 true, 2 false), IF(3 criteria, IF(4 criteria, 4 true, 4 false), 3 false))
+
+SUMIF Function:
+If you’ve got a long list that you want to essentially do subtotals for, this is a way you can do it
+without moving it to Access or doing a lot of repetitive typing of formulas. The example uses a
+list of player salaries for the NBA. I want to know the total for each team.
+
+The formula requires three pieces:
+=sumif(range to evaluate, criteria, range to sum)
+In this example, let’s say we want to subtotal the Dallas Mavericks salaries. So the range to
+evaluate will be the C column (c2:c424). The criteria would be “Dallas Mavericks”(put it in
+quotes because it’s a text string). And the range to sum would be the E column (e2:e424). Here’s
+the full formula:
+=sumif(c2:c424, “Dallas Mavericks”, e2:e424)
+To do this for all teams in one sweep, I put a list of the teams in a separate worksheet and then
+“link” the formulas between the two worksheets. The worksheet with the player-by-player
+salaries is named “Salaries” and the team names are in the A column of my new worksheet.
+Here’s what the formula ends up looking like:
+=sumif(Salaries!c2:Salaries!c424, a2, Salaries!e2:Salaries!e424)
+
+8
+- -
+
+There’s a similar function called COUNTIF that will do the same thing, only it will count the
+number of instances rather than adding numbers together. The formula is a bit shorter:
+=countif(range to evaluate, criteria)
+
+Copying down a single date:
+Excel’s wonderful feature of copying down (or across) formulas becomes a bit of a nightmare
+when you simply want to copy down the same date. Excel will think you want to go on to the
+next day, then the next, and the next, etc. Here’s the trick for disabling that:
+**Hold down the Control (Ctrl) key while dragging/copying down the first instance of the date.
+
+Custom lists:
+If you’ve got a list that you use frequently in Excel — such as state names or city names — you
+can create a custom list that will allow you to use the copy-down function in Excel to insert those
+names into a new worksheet. (This is why you can type a day of the week or month and get it to
+change as you copy down or across)
+To create a custom list from an existing list in Excel:
+1) Highlight the list.
+2) Go to the Tools Menu and choose Options. Navigate to the “Custom Lists” tab.
+
+9
+- -
+
+You should see the range of your data in the “import list from cells”
+3) Push the “import” button and you will see your list added to the others that are already there
+(the days of the week and months are defaults)
+You can also type the list directly into the “list entries” box and push the “Add” button.
+To recall the list and insert into a new worksheet:
+Simply type the first item in your list, then use the copy-down tool.
+Hint: For my lists of sports teams (see picture) I decided to make the first item in the list the
+sport, such as baseball, football and basketball, so that I merely have to type the sport and I will
+get the list. I don’t have to remember which team is the first one in the list.
+
+10
+- -
+
+

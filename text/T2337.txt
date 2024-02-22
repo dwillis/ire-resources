@@ -1,0 +1,144 @@
+Advanced mapping strategies: Density analysis
+Janet Roberts, Database Editor
+The New York Times
+janetroberts@nytimes.com
+
+2005 IRE National CAR Conference
+Hollywood, Calif.
+Panel: The Latest in Mapping
+
+So you’ve endured the pain and suffering of
+geocoding a large data set, and you have
+the addresses plotted on a map in ArcView.
+Ah, how satisfying!
+Or is it? Do you have a useful map, or a
+Rorschach ink blot test? Here’s what I got
+after a week of editing address data so I
+could geocode 911 calls related to drugs
+and other street crime in St. Paul, Minn.
+
+This map certainly shows that this type of
+crime is a bigger problem in some
+neighborhoods than others.
+I could show even greater detail by using the
+St. Paul Police Department’s grid map,
+which slices the city into almost 200
+quadrants, each four or five square blocks in
+area.
+I had acquired 10 years’ worth of 911 data to
+help gauge the results of a highly publicized
+police roundup of drug suspects, which had
+followed a summer-long sting operation that
+targeted dealers in St. Paul’s Frogtown
+neighborhood. Police and prosecutors
+lauded the operation, saying it would go far
+to return safety to the streets.
+I had geocoded the 911 calls so I could
+identify the city’s trouble spots and see what
+had changed after the sting. This blob of
+points didn’t do much to illuminate the story.
+The usual solution to this Rorschach
+problem is to turn the points into a thematic
+map by quantifying the points for distinct
+geographic areas. In this case, I did some
+spatial joins so I could count points by
+neighborhood and by police quadrant. With
+those counts, I could create a standard
+thematic map, shading the neighborhoods
+according to the number of 911 calls.
+
+But both of these maps are limited by the
+nature of how they were drawn: to fit
+geographic boundaries. The quadrants are a
+convenient way to assign police patrols, and
+the neighborhood boundaries are helpful to
+the city planning department, but do streetcorner drug transactions follow those
+
+boundaries as neatly as these maps
+suggest?
+Consider the neighborhood-level map, which
+paints large areas of the city as “problem
+areas.” Is that accurate? Or is the problem
+most intense in certain pockets within those
+neighborhoods? Likewise, some
+neighborhoods look fairly safe on such a
+map, when in reality, they could have a
+pocket that is a trouble spot.
+This is where density analysis can help.
+Using an ArcView extension called Spatial
+Analyst, I was able to draw “hot spots” – the
+areas where 911 calls were most
+concentrated in the city, regardless of
+artificial geographic boundaries. The result
+looked like this:
+
+What is important to note – and difficult to
+grasp -- is that Spatial Analyst will produce
+entirely different maps depending on the cell
+size and search radius you choose. So a
+police chief who wants to make his city look
+crime-free, could play with the settings and
+do just that. A muckraking journalist could
+do the opposite.
+There are no “right” or “wrong” settings.
+Your aim is settings that produce a
+defensible map – one that is backed up by
+your reporting.
+
+A few pointers
+Spatial Analyst is complex, expensive
+($2,500) software and it’s not intuitive.
+Unless you are confident running with
+scissors, it’s wise to find a professional
+geographer willing to walk you through
+the process and evaluate your results.
+For a good explanation of density
+analysis, get a copy of the Crimestat
+manual. Crimestat is a free density
+analysis program, available at:
+www.icpsr.umich.edu/NACJD/crimestat.
+html.
+
+If our aim is to show readers the trouble
+spots for these types of crimes, which of the
+maps – the earlier thematic versions, or this
+one – is the easiest read?
+
+How Spatial Analyst works
+The density tool in Spatial Analyst looks at a
+point layer and shows how the points
+cluster. It does this by using a grid – which
+would look much like the police quadrants
+on the previous page.
+From within each cell on the grid, using a
+search radius that you specify, the software
+looks for all the points within that radius and
+uses an algorithm to compute the density of
+those points. The software offers two types
+of density analysis: simple and kernel. The
+kernel technique weights points near the
+center of the cell more heavily and produces
+a smoother result.
+
+As with all mapping that requires
+geocoding, expect to invest a lot of time
+in address cleanup before you even get
+around to density analysis.
+Project your points. You can’t do density
+analysis on an unprojected theme.
+The search radius is defined in map
+units. My map was a UTM projection,
+and the map units were meters. I
+wanted a half-mile search radius, so I
+typed 854 in the search radius box. (1/2mile = about 854 meters).
+Your legend display will be based on
+whatever you set as your output units
+(square miles usually makes the most
+sense). Remember that what you’re
+seeing here is a rate: number of points
+per square mile. Even so, the numbers
+are hard to grasp. When we ran these
+maps in the paper, we left the numbers
+out and simply labeled the legend mostconcentrated to least-concentrated.
+
+

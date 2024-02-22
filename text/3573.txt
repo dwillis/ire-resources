@@ -1,0 +1,156 @@
+Your data is dirty.
+Get over it.
+
+Documentation
+Keep a log of what you do
+Legal Pad
+z Spiral Notebook
+z Text File
+z Anything
+z
+
+Documentation
+
+Efficiency
+Work smarter not harder
+Import scripts or stored procedures that execute all queries in order. You need
+to be able to rebuild everything from scratch in an automated fashion.
+z
+
+z
+
+Save queries in spreadsheets that are passed around.
+
+z
+
+Learn Perl or Python or Ruby. Just a few basics can go a long way.
+
+Avoid having to redo hours, days, weeks or months of work if you make a
+mistake
+
+Types of Tools
+
+OpenOffice, Libre Office, Microsoft Office, Google Docs
+SQLite, MySQL, SQL Server, PosgreSQL, SQLite, Oracle, Fusion Tables
+ArcGIS, QGIS, uDig, Fusion Tables
+Perl, Python, Ruby
+
+An example
+Tie these data sets together
+Public Schools
+z Problematic Construction Projects
+z Structurally Deficient Buildings
+z
+
+And map them in relation to:
+Fault Zones
+z Landslide Zones
+z Liquefaction Zones
+z Fault Lines
+z
+
+Problem: ~8,000 records relating to school construction projects released to us in a
+spreadsheet are incomplete.
+Solution: Scrape the rest of the data.
+
+Problem:
+~4,000 Shapefiles with no projection format defined
+Mandatory files :
+z .shp — shape format; the feature geometry itself
+z .shx — shape index format; a positional index of the feature geometry to allow
+seeking forwards and backwards quickly
+z .dbf — attribute format; columnar attributes for each shape, in dBase IV format
+Optional files :
+z .prj — projection format; the coordinate system and projection information, a plain
+text file describing the projection using well-known text format
+
+Solution:
+Grab a function from the Python Cookbook to walk the directories and return all ~4,000
+shapefiles and use the path info and data documentation to write out a projection file for
+every shapefile.
+
+Toolbox
+
+from django.contrib.gis.utils import ogrinfo
+
+from django.contrib.gis.utils import ogrinspect
+
+Justin Bronn, GeoDjango - Web Applications for Geographers
+with Deadlines (TNRIS Forum - Oct. 29, 2008).pdf
+http://geodjango.org/presentations/
+
+from django.contrib.gis.utils import LayerMapping
+thefiles = python_cookbook_function(gimme_all_the_shapefiles)
+for shp in thefiles:
+mapping_dict = {
+'geom': 'POLYGON',
+}
+lm = LayerMapping(AlquistPriolo, shp, mapping_dict)
+lm.save(verbose=True)
+
+Desktop GIS programs like uDig & QGIS can view the map data
+
+GIS Swiss Army Knife
+The ogr2ogr command is part of the GDAL library and can be used outside of
+GeoDjango to convert between GIS formats.
+To convert a shapefile that is not in WGS84 Lat/Lon and which has a correct .prj file
+into a shapefile:
+ogr2ogr -f "ESRI Shapefile" -t_srs EPSG:4326 OutputDirectory InputShapefile.shp
+PostGIS to KML:
+ogr2ogr -f "KML" neighborhoods.kml PG:"host=myhost user=myloginname
+dbname=mydbname password=mypassword" -sql "select gid, name, the_geom from
+neighborhoods"
+Importing kml into PostGIS:
+ogr2ogr -f "PostgreSQL" "PG:dbname=postgis user=postgres password=postgres
+host=localhost port=5432" roads.gml
+
+Computers can't do everything
+
+Reporter Kendall Taggart
+Kendall put in countless hours matching construction projects to schools,
+reviewing construction project files, managing records requests and many other
+essential reporting tasks.
+
+Result
+Mapped:
+Public schools
+z Fault zones
+z Fault lines
+z Liquefaction zones
+z Landslide zones
+z
+
+Tied thousands of problematic construction projects and buildings to schools
+http://californiawatch.org/earthquakes
+http://californiawatch.org/OnShakyGroundPDF
+
+Lessons Learned
+
+Roll out the app to the intranet for reporters to use instead of spreadsheets – we just didn't have an
+intranet.
+Matching spreadsheets – not sure. It's hard to find a good way to matching things other than by hand and
+using spreadsheets. But on a project of this size, the sheer number of matching spreadsheets got out of
+hand very quickly.
+
+Resources
+Think Python by Allen B. Downey
+http://greenteapress.com/thinkpython/thinkpython.html
+Practical Django Projects by James Bennett
+http://www.amazon.com/Practical-Django-Projects-Pratical/dp/1590599969
+Voidspace Python and HTTP tutorials
+http://www.voidspace.org.uk/python/articles.shtml#index
+Ben Welsh – his tutorials and github accounts
+http://www.palewire.com/posts/page/1/
+https://github.com/palewire
+https://github.com/datadesk
+Your local library and university library if you're in a university town. The Berkeley Public
+Library provides free access to Safari Books Online using your library card through a web
+portal. There are no words to describe how cool this is.
+NICAR-L & the annual NICAR conferences.
+
+Agustin Armendariz
+California Watch
+aarmendariz@californiawatch.org
+510.809.3173
+
+

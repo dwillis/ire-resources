@@ -1,0 +1,646 @@
+ugliness that grows
+into beauty inside of
+your favorite shell
+
+Disclaimer I
+This is an Advanced class
+
+-- Ed Snoeck, Grand Prize Winner, ASPN Haikus about Perl Contest
+
+Goals
+Disclaimer II
+You can’t learn Perl in an hour
+
+• A basic understanding of the philosophy behind Perl
+• An very basic introduction to Perl syntax
+• An introduction to basic regular expression syntax
+• Exposure to some common Perl idioms
+• Exposure to common errors
+• Where to find help
+
+Why use Perl?
+Perl
+
+• It’s easy
+–
+
+•Practical Extraction and Report Language:
+“An interpreted language optimized for scanning arbitrary text files,
+extracting information from those text files, and printing reports based
+on that information.”
+
+–
+
+The guiding principals of Perl’s developers:
+“Easy things should be easy. Difficult things should be possible.”
+Laziness is considered a primary virtue.
+
+• It’s free
+–
+
+(Publishers love this part.) All you need is a text editor.
+
+• It runs everywhere
+
+•AKA:
+– Pathologically Eclectic Rubbish Lister
+– Duct tape for the internet
+– The Swiss Army chainsaw
+– The first postmodern programming language
+
+–
+
+Unix, Linux, Win9x/NT/2000/XP, Mac OS7-9, Mac OS X, and more …
+
+• It does everything
+–
+
+Want to access data through ODBC; manipulate Excel spreadsheet or Access database
+files; crawl around agency web sites looking for newly posted information; pull data from
+online search forms; parse ASCII reports into csv files; do statistical analysis; build dynamic
+Web pages? Perl’s your answer.
+
+1
+
+Some background
+needing a quick meal,
+i whip out my non-stick perl
+to cook spaghetti.
+
+• Perl comes from the Unix universe:
+– Focused on text (Perl = grep + awk + sed + bash + korn + regex + (C +
+C++ + COBOL + Fortran + Lisp + Basic + SNOBOL + Ada))
+– It assumes you know what you’re doing, and that you intend to do what
+you tell it to do – Programming with the safety off.
+
+• Perl’s originator was a linguist:
+–
+–
+–
+–
+
+A computer language built to act like natural language
+Context matters
+DWIM: Do What I Mean
+TMTOWTDI: There’s More Than One Way To Do It.
+
+How to get help
+
+Perl syntax
+
+• Documentation: Active Perl Users Manual
+
+• Case sensitive: $Name != $name
+
+• Online documentation:
+
+• Every line ends with a ;
+
+– http://www.perl.com/pub/q/documentation
+
+• perldoc command
+– perldoc
+– perldoc –h
+– perldoc perldoc
+
+• White
+space
+doesn’t
+
+matter;
+
+• # Everything after a hash mark to the end
+# of a line is a comment
+(perldoc perlsyn)
+
+Name Parsing
+
+Name Parsing
+McGee, Walter Brown
+James, Neamiah
+Allen, Fulton
+Hurt, John
+Pridgett, Gertrude
+Burnett, Chester Arthur
+Terrell, Saunders
+Morganfield, McKinley
+Blake, Arthur
+Broonzy, William L.C.
+James, Eddie
+Hopkins, Sam
+Douglas, Lizzie
+McTear, William
+Jefferson, Clarence
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+2
+
+Mucking in files: Basic I/O
+Sweet light of reason
+Strikes me in a blinding flash:
+Must ALWAYS 'use strict;'
+
+• File Handles
+–
+–
+–
+–
+
+For reading: open MYFILEHANDLE, “c:/path/somefilename”;
+For writing: open MYFILEHANDLE, “>c:/path/somefilename”;
+For appending: open MYFILEHANDLE, “>>c:/path/somefilename”;
+Binary mode: open MYFILEHANDLE, “>:raw”, “c:/path/somefilename”;
+
+• Angle/Diamond operator <>:
+– The line input operator: <MYFILEHANDLE>
+– <> when empty, it reads line by line through files listed in command line
+
+• Standard input/ Standard output:
+– <STDIN> takes input from the keyboard
+– <STDOUT> sends output to the command window
+
+• Output to a file:
+– print FILEHANDLE “some stuff”;
+(perldoc perlopentut, perlcod perlfunc)
+
+Name Parsing
+
+Name Parsing
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+while( my $name = <IN> ) {
+
+}
+close IN;
+
+close IN;
+
+Nouns
+• Singularities (scalars)
+– Name starts with a $ (a sigil): $myScalar
+– Hold a single thing: string, integer, decimal, reference, object, file handle
+– What the thing is depends on how it’s used
+
+• Pluralities (lists)
+– Array: numerically indexed list of scalars
+
+trinity of types
+save me from data type hell
+simplify me again
+
+• Name starts with @: @myArray
+• Index begins with 0: $myArray[0]
+
+– Hash: associative array
+• Name begins with %: %myHash
+• Collection of key => value pairs: $car{color} = ‘blue’
+(perldoc perldata)
+
+3
+
+Name Parsing
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+Control structures
+While: executes block repeatedly as long as condition is true
+while (condition) {
+do something;
+}
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+If / then / else: executes block if condition is true
+while( my $name = <IN> ) {
+
+}
+close(IN);
+
+if ( condition ) {
+do something;
+}
+elsif ( differentCondition ) {
+do something different;
+}
+else {
+do something really different;
+}
+Or:
+do something if condition;
+
+Control structures
+
+Control structures
+
+For: executes block a set number of times
+
+Foreach: the Readers Digest version
+
+for ( my $i = 1; $i < 11; $i++) {
+do something …
+}
+
+for (@array) {
+chomp;
+my @words = split;
+do other stuff with $_ …
+}
+
+Foreach: iterates through array elements
+foreach $element (@array) {
+do something with $element …
+}
+
+Verbs
+What is truth
+
+String functions:
+– chomp($string): removes newline character
+
+A non-empty string or a number greater than zero.
+
+– substr($string, $start_position, $length): extracts
+a substring
+
+Conditional Operators
+
+– index($string, $substring): returns the position number
+of the first occurrence of $substring in $string
+
+Numeric comparison: == != < > <= >=
+If( $a = $b ) { … } is true unless $b == 0
+String comparison operators: eq ne lt gt le ge
+
+– length($string): return length of a string
+– split( /pattern/, $string): divides the string into an
+array divided by the pattern
+– join( ‘separator_string’, @array): turns the array into
+a single string with separator_string between elements
+(perldoc perlfunc)
+
+4
+
+Name Parsing
+
+Name Parsing
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+while( my $name = <IN> ) {
+chomp $name;
+my $lname = substr($name, 0, index( $name, ‘,’ ) );
+my $fname = substr($name, index( $name, ‘,’ ) + 2 ) );
+
+while( my $name = <IN> ) {
+chomp $name;
+my $lname = substr($name, 0, index( $name, ‘,’ ) );
+my $fname = substr($name, index( $name, ‘,’ ) + 2 );
+
+}
+close(IN);
+
+print “$lname\t$fname\n”;
+}
+close(IN);
+
+Name Parsing
+
+Arrays
+• Array assignment:
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+while( my $name = <IN> ) {
+chomp $name;
+my( $lname, $fname ) = split( /, /, $name );
+print “$fname\t$lname\n”;
+}
+close(IN);
+
+–
+–
+–
+–
+
+@array = ( “Harry”, “Ron”, “Hermione” );
+@array = qw( Harry Ron Hermione );
+@array2 = (@array, “Frodo”,”Bilbo”, 42.6);
+push @array2, “more stuff”;
+
+• Accessing array elements:
+–
+–
+–
+–
+–
+
+$array[0] eq “Harry”;
+$array[-1] eq “Hermione”;
+@array2[0,4] eq (“Harry”,”Bilbo”);
+@array2[3 .. 5] eq (“Frodo”,”Bilbo”, 42.6);
+my $firstElement = pop @array;
+
+(perldoc perldsc)
+
+Name Parsing
+
+Name Parsing
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+#! /usr/bin/perl
+use strict;
+use warnings;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+
+while(<IN>) {
+chomp;
+my @name = split /, /;
+
+while(<IN>) {
+chomp;
+my @name = split /, /;
+
+print “$name[1]\t$name[0]\n”;
+}
+close(IN);
+
+print join( “\t”, @name ), “\n”;
+}
+close(IN);
+
+5
+
+Name Parsing
+#! /usr/bin/perl
+open IN, ‘c:/Perl Hands-on/Data/names.txt’ or die “$!”;
+printf "%-20s%-20s\n", split(/, /,$name) while chomp( $name = <IN> );
+close(IN);
+
+Regular Expressions
+• A pattern to search for, extract and manipulate.
+
+When I try to read
+Regular Expressions My
+eyes bleed profusely
+
+RegEx Bestiary
+• String literals: /aBcDe123/ matches the string “aBcDe123”
+
+– Think * or %, but more specific
+
+• Character classes:
+
+• m/pattern/: matching operator
+– m/foo/ matches “foo”
+– /foo/ matches “foo”
+– m{http://foo.com} or m#http://foo.com#
+
+• s/search pattern/replace pattern/: substititution operator
+– s/foo/bar/ replaces the first instance of “foo” with “bar”
+– s/foo/bar/g replaces all instances of “foo” with “bar”
+
+– $string =~ /foo/
+– $string !~ /foo/
+(perldoc perlre)
+
+RegEx Bestiary
+
+RegEx Bestiary
+• Alternation
+
+• Quantifiers:
+* 0 or more
+? 0 or 1 (optional)
+
++ 1 or more
+
+{6,} six or more
+
+{6,8} 6 to 8
+
+^ beginning of a string
+$ end of a string
+\b word boundary
+
+• Metacharacters:
+– \w == [a-zA-Z0-9_]
+\W == [^a-zA-Z0-9_]
+– \d == [0-9]
+\D == [^0-9]
+– \s == [ \t\v\n\r\f] \S == [^ \t\v\n\r\f]
+– . Matches anything except a newline
+– \ escape – turns special characters back into literal characters:
+/http:\/\/www\.nicar\.org/
+
+• =~: binding operator
+
+• Position Anchors
+
+– Describes a type of single character
+– /[bc]ar/ matches bar or car
+– /[a-zA-Z]/ matches any letter lower or upper case
+– /[^A-Z]/ matches anything that’s not an upper-case letter
+
+– /(Mr|Mrs|Ms)\s\w+\s\w+/
+{6} exactly six
+
+• Capturing and clustering
+– /(Mr|Mrs|Ms)\s(\w+)\s(\w+)/
+– $1 $2 $3 …
+
+• Pattern modifiers
+– m/pattern/i -- ignores case
+– s/search pattern/replace string/g – global
+search: continues to search and replace through to
+the end of the string
+
+6
+
+Name Parsing Again
+A complex regex
+Lines and lines of cryptic text
+The match is still wrong
+
+#!/usr/bin/perl
+use strict;
+use warnings;
+open IN, ‘c:/Perl Hands-on/Data/names.txt’;
+while(<IN>) {
+$_ =~ /(\w+), (.*)/;
+print “$2\t$1\n”;
+}
+close IN;
+
+Name Parsing Again
+#!/usr/bin/perl
+use strict;
+use warnings;
+open IN, ‘c:/Perl Hands-on/Data/names.txt’;
+while(<IN>) {
+print “$2\t$1\n” if /(\w+), (.*)/;
+}
+close IN;
+
+Parsing Addresses
+–
+
+2620 NW EXPWY
+(Number NW EXPWY)
+
+–
+
+3601 GRANDDAUGHTER
+(Number Street_Name)
+
+–
+
+505 S MEADOW
+(Number Direction Street_Name)
+
+–
+
+5900 LYTLE DR
+(Number Street_Name Type)
+
+–
+
+2438 SW 24TH ST
+(Number Direction Street_Name Type)
+
+–
+
+BOX 32437 / PO BOX 2424
+(Post Office Box)
+
+Parsing Addresses
+Oklahoma City building permits
+3601 GRANDDAUGHTER
+BOX 32437
+2438 SW 24TH ST
+10309 SE 44TH ST
+709 N BLUEBIRD WY
+5321 BODINE DR
+1327 POST AV
+5900 LYTLE DR
+3209 SE 55TH ST
+1708 LOWRY AV
+417 NW 34TH ST
+650 MUSTANG RD
+8501 MANTLE AV
+12036 N PENNSYLVANIA AV
+900 CHERRY AV
+9101 NW 99TH ST
+1912 S BOULEVARD ST
+2400 S MACARTHUR BL
+PO BOX 75368
+
+7924 N GLORY RD
+1800 E MEMORIAL RD
+329 S EAGLE LN
+3854 NW 21ST ST
+3308 SE 89TH ST
+9304 SUNDOWN DR
+3416 S WOODWARD AV
+1800 E MEMORIAL RD
+6700 S SHIELDS BL
+3209 WILBURN AV
+3220 S HIGH ST
+3220 S HIGH AV
+17 NE 27TH ST
+7158 MELROSE LN
+14625 SE 104TH ST
+825 NW 58TH ST
+9009 NW 10TH ST
+2302 S PROSPECT AV
+PO BOX 2424
+
+13100 S MAY AV
+721 AZALEA PL
+2741 SW 2ND ST
+1290 N MUSTANG RD
+804 SE 26
+4631 NW 23
+P O BOX 461
+PO BOX 3757
+3003 PASEO
+8312 W RENO AV
+3033 SPITLER ST
+2617 S WALKER AV
+3200 NW 23RD ST
+120 E SHERIDAN AV
+3031 SPITLER ST
+11632 KINGSWICK
+505 S MEADOW
+2440 SW 55
+2620 NW EXPWY
+
+Parsing Addresses
+Pattern 1 : Number NW Expwy
+/(\d+)\s+(NW EXPWY)/
+
+Pattern 2 : Number (Direction)? Street_Name Type
+/(\d+)\s+([NSEW]{1,2})?\s*\b(.+)\s+([A-Z]{2})$/
+
+Pattern 3 : Number (Direction)? Street_Name
+/(\d+)\s+([NSEW]{1,2})?\s*\b(.+)/
+
+7
+
+And More . . .
+• References and complex data structures
+• Subroutines
+• Object-oriented Perl
+• Modules and packages
+
+Perl Modules
+• DBI – (Database Interface) access most data sources.
+• Win32::OLE – access any OLE compliant application: MS Access,
+Excel, SQL Server, MS Word, MS Outlook.
+• Spredsheet::ParseExcell, Spreadsheet::WriteExcel,
+Excel::Template – Read, write and automate Excel spreadsheets
+
+open(heart_to_perl);
+chomp($those_other_languages);
+print "perl is the best";
+
+• WWW::Mechanize, LWP::Simple, LWP::UserAgent – build
+spiders and robots to find and grab Web pages.
+• HTML::TokeParser, HTML::TreeBuilder, Template::Extract -parse data from Web pages.
+• Statistics::Basic, Statistics::Descriptive – calculate mean,
+median, standard deviation, covariance, least square fit, and more.
+
+8
+
+

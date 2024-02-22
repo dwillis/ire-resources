@@ -1,0 +1,709 @@
+Tips for using the Naval Aviation Safety Database
+Richard O’Reilly, Director of Computer Analysis, Los Angeles Times
+213-237-7084
+richard.oreilly@latimes.com
+IRE Conference, Washington, DC, June 5-8, 2003
+
+Navy Safety Center: Naval Aviation Safety Database
+www.safetycenter.navy.mil,
+FOIA contact: Josie Bowden, 757-444-3520, ext. 7045
+JBowden@safety.center.navy.mil)
+Data contains more than 48,000 “reportable events” since Jan 1, 1980, ranging from minor no-cost, nodamage problems to loss of aircraft and crew. None of the conclusionary narrative fields are included. The
+short summary included has no conclusions. There are no names or personal identifiers. Aircraft
+tailnumbers are included and allow identifying multiple events for the same aircraft.
+We got 97 data tables with 807 variables. But data was suppressed in 218 fields because of privacy and
+national security.
+There are three primary key fields – events, persons and planes, plus several subsidiary key fields for some
+detail tables.
+Suggested table joins:
+Explore specific aircraft tailnumbers or aircraft models:
+Select records from AV_INVLVD_ACFT, then join to AV_RPRTBL_EVENT,
+AV_EVENT_SUMMARY and AV_INVLVD_PER by field rprtbl_event_serl.
+Then use field invlvd_acft_serl to join to tables AV_ENG_MODEL, AV_TD_NON_COMPL,
+AV_ACFT_DMG, AV_REQN_OSTNDG, AV_DPRTR_LOCN,
+AV_MAINTN_DEVN,
+AV_INCDT_OCCURN, AV_ACFT_STAT, AV_ACFT_HIST, AV_IMP, AV_ENG_CMPNT,
+AV_HAZS_FORN_OBJ, AV_POWER_LOSS, AV_CMPNT_SEPD, AV_CNDNL_INSPN,
+AV_FLUID_SMPL,
+AV_IMP, AV_FUSLG_DFORMN, AV_IMP_TER, AV_IMP_OBST,
+AV_CRASH_SEAT, AV_MODE_OF_FLT, AV_MISHAP_TER, and AV_SUPPML_LIGHT.
+Detail pilot and aircrew information:
+Select records from table AV_RPRTBL_EVENT, then join to AV_EVENT_SUMMARY,
+AV_EVENT_LOCN and AV_ACFT_STAT
+by field event_rprtbl_serl. Next use field invlvd_per_serl to join with tables
+AV_EVENT_PER, AV_INJ, AV_BKGRND, AV_TNG and AV_EJECTION. Finally, use filed inj_serl to
+join table AV_INJ_CAUSE.
+For counting frequencies of aircraft problems, choose the events of interest as above, then join these tables
+and create new variables as needed to count their actual incidence and overcome the multiplication effects
+of the joins:
+Join tables AV_RPRTBL_EVENT, AV_INCDT_OCCURN, AV_INVLVD_PER, and AV_ENG_CMPNT
+by field rprtbl_event_serl. Then join these tables, AV_TD_NON_COMPL, AV_REQN_OSTNDG,
+AV_MAINTN_DEVN, and
+AV_ACFT_HIST by field invlvd_acft_serl.
+
+Decoding nested codes:
+Table AV_ENG_CMPNT provides details on the aircraft parts that were involved in events and on the type
+of damage or failure. The variable IMC_C is a five-character variable that describes the material or
+component involved in a problem. The first character codes the major section of the aircraft such as
+
+airframe or brakes. The second and third characters code the subsection, such as fuselage. The fourth and
+fifth characters code the specific area, such as “landing gear attachment”.
+Some code descriptions are not unique to an aircraft section or subsection and can thus give misleading
+information, or hide information, is they are simply tallied as presented in the decode table. An example is
+“A0198”, “not elsewhere coded” and “A0199”, “undetermined”. The “A” indicates that it is an airframe
+component and “A01” shows it is the fuselage. Both of the details would be missed because the fivecharacter code in the data would translate to meaningless information.
+
+See selected slides from PowerPoint presentation on following pages:
+
+Finding Answers
+• Joined 10 tables by three different key
+fields to profile pilots
+• Joined 27 tables by two different key fields
+to detail crashes
+• Created special table for counting deaths,
+costs and problems by joining singleinstances of fields from 8 tables
+
+Analysis Issues
+• No denominator = No percentages
+• A multitude of code tables and codes
+• 2-level and 3-level hierarchical codes
+– There are 5,678 codes for components
+• 295 codes translate into “bearing”
+• 253 codes translate into “wiring”
+
+– Similar ambiguity with failure causes
+• “Murphy’s Law” appears 42 times
+
+A Simple Question
+• “What percent of crashes involve engine
+problems?”
+• Requires several steps
+• To provide a simple answer
+
+Easy Enough to Count the Parts Categories
+HARRIER PARTS PRIMARY CATEGORY BY EVENT CLASS
+The FREQ Procedure
+Table of IMC_A by EVENT_SEVTY_C
+IMC_A
+Frequency
+A-AIRFRAMES
+B-BRAKES
+C-FLGHT CNTRLS
+D-ESCAPE/SURVIVAL SYS
+E-ELECTRICAL OR ELECTONIC SYS
+F-FUEL SYS
+G-WEAPONS SYS
+H-HYDRAULIC/PNEUMATIC SYS
+I-INSTRUMENTS
+L-LANDING GEAR
+M-AUXILLARY EQUIP SYS
+O-ENGINE OIL SYS
+R-AIR CONDITIONING
+T-TURBO-JET ENGINE
+U-UNDETERMINED
+Total
+
+EVENT_SEVTY_C (EVENT SEVERITY)
+A
+
+B
+8
+1
+15
+3
+7
+9
+7
+4
+1
+7
+1
+1
+3
+59
+0
+126
+
+C
+18
+0
+2
+0
+5
+4
+5
+1
+2
+13
+0
+0
+0
+29
+1
+80
+
+Total
+70
+4
+24
+4
+14
+11
+22
+5
+5
+37
+2
+1
+1
+62
+2
+264
+
+96
+5
+41
+7
+26
+24
+34
+10
+8
+57
+3
+2
+4
+150
+3
+470
+
+But Difficult to Summarize
+• Not all “events” include plane component
+data
+• Some “events” include data for multiple
+components
+• Dividing component instances by total
+“events” gives the wrong answer
+• Solution: create a PARTS field to identify
+whether component data is present
+
+Harrier - Event Description, Category and Presence of Component Involvement Data
+BUNO
+159376
+159256
+158389
+159242
+159384
+158384
+159368
+158958
+158975
+159248
+159246
+159234
+158703
+158704
+158968
+158956
+158393
+158962
+158955
+159253
+
+MODEL DATE
+DESCRIPTION
+CAT
+AV008A 1/25/1980 ACFT DAMAGED DURING LOW POWER TUR A
+AV008A 3/13/1980 ACFT CRASHED INTO WATER FOLLOWING A
+AV008A
+4/7/1980 ACFT CRASHED DURING ONE-VS-ONE AC A
+AV008A
+5/1/1980 ACFT CRASHED DURING VSTOL LDG STR A
+TAV008A 8/1/1980 ACFT CRASHED FOLLOWING ENG FAILUR A
+AV008C
+9/5/1980 ACFT CRASHED INTO WATER DURING TA
+A
+AV008A 1/19/1981 ACFT CRASHED INTO GROUND DURING V A
+AV008A 1/25/1981 ACFT CRASHED INTO FIELD FOLLOWING
+A
+AV008A
+2/2/1981 MAINT PERSON FELL OVERBOARD FROM A
+AV008A 2/26/1981 ACFT EXPLODED SHORTLY AFTER LIFT
+A
+AV008A 3/18/1981 AIRCRAFT CRASHED INTO GROUND FOLL A
+AV008A 4/20/1981 ACFT WENT OVER BOW, CRASHED AT SE A
+AV008A 6/26/1981 ACFT CRASHED INTO SEA DURING HI S
+A
+AV008A 12/3/1981 ACFT CRASHED INTO GROUND DURING O A
+AV008A 1/26/1982 A/C CRASHED INVERTED BESIDE RWY D
+A
+AV008C
+3/4/1982 A/C STRUCK TREES, CRASHED DURING
+A
+AV008A 8/26/1982 DURING T/O ROLL,A/C ENG FAILED;A/
+A
+AV008A 9/24/1982 ACFT DEPARTED CONTROLLED FLT DURI A
+AV008A 12/1/1982 ACFT STRUCK GROUND DURING DIVE BO A
+AV008C
+2/2/1983 ACFT CRASHED INTO RWY DURING APPR A
+
+PARTS
+YES
+NO
+YES
+NO
+YES
+YES
+NO
+YES
+NO
+YES
+NO
+YES
+NO
+NO
+YES
+NO
+YES
+NO
+NO
+YES
+
+Summarizing – Part II
+• Then it is possible to cross-tabulate
+CATegory of Event with presence of
+PARTS data
+• The counts for PARTS = YES provides
+denominators for percentages
+
+The FREQ Procedure
+Table of EVENT_SEVTY_C by PARTS
+EVENT_SEVTY_C (EVENT SEVERITY)
+PARTS
+Frequency
+
+NO
+
+YES
+
+Total
+
+A
+
+29
+
+86
+
+115
+
+B
+
+2
+
+43
+
+45
+
+C
+
+13
+
+156
+
+169
+
+Total
+
+44
+
+285
+
+329
+
+Summarizing – Part III
+• Next you have to categorize the parts
+• And aggregate them
+• Notice that one-of-a-kind parts problems
+predominate
+• And jet engine problems lead the list of
+repeat offenders
+
+Harrier Class A Events - Component involvement
+
+Count
+
+SINGLE INCIDENT - NO DETAIL
+
+50
+
+TURBO-JET ENG-NOT DETAILED
+
+17
+
+TURBO-JET ENG-COMPRESSOR-ROTOR
+
+7
+
+TURBO-JET ENG-COMPRESSOR-NOT DETAILED
+
+5
+
+TURBO-JET ENG-COMPRESSOR-STATOR
+
+5
+
+TURBO-JET ENG-FUEL CTRL/REGULATOR-ELECTRONIC FUEL CONTROL
+
+5
+
+ELCTRCL/ELCTRNC SYS-NOT DETAILED
+
+4
+
+TURBO-JET ENG-UNDETERMINED
+
+4
+
+AIRFRM-WINGS-WING STRUCTURE
+
+3
+
+FLGHT CNTRLS-NOT DETAILED
+
+3
+
+FUEL SYS-ENG FUEL SYS-TANK EXTERNAL
+
+3
+
+FUEL SYS-NOT DETAILED
+
+3
+
+LANDING GEAR-NOSE GEAR-NOSE GEAR STEERING AND SHIMMY DAMPER MECHANISM
+
+3
+
+TURBO-JET ENG-COMPRESSOR-ROTOR BLADING
+
+3
+
+WPNS SYS-MISSILE LAUNCHERS/PYLONS-NOT DETAILED
+
+3
+
+AIR COND OR PRESSURIZATION-NOT DETAILED
+
+2
+
+AIRFRM-CANOPY-TRANSPARENT MATERIAL
+
+2
+
+ESCP/SRVL-STENCEL EJCTN SEAT-HARNESS RESTRAINT AND RELEASE ASSEMBLY
+
+2
+
+FLGHT CNTRLS-AILERON-LINKAGE
+
+2
+
+FLGHT CNTRLS-FLAPS-MODULE INTEGRAL COMPONENT OF A SYSTEM OR SUB-SYSTEM
+
+2
+
+HYDRLC/PNEUM SYS-NORMAL UTILITY-LINES/FITTINGS
+
+2
+
+HYDRLC/PNEUM SYS-NOT DETAILED
+
+2
+
+LANDING GEAR-NOSE GEAR-WHEELS
+
+2
+
+TURBO-JET ENG-COMPRESSOR-AIR SEALS
+
+2
+
+TURBO-JET ENG-COMPRESSOR-INLET GUIDE VANES
+
+2
+
+TURBO-JET ENG-COMPRESSOR-VARIABLE STATOR VANES/ACTUATORS/INLET GUIDE VANE A
+
+2
+
+TURBO-JET ENG-FUEL CTRL/REGULATOR-LINKAGE OR CONTROL
+
+2
+
+TURBO-JET ENG-MAIN BEARINGS-NO. 1 BEARING LP/IP ROTOR FRONT BEARING
+
+2
+
+TURBO-JET ENG-MAIN BEARINGS-NO. 3 BEARING HP COMPRESSOR ROTOR BEARING
+
+2
+
+TURBO-JET ENG-TURBINE-BLADES
+
+2
+
+Summarizing – Part IV
+• Using the “real” denominators
+• It is possible to calculate the actual
+percentage incidence of problem parts
+• Jet engines, fuel systems and flight controls
+come into focus
+
+HARRIER 1980-2001: MISHAP INVOLVED
+COMPONENT CATEGORIES AND PERCENT
+INCIDENCE
+
+COMPONENT CATEGORY
+T-TURBO-JET ENGINE
+A-AIRFRAMES
+L-LANDING GEAR
+C-FLGHT CNTRLS
+G-WEAPONS SYS
+E-ELECTRICAL OR ELECTRONIC SYS
+F-FUEL SYS
+H-HYDRAULIC/PNEUMATIC SYS-NOT DETAILED
+I-INSTRUMENTS
+D-ESCAPE/SURVIVAL SYS
+B-BRAKES
+R-AIR CONDITIONING OR PRESSURIZATION SYS
+M-AUXILLARY EQUIPMENT
+U-UNDETERMINED
+O-ENGINE OIL SYS
+
+INVLVD IN INVLVD IN
+PCT OF
+PCT OF
+CLASS A ALL
+MISHAPS MISHAPS
+68.6
+52.6
+9.3
+33.7
+8.1
+20
+17.4
+14.4
+8.1
+11.9
+8.1
+9.1
+10.5
+8.4
+4.7
+3.5
+1.2
+2.8
+3.5
+2.5
+1.2
+1.8
+3.5
+1.4
+1.2
+1.1
+.
+1.1
+1.2
+0.7
+
+Single Incident: Joining Five Tables Creates Four Rows
+HARRIERCRASHEXAMPLEA
+AV_INVLVD_ACFTAV_RPRTBL_EVENT AV_EVENT_SUMMARY
+AV_INCDT_OCCURN
+AV_MISREC
+BUNO_FAA_IDN
+EVENT_DATE
+TOT_EVENT_COST INCDT_PHASE_OPS_CINCDT_TYPE_C CMPNT_DMG_FLR_C IMC_C
+
+158384
+158384
+158384
+158384
+
+9/5/1980
+9/5/1980
+9/5/1980
+9/5/1980
+
+9000000 33Z
+9000000 33Z
+9000000 33Z
+9000000 33Z
+
+G1
+P8
+B3
+B3
+
+T33
+T37
+zzz
+zzz
+
+T0000
+T0000
+T1007
+T9999
+
+Can’t sum up the cost field: $9 million, not $36 million
+Yet a simple Group-By query won’t work either
+
+HIERARCHICAL CODES
+A Simple Decode May Yield Useless Information.
+Codes Must Be Dissected To Extract Full Meaning.
+INCDT_PHASE_OPS_C
+33Z NO FURTHER BREAKDOWN
+TAKEOFF FORWARD MOTION
+ON RUN/CATAPULT UNTIL
+3 ATTAINING CLIMB SCHEDULE
+AIRCRAFT BREAKS GROUND
+CLIMB SCHEDULE NOT YET
+33 ATTAINED
+
+Other Hierarchical Code Examples
+INCDT_TYPE_C
+G1 DUE TO ENGINE FAILURE
+G ABANDONED AIRCRAFT
+
+CMPNT_DMG_FLR_C
+T33 SLOW ACCELERATION
+T POWER PLANTS - TURBO-JET
+IMC_C
+T1007 COMPRESSOR PRESSURE LIMITER SECTION
+T10 REGULATOR-NOT DETAILED
+T TURBO-JET ENGINE
+
+New Fields Will Unravel Hierarchies
+INCIDENT
+CATEGORY
+
+INCIDENT
+DETAIL
+
+DAMAGE
+OR
+FAILURE
+CATEGORY
+
+DAMAGE
+OR
+FAILURE
+DETAIL
+
+G
+P
+B
+B
+
+G1
+P8
+B3
+B3
+
+T
+T
+zzz
+zzz
+
+T33
+T37
+zzz
+zzz
+
+COMPONENT
+SYSTEM
+
+COMPONENT
+SUB SYSTEM
+
+COMPONENT
+DETAIL
+
+T
+T
+T
+T
+
+T00
+T00
+T10
+T99
+
+T0000
+T0000
+T1007
+T9999
+
+The Goal is a Table With a Single Row Per Event
+
+TAIL
+NUMBER
+
+158384
+
+DATE
+
+EVENT
+COST
+
+INJURY
+
+OPERATION
+
+TAKEOFF or
+9/5/80 $ 9,000,000 FIRST AID CATAPULT
+
+PHASE
+
+LIFTOFF
+
+INCIDENT
+CATEGORY
+
+INCIDENT
+DETAIL
+
+ABANDONED ENGINE
+AIRCRAFT
+FAILURE
+
+DAMAGE OR
+FAILURE
+CATEGORY
+
+TURBO-JET
+ENGINE
+
+DAMAGE OR
+COMPONENT
+FAILURE DETAIL
+SYSTEM
+
+SLOW
+TURBO-JET
+ACCELERATION ENGINE
+
+COMPONENT
+SUB SYSTEM
+
+COMPONENT
+DETAIL
+
+REGULATOR
+
+COMPRESSOR
+PRESSURE
+LIMITER
+SECTION
+
+

@@ -1,0 +1,267 @@
+When to Scrape
+Tools and techniques
+
+Sponsored by Knight Foundation
+
+bit.ly/whentoscrape
+
+Steven Rich, The Washington Post | @dataeditor
+Aaron Williams, Center for Investigative Reporting | @aboutaaron
+bit.ly/whentoscrape
+
+Sponsored by Knight Foundation
+
+bit.ly/whentoscrape
+
+What is Web Scraping?
+● The automated process of systematically pulling data
+or information from a website using computer
+programming or software
+● Free all of the data
+● When agencies claim that posting their data on
+thousands of pages on a site means they refuse your
+FOIA request, this is a great tool
+bit.ly/whentoscrape
+
+What can you scrape?
+● Court search websites
+● Online Property records
+● School data
+● Online police blotters
+● Public employee directories
+● Campaign finance data
+bit.ly/whentoscrape
+
+Why scrape data?
+● Despite posting data on its site, DC public schools didn't
+have access to their own school testing data
+● Web serving software made recalculations that fixed scores
+as they were posted to site and were not reproducible by
+school district
+● Got help from DC schools in defeating a session
+requirement and scraped the data
+● The district and schools found out he had it and wanted it
+for grants because they'd never had it before
+
+Why scrape data?
+● Automation
+● Gateway to programming. You’ll eventually learn about:
+○ HTTP
+○ HTML and CSS
+○ Servers
+○ Scripting Languages (Python, Ruby, Perl, PHP, etc.)
+○ Databases and Spreadsheets
+○ Insanity
+bit.ly/whentoscrape
+
+Scraping for journalism
+● Create and analyze datasets that live on thousands of
+pages on a website
+● Create interactive graphics and web applications
+○ ProPublica’s Dollars for Docs investigation is
+powered by scrapers
+● Get stories before anyone else
+○ LA Times broke story in March on a major
+earthquake using a bot to scrape USGS website
+
+Before you scrape
+● Always ask for the data
+○ FOIA not always a necessity
+○ Try to talk to the folks in charge of data
+● There are probably people in your newsroom who can help
+● Don't reinvent the wheel
+○ See if someone else has already written a scraper
+bit.ly/whentoscrape
+
+Before you scrape
+● If it's one page, it's possible to copy/paste
+● It’s easier to scrape if you know how a
+website is made
+○ Understanding HTML is a big plus
+○ JavaScript, too
+
+● Some sites are harder to scrape than others
+bit.ly/whentoscrape
+
+Scraping hurdles
+● Not all websites are pretty
+○ Missing tags
+○ Dirty or difficult Javascript
+
+● Forms can be funky
+● Requests can time out
+● Site admins can kick you off
+● Website layouts change often
+bit.ly/whentoscrape
+
+Scraping hurdles
+● Websites change. ALL THE TIME.
+● Scrapers often fail
+● Your scraper will fail
+● You may need to run your code more than once
+
+bit.ly/whentoscrape
+
+Scrape responsibly
+● Don't hit a site too hard
+○ Difficult to differentiate from DDoS attack
+
+● Scrape during off hours
+● In Python, time.sleep() is your friend
+○ Comparable options in other languages
+
+● Use APIs when available
+● Share your code
+bit.ly/whentoscrape
+
+Using Excel
+● California wouldn’t release Megan’s Law sex offender
+database because the information was available online
+● The web page address has parameters for each
+California county. There’s a pattern.
+● Using Excel string functions and a command-line tool,
+we can download the webpages to our computer to
+analyze
+bit.ly/whentoscrape
+
+Using Excel
+
+Using Excel
+http://www.meganslaw.ca.gov/cgi/prosoma.dll?
+zoomAction=Box&zoomAction=clickcenter&zoomAction=clickoffender&l
+astName=&firstName=&Address=&City=&zipcode=&searchDistance=.
+75&City2=&countyLocation=&zipcode2=
+
+&SelectCounty=ALAMEDA
+&ParkName=&searchDistance2=.
+75&City3=&zipcode3=&countyLocation3=&schoolName=&searchDistance3
+=.
+75&City4=&zipcode4=&countyLocation4=&refineID=&pan=&distacross=&
+centerlat=&centerlon=&starlat=&starlon=&startext=&x1=&y1=&x2=&y2
+=&mapwidth=525&mapheight=400&zoom=&searchBy=countylist&id=&docou
+ntycitylist=2&OFDTYPE=&W6=870100%0D%0A&lang=ENGLISH&W6=870100
+
+bit.ly/whentoscrape
+
+Using Excel
+
+Using Excel
+Columns: county (A), first (B), last (C), url (D)
+Function in D2: =B2&A2&C2
+
+Using Excel
+● Copy and paste web addresses from column D into
+text file and save it, e.g., megans-law-urls.txt
+● Use wget to request each URL and download their
+contents to your computer
+● http://palewi.re/posts/2008/06/15/terminal-recipehow-to-download-an-entire-web-site-with-wget/
+wget -mk -i megans-law-urls.txt
+
+Using Excel
+
+Using Python
+
+bit.ly/whentoscrape
+
+Using Python
+
+Tools and resources
+Web scraping for any reporter
+●
+
+Speaker: Liz Lucas
+
+●
+
+Date/Time: Friday, June 27 at 8:50 a.m. (tomorrow morning!)
+
+●
+
+Location: Nob Hill C
+
+●
+
+Audio file: No audio file available.
+
+Scraping class based on Helium Scraper. No programming required!
+
+IRE CAR bootcamps: http://ire.org/events-andtraining/boot-camps/
+
+Tools and resources
+Intro to Python
+●
+
+Speaker: Anthony Debarros
+
+●
+
+Date/Time: Friday, June 27 at 11:10 a.m. (tomorrow morning!)
+
+●
+
+Location: Nob Hill C
+
+●
+
+Audio file: No audio file available.
+
+This session is good for: People who know their way around a computer and are ready to dive into programming.
+
+IRE CAR bootcamps: http://ire.org/events-andtraining/boot-camps/
+
+Tools and resources
+● Dan Nguyen’s primer on web browsers and scraping
+http://ruby.bastardsbook.com/chapters/web-scraping/
+● ScraperWiki: https://scraperwiki.com/
+● KimonoLabs: https://www.kimonolabs.com/
+● Ben Welsh’s blogs on learning to scrape with Python:
+http://palewi.re/posts/2008/04/20/python-recipegrab-a-page-scrape-a-table-download-a-file/
+bit.ly/whentoscrape
+
+Tools and resources
+● When does web-scraping become unethical or illegal?
+○
+
+http://ire.org/blog/ire-radio/2014/04/04/when-does-web-scrapingbecome-unethical-or-illegal/
+
+● Where to begin if you’re learning to code
+○
+
+http://ire.org/blog/ire-news/2013/10/18/where-begin-if-yourelearning-code/
+
+● Install a data journalism rig on your computer!
+○
+
+https://github.com/cirlabs/vm
+
+bit.ly/whentoscrape
+
+Tools and resources
+● Excel string function guide: http://bit.ly/1pEiGk8
+
+bit.ly/whentoscrape
+
+Questions?
+More questions after the session? Contact us:
+steven.rich@washpost.com | @dataeditor
+awilliams@cironline.org | @aboutaaron
+
+bit.ly/whentoscrape
+
+Credits
+All icons from the Noun project
+Browser by Fernando Vasconcelos
+Trowel by Michela Tannoia
+
+Presentation available at:
+
+bit.ly/whentoscrape
+
+When to Scrape
+Tools and techniques
+
+Sponsored by Knight Foundation
+
+bit.ly/whentoscrape
+
+

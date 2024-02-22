@@ -1,0 +1,262 @@
+Excel Formulas – a quick list (Swedish version)
+Jaimi Dowdell, IRE
+
+Here’s a brief cheat sheet for some of the formulas you’ll use often in Microsoft Excel. Use this
+spreadsheet below to refer to for examples and remember: If in doubt, the help file is your friend.
+(Search the help file by “worksheet function” to find an alphabetical list of Excel functions.) I’ve listed
+the formulas below in Swedish and English so you can tackle spreadsheets in either language. Please
+note that if you see “( : )” this means that you’ll need to enter cell references to create a range within
+the parenthesis such as (A2:A9). Examples are listed below each formula.
+
+Figure 1
+
+Basic math
+ADDITION
+To add up the total in English: =SUM( : )
+To add up the total in Swedish: =SUMMA( : )
+Using the above spreadsheet, write a formula to find the total salary for this year:
+-In English: =SUM(B2:B9)
+-In Swedish: =SUMMA(B2:B9)
+
+AVERAGE
+To find the average in a range of numbers in English: =AVERAGE( : )
+To find the average in a range of numbers in Swedish: = MEDEL( : )
+Find the average value for “Last year” in the above data using this formula:
+-In English: =AVERAGE(C2:C9)
+-In Swedish: =MEDEL(C2:C9)
+
+MEDIAN
+To find the median in a range of numbers in English and Swedish: MEDIAN( : )
+1
+
+Find the median value for “Last year” in the above data using this formula:
+-In English and Swedish: =MEDIAN(C2:C9)
+SUBTRACTION
+To find the change (difference) in English & Swedish: =New value – old/original value
+Using the above spreadsheet, write a formula to find the change in salaries between last year and this
+year. (Remember, in this situation “This year” is the New Value and “Last year” is the old value.)
+-In English and Swedish: =B2-C2
+PERCENT CHANGE
+To find the percent change in English and Swedish ask yourself, “Do journalists typically like to do
+math?” The answer should be “NO” and our formula spells out “N-O-O”:
+=(New value-old value)/Old value
+Find the percent change from last year to this year using the above spreadsheet:
+-In English and Swedish: =(B2-C2)/C2
+
+MAXIMUM
+To find the maximum value in a list of numbers in English and Swedish: =MAX( : )
+Find the maximum value for “This year” in the above data using this formula:
+-In English and Swedish: =MAX(B2:B9)
+MINIMUM
+To find the minimum value in a list of numbers in English and Swedish: =MIN( : )
+Find the minimum value for “This year” in the above data using this formula:
+-In English and Swedish: =MIN(B2:B9)
+
+Figure 2
+
+PERCENT OF TOTAL
+2
+
+When you’re working with categories, such as job titles or geographic areas, sometimes it’s useful to
+find out what percent of the grand total is going to each category. When you want to do that you use
+this formula (remember you need to anchor the base amount – the total – with “$”):
+-In English: =Part/$Whole
+-In Swedish: =Part/€Whole
+If you wanted to calculate the total for “This year” using the data in Figure 2, you’d enter the following
+formula into cell C2.
+In English: =B2/$B$16
+In Swedish: =B2/€B€16
+
+Simple formatting tricks
+To change a cell from all upper or lower case to proper case, where the first letter of each word is
+capitalized, use the following formula replacing “cell” with the cell containing the text you want to be
+proper case.
+In English: =PROPER(cell)
+In Swedish: =INITIAL(cell)
+
+To change a cell so all of the letters appear in upper case use the following formula replacing “cell” with
+the cell containing the text you want to be upper case.
+In English: =UPPER(cell)
+In Swedish: =VERSALER(cell)
+To change a cell so all of the letters appear in lower case use the following formula replacing “cell” with
+the cell containing the text you want to be lower case.
+In English: =LOWER(cell)
+In Swedish: =GEMENER(cell)
+
+Conditional statements
+You can use conditional statements to test your data and return information depending on whether that
+test has a true or false answer. This is great for data cleaning and also for adding categories to your data.
+Here’s how the formula works:
+In English:
+=IF(logical test, “result if the test answer is true for this cell”, “result if the answer is false for this cell”)
+In Swedish:
+=OM(logical test; “result if the test answer is true for this cell”; “result if the answer is false for this cell”)
+If you wanted to add labels to the data in Figure 1 above to flag whether the salary was high or low, you
+could do something like this:
+In English: =IF(B2<25000, “Too small”, “OK”)
+In Swedish: =OM(B2<25000; “Too small”; “OK”)
+The value in column B is checked. If it is less than $25,000 the phrase “Too small” will be your formula
+result. If the value in column B is higher than $25,000 it fails the test and the “A-OK” phrase would be
+the formula result.
+3
+
+Pulling things apart
+String functions – to split apart a name (or any other text):
+LEFT
+The LEFT function will start from the left and return the number of characters you specify. Here is the
+description of the formula:
+In English: =LEFT(cellwithtext, number of characters you want returned)
+In Swedish: =VÄNSTER(cellwithtext; number of characters you want returned)
+
+Figure 3
+
+For example, if you wanted to pull the year off of the date above in Figure three you would put the
+following formula in cell B2:
+In English: =LEFT(A2, 4)
+In Swedish: =VÄNSTER(A2; 4)
+RIGHT
+The RIGHT function acts just like the left function except it allows you to begin from the opposite side of
+the field. You will most likely use this function less than the others.
+In English: =RIGHT(cellwithtext, number of characters you want returned)
+In Swedish: =HÖGER(cellwithtext; number of characters you want returned)
+
+Figure 4
+
+Using Figure 4 above, you would enter the following formula in cell C2 to pull of the day from the date
+listed in column A:
+In English: =RIGHT(A2, 2)
+In Swedish: =HÖGER(A2; 2)
+
+MID
+The MID function allows you to start from somewhere other than the far left or the far right of the field.
+It allows you to extract information from the middle. Here’s how it works:
+In English: =MID(cellwithtext, start position, number of characters you want returned)
+In Swedish: =EXTEXT(cellwithtext; start position; number of characters you want returned)
+
+4
+
+Figure 5
+
+Using Figure 5 above, you would enter the following formula in cell D2 to pull of the month from the
+date listed in column A:
+In English: =MID(a2, 5, 2)
+In Swedish: =EXTEXT(a2; 5; 2)
+
+SEARCH
+Often last names aren’t the same length so you can’t use a simple number to retrieve them like you can
+with the dates shown in the examples above. Rather, you need to look for a pattern within the data and
+use that to help you slice and dice. First and last names are often separated with a comma. You can use
+the SEARCH function to find the position of any character, such as a comma, within a cell. Please note,
+the formula will return a number. This number specifies the location of the character you are searching
+for within the cell. Here’s the description of the formula:
+In English: =SEARCH(“text you want to find”, where you want to find it)
+In Swedish: =SÖK(“text you want to find”; where you want to find it)
+
+Figure 6
+
+If you wanted to find the location for each comma using the data in Figure 6, you would write the
+following formula in cell B2.
+In English: =SEARCH(“,”, A2)
+In Swedish: =SÖK(“,”; A2)
+
+Figure 7
+
+You can combine the information you got back from the SEARCH function (See Figure 7) with LEFT to
+extract the last name. Here’s the formula you’d write in cell C2 to do that:
+In English: =LEFT(A2, B2-1)
+In Swedish: =VÄNSTER(A2; B2-1)
+5
+
+Since the comma is one character position after the last name, we need to subtract one and that’s how
+the “-1” after B2 is necessary.
+
+Putting things together
+You can “concatenate,” or string things together, by using the “&.”
+
+Figure 8
+
+For example, look at Figure 8 above. If you wanted to put all of the pieces of each address into one line,
+you could do that like this:
+=a2&” “&b2&”, “&c2&” “&d2
+Notice that any time you want a space or any additional character added to your string and it isn’t
+already in a cell, you simply write it in your formula contained with quotes.
+
+Dealing with dates
+There are some simple functions that will help you pull apart pieces of dates. This can be useful if you
+want to count the number of records in a particular year, month, etc. If a date looks like a date to you,
+but doesn’t operate like one in Excel, that likely means that it is not in a proper date format. To get it
+into a proper date format you’ll need to use the string functions above to manually pull out the pieces of
+the date and then string it together using the DATE function, (DATUM in Swedish).
+
+Figure 9
+6
+
+To break apart pieces of a date:
+To return the YEAR
+In English: =YEAR(Datefield)
+In Swedish: =ÅR(Datefield)
+Using the data in Figure 9 above, you’d write the following formula in cell B2 to extract the year from
+the date:
+In English: =YEAR(A2)
+In Swedish: =ÅR(A2)
+
+Figure 10
+
+To return the MONTH
+In English: =MONTH(Datefield)
+In Swedish: =MÅNAD(Datefield)
+Using the data in Figure 10 above, you’d write the following formula in cell C2 to extract the month from
+the date:
+In English: =MONTH(A2)
+In Swedish: =MÅNAD(A2)
+
+Figure 11
+
+To return the DAY
+In English: =DAY(Datefield)
+In Swedish: =DAG(Datefield)
+Using the data in Figure 11 above, you’d write the following formula in cell D2 to extract the day from
+the date.
+In English: =DAY(A2)
+In Swedish: =DAG(A2)
+
+Figure 12
+7
+
+Finding the DAY OF WEEK
+To return the day of the week for a specific date (1 = Sunday, 2=Monday, 3=Tuesday, etc.):
+In English: =WEEKDAY(Datefield)
+In Swedish: =VECKODAG(Datefield)
+Using the data found in Figure 12 above, you’d write the following formula in cell E2 to find the day of
+the week.
+In English: =WEEKDAY(A2)
+In Swedish: =VECKODAG(A2)
+
+Figure 13
+
+To convert a date stored as text into true date format (necessary to sort on dates properly): Let’s say
+the date looked something like 20100529. This date is actually 5/29/2010, (29/5/2010) but right now we
+would say that it was text in YYYYMMDD format.
+The first step to making it a true date is splitting the different pieces of the date apart so you can put it
+back together properly. Because the date isn’t stored as a proper date, you won’t be able to make the
+YEAR(), MONTH() and DAY() functions work on the cells like you did in the examples above. You’ll have
+to use string functions in situations like this. You’ll use LEFT, RIGHT and MID (See above). Once you have
+the different pieces of the date apart, you’ll be able to put them back together using the following
+formula.
+In English: =DATE(year, month, day)
+In Swedish: =DATUM(year; month; day)
+
+Figure 14
+
+For example, to put the date together in Figure 14 you’d write this in cell E2.
+In English: =DATE(b2, c2, d2)
+In Swedish: =DATUM(b2, c2, d2)
+See the results in Figure 15 below. (Note, you can change the format of the date so it reads like
+“29/5/2010”):
+8
+
+Figure 15
+
+9
+
+

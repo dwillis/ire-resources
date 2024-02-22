@@ -1,0 +1,326 @@
+Demographic Map Workshop Tutorial
+Demographic information can add critical context to any story. When paired with location, it can help
+explain why things happen where they do. This session will explore visualization- and analysis-ready
+datasets available to use in your stories. You’ll also see how to quickly find authoritative content in
+ArcGIS Online, run powerful spatial analyses, and create responsive web apps to support your reporting.
+In this tutorial, we’re going to look at rates of Internet connectivity among Hispanic households and the
+impact on educational attainment and median household income in areas without Internet access.
+
+Log In
+This section will detail how to login to your account in ArcGIS Online. For the purposes of this tutorial,
+we’ve already created a log-in for you to use. Upon entering the classroom today, you should have
+received a slip of paper with an account name on it. If you did not receive a slip, please alert the
+instructor.
+1. Open Chrome and navigate to www.arcgis.com
+2. Click the blue “Sign In” button.
+
+3. For Username, enter the name on the slip of paper you were given. It should look something like
+“CAR19Workshop_UserX” (the X will be a number from 1 to 36). For password, enter
+“CAR19User”. Click “Sign In”.
+
+1
+
+Meet the Map Viewer
+This section introduces you to the Map Viewer in ArcGIS Online, an interactive interface for authoring
+maps. You’ll spend most of your time working with the Map Viewer.
+4. Click “Map” from the top navigation bar to open the Map Viewer.
+
+5. Pan and zoom around the map using either the embedded map controls or your mouse. Click in
+the upper Search bar and type “Newport Beach, CA.”
+6. By default, the Topographic basemap shows a variety of features from roads and waterways to
+parks and points of interest. Click the “Basemap” button to see other basemaps. Click “Imagery
+with Labels” to switch to a high-resolution imagery basemap.
+
+7. Zoom in to see the detail offered by the Imagery with Labels basemap. Since we’re interested in
+mapping demographic data, let’s choose a neutral basemap that will provide some context
+while letting the data tell the story. After you zoom back out to a regional extent, select the
+Light Gray Canvas basemap. Your map should look something like this.
+2
+
+Add and Style Data
+ArcGIS Online lets you work with data from numerous sources. In this section, you’ll add an ACS layer
+from the Living Atlas, Esri’s curated collection of authoritative data.
+8. Click the “Add” button (next to Basemap) and select “Browse Living Atlas Layers.“
+
+9. In the Search box, type “ACS Internet Access by Age and Race Variables” and hit enter.
+
+3
+
+10. For this tutorial, we want the boundaries layer. Click the “+” icon in the bottom right of the
+entry that says “ACS Internet Access by Ace and Race Variables – Boundaries” to add the data to
+the map.
+
+11. Your map will update to show the new layer. This layer is a multi-scale layer, meaning it shows
+different data at different levels. Zoom out until you see the county-level data. After you’ve
+explored, zoom back in toward Los Angeles county so you can see the tracts. Your map should
+look something like this:
+
+4
+
+12. Click the “Details” button and then click the “Content” button to see the layer you’ve added.
+
+13. The grayed-out entries represent the county- and state-level data included with this layer. We’ll
+be working at the tract level for the rest of this exercise. To begin styling your data, hover over
+the Boundaries – Tract entry in the Table of Contents and several contextual buttons will
+appear. Click the one that looks like a circle, square, and triangle to open the “Change Style’
+pane.
+
+5
+
+14. The Change Style pane shows the current attribute being displayed, as well as the drawing style.
+ArcGIS Online uses a technique called Smart Mapping to recommend the best drawing style for
+the data you’re visualizing.
+By default, this layer is displaying the “Percent of Population 18 to 64 Years in Households with
+No Computer” attribute using a choropleth renderer. Click “Select” under “Counts and Amounts
+(Size)” to see how this data would appear as graduated symbols instead.
+
+15. In this exercise, we’re interested in Internet connectivity rates for Latino households. Let’s
+change the map to reflect this attribute instead. Under “Choose an attribute to show,” click the
+
+6
+
+dropdown and select “Hispanic or Latino Populations in Households that Have a Computer
+without an Internet Subscription.”
+
+16. Now that we’ve selected the attribute, we can style the map. While ArcGIS Online chooses
+graduated symbols as a default, it’s difficult to see much distinction at this scale. Click “Select”
+under “Counts and Amounts (color)” to change to a choropleth style.
+
+7
+
+17. This is a better view of the data, but it’s only displaying raw counts. We can normalize this data
+and tweak the style to better tell the story we’re interested in. Where you previously clicked
+“Select” to activate the “Counts and Amounts (color)” style, click the “Options” button.
+
+18. This pane lets us normalize the data, change the drawing theme, and adjust symbology. Let’s
+start by normalizing the data. Click the dropdown next to “Divided By” and select “All Hispanic
+or Latino Population in Households that Have a Computer”.
+
+19. This produces a ratio, which lets us target tracts have a higher percentage of Latino households
+with a computer but no Internet access. While continuous colors work well for many cases, let’s
+classify the data to make it easy to see how the colors relate to the various values. Click “Classify
+Data” and then choose “3” classes.
+
+8
+
+20. ArcGIS Online selects natural break points in the data as a default view. In this case, the bottom
+break is very close to the dataset average of 0.1 for this variable. Let’s adjust the class break to
+hit that value. Click “0.14” next to the bottom class break and enter “0.1”. Alternatively, you can
+drag the handle to set the value that way.
+
+21. The map updates as you adjust the break points in real-time. Now let’s update the colors. Click
+“Symbols” to open the color options for this layer. By default, ArcGIS Online recommends a set
+of color ramps that have been optimized for this basemap. Click any color ramp you like and
+click “OK”.
+
+9
+
+22. Click “OK” on the Change Style dialog to set this updated symbology for the map and click
+“Done” on the following pane.
+
+10
+
+Save the Map
+Since ArcGIS Online is browser-based, it’s easier to navigate away from the page and lose your work
+than you might think. This section walks through saving your map.
+23. Click “Save” on the toolbar.
+
+24. Metadata in ArcGIS Online is entirely user-driven. If you want people to find your content, tag
+and document it accordingly. If you want to keep things under wraps, you’re welcome to
+describe your map any way you like. One thing to keep in mind is that your map stays private in
+ArcGIS Online until you share it. So even if you document the map well and save it, it’s still
+private.
+Enter a title and tag for your map (these are required). You can also enter an optional summary
+and save to a specific folder of your account (right now you’ll only have a single folder available).
+Click “Save” when you’re done.
+
+Filter Your Data
+Sometimes you only want to work with a subset of a dataset. ArcGIS Online lets you define filters on
+your data based on the values and relative to one another. In this section, we’re going to filter the tracts
+layer to focus on Los Angeles County.
+25. Hover over the tract entry in the Table of Contents and click the yellow icon with the filter on it.
+
+11
+
+26. Click the first dropdown and select “County.” Click the blank cell and type in “Los Angeles
+County”.
+
+27. Click Apply Filter. Your map should look similar to this.
+
+Edit Pop-Ups
+ArcGIS Online provides a lot of customization options for your pop-ups. This section describes how to
+edit pop-ups, including the use of a custom Arcade expression.
+12
+
+28. As a Living Atlas layer, this dataset already has a preconfigured pop-up. Click any feature on the
+map to open the pop-up. It will look something like this:
+
+29. The pop-up reports data for several attributes related to the tract we clicked. In this case, the
+pop-up still references the initial variable the layer displayed when we first added it to the map.
+To change the pop-up, hover over the tract entry in the Table of Contents and click the ellipses
+that appears. Then click “Configure Pop-up”.
+
+30. ArcGIS Online provides options for setting the title, main content, and any multimedia (charts or
+images) for your pop-up. In this case, the layer is already using a custom attribute display that
+
+13
+
+we’ll edit. However, before we do, we need to write an expression to capture the percentage of
+Latino households that lack Internet access. Click “Add” under “Attribute Expressions”.
+
+31. Arcade is a scripting language that lets you do a ton of interesting things, from conditional
+formatting of your pop-ups to on-the-fly calculation and analysis. In this case, we’re going to
+write a simple equation to report the percentage of Latino households without Internet access.
+Click “Feature: Census Tract 201” to expand the feature globals.
+
+14
+
+32. Scroll through the list and click the blue text under “Field: Hispanic or Latino Population in
+Households that Have a Computer without an Internet Subscription”. The global gets added to
+the expression editor.
+
+33. Find “Field: Total Hispanic or Latino Population in Households” and click the blue text there to
+add that value to the editor as well.
+
+34. Click in the expression editor to write an expression to generate the percentage. Your
+expression should read “($feature["B28009I_005E"]/$feature["B28009I_001E"])*100”.
+
+15
+
+35. Click the “Test” button to validate your expression. If the table returns a result with a number,
+your expression works as expected.
+
+36. Give your expression a name and then click “OK”.
+
+16
+
+37. You should now see your new expression listed under “Attribute Expressions.” To include this
+expression in the pop-up, click the “Configure” button.
+
+38. The Custom Attribute Display dialog lets you write your own narrative pop-up using basic
+formatting options or HTML. Start by highlight the text in the pop-up and deleting it.
+17
+
+39. Click the small “+” icon next to the font size dropdown to open the field selector. Scroll to the
+end of the list and select the attribute expression you just wrote in the previous steps.
+
+40. Similar to the Arcade Expression editor, the field name appears in the box to the left. We can
+now craft a pop-up that will give readers some helpful context. Click in the editor and write the
+following sentence:
+“{expression/expr0}% of Latino households with a computer in this tract do not have an Internet
+subscription.”
+41. We can make that value stand out in the pop-up with some basic formatting. Highlight
+{expression/expr0}% and bold it. You can also change the size to “Medium”.
+
+42. Click “OK” to close the Custom Attribute Display editor and click “OK” on the Configure Pop-up
+pane. Click a feature to test your new pop-up. It should look something like this:
+
+18
+
+43. Save the map again.
+
+GeoEnrich Your Data
+ArcGIS Online includes powerful analysis tools directly in the browser. In this section, we’re going to use
+GeoEnrichment to append additional data to the data we’re already working with. For this story, we’re
+going to add in data related to incomes and educational attainment to see if there’s a relationship with
+low Internet access.
+44. Hover over the tract entry in the Table of Contents and click the button that looks like a small
+map.
+
+45. Click “Data Enrichment” and then click “Enrich Layer”.
+
+19
+
+46. GeoEnrichment allows you to append demographic data to any shape or scale of geography. To
+get started, click the green “Select Variables” button.
+
+47. Esri carries more than 13,000 variables for the US down to the block group level that can be
+appended to any shape or scale of data. Feel free to click around the different categories to see
+what data is available. When you’re ready, click in the Search bar and type “median income”.
+Then hit enter.
+
+20
+
+48. The Data Browser returns 29 different variables with “median income” in them. Click the arrow
+next to “2018 Income (Esri)” to expand the category. Click the checkbox next to “2018 Median
+Household Income (Esri)”.
+
+49. Click the ellipses next to “All Variables” to go back to the main page of the Data Browser. Search
+for “bachelor degree” and then hit enter.
+50. Check the box next to “2018 Education: Bachelor’s Degree (Esri)” to add this variable. You
+should now see two selected variables.
+
+21
+
+51. Click the “Apply” button to close the Data Browser.
+52. On the Enrich Layer pane, accept the rest of the defaults and click “Run Analysis”
+53. ArcGIS Online will now generate a new layer that appends the two variables we selected to the
+existing layer we were using. You should see a new item in the Table of Contents.
+
+54. To confirm the variables were included, hover over the new layer and click the table icon.
+
+55. Scroll the very far right of the table to see that the new variables we selected were indeed
+added to this dataset.
+
+56. Close the table and save your map again.
+22
+
+Publish Your Map as an Interactive App
+ArcGIS Online provides several application templates that add additional UIs onto your map. In this
+section, we’ll publish the map to the Basic Viewer remplate and walk through how to embed the app on
+your news site.
+57. Toggle off the new layer you added in the Table of Contents. Only the initial layer you’ve been
+working with should be turned on.
+
+58. Save your map again.
+59. On the toolbar next to “Save,” click the “Share” button.
+
+60. To enable the public to see your map, you must share it. Until you share your map in ArcGIS
+Online, content is always set to private. Click the “Everyone (public)” check box. When you do
+this, ArcGIS Online will realize the geoenrich layer we created also needs to be shared. Click
+“Update Sharing” on that dialog when it pops up.
+
+23
+
+61. Click the “Create a Web App” button.
+62. The template selector opens. Feel free to browse the templates to see what they look like.
+When you’re ready, either navigate to “Basic Viewer” or search for it. Click on “Basic Viewer”.
+
+63. Click “Create Web App”.
+64. Provide a name a title for your app. By default, it uses the same information you entered for the
+web map. When you’re ready, click “Done”.
+65. The builder for the Basic Viewer app will open. This interface lets you configure the app to best
+suit your needs. Each app has a different configuration experience and options. Click in the box
+under “Application title” and enter “Internet Connectivity”. Click “Save” and you’ll see the title
+update in the preview pane.
+
+24
+
+66. Click the “Options” tab.
+
+67. You can toggle on various options, but in this case, we want to be sure to provide a Legend in
+the app. Under “Toolbar Options”, click the check box next to “Legend.” Scroll down and under
+“Specify active tool at app startup”, select “Legend” in the dropdown.
+
+25
+
+68. Click “Save” to write the changes to the app. Then click “Launch”.
+69. The app opens in a new tab. Feel free to play with the app to see how the various tools work.
+Your app should look something like this.
+
+26
+
+70. If you want to emebed this app into your news site, simply copy the URL and paste it into the
+highlighted section of the HTML code below. This code invokes an iframe that embeds the app
+and is very similar to the code used to embed YouTube videos in most sites.
+<iframe width="100%" height="800px"
+src="https://mediaprogram.maps.arcgis.com/apps/View/index.html?appid=e848f7cb46394786
+9789733387e106a3" frameborder="0" scrolling="no"></iframe>
+
+You’re Finished!
+Thanks so much for joining our session today. If you have any questions, please don’t hesitate to reach
+out to media.help@esri.com and we’ll do everything we can to help out.
+
+27
+
+

@@ -1,0 +1,132 @@
+Carto basics
+the tipsheet
+By CJ Sinner, @cjsinner, StarTribune
+
+FIRST:
+If you are an IRE member, you get a free upgraded account.​ ​More info here​.
+
+Prep your data
+-
+
+-
+
+-
+
+-
+
+You’ll need some form of location field or a plan to merge it with another file that has
+locations or polygon shapes.
+Helpful to have your datapoints geocoded into lat/longs before uploading. We use a
+handy Excel macro at the Star Tribune that uses Bing to geocode. ​Directions and
+downloads in our Github repo here​.
+Carto georeferences best based on Lat/Long
+- Should be in separate columns. Naming them “Lat” or “Latitude” and “Long” or
+“Longitude” will help the software recognize what they are.
+Addresses can be finicky in Carto, and the free version of the software will only geocode
+so many rows for you before it will ask you to pay.
+- If you do need to go the address route, keep your street addresses, cities and
+states all in different columns.
+- You may still get mistake, but you can manually move points or update the data
+pulling into an individual cell.
+Will also georeference by zip code or administrative region.
+If you plan to merge your dataset with a polygon region, make sure they have a column
+in common to join/merge on.
+
+Major drawbacks to the FREE version:
+- If you have to ask Carto to georeference your data, you may run out of “credits” in a
+given time frame (usually a month).
+- The size of data storage and vector uploads it will allow. If it throws an error at you for a
+filetype that it should take, it could be because you’re going beyond your free capacity.
+This makes Carto great for a local newsroom and local stories, but less scalable for
+bigger stories or more complex data.
+
+What’s the difference between “Datasets” and “Maps”?
+Datasets
+- Upload your raw data
+- Geocode your data
+- Merge with other datasets
+- Preview maps
+Maps
+- Polish maps
+- Layer maps
+- Publish maps
+Both have a “Data View” tab and a “Map View” tab. This can get a little confusing.
+
+Datasets
+Upload data
+- Filetypes: .xls or .xlsx, .csv, .kml, .zip, .txt, .geojson
+- Excel files tend to upload slower
+- CSV works best
+- KML or zipped shapefiles work well for polygon data (it will not just take the .shp
+filetype, for instance, it needs to be the whole zip file collection.)
+- Can connect to Google Drive, Twitter, Dropbox, etc. to collect outside data
+- Will sometimes require you to use “credits” on your account
+- Find shape/polygon data in their “Data Library”
+- The library isn’t huge, and is mostly national or international. Don’t be surprised if
+you can’t find anything for your state or region. But they do have some larger US
+polygons, like states and counties.
+- Beware that syncing some of these larger files will count against your allotment
+for the month.
+Make sure your datatypes have been coded correctly
+- If not, there’s a dropdown menu at the label that will allow you to change it to a string,
+number, date or boolean. You can also rename your columns in that dropdown.
+- It’s not great at treating numbers-as-text columns (like with leading zeroes) as actual
+text, even when stored as text. BUT before you upload, if you think this could be a
+problem, ​un​check the box that says “Let Carto automatically guess data types and
+content on import.” Then it will keep leading zeroes and you can manually select whether
+the data type is text, number, date, or boolean.
+
+-
+
+If you’re going to want your percent data to show up as a whole number rather than a
+decimal, import it as the whole number -- you cannot do calculated fields in Carto and it
+won’t let you move a decimal point for presentation. I sometimes create a “for display”
+field in my data with the whole number or percent purely for displaying in the tooltip.
+
+It will also add a column called “the_geom.” This is either the column in your data that it thinks
+you want to map (so, it might automatically identify your lats and longs), or it will be left blank
+and you’ll have to tell it which column you want to georeference. If you upload or merge with a
+shape file, it will just say “polygon.”
+Merge datasets! The easiest way is to merge on a common column, but you can also do a
+spatial join. The column-based merge operates in a very similar way to Fusion Tables. Go up to
+the “Edit” dropdown in the upper right corner, and select “merge with dataset.” Tell Carto which
+table you want to combine it with and which column they have in common. Make sure you select
+which dataset (probably the shapefile) you want to use “the_geom.” It will generate a new table
+to start mapping.
+
+Start building your map
+Toggle from “data view” to “map view” to start mapping. Carto will attempt to suggest maps for
+you. Sometimes these are right, sometimes they’re not.
+Use the “Wizards” panel to look through your options for different types of maps. It will select
+numerical columns to map, but you can change those if it’s picking ones that are completely
+arbitrary.
+There are some customization limits to some maps. For example, cluster maps can’t have
+infoboxes. Torque maps only work with point data, not polygons.
+Try toggling to </> icon to custom edit infoboxes and legends with basic HTML.
+Try the CSS tab to edit the color palettes with custom hex codes or to alter where your
+choropleth buckets break.
+Change the basemap design in the upper lefthand corner.
+Use the SQL or Filter tabs to filter out certain data, and it can create a new table based on that
+query. I have done this when I want to isolate, say, a group of neighborhood boundaries in a
+new map.
+
+Get your map (more) ready to publish
+If you want to publish this thing or add another layer, this is where you need to toggle to
+“Visualize.”
+This will import your dataset into the “Maps” section. You can still make any changes to the map
+here in terms of style, basemap, editing the infoboxes and legends, etc.
+Add another layer by hitting the blue plus sign at the top of the editing panel.
+Try adding annotations and text boxes, and previewing for mobile. (top left)
+An “Options” button in the lower window gives even more options for things like a search box or
+scroll wheel zoom.
+Then, when you feel you’re happy with it, select “Publish” to get an embed code.
+The embed code will inherit whatever zoom level and center point you have left it on (and it auto
+saves periodically)
+
+Did you make updates after publish?
+Sometimes I can’t know until it’s on the page whether my zoom level was quite right or whether
+the center point I’ve chosen means some of the map will get cut off by the legend. Luckily, if you
+go back into the map file and make any edits, it will automatically save and you won’t need to
+grab a new embed code; it should just update automatically!
+
+

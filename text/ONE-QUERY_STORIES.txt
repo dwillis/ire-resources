@@ -1,0 +1,193 @@
+The one-query story
+Quick hits for your newsroom
+tiny.cc/onequery
+
+Presenters
+Kate Martin, Skagit Valley Herald
+@Kate_SVH and @KateReports
+Grant Smith, The Commercial Appeal in Memphis
+
+@grantmeaccess
+Megan Luther, training director for IRE
+@meganluther
+
+Excel tricks you need to know
+● Sorting
+○ Largest to smallest and vice versa
+○ Alphabetical
+
+● Pivot tables
+○ A way of grouping like things together from a large
+spreadsheet
+
+● Basic formulas to know
+○ Convert a standard date to a month, then use a pivot
+table to compare months
+○ Math in Excel (percent change, addition, etc)
+
+Excel: Why you need to learn formulas
+
+Basic Excel formulas
+● Anything you want is on the internet
+○ Search for "Excel percentage change formula"
+○ You can do basic statistics: Median, Maximum,
+Minimum
+○ Change a full date to a month, for example: 1/2/12 =
+January
+○ If you can't find the formula, ask the NICAR listserv
+
+Sorting in Excel
+Question: Who earned the most overtime?
+
+Sorting in Excel
+Question: Who earned the most overtime?
+Answer: The diretor of labor and delivery
+What else do you notice?
+
+Excel pivot tables
+Q: Which department made the most overtime?
+
+Excel pivot tables
+1. Select data you want to use in the pivot table
+2. Insert tab --> Pivot table, click OK
+3. Put "Department" into "row labels" and "OT" into
+Values. Then sort values largest to smallest
+4. More information:
+Google for videos or ask
+listserv
+
+Strategies you can use today
+● Compare data: Budgets
+○ One department to another (staff or money)
+○ Last year to this year (staff or money)
+
+● Fact-check sources
+○ Mayor Soandso says the reason he is denying a
+liquor license to a business is because there were
+too many 911 calls
+○ Ask your 911 agency for a list of calls for the time
+period in question (Can be exported into Excel from
+proprietary software)
+
+● Look for trends
+○ Employment at cities up or down over years of
+salary data?
+
+Data you can use today
+● Every year request salary information from
+your publc agencies: cities, hospitals,
+schools, colleges, utilities.
+○ Trend stories
+○ Breaking news (Soandso was put on administrative
+leave, he made $123,000 last year)
+○ Overtime
+
+● Other data
+○ 911 calls: Story: Neighborhood response times
+○ Sales tax information: Which towns earn the most
+sales tax?
+○ Campaign finance: Out-of-state donors?
+
+Data you can use today
+● Other data
+○ Unemployment and jobs numbers
+○ Boating and hunting safety data: Can write a story
+before summer or boating season
+○ Traffic fatalities or DUI data
+○ Election results: With a little more effort you can
+make a map on Fusion Tables.
+○ School immunization rates
+
+Daily crime incidents
+
+select left(date,4), `desc`, count(*)
+from crimedata
+where city = "Memphis" and `desc` = "Murder"
+group by 1, 2
+order by 1
+
+Other crime ideas
+● Other crimes
+● Look at time of day
+● Group crimes by violent, property, society
+● Look at streets - what crimes are happening
+there?
+●
+
+Property data
+
+select ownername, sum(marketassessment),
+sum(calcacres), count(*)
+from searchfinal
+group by 1
+order by 2 desc
+
+Other property ideas
+● Tax assessments by county
+● Assessments by property type
+● Average assessments by square foot, by
+county
+● Who owns all the commercial real estate?
+
+Handgun carry permits
+
+select countycode, count(*)
+from guns_12_12
+group by 1
+order by 2 desc
+
+Note: You should really get the rate per
+capita, or the rate among people who are of
+age to carry a handgun
+
+select city, count(*)
+from guns_12_12
+group by 1
+order by 2 desc
+
+Other gun permit ideas
+● Age breakdown
+● Gender breakdown
+● By zip code
+● Join with felon data
+● Get fancy and look at hot spots with GIS
+
+Salary data
+
+select Department, count(*), avg(Rate_of_Pay)
+from shelby_county_9_20_12
+group by 1
+order by 3 desc
+
+Other salary ideas
+● Employees per department
+● Average salary per position
+● Outliers in each position or department
+● Total pay per department
+● Get all pay, not just base pay
+●
+
+Felons
+
+select V5_LAST_NAME, V6_FIRST_NAME,
+V8_DOB, count(*)
+from felons2009
+group by 1, 2, 3
+order by 4 desc
+
+Other felon ideas
+● By age, race, gender
+● Sentence type/incarceration by crime (does
+this vary with race?)
+● Conviction type
+● Most dangerous felons
+● Any of the above grouped by status of their
+freedom
+
+Other ideas
+● Police internal affairs, disciplinary actions
+● Consumer affairs/protection
+● Inspection data - nursing homes, etc
+● Hunting harvest reports
+
+

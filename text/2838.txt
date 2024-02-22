@@ -1,0 +1,88 @@
+Home Mortgage Disclosure Act: Working with new race/ethnicity categories
+Paula Lavigne - The Des Moines Register
+NICAR 2007 – Cleveland
+One of the most popular uses of HMDA data is to measure lending variations by race and
+ethnicity. In the last few years, the race/ethnicity reporting requirements and tabulations
+have changed. They offer more detail, but with that comes more headaches.
+What’s new:
+Reporting – Lenders for first-origination loans are required to collect race and
+ethnicity data, including in interviews with applicants over the phone.
+Race/ethnicity information is options for institutions that buy loans in the
+secondary market. (In the “action” field, these are under code ‘6’.)
+Tabulation – Just like the U.S. Census, race and ethnicity are two separate
+questions and there are options for multiple race selections. There are 12 fields
+total, including:
+APP_ETH 1 (applicant's ethnicity)
+1 -- Hispanic or Latino
+2 -- Not Hispanic or Latino
+3 -- Information not provided by applicant in mail,
+Internet, or telephone application
+4 -- Not applicable
+5 -- No co-applicant
+COAPP_ETH1 (co-applicant's ethnicity)
+1 -- Hispanic or Latino
+2 -- Not Hispanic or Latino
+3 -- Information not provided by applicant in mail,
+Internet, or telephone application
+4 -- Not applicable
+5 -- No co-applicant
+APP_RACE1 1 (race of the applicant)
+1 -- American Indian or Alaska Native
+2 -- Asian
+3 -- Black or African American
+4 -- Native Hawaiian/Other Pacific Islander
+5 -- White
+6 -- Information not provided by applicant in mail,
+Internet, or telephone application
+7 -- Not applicable
+8 -- No co-applicant
+
+APP_RACE2, APP_RACE3, APP_RACE4,
+APP_RACE5, and (for the coapplicant)
+COAP_RACE1, COAP_RACE2, COAP_RACE3,
+COAP_RACE4 and COAP_RACE5 follow using
+the same codes.
+Define a minority loan: I’ve defined a loan as a minority loan if either the
+applicant or the co-applicant is anything other than white, non-Hispanic.
+Depending on the program you use (SPSS, MySQL, Access, etc.) you
+would write this in any number of ways, but basically what you want is
+the following (in plain English).
+MINORITY LOAN: APP_ETH is 1 or COAPP_ETH is 1 or
+APP_RACE1 is 1, 2, 3, or 4 or APP_RACE2 is 1, 2, 3, or 4, (same for
+APP_RACE 3-5), or COAP_RACE1 is 1, 2, 3, or 4, (same for
+COAP_RACE 2-5).
+Use this to create a new field called MINORITY and tell it to record a Y
+(or whatever) in each row that fits the above criteria, and N in rows that
+don’t. Rows with Y then would be minority loans.
+At this point, you can’t simply say that all other loans are non-minority
+applicants, because many loans are missing information. You should set it
+up to include loans where there is at least one human applicant whose race
+and ethnicity are known. (Remember the codes for not-applicable and
+information not available.) You decide how limiting you want to be, but
+my scenario might exclude some loans that others would want to include.
+NONMINORITY LOAN: MINORITY is N, APP_ETH is 2, APP_ETH is
+5. This includes any case where the loan is clearly not a minority loan and
+where there is a main applicant who is not-Hispanic and who is white.
+‘Not applicable’: If you’re looking at first-origination loans and the code
+‘4’ for ethnicity or ‘7’ for race is entered, that likely means the applicant
+was not a person and was a business or limited partnership instead. These
+codes can show up often for secondary market purchases (action code ‘6’)
+where race/ethnicity information is not required. In origination loans, ‘Not
+applicable’ entries are rare when you limit your loans to those for singlefamily, owner occupancy.
+You could further limit your MINORITY and NONMINORITY
+categories by filtering out any records in which ‘Not applicable’ or
+‘Information not provided’ shows up in either the APP_ETH,
+COAPP_ETH, APP_RACE1, or COAP_RACE1 fields.
+
+My suggestion is to tally your records both ways to see if accounting for
+the ‘Not applicable’ and ‘Information not provided’ has a significant
+impact on your totals.
+You also could see whether there is any correlation between census tracts
+with high percentages of ‘Not applicable’ or ‘Information not provided’
+and the percentage of minorities or of a certain income group in those
+tracts. My own experience, and that from others who’ve tried this, is that
+there is no strong correlation.
+Keep track of your methodology so you can explain it to your editors and
+to your readers.
+
+

@@ -1,0 +1,103 @@
+Regular Expressions and
+OpenRefine #NICAR16
+Acton H. Gorton
+University of Illinois at Urbana­Champaign
+actongorton@gmail.com
+
+“It’s a lotta explanation, but don’t worry about
+it kids, okay? Just tune in, turn on, drop out,
+drop in, switch off, switch on, and explode...”
+Necessary Stuff:
+Sample Police Media Report: ​
+http://pastebin.com/0wATNTQT
+Full Police Media Report: ​
+http://pastebin.com/VG2UBqcq
+Building Regular Expressions: ​
+https://regex101.com/
+OpenRefine: ​
+http://openrefine.org/
+OpenRefine Documentation: ​
+https://github.com/OpenRefine/OpenRefine/wiki/Documentation­For­Users
+Tip Sheet: ​
+http://bit.ly/1P6TFsc
+
+Regular Expressions:
+Here is a quick list of the regex queries and the GREL command we will be using to clean up the data:
+Text Target:​Filter on each unique incident
+Sample Text:​POL405 RUN DATE: 3/12/2016 13:41:34 A.R.M.S. PAGE 1
+Regex Query:​^C\d
+GREL:​value.match(/^(C\d.+)\s.+?/)[0]
+Text Target:​Location
+Sample Text:​600 BLOCK OF DANIEL ST E KAMS
+Regex Query:​LOCATION\:(.+)
+GREL:​value.match(/^LOCATION\:(.+)/)[0]
+Text Target:​Incident Date
+Sample Text:​OCCURRED: 1/28/2016 23:00 REPORTED: 3/10/2016 7:03
+Regex Query:​OCCURRED\:(.+)REPORTED.+
+GREL: ​
+value.match(/^OCCURRED\:(.+)REPORTED.+/)[0]
+
+OpenRefine
+Start new project and import text:
+
+See a page like this:
+
+Trim all the leading and trailing whitespace:
+
+Create a new column to hold the unique incidents:
+
+Fill out the column details:
+
+Create a column to add the locations:
+
+Create a column to hold the date:
+
+Remove the original column:
+
+OpenRefine should look like this:
+
+Move incident column to the left:
+
+Split the column into incident and crime:
+
+Should look like this:
+
+Remove incident column, rename “incident 1” to “incident” and “incident 2” to “crime”:
+
+Move location column to the left:
+
+OpenRefine should look like this:
+
+Fill down on each column except the date:
+
+OpenRefine will look like this:
+
+Facet by blank:
+
+From Facet menu, choose “true”:
+
+From “All” column, choose Edit Rows ­> Remove All Matching Rows:
+
+Remove the Date facet:
+
+Create Text Facet on Crime:
+
+Choose Cluster ­> Metaphone 3:
+
+Select boxes to merge, click Merge Selected & Re­Cluster:
+
+Try a few different clustering algorithms:
+
+Browse through facet and fix records:
+
+Create Filters and change records:
+
+Trim “Date” column, then split Date Column into date and time:
+
+OpenRefine should now look like this:
+
+Choose “Export” in the top/right corner, and click on “Comma­separated value” to create a .csv
+file for your project. You can use the csv for a database, further analysis, or creating a map.
+A map created using the CSV uploaded to CartoDB:
+
+

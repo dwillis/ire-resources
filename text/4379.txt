@@ -1,0 +1,509 @@
+Transforming Data
+!
+
+Using Abstraction to Gain
+Knowledge from Numbers
+!
+!
+!
+!
+NICAR 2015
+Atlanta, GA • March 6, 2015
+!
+Robert Simmon
+Planet Labs
+simmon@mac.com
+@rsimmon
+
+What is abstraction & how does it relate to visualization?
+Case Studies with:
+Line Graphs, Logarithmic scales, Mapping, Cycle Plot, Slope Graph
+
+NASA/NOAA/DoD
+
+Throughout my career I’ve worked with “realistic” representation of the Earth. From city lights …
+
+Piqiang Fault
+China
+
+… to true-color Landsat imagery …
+
+NASA
+
+… to the Blue Marble.
+
+After 20 years at NASA, that work continues at Planet Labs
+
+NASA
+
+Where we use small satellites (deployed from the ISS on Friday!)
+
+Yarlung Tsangpo
+China
+
+Planet Labs
+
+We’re going to image the whole world, from the Yarlung Tsangpo near Lhasa, Tibet
+
+Yazghil Glaicer
+Pakistan
+
+Planet Labs
+
+… to glaciers in Pakistan
+
+Grand Canyon
+USA
+
+Planet Labs
+
+the Grand Canyon …
+
+Kashima Industrial Zone
+Japan
+
+Planet Labs
+
+Japanese Steel Mills
+
+Desert Irrigation
+Turkey
+
+Planet Labs
+
+massive development projects in the arid Middle East
+
+Dog Fence
+Australia
+
+Planet Labs
+
+and the Australian Outback. This fence separates the dingoes from the tasty sheep!
+
+Itumbiara, Brazil
+August 8, 2014
+
+Planet Labs/NASA/USGS
+
+Every day. (Soon)
+
+Itumbiara, Brazil
+August 9, 2014
+
+Planet Labs
+
+Change happens rapidly, as shown by these burning sugarcane fields.
+
+The more images I work with, the more I’m interested in “pure” visualization. Using pictures to communicate
+numbers and ideas. Gas trapped in Antarctic ice reveals past climate.
+
+NASA/WHRC
+
+This can include maps of quantities: the amount of carbon stored in trees in the U.S., using a color scale that’s
+evocative of the underlying dataset.
+
+Paciﬁc Cyclones
+2013
+
+Carefully chosen abstractions do a better job of communicating information than simply showing the data.
+
+Abstraction &
+Representation
+
+Starting with the basics, what do I mean by abstraction?
+
+cc Jeanette, ﬂickr
+
+Something concrete: a single peach. (But yes, this is not a pipe.)
+
+cc Kate Ter Haar, ﬂickr
+
+For small groupings, we can read the number instantaneously. No counting required.
+
+cc Judy Baxter, ﬂickr
+
+But as soon as you get above about 5, maybe 7 or 8, you need to count. So we use numbers to represent these
+quantities.
+
+cc Brent Moore, ﬂickr
+
+Of course, with even larger amounts of peaches we change from counting to using pecks and bushels.
+
+Georgia Peaches
+Year
+
+Production (tons)
+
+Price ($/ton)
+
+2014
+
+35,500
+
+1,090
+
+2013
+
+35,250
+
+826
+
+2012
+
+35,300
+
+961
+
+2011
+
+36,000
+
+930
+
+2010
+
+40,000
+
+817
+
+2009
+
+32,000
+
+930
+
+2008
+
+28,000
+
+773
+
+2007
+
+13,000
+
+819
+source: USDA
+
+Tables are precise, but hard to find patterns—
+even for small datasets like this.
+
+source: USDA
+
+Just like we use numbers to represent quantity, we can use graphics to encode numbers. In this case increasing
+height represents larger production.
+
+source: USDA
+
+The true power of visualization is to reveal relationships that are otherwise hidden. So does the price of peaches
+affect production? (Too little data in this case.)
+
+source: USDA
+
+The scatterplot removed the time component, but a connected scatterplot adds some (but not all) of that
+information back in.
+
+The Power
+of Visualizaion
+
+NOAA
+
+As I mentioned before, all any group of numbers large than a handful are extremely difficult to parse.
+
+NOAA
+
+But a simple line graph reveals multiple patterns: both seasonal patterns and long-term trends.
+
+Case Study:
+Differences
+
+Sometimes our eyes can deceive us:
+
+!
+
+Although plotting two datasets simultaneously may seem straightforward, our visual system tends to evaluate the
+closest point between two lines, not the distance in a particular direction
+
+Cleveland & McGill. Graphical Perception: Theory,
+Experimentation, and Application to the
+Development of Graphical Methods.
+
+William Playfair. “The commercial and political atlas which represents at a single view, by means of copper plate
+charts, the most important public accounts of revenues, expenditures, debts, and commerce of England” 1786
+one of, if not the first, line graphs.
+
+Cleveland & McGill. Graphical Perception: Theory,
+Experimentation, and Application to the
+Development of Graphical Methods.
+
+Plotting the difference between imports and exports—the balance of trade—reveals a very different picture than
+the pair of lines.
+
+Cleveland & McGill. Graphical Perception: Theory,
+Experimentation, and Application to the
+Development of Graphical Methods.
+
+So if you want to show the difference between two trends, plot the difference! (and read this paper: https://web.cs.dal.ca/~sbrooks/csci4166-6406/
+seminars/readings/Cleveland_GraphicalPerception_Science85.pdf)
+
+Case Study:
+Maps
+
+Why do we use maps? What choices do we make so that our maps suit a specific purpose?
+
+NASA Astronaut Photograph ISS025-E-13525
+
+A realistic view of the Earth: decidedly not flat, lots of atmosphere in the way. (which makes my current job
+difficult, but keeps me employed)
+
+“Aerial photographs from great
+heights, even in color, are often
+quite misleading ... Colors and
+color elements in vertical
+photographs taken from high
+altitudes vary by a greater or lesser
+extent from those that we perceive
+as natural from day to day visual
+experience at ground level.”
+Eduard Imhof, Cartographic Relief Presentation
+
+Washington, DC
+
+NASA/USGS/Landsat
+
+For many tasks, there can be too much information
+True-color satellite view of Washington, DC. September 12, 2013.
+Detailed view of urban areas, vegetation, water, clouds, haze, a contrail ...
+Accurate, but not useful for navigation or more than basic categorization.
+
+Accurate Metro
+
+Open Street Map/WMATA
+
+Accurate map of the DC Metro
+Shows lines and stations in their real-world locations
+pink is NASA Goddard
+notice that some stations aren’t even on the map, and others are crowded together
+(Perhaps) useful for driving to a Metro station, but not useful for navigation within the system
+
+WMATA
+
+focused on what’s important for riders:
+routes linked by nodes
+small amount of ancillary data for context
+based on the London Underground map
+
+WMATA
+
+Henry Beck, London Underground map, 1933
+Evolved over decades
+
+Metropolitan Atlanta
+Rapid Transit Authority
+
+Now used by almost every subway in the world, including Atlanta’s MARTA
+
+Case Study:
+Global Temperature
+
+How do you show long term trends in highly variable data? Averages are good, smoothing is better, but plotting
+the change in trend over time is even better.
+
+Annual average vs. the 30-year average from 1951-1980
+Trend is partly hidden by noise, and appears to level off after 1998
+
+5-year moving average helps focus on the trend,
+but still shows a “pause”
+
+How about longer-term averages? 17-year trend from 1998–2014. Clearly rising, but slowly. Not sufficient to
+accurately show trends with observed annual variability.
+
+30 years of data are required to detect patterns in data this noisy, so how about a 30-year trend?
+SUCCESS!
+
+!
+
+30-year timescale isn’t arbitrary, it was chosen as the minimum time period to fit the observed inter-annual
+variability.
+
+And if you plot the change in 30-year trend over time, it’s clear there’s no “pause” in warming. Chloe Whiteacre,
+Bloomberg Graphics
+
+Case Study:
+Sea Ice
+
+How to show a long-term trend in data with strong cyclical variation?
+
+!
+
+Cycle plot.
+
+MitchMaloney (CC BY-ND 2.0)
+
+View of Helsinki from Suomenlinna Island
+
+NASA
+
+Sea ice at a particular time and place—shows local distribution, but no short- or long-term change
+
+NASA GSFC SVS
+
+You can animate maps to show change over time, but it’s not quantitative and a slow transfer of information.
+
+National Snow & Ice Data Center
+
+Plot the area every day for 35+ years?
+
+!
+
+It’s a mess.
+
+National Snow & Ice Data Center
+
+Show both seasonal patterns and long-term trends
+standard deviation hard to understand, may not fit data, removes detail.
+
+Small Multiples
+
+Show many thumbnail-sized graphics for comparisons
+
+NASA GSFC SVS
+
+Can see broad trends and some of the cyclic pattern, but consumes *a lot* of space and not precise. http://
+svs.gsfc.nasa.gov/cgi-bin/details.cgi?aid=4204
+
+NASA GSFC SVS
+
+some details are visible zoomed in …
+
+Cycle Plot
+
+But to accurately see the annual cycle and long term, it’s best to use a cycle plot.
+
+National Snow & Ice Data Center
+
+Plot each month of the year separately.
+Show both seasonal patterns and long-term trends
+downside: need to explain how to read the figure:
+is it worth it?
+
+Case Study:
+Nitrogen Dioxide
+
+How to show change in spatial data? Do we even need to use maps at all? Logarithmic scaling, revisit small
+multiples, introduce the slope graph.
+
+Los Angeles, CA
+
+cdshock CC BY 2.0
+
+Smog (primarily NO2) in LA
+
+Linear
+
+NASA/KNMI
+
+We can map the distribution of NO2, but it looks like China is the only polluted region.
+
+Log10
+
+NASA/KNMI
+
+We’re all gonna die!
+
+Square Root
+
+NASA/KNMI
+
+Taking the square root is a happy medium.
+
+2005
+NASA GSFC SVS
+
+But how do we show change over time? Sequential maps show a reduction of NO2 in the U.S.
+
+2011
+NASA GSFC SVS
+
+… but it’s not very quantitative.
+
+NASA
+
+A bubble plot is an improvement.
+
+Hilboll et al., 2013
+
+But why use a map at all?
+Try small multiples. Shows seasonality, but hides differences between cities & trends.
+
+Hilboll et al., 2013
+
+Remove chart junk, set to consistent scale, & improve typography to reveal difference between cities, but trends
+remain hard to determine.
+
+Slope Graph
+
+solution: slope graph
+
+Hilboll et al., 2013
+
+Shows relative pollution in cities worldwide, and shows change over time. Important to use trends, not just
+connecting two data points.
+
+!
+
+No spatial relationships.
+
+Finally, some
+counter-examples
+
+Sometimes it is best to just show the data.
+
+Seasons
+
+©2011 EUMETSAT
+
+This can lead to some surprising views of Earth
+6:00 am every day
+September 2010-September 2011
+clearly shows what causes the seasons
+choice of what not to display is as important as what to display
+
+!
+
+EUMETSAT
+
+It’s hard to understand just how fast a satellite moves. But showing an overpass in real time gives some sense.
+
+It’s important to create visualizations that fit the dataset, message, and audience.
+When necessary, transform data to use the strengths of our visual system, and mitigate the weaknesses.
+
+Inspirations
+Cynthia Brewer Color Brewer
+Robert Bringhurst The Elements of Typographic Style
+Alberto Cairo The Functional Art
+William Cleveland The Elements of Graphing Data
+Philip B. Meggs History of Graphic Design
+Donald Norman The Design of Everyday Things
+Edward Tufte Visual Display of Quantitative Information
+Colin Ware Information Visualization: Perception for Design
+
+selection of resources that influenced me
+heavy on design and typography
+
+Contact
+simmon@planet.com
+@rsimmon
+!
+
+planet.com
+thumbsupviz.com
+earthobservatory.nasa.gov/blogs/elegantfigures
+
+Thank You
+
+Seriously, thanks for reading. And feel free to hit me up with questions or feedback.
+
+NASA/NOAA/DoD
+
+

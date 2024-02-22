@@ -1,0 +1,501 @@
+QGIS I - workshop, Nicar 2019, Newport
+Link to this document:​ ​bit.ly/qgis1_nicar
+Daniel Dunford & Clara Guibourg, BBC Data Journalism Team
+@DanielJDunford @cguibourg
+QGIS is a powerful and complex piece of mapping software but
+journalists can get excellent results from a couple of relatively simple
+functions. It’s useful for data exploration as well as for producing data
+maps for publication, and it’s open source.
+These are the full follow-along instructions from the NICAR session with a worked example.
+You will find the data and shapefiles ​HERE​ - download them before starting.
+THEY SHOULD ALREADY BE DOWNLOADED TO YOUR NICAR LAPTOP.
+What you are aiming for by the end of this tutorial is a plot of all the power stations in
+California, laid over some county-level data on the electricity consumption per county.
+It will look something like this:
+
+Opening QGIS
+Download QGIS: ​https://qgis.org/en/site/forusers/download.html#
+There are lots of versions as it is frequently updated. You can choose between the latest or
+earlier ones that are more stable.
+The version we are using here is ​QGIS 3.2​. It’s not the latest version but should be robust.
+TIP​ Be aware that QGIS projects are not always backwards-compatible so when you update,
+you may have to rebuild old projects.
+Finding your way around
+Your QGIS should look something like this. It may not be exactly the same, depending on
+the edition and whether the panels and toolbars have been moved around but it should have
+these functions. The version for Windows looks slightly different.
+
+You need two basic ingredients for most QGIS maps 1) a ​shapefile ​which is the map on which you will display your data.
+2​) a ​data file​, usually a CSV, which contains the information you want to display
+(There are other options - for example you can bring in a highly detailed aerial photograph)
+
+Adding a shapefile
+When people talk about a shapefile, or you go looking for one, you actually need a collection
+of files which all correspond to each other. They are often found in zip files.
+If you have not already done so, go to the ​folder for this workshop​, find the sub-folder called
+CA_counties ​and download all the files in there. They are California county boundary files.
+
+There are eight files which all start CA for California. Tiger is just the name of the US Census
+Bureau service from which we downloaded the data.
+The extensions tell you what type of file they are. They include
+●
+●
+●
+●
+
+.shp ​the geometry drawing file. It's a "​vector​" file
+.dbf​ a database file with all the text based information such as the name of a
+county or the ID code
+.shx​ an index file which ties the two together
+.prj​ contains the projection information
+
+IMPORTANT​: You need to keep these files in a single folder so QGIS can reference them
+and they must all keep the same prefix as each other - eg. CA_Counties_TIGER2016.
+Go back to QGIS and click Layer > Add Layer > Add Vector Layer from the menus along the
+top of the page. It is usually the top option and the icon looks like a V.
+
+Browse to the folder we were just looking at and select the shapefile itself
+CA_Counties_TIGER2016.shp
+
+Hit ​open ​and you should see a map forming and you have a layer in your layers panel
+TIP Y
+​ ou can also ​add a shapefile by d
+​ ragging and dropping from the folder
+Save your project!
+
+TIP​ QGIS works in projects which are temporary arrangements of the files which you have
+told it to look at. This means that if you move or rename a file then it will no longer appear in
+your QGIS project. For this reason it is a good idea to keep your files for a map all in one
+folder. Your map is not a permanent object until you export it in some form. Beware having
+some files on pen drive only!
+Finding your way around the shapefile
+You should have now have a map of all of the counties in California.
+You can easily zoom in, either with the mouse wheel when the touch zoom button is
+selected (PC only) or with the other zoom buttons at the top.
+Avoid using the trackpad on a Mac as you will skeeter all over the place.
+
+Pan
+
+​to grab and move around
+
+Zoom​
+
+use in normal way or draw rectangle of the view you wish to zoom to
+
+Full extent​
+
+is useful if you get lost in the map. It resets to the original view
+
+Previous & next​
+
+zoom levels step you back/forwards through previous views
+
+Notice as you zoom in and out the lines stay crisp. That's because a vector file is generated
+mathematically, rather than being an image. So in theory you could magnify this to any size
+and it would stay true.
+This also means that you can project the map in different ways - ​more about projections
+here​.
+To make California look the correct shape, from the main page click the button next to
+Render in the bottom right corner. That will bring up a search box. You can search for
+
+different parts of the world, or if you try 42308 it should bring up NAD27 / California Albers.
+Click ​Apply ​and ​OK.
+You might notice your map changing shape slightly - check that the northern border is not
+quite a straight line.
+
+TIP I​ f you have a very detailed shapefile and moving around is slowing you down, toggle off
+the render button at the bottom right, perform your move or zoom, then switch it back on. It
+means QGIS is not trying to constantly draw.
+Identify features
+
+This button
+or a point.
+
+is ​identify features​, which reveals the information attached to an area
+
+If you click on one of the counties you will see the ​Identify results panel​ open. ​On some
+versions this is a tab, with the Layers panel, on others it is a separate floating panel.
+
+The panel shows the information which the shapefile already holds about this county​: the
+county name, and it has a field called GEOID which is an ID number that will be important
+later.
+Attribute table
+We can look at this information another way by viewing the attribute table. It will show all the
+data in the shapefile as a table with, in this case, one row per county.
+
+Styling
+We’re going to add some data to this map before we style it up, but you can change the
+colour of the map without doing this if you want to.
+Double click on the layer name in your Layers panel and it will bring you up a menu (or right
+click and select properties).
+Select the second item: ​Symbology
+
+If you click Pick Colour you can choose a colour from the page. If you click Choose Colour
+you can type in a hex code - a hash followed by a six character code which identifies a
+unique colour.
+Several ways to change the colour ● Simple: the dropdown next to Colour gives you recent and standard colours
+● Full: clicking on the colour itself, gives you a full range of options.
+● Or click on simple fill and you can also change the colour there
+TIP​ When you use QGIS regularly you can set your own colour palettes and save them as
+style files which can be shared with colleagues or reused by you. Eg house mapping style,
+political parties' colours.
+Choose one which you like, hit apply and OK
+Save your project
+ADDING DATA
+There are two main ways of adding data - adding point data and joining area data.
+Your data needs to be a ​delimited text file​ - most often this will be a CSV file. You can't
+import an excel workbook.
+In your data:
+● Make sure your first row has column headers.
+
+●
+●
+●
+
+●
+●
+
+Keep column headers short - and some versions of QGIS need single words
+without spaces (use underscore).
+Do not have notes in columns, it should just be the data.
+Try to make sure that your data is as clean and consistent as possible,
+sometimes text in a numbers column can mean QGIS thinks the whole column is
+text.
+Keep symbols out of the data - eg don't have 100% in a cell, just use 100.
+It’s better to not have comma separators for thousands - QGIS sometimes.
+interprets eg. 1,234,567 as a string, whereas 1234567 would be recognised as a
+number.
+
+Adding area data via a join
+Now we will look at the first key way of entering data - joining it to your map.
+We do this by using a common ID shared by the shapefile and the data, and we will display
+the results by county. Often called a heatmap but it's properly called a ​choropleth​.
+
+●
+●
+●
+●
+●
+●
+
+Find the ​Add Delimited Text Layer ​button, below where the Add Vector Layer one
+was
+Browse to find ​california_electricity_by_county.csv
+It’s a CSV so keep that button checked
+Discard 0 lines and the first record has field names
+Click detect field types so it will treat your numbers as numbers rather than text
+There is nothing inherent in the file which tells you how to map it straight away so
+choose ​No geometry
+
+You get a preview of the data - it shows various the amount of electricity used each year ​per
+county​, in millions of gigawatt hours, broken down by residential and non-residential use.
+●
+
+●
+●
+
+First column is the county FIPS code (​Federal Information Processing Standard)​ that’s what we are going to be using to join the data to the shapefile. Every county in
+the US has a unique one and they will always be five characters long.
+○ The first two digits identify the state (06 is California), and the following three
+identify the county within the state (091 is Sierra County and 003 is Alpine
+County, etc.)
+County name
+Data columns - electricity used for residential purposes, non-residential, and the total
+used per county.
+
+Hit ​Add
+
+Joining data
+We’ve now imported the data and you will see it in the Layers panel on the left-hand side.
+But nothing will show up on the map until we integrate the data with the shape file. We do
+that with a join - merging the datasets on a shared value across both, in this case the FIPS
+code.
+If you right-click and select Open Attribute Table from the dropdown, you’ll notice that the
+leading zero from the FIPS column may have disappeared. QGIS does this when you import
+data because it thinks eg. 06031 is a normal number and should be 6,031. Annoyingly, this
+means it won’t match our shapefile anymore. We can fix this by opening the Field Calculator,
+the abacus icon in the top right >
+
+●
+
+When you’ve got your Field Calculator open, paste the following line of code into the
+expression box:
+if(length(to_string("FIPS")) < 5, concat(to_string(0), "FIPS"), "FIPS")
+
+○
+
+●
+●
+●
+
+That converts our FIPS column from a number to a string (a text field), and
+adds a zero to the front of every value that is less than five characters long. In
+this case that’s all of them, because all California’s counties have leading
+zeros, but doing it like this ensures that it will still work for a dataset with every
+US county.
+You’ll also need to select ‘​Text, unlimited length (Text)​’ from the ‘Output field type’
+dropdown, or it will turn it back into a number and take the zero out again.
+And write something in ‘Output field name’ - that’s going to be the name of our new
+corrected column. We’ve called it ‘FIPS_zero’.
+Then click OK.
+
+Now your attribute table should have a new column at the end called FIPS_zero, where all
+the values are the same as FIPS but with a zero added on in front. Now we can finally style
+the map up!
+●
+●
+●
+●
+●
+●
+●
+
+In your layers panel, double click on your ​shapefile ​(CA_Counties_TIGER2016)
+Go to ​joins
+Click the green plus at the bottom
+Join layer - ​california_electricity_by_county
+Join field​ - this is where you have to tell it which column to use from the ​data layer​ the new ​County code ​column I called ​FIPS_zero​.
+Target field​ - this is the corresponding column in the shapefile. It's called ​GEOID
+Click OK
+
+Now hit apply and OK.
+Nothing has changed.... or rather it ​looks​ ​as though nothing has changed but if you use the
+identify features ​button again, this time you will see that it gives you some extra fields in
+your results panel which come from the data so we know the join has worked. You could
+also check the ​Attribute table​ for the shapefile layer and see the new columns.
+
+Styling the area data
+This is where you will tell the shape file how to display the data it now contains
+●
+●
+●
+
+●
+●
+●
+
+●
+●
+
+With your shapefile still highlighted in your layers panel, double click and open Layer
+properties > Symbology
+Pick the third dropdown option: ​Graduated
+Column​ - it offers you the columns which it thinks are numbers.
+○ NB: if you hadn't have done the join, it would not see the options starting
+california_electricity... in there as your shapefile wouldn't know about them.
+You can choose whichever column you like, the eg we are using here is the Total
+electricity used:​ california_electricity_by_county_Total
+Colour ramp​ We’ve used “YlOrRed”, from the All colour ramps selector, but there
+are lots of options in there
+Mode​: This is where you decide on a way of splitting it up - see below for more info
+on these options. It defaults to ​Equal Interval​, but this sometimes doesn’t work if the
+data has very different extremes​. W
+​ e’ve gone for ​Quantile (equal count)
+You can set how many different colours you want either with the ​+​ and ​-​ buttons or by
+changing the ​Classes ​selection. It defaults to five which works for us.
+Hit Classify, Apply, OK
+
+Now your map should colour up and look something like this, depending on what options you
+chose.
+
+TIP​ It sometimes can be hard to find data with geographic codes already attached. Often it
+will have county name but not the code. You may have to do some wrangling to get your
+data in a format which can join to your shapefile. It is sometimes possible to join on name
+but really not recommended as punctuation and abbreviation etc can cause problems. Eg
+"City of London" is the same as "London, City of" but QGIS won't spot that.
+Changing the break points
+Experiment with the other breaks by opening up the Layer properties menu again and
+choosing one of the other options. They are all algorithms
+●
+
+●
+●
+
+Quantile (Equal count) ​- makes sure that there are the same number of counties in
+each bucket. There are 58 counties and five classes, so you should get get 11 or 12
+of each colour. If you add more classes you’ll get more detail.
+○ This one is good for quickly making the map look interesting, but check that
+your breakpoints aren’t odd as it can look purposely manipulated
+Pretty Breaks​ - Creates recognisable class boundaries in whole numbers - see what
+happens when you use it for this dataset
+Equal Interval​ - creates classes which have the same range as each other. So in
+this case, the lowest amount of electricity used in any county is 19m GWh and the
+
+●
+●
+
+highest is 67,569m GWh. If you have 5 classes then they will each have a range of
+one fifth of the difference = 13,510m GWh. Doesn’t make much sense for this data
+but can be useful in other cases.
+Natural Breaks (Jenks)​ - This tries to group data in clusters with the biggest
+variance between the classes
+Standard Deviation​ - This method will calculate the mean of the data, and create
+classes based on standard deviation from the mean.
+
+You can also edit the breaks yourself and make the classes bigger or smaller. And you can
+edit the key separately to make it more human-readable.
+We can edit these colours too by double clicking on the colour in the layers panel or in the
+Layers properties>Style menu.
+TIP ​As with the project itself, the join is temporary. If you delete the data layer, the join will
+disappear. You can save the map as a new shapefile (using Save As) but be aware that your
+column headers may change.
+Adding point data
+A second common form of data for mapping is point data using latitude and longitude.
+Import the data in the same way:
+● Add delimited text layer from the Layer dropdown again, and bring in
+california_power_plants.csv ​- this is all the registered power stations in California.
+● Keep all the options as default apart from this time we DO have ​Geometry definition
+- because this data has something in it which means it could be plotted on a map: Lat
+Long. Therefore ​Point coordinates ​is appropriate in this case.
+● If necessary, use the dropdowns next to X field and Y field to tell it ​X field is
+Longitude and the Y field is Latitude​. - they may already be filled in correctly but
+this won’t always happen.
+● Also check that the ​Geometry CRS​ is set to the default projection E
+​ PSG:4326​.
+
+MEGA TIP!​ - X
+​ is LONGITUDE and Y is LATITUDE!
+If you find all your points all bunched up in one spot or you map looks otherwise wrong,
+check that you have the X&Y fields pointing to the right columns
+Click Add​. ​Now you SHOULD have a whole lot of points on your map. Quite likely in garish
+colours but as with the shapefile that is easy to fix using style.
+
+You can use the ​identify features​ button to click on your circles - make sure you have the
+data layer highlighted in your layers panel.
+Right click in the layers tab and select ​Open Attribute Table​ to see the data as a table.
+
+You will see details like the name of the power plant, a unique ID, the fuel they use, an
+address, an operational status and a column called MW which is the amount of Megawatts
+produced by the power station each year.
+Categorising
+One way of looking at point data is by using categories, and the Renewable_Energy column
+is a good candidate for this because there are only three possible options - renewable (1),
+not renewable (0) and not categorised (blank).
+Go back to ​Symbology ​by double-clicking on the power plants layer, and this time instead of
+Single symbol​ choose ​Categorized​.
+Now go to the Column dropdown and you will see it offers you all the possible columns
+which we just looked at in the attribute table
+● Choose Renewable_Energy - you may have to scroll down to it
+● Hit Classify and you should get three symbols with different colours and values
+● Uncheck or delete the bottom one, that's no data.
+Change colour
+Just like with the map, the colours of these points are easy to change
+● Either double click on the layer name to bring up the style panel again, then
+change the colours in a similar way to the shapefile, by clicking on the symbol
+and choosing a colour there. Note that there are preset colour ramps which you
+could choose to use.
+● Or you can double click on the symbol directly in your layers panel. This brings
+you straight to colour editing that symbol.
+● You can copy and paste a colour
+
+Experiment with turning the categories on and off in the layers panel
+Scaling the points
+Another useful way of visualising point data is to scale the points according to a column in
+the data. Let’s scale our power stations by how many Megawatts of power they produce.
+
+● In Symbology, open the Symbol Selector by clicking the ​Symbol: Change…​ box
+
+● Click the
+button next to the size bar
+● Select A
+​ ssistant
+● This brings up a second dialogue box with a dropdown to choose which column you
+want to use to size the symbols
+● In Field choose ​MW
+● Set the values from 0 to 2393 - the highest MW value in our dataset
+● And for scale method choose ​surface​, other options are radius, exponential or
+Flannery​, which may be useful for other datasets
+● Size from - experiment here. We’ve gone with 1-10
+● Back in the main style menu it's also a good idea to make the symbols slightly
+transparent so that they don't blot each other out. You can experiment with that on
+the transparency slider scale, we’ve gone for about 60%.
+● Apply and OK
+
+Now you should have a range of dot sizes
+Again zoom in and out to see how they change
+Use ​identify features​ to look at some you are interested in
+Note that you can end up with several points highlighted at once when you use identify
+features. The expanders in the features panel allow you to look at each one.
+TIP​ in some other versions of QGIS the option to scale by the value of a field is in an
+advanced setting at the bottom of the style window
+You should now have something which looks closer to a finished map:
+
+Labels
+To label your county map, either bring up the Layer properties menu again or use the ​abc
+button on a yellow background
+
+●
+●
+●
+●
+
+Choose Show labels for this layer
+Label with - and choose what you want to show eg: Name, Values
+You can change the font, size, colour - again you can match this to house style
+Buffer tab can be useful to make the text stand out from the background
+
+If you have chosen county names, it will make the map look a bit crowded, but you get the
+idea. There are ways to manually change the placing - ​more details here
+Saving as image and exporting
+Simplest way of getting a map out is ​Project>Import/Export>Export Map to Image​ which
+saves the main window as a png. Quick and easy but lacks the legend and is quite small.
+
+Better option: ​New Print Layout ​- either select this icon from the top​
+Print Layout ​below the Import/Export button shown above
+It prompts you for a title and brings you to this window
+
+●
+●
+
+Click ​Add map​
+page.
+Map will appear
+
+,​ or click ​New
+
+and then draw a rectangle with the cursor on the blank
+
+● To add a title, click ​Add label
+●
+
+●
+
+To add a legend and scale, click on ​Add legend​
+and ​Add scale
+and drop them where you want them
+○ You can edit them, but if they look bad/don’t work, you can make your own
+with the ​Add shape
+option, combined with ​Add label
+To edit any of your objects, go to​ Main Properties​ on the right hand side. You
+can edit the text, set the font and colours
+
+To export your map
+●
+
+Use the buttons at the top of the page or ​Layout > Export as
+
+●
+
+You can save it as a simple ​PNG image
+
+●
+
+Or ​export as SVG
+similar
+
+●
+
+Or ​export as pdf
+
+to save as vector graphic for Adobe Illustrator or
+
+You're done!
+-----------------------------------------------------------------------------------------------------------------Useful data source links
+California Open Data Portal
+FIPS codes
+US Census fact finder
+Census ​Cartographic boundary shapefiles
+Census ​Maps and data main page
+Natural Earth​ - for lots of useful country files
+
+

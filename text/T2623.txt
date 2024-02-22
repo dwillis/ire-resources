@@ -1,0 +1,64 @@
+Parsing House Vote Data using Python
+Derek Willis, Washington Post
+NICAR 2006
+(an extended version of this handout is available at
+http://www.thescoop.org/projects/irenicar/)
+First, download and install Python from http://www.python.org or
+http://www.activestate.com (Windows version). The most recent version is 2.4, and there
+are binaries available for Windows, OS X and Unix. If you’re unfamiliar with Python,
+there are some excellent tutorials on the Python.org site.
+Next, download xmltramp from http://www.aaronsw.com/2002/xmltramp/ (just save
+the xmltramp.py file into a directory).
+
+Let’s take a look at a sample House vote, say the reauthorization of the Patriot Act
+(http://clerk.house.gov/evs/2006/roll020.xml). On the web it looks like HTML, but
+do a “View Source” and you’ll see XML, which is the real source.
+xmltramp lets you refer to individual elements within the XML and then do
+something with them: print them out or insert them into a database are two
+common uses. After you load the file into xmltramp, you roughly follow these
+steps:
+start the Python interactive shell
+type “import xmltramp” – if you don’t see any messages, it worked.
+Load the vote into a variable:
+d=xmltramp.load('http://clerk.house.gov/evs/2006/roll020.xml')
+Now you can refer to various elements within the XML by calling their names:
+d['vote-metadata'].congress[0]
+A couple of notes here: we need to use the [‘element-name’] because the element
+contains a hyphen. We use the [0] at the end to get the actual content between the
+XML tags <congress> and </congress>. Leaving off the [0], which refers to the
+first (and only) item, would yield the entire tag and contents:
+<congress display="yes">...</congress>
+
+Iterating over records
+Since each vote file contains 430+ individual votes, you want to be able to iterate over
+those. Python does this extremely well. First, let’s break out the section of the file that
+has the individual votes into its own variable:
+vd = d['vote-data']
+
+then we can count the number of votes using Python’s built-in len function:
+votes = len(vd)
+Typing “votes” at the Python prompt will yield 432, and you can use the “votes” variable
+as the upper limit of an iterator:
+for each in range(votes):
+print vd[each].legislator(‘name-id’), vd[each].legislator(‘party’)
+Indentation, by the way, is critical in Python. You can use tabs or spaces, but it has to be
+consistent when you indent (which usually follows a colon). The preceding statement
+yields:
+A000014 D
+A000022 D
+A000055 R
+A000358 R
+A000361 R
+etc.
+Adding the actual vote is a matter of tacking on “vd[each].vote[0]” to the end of the
+preceding statement. You can also call names or states or even construct an if clause to
+check for certain states or lawmakers:
+for each in range(votes):
+st = str(vd[each].legislator('state'))
+if st == ‘HI’:
+print vd[each].legislator(‘name-id’), vd[each].legislator(‘party’)
+else:
+pass
+Note the interior indentation and double == required for if/then/else loops in Pytho n .
+
+

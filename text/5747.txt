@@ -1,0 +1,268 @@
+Saving Data Journalism
+Katherine Boss, New York University Libraries
+Meredith Broussard, NYU Arthur L. Carter Journalism Institute
+Fernando Chirigati, NYU Tandon School of Engineering
+Rémi Rampin, NYU Tandon School of Engineering
+Vicky Steeves, NYU Libraries & Center for Data Science
+
+National Institute of Computer Assisted Reporting, Newport Beach, 2019
+
+How do News Apps differ
+from other born-digital news
+content?
+•
+•
+•
+•
+•
+
+Interactive
+Exploratory
+Some reliant on a database
+Some use external APIs
+Custom-built software
+
+Source: Times analysis of LAFD data. Credits: Ben Welsh, Robert Lopez, Kate Linthicum. Map data: (c) OpenStreetMap contributors, CC-BY-SA. http://graphics.latimes.com/how-fast-is-lafd/#14/34.0521/-118.2756
+
+The Problem:
+Interactive news stories can’t
+be archived
+
+Why?
+• Web archiving crawlers were built to crawl the static web
+• Current web archiving technology cannot capture dynamic elements of
+a site, or back-end files (like data!)
+• Older interactives are dependent on older browsers to display (such as
+Flash-based interactives)
+• Newsrooms are volatile organizations: they get bought and sold, the
+servers are shut down, labor is re-organized
+
+Early news app from 2009 — “Fatal Flights”
+
+The Washington Post. 2009. “Fatal Flights: Fatal Medical Helicopter Crashes.” From: http://www.washingtonpost.com/wp-srv/special/nation/medical-helicopters/fatal-crashes.html
+
+ProPublica “How much is a limb worth?”
+
+Groeger, L., Grabell, M., & Cotts, C. 2015. Workers’ Comp Benefits: How Much is a Limb Worth? From http://projects.propublica.org/graphics/workers-compensation-benefits-by-limb
+
+Internet Archive snapshot of Workers’ Comp, Mar. 8 2016
+
+Okay, but as long as AWS is
+around in 20 years, won’t
+my stuff be okay?
+
+But all of my work is
+containerized. Isn’t Docker
+a reliable way of saving
+stuff?
+
+The Solution
+
+How? An emulation-based web archiving tool
+NYU Libraries and the NYU Center for Data Science were awarded an
+IMLS grant to build an extension to ReproZip to capture remote
+front-end files (e.g. not located on server where app is running) to be
+able to capture the *complete* news app!
+
+How does ReproZip work?
+
+necessary data ﬁles,
+libraries, environment
+variables, etc. required
+to reproduce your data
+journalism
+
+open, unpack, and
+reproduce
+anywhere, anytime!
+
+reprozip.org & examples.reprozip.org
+
+ReproZip: Reproducibility in 2 Steps
+Packing
+
+Unpacking
+Window
+s
+
+ReproZip
+Bundle
+
+Linux
+
+data files, libraries,
+environment variables, etc.
+required to reproduce
+the research
+
+Linux
+
+macOS
+
+open, unpack, and
+reproduce anywhere, anytime!
+
+Step 1: Tracing & packing
+
+JOURNALISTS
+
+Computational Environment E (Linux, in this case a web server)
+Detailed Provenance
+Tracing
+
+Executing
+
+Workﬂow
+Creating
+Conﬁguration
+
+Conﬁguring
+Preservation
+Bundle
+(.rpz file)
+
+Input ﬁles, output ﬁles, parameters…
+
+reprozip
+
+Data Analysis,
+App, etc.
+
+Data
+
+Packing
+
+Configuration
+File
+
+Executable programs and steps
+Environment
+Environment variables,
+dependencies, …
+
+Step 2: Unpacking & replaying
+
+READERS
+
+Computational Environment E’ (something potentially different from original)
+Linux
+
+directory
+
+Linux
+
+VisTrails
+(any OS)
+
+chroot
+
+Unpacking
+Preservation
+Bundle
+(.rpz file)
+
+Provenance
+Graph
+(any OS)
+
+reprounzip
+
+Linux
+macOS
+Windows
+
+Singularity
+(upcoming)
+
+Linux
+macOS
+Windows
+
+ReproServer
+(in-browser)
+
+vagrant
+
+docker
+
+Our prototype － extending ReproZip for news apps!
+Pack & record
+
+Data Analysis,
+App, etc.
+
+Record
+
+Tracing
+
+Executing
+reprozip
+
+ReproZip
+Bundle
+.rpz file
+
+Add
+WARC
+
+Preservation
+Bundle
+.rpz file w/ WARC
+
+Unpack & replay
+
+Preservation
+Bundle
+.rpz file w/ WARC
+
+Unpack
+
+playback
+reprounzip dj
+
+View news app
+locally, even
+without wifi!
+
+Demo: Interactive Election Polls 2015 from
+the Guardian
+
+Source found at: https://github.com/guardian/interactive-election-polls-2015
+
+Current Limitations of the Prototype
+●
+
+ReproZip only captures what was executed; some news apps require all parts of
+the environment (e.g. gems for Ruby) that may or may not be executed, so that
+all the links in the front-end are captured correctly
+○
+
+Implemented extra rule to detect and automatically capture Ruby gems, will
+implement for other languages in next phase of dev work
+
+●
+
+Access to external APIs and data (e.g. on S3 stores) when re-running the news
+app from RPZ file
+
+●
+
+Tested on a few types of interactives of similar types (e.g. built on Rails and
+Node.js, Django) based on environmental scan of news apps
+○
+
+More testing coming in the next phase of work and/or by anyone who wants
+to test out the prototype and give us feedback!
+
+Next steps, funding to:
+➔ Continue generalizing the tool for a wider range of interactive sites
+➔ Build in functionality to point to archived, emulated web browsers
+➔ Create a GUI that works for newsrooms
+
+Thank you! Questions?
+Get this presentation: https://goo.gl/JKZKK5
+Try out our prototype: https://github.com/reprozip-news-apps/reprozip-news-apps
+Documentation: https://reprozip-news-app-archiving-tool.readthedocs.io/
+Any feedback? Either leave us an issue on GitHub or email us: rz-dj@nyu.edu
+
+

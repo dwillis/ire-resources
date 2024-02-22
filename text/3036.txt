@@ -1,0 +1,38 @@
+Robots and RSS‐feeds
+Handout at Nicar‐conference, Houston, 29th of February 2008, 3.20 p.m. in the panel “Keeping up with the
+Web: Alerts, RSS feeds, robots and more”
+By Nils Mulvad, Kaas & Mulvad, nils.mulvad@kaasogmulvad.dk
+
+Robots running every minute
+We use Robosuite from Kapowtech for making robots. We use the professional version, not OpenKapow.
+Some robots run every minute to check sites from the Danish Royal Family, the Prime Minister or the
+military. All robots run for the national wire agency. If news appears on the websites maximum two
+minutes later we will send a rss‐feed to the editorial system at the wire agency. Data are stored in MySQL
+on a Linux‐server when scraped. The wire agency has also access to look at all the data here.
+Running several robots every minute puts extra pressure on optimizing them to reduce runtime. We do
+that by not loading frames and java‐scripts. Robots are placed in a directory, and the robots are run one by
+one, meaning we can have runtime on two seconds for one robot.
+
+Robots for updating parliament data
+Every day we run a robot to upload new information on voting records from the parliament. After this run
+we send a xml‐feed to the media named Altinget (www.altinget.dk) with all this info to provide lists of
+voting records for all members of parliament. It makes it possible to see who’s absent, who is voting against
+party‐line, how often decisions are made by a block of parties etc.
+
+Sharing databases between medias
+Kaas & mulvad is regarded as a mass media and is allowed to share internal information databases with
+other mass medias. We use this to share a lot of databases of real estate records and court records with
+other medias. We normally get the data by running robots every day or 3 times a week. These big
+databases are also stored in MySQL on our Linux‐server.
+We then gives the different mass medias access to this through a Microsoft Access environment, meaning
+they can make queries etc in Microsoft Access on our MySQL‐databases. These queries are done by an
+odbc‐connection from Microsoft Access.
+
+Robots move to linux
+Right now these robots run on a Windows computer and with a rather small broadband connection on only
+4 MB. This is done by batch‐job and scheduled tasks. We’re now in a process of moving all this to our Linux‐
+server to make it possible to run more robots in a faster environment.
+For uploading the robots we use Winscp and for writing cronjobs on the Linux server we use putty. Robots
+made for windows run without any change on Linux.
+
+

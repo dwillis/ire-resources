@@ -1,0 +1,164 @@
+Beyond Chi Square
+Jennifer LaFleur, Reveal | The Center for
+Investigative Reporting
+
+Was cleanup working?
+
+Time-series correlation
+• Is the decrease real?
+• Kendall’s Tau
+• Independent variable is time
+• Can be done in most stats programs
+• Add-on for Excel called XLSTAT
+• A valuable check on any data where you might
+think there is a trend
+
+Significant decrease
+
+No significant increase or
+decrease
+
+Were extreme improvements in
+test scores a fluke?
+
+Regression
+
+Regression
+When you run a regression, you get a result called an Rsquare. That will help you see how much the independent
+variable predicts the dependent variable.
+Model Summary
+Model
+
+R
+
+R Square
+
+Adjusted R
+Square
+
+Std. Error of the
+Estimate
+
+1
+.911(a)
+
+.830
+
+.829
+
+10.8330
+
+83 percent of the variation in test
+scores is explained by change in
+poverty
+
+Regression
+Then use that information to “adjust” the data or to
+see if entities are doing better or worse than they
+should.
+
+Binary Logistic Regression
+Often the data we work with doesn’t have a continuous
+value as the outcome. We deal with data that has binary
+outcomes: yes/no, got selected/didn’t get selected.
+You also can use logistic regression when you have more
+than two categories.
+
+Logistic Regression
+Logistic regression looks at how much one more
+independent variables affect the likelihood of the
+dependent variable.
+It also allows you control for all the other factors that
+might also contribute to the outcome variable.
+Is there really an effect or is just explained by something
+else.
+
+Boston traffic stop data
+
+Performing logistic regression
+There are add-on tools for Excel. But you also can do
+logistic regression in your statistics program. (Warning: in
+some pay software, such as SPSS, logistic is an add-on
+module and one key test is not yet available in PSPP.)
+
+Monte Carlo Simulations
+and
+The Multiple Comparisons Problem
+John Templon, BuzzFeed News
+
+What Are Monte Carlo Simulations?
+From Wikipedia: Monte Carlo methods (or
+Monte Carlo experiments) are a broad class
+of computational algorithms that rely on
+repeated random sampling to obtain
+numerical results.
+Monte Carlo simulations result in a distribution of outcomes.
+They’re good for answering questions such:
+●
+●
+
+How often does X happen?
+How often does something more/less than X happen?
+
+How Have People Used Monte
+Carlo Simulations?
+-
+
+-
+
+-
+
+-
+
+To figure out how often you’d expect a tennis player to lose a
+certain number of matches. (BuzzFeed News:
+https://github.com/BuzzFeedNews/2016-01-tennis-bettinganalysis)
+To figure out who is going to have the best record in the NBA.
+(FiveThirtyEight: http://projects.fivethirtyeight.com/2016-nbapicks/)
+To simulate playing the New York state lottery. (BuzzFeed
+News: https://github.com/BuzzFeedNews/2015-11-lotterysimulations)
+To figure out improbable backdating on stock prices. (Wall Street
+Journal: http://www.wsj.com/articles/SB114265125895502125)
+
+A Simple Example
+A Monte Carlo simulation takes a chain of events,
+such as flipping a coin 10 times, and calculates
+the results, such as the percentage chance you’ll
+get heads all 10 times. You run the test once
+(flip the coin 10 times), and record the result
+(count the number of heads). Then you run the
+same test over a large sample of times, say 1
+million simulations.
+(This is why you need computer code. Otherwise
+your finger might get tired.)
+Note: The probability is 1 in 1,024 (1 / 0.5^10).
+
+Monte Carlo Simple Example
+
+Monte Carlo Simple Example
+Results
+The 10 heads result occurred 942 times in 1
+million simulations or 0.000942. The
+probability says it should’ve occurred
+approximately 0.000976, or 976 times.
+
+Multiple Comparisons Problem
+If you look at a large number of probabilistic
+results it becomes more likely that you’re going
+to find a result that “looks” significant.
+If you test 20 observations you would expect one,
+by chance, to have a probability of 0.05 (1 / 20).
+How can we control for that issue?
+
+Bonferroni Example
+Example:
+10 observations: 0.156, 0.141, 0.345, 0.561, 0.010,
+0.005, 0.003, 0.943, 0.004, 0.001
+If you didn’t correct you would get 5 significant
+results (red and orange).
+Bonferroni: Look for a p-value that is less than
+0.05 / 10 = 0.005 instead.
+Once you correct for the multiple hypotheses there
+are 3 significant results.
+
+

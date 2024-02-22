@@ -1,0 +1,283 @@
+Advanced Web Scraping
+Samples at: https://github.com/esagara/advancedweb-scraping
+
+Web servers generally want two
+types of requests:
+● Get requests
+● Post requests
+
+Get requests
+● Most common scraper target
+● URLs typically contain the data a server
+needs to display data.
+● But sometimes that information can be
+difficult to find.
+
+Post requests
+● The server relies on you submitting data in
+addition to the URL in order to complete a
+web request.
+● Sometimes these forms and the data
+needed for them are hidden.
+
+But don’t worry
+
+We can find this data using tools
+found in most major browsers.
+
+Chrome has the JavaScript Console.
+
+Firefox has the developer tools.
+
+Safari and Internet Explorer also have
+versions.
+
+Understanding how to use these
+tools is key to scraping the more
+difficult sites.
+
+Post requests
+In order to scrape sites that require form data,
+you need to know what data it wants and how it
+wants it.
+For this next part we will be looking at:
+http://bit.ly/1Bo25K1
+
+ASP.NET websites
+ASP.NET is a Microsoft web framework.
+Navigating through pages requires submitting a
+hidden form. The form elements and
+corresponding values can be found using a
+web inspector or by viewing the source code of
+the page.
+
+If you look in the source, you can
+see the form at work.
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+theForm.__EVENTTARGET.value = eventTarget;
+theForm.__EVENTARGUMENT.value = eventArgument;
+theForm.submit();
+}
+}
+//]]>
+</script>
+
+Most web inspectors allow you to look at what
+form data is being submitted to the server and
+its response.
+
+ASP forms have strange fields
+__VIEWSTATE
+__EVENTTARGET
+__EVENTARGUMENT
+__EVENTVALIDATION
+
+You will need values for at least some of these
+fields to scrape a page.
+
+__VIEWSTATE
+VIEWSTATE is a base64-encoded string, so it
+will not make sense to the naked eye. It is used
+by the server to track properties on the page
+that can change dynamically - such as when a
+user interacts with something on the page. It
+may not always be needed for a scrape, but I
+suggest using it anyways.
+
+"/wEPDwUKMTAwNTQwNzU3MA9kFgJmD2QWAgIDD2QWAgIBD2QWAgIbD2QWAmYPZBYoAgQPDxYCHgRUZXh0BSggKEphbnVhcnkgM
+SwgMjAxNCB0byBTZXB0ZW1iZXIgMzAsIDIwMTQpZGQCBw8PFgIfAAURIERlY2VtYmVyIDMsIDIwMTRkZAIJDxYCHgdPbkNsaWNrBWdqYX
+Zhc2NyaXB0OnJldHVybiBmbk9wZW5NZW51SGVscFBERignUGRmL1BoeXNpY2lhbiBEaXNjbG9zdXJlIEhlbHBfV2hvIGlzIGluY2x1ZGVkIGluI
+HRoZSByZXBvcnQucGRmJyk7ZAILDxYCHwEFaGphdmFzY3JpcHQ6cmV0dXJuIGZuT3Blbk1lbnVIZWxwUERGKCdQZGYvUGh5c2ljaWFuIE
+Rpc2Nsb3N1cmUgSGVscF9XaGF0IGlzIGluY2x1ZGVkIGluIHRoZSByZXBvcnQucGRmJyk7ZAINDxYCHwEFcGphdmFzY3JpcHQ6cmV0dXJuI
+GZuT3Blbk1lbnVIZWxwUERGKCdQZGYvQXN0cmFaZW5lY2EgUGh5c2ljaWFuIERpc2Nsb3N1cmUgUmVwb3J0X0hvdyB0byBzZWFyY2ggdG
+hlIHJlcG9ydC5wZGYnKTtkAg8PFgIfAQVRamF2YXNjcmlwdDpyZXR1cm4gZm5PcGVuTWVudUhlbHBQREYoJ1BkZi9GQVFzUGh5c2ljaWFuR
+GlzY2xvc3VyZVJlcG9ydHNQREYucGRmJyk7ZAIRDw8WAh4HVmlzaWJsZWhkZAITDw8WAh8AZWRkAhUPFgIeCWlubmVyaHRtbGVkAhcPF
+gIfAmgWAmYPZBYCZg9kFgICAw8QDxYGHg1EYXRhVGV4dEZpZWxkBQhSb3dfdGV4dB4ORGF0YVZhbHVlRmllbGQFCFJvd190ZXh0HgtfI
+URhdGFCb3VuZGcWAh4IT25DaGFuZ2UFD2ZuTG9hZFN0YXR1cygpOxAVAwIxMAIyMAI1MBUDAjEwAjIwAjUwFCsDA2dnZxYBAgFkAhkPF
+gIfAmhkAlUPFgIfAmhkAlsPEA8WBh8EBQpSZXBvcnRZZWFyHwUFAklEHwZnZBAVBAQyMDE0CzIwMTMgQW5udWFsCzIwMTIgQW5udWF
+sCzIwMTEgQW5udWFsFQQcMjAxNF4zMC1TRVAtMjAxNF4wMy1ERUMtMjAxNBwyMDEzXjMxLURFQy0yMDEzXjIyLU9DVC0yMDE0HDIwM
+TJeMzEtREVDLTIwMTJeMDktT0NULTIwMTMcMjAxMV4zMS1ERUMtMjAxMV4xMS1ERUMtMjAxMhQrAwRnZ2dnZGQCXw8PZBYEHgpPbktl
+eVByZXNzBRxyZXR1cm4gdHh0VmFsaWRhdGlvbihldmVudCk7HglPbktleURvd24FF3JldHVybiBmbktleUVudGVyKCcxJyk7ZAJjDw9kFgQfCA
+UccmV0dXJuIHR4dFZhbGlkYXRpb24oZXZlbnQpOx8JBRdyZXR1cm4gZm5LZXlFbnRlcignMScpO2QCZw8PZBYEHwgFHHJldHVybiB0eHRW
+YWxpZGF0aW9uKGV2ZW50KTsfCQUXcmV0dXJuIGZuS2V5RW50ZXIoJzEnKTtkAmsPD2QWBB8IBRxyZXR1cm4gdHh0VmFsaWRhdGlvbihl
+dmVudCk7HwkFF3JldHVybiBmbktleUVudGVyKCcxJyk7ZAJvDxAPFgYfBAUIU1RBVEVfSUQfBQUIU1RBVEVfSUQfBmcWAh8JBRVyZXR1cm
+4gZm5LZXlFbnRlcigxKTsQFTUKLS1TZWxlY3QtLQJBSwJBTAJBUgJBWgJDQQJDTwJDVAJEQwJERQJGTAJHQQJISQJJQQJJRAJJTAJJTg
+JLUwJLWQJMQQJNQQJNRAJNRQJNSQJNTgJNTwJNUwJNVAJOQwJORAJORQJOSAJOSgJOTQJOVgJOWQJPSAJPSwJPUgJQQQJQU
+gJSSQJTQwJTRAJUTgJUWAJVVAJWQQJWVAJXQQJXSQJXVgJXWRU1AAJBSwJBTAJBUgJBWgJDQQJDTwJDVAJEQwJERQJGTAJHQ
+QJISQJJQQJJRAJJTAJJTgJLUwJLWQJMQQJNQQJNRAJNRQJNSQJNTgJNTwJNUwJNVAJOQwJORAJORQJOSAJOSgJOTQJOVgJOWQ
+JPSAJPSwJPUgJQQQJQUgJSSQJTQwJTRAJUTgJUWAJVVAJWQQJWVAJXQQJXSQJXVgJXWRQrAzVnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2
+dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAnMPD2QWBB8IBRxyZXR1cm4gdHh0VmFsaWRhdGlvbihldmVudCk7HwkFF3Jld
+HVybiBmbktleUVudGVyKCcxJyk7ZAJ3Dw9kFgQfCAUccmV0dXJuIHR4dFZhbGlkYXRpb24oZXZlbnQpOx8JBRdyZXR1cm4gZm5LZXlFbnRlci
+gnMScpO2RkHHsVwY8/FzwZ2aAcBIVcjv81rxg="
+
+__EVENTTARGET
+In simple terms, the event target is basically
+telling the server what function you want it to
+execute when submitting the form. An example
+could be moving on to the next page of a
+database.
+
+Many times this will have an empty string as a
+value, indicating you do not need to pass a
+value to the form. I capture it anyways, just to
+be safe.
+
+__EVENTARGUMENT
+This is the value passed on to the function
+named by the __EVENTTARGET field. An
+example would be the next page number.
+Again, not always needed.
+
+__EVENTVALIDATION
+This feature was added in ASP.NET 2.0 and is
+a security percaution to prevent unauthorized
+requests. I still see this blank quite a bit, but
+look for it if your scraper is breaking.
+
+The other goodies
+There are quite a bit of other form values that
+can be found on an ASP.NET page. In most
+cases these are the controls - the stuff we use
+to navigate or alter a web page to display the
+results we want.
+
+Some examples:
+
+Using those form fields provide us a way to
+page through the database.
+
+Making a scraper work on ASP.NET
+Both Ruby and Python can handle post
+requests provided you have the right libraries.
+In fact you may already be using them.
+
+Python
+
+Ruby
+
+Requests
+BeautifulSoup4
+
+Mechanize
+Nokogiri
+
+The scrape in broad strokes:
+Determine what parameters are required in
+making a post request.
+● __VIEWSTATE and other ASP.NET
+standard form fields.
+● Additional fields that contain things such as
+date, page number or a person’s name.
+
+Create a payload with the values you want to
+be passed to the server. This process varies
+depending on the programming language.
+
+Submit the payload along with the URL to
+either Mechanize in Ruby or Requests in
+Python - again this varies by programming
+language.
+
+If you are dealing with a paginated web page
+like in our example, collect the new form values
+from the server response using your HTML
+parser and add them to your payload,
+overwriting old values. Re-submit and parse out
+the results. Rinse and repeat.
+
+Complex Get requests
+Scrapes using Get requests can be fairly
+straightforward. Sometimes it’s only a matter of
+incrementing a page number.
+
+Our example: http://bit.ly/1pw9mg8
+
+But not always...
+
+So how do we get at the data?
+The key is to look at how information is being
+passed back and forth from the server. We
+could probably do the same thing by digging
+through the JavaScript, but I found looking at
+how the server communicates with the browser
+to be easier.
+
+How do we do that?
+In your browser open the web inspector while
+on the map page. Select the tab that says
+“Network.” Refresh the page to see how the
+browser is communicating with the server.
+
+It should look something like this:
+
+A lot of this is fairly standard and does not
+provide strong clues to what is happening. So
+we scroll down until we start seeing requests
+made to a URL with the word ‘data’ in it (this
+was a lucky guess on my part when I first
+looked at it).
+
+What is happening
+The outage map gets its data from a JSON
+object. That object is queried using a specific
+date and time included in the url path to the
+JSON.
+
+So what do we need to do?
+We need to find what date and time to include
+in the path. This is done with a query to a
+separate url. We can see this happening in the
+Network tab as well. This time we look for a file
+with the word ‘metadata’ in it.
+
+Which returns an XML file that looks like this:
+
+So how do we scrape this?
+It’s actually two scrapes.
+
+The first scrape
+Using whichever language you prefer, generate
+a timestamp. Then append that timestamp onto
+the end of the URL to get the metadata:
+http://outagecenter.pseg.
+com/data/interval_generation_data/metadata.
+xml?timestamp=
+
+Using the HTML/XML parser of your choice
+(Nokogiri in Ruby and BeautifulSoup in Python)
+parse out the directory tag to get the value to
+be inserted in the URL for the second scrape:
+http://outagecenter.pseg.
+com/data/interval_generation_data/<DATA DIRECTORY
+HERE>/data.js?timestamp=<TIMESTAMP HERE>
+
+Conduct the final scrape and use the JSON
+parser for either Ruby or Python to read the
+result and write out to CSV or import into a
+database.
+{"file_title":"data","file_data":{"total_customers":98,"total_served":2178738,"
+total_outages":10,"date_generated":"Mar 2, 5:15 PM","overwritten_etr":"n","
+overwritten_ca":"n","servlet_interval":900,"update_wording":"Information is
+updated every 15 minutes.","storm_mode":"n"}}
+
+The key to these scrapes is the web
+inspector. You should use it to:
+● Examine how files are being passed
+between the server and the browser.
+● Look at the headers of the files - what
+requests are being made, what the
+parameters of those requests are and how
+the server responds.
+
+Doing those two steps should solve
+most challenges presented by
+complex scrapes.
+
+

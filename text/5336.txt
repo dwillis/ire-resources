@@ -1,0 +1,706 @@
+TECHRAKING 2018
+BOOTSTRAPPING THE NEWS
+
+Wifi network:Marriott Conference
+Password:CAR18
+
+Your hosts
+
+Michael Corey
+@mikejcorey
+mcorey@revealnews.or
+g
+
+Emmanuel Martinez
+@eman_thedataman
+emartinez@cironline.org
+
+Eric Sagara
+@esagara
+esagara@revealnews.org
+
+Special guest coaches
+(Thank you!)
+Steve Stirling
+@sstirling
+
+Melissa Lewis
+@iff_or
+
+What is data journalism?
+
+Why program?
+
+Because Grace Hopper says so.
+
+Watch that first step: It’s a doozy
+(RIP Harold Ramis)
+
+Be lazy: automate boring tasks
+
+Scale up to things humans can’t do
+
+404
+File not found
+
+Make things repeatable/documented
+
+Make things repeatable/documented
+
+Government salary database
+Prep time: 1 fiscal year. Serves 6
+
+1 ) Receive CSV of salaries from city
+2) Pull out fields you care about
+3) Format fields consistently for upload
+4) Group by departments
+5) Upload
+6) Repeat yearly
+
+Don’t reinvent the wheel
+
+What we’re about to install
+
+What’s a virtual machine?
+➢ A virtual computer inside your computer
+➢ Run an operating system without removing
+your existing one
+➢ We’re using VirtualBox
+
+What’s Ubuntu?
+➢ An open-source Linux OS known for its ease
+of use and portability
+➢ Today you get Xubuntu 16.04
+
+Installing VirtualBox
+1. Plug in your flash drive
+2. Double click the VirtualBox .dmg or .exe
+3. Follow the installation instructions
+4. Install the VirtualBox extensions
+a. double click on the .vbox-extpack file
+
+Installing Ubuntu
+1. With VirtualBox installed, double click on
+the NICAR Pre-K .ova file
+2. Click reinitialize MAC address
+3. Follow the prompts to install
+4. Click on the virtual machine and click “start”
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Screenshots of VirtualBox install
+
+Using your powers
+
+Navigating the
+command line
+Using your powers, part 1
+
+Welcome to the Terminal
+This dollar sign is a prompt telling you that You are
+working in a shell program called bash.
+nicar@nicar $
+
+You type a command after the prompt and hit return to
+run the command.
+
+Getting around
+pwd print working directory
+ls list directory contents
+cd change directory
+sudo superuser do
+
+pwd (print working directory)
+Where the heck am I, anyway?
+Prints the full path from the system root to where you are currently working.
+$ pwd
+/home/nicar
+You are currently in the nicar directory inside the home directory.
+
+ls (list directory contents)
+What is in my current directory?
+$ ls
+bootstrap.sh Desktop
+demo
+Documents
+Look, ma -- more directories!
+
+Downloads
+ILENE
+
+Music
+Pictures
+
+pspp.jnl
+Public
+
+Templates
+Videos
+
+ls (list directory contents)
+Often, we want to know more than just the name of files or folders.
+$ ls -la
+total 16
+drwxr-xr-x 4 nicar nicar 4096 Feb 21 2014 .
+drwxr-xr-x 31 nicar nicar 4096 Feb 26 19:34 ..
+-rw-r--r-- 1 nicar nicar
+19 Feb 26 20:34 .a_hidden_file
+drwxr-xr-x 4 nicar nicar 4096 Jan 15 2014 Documents
+drwxr-xr-x 4 nicar nicar 4096 Feb 21 2014 demo
+With the -la flag, we see hidden files, permissions, ownership, size, and more.
+
+cd (change directory)
+Use cd plus a relative or absolute path to go to a different place on your
+machine.
+nicar@NICAR:~$ cd demo
+nicar@NICAR:~/demo$
+Hint 1: Only type what’s after the dollar sign!
+Hint 2 this one is on the test: Type 1 or 2 characters, then hit TAB, and bash
+will autocomplete!
+
+cd (change directory)
+We can use cd .. to navigate up one or more levels in the directory structure
+~/demo$ cd ..
+~$
+Jump back two levels:
+~/demo$ cd ../..
+/home$
+
+cd (change directory)
+Subtle changes can make a big difference the command line.
+$ cd /home
+Is very different from:
+$ cd home
+This is because if you start a path with / it means you are referring to the root
+of the directory structure. If not, you are referring to the path RELATIVE TO
+your current location.
+
+cd (change directory)
+The tilde is a shortcut for your user’s directory:
+$ cd ~
+$ pwd
+/home/yourusername/
+And you can use this as you specify other paths:
+$ cd ~/Documents/inner_folder/
+$ pwd
+/home/yourusername/Documents/inner_folder/
+
+sudo (superuser do)
+Using sudo is basically like playing Simon Says with your computer.
+Sometimes, you can only do the action you want to do by asserting your
+superuser (administrator’s) super powers.
+$ shutdown now
+Shutdown: need to be root
+This means you can’t shut down the computer unless you’re a root user (AKA a
+superuser). But if you add sudo before the command, you’re doing the action
+as a superuser. (Simon Says shutdown.)
+$ sudo shutdown now
+
+sudo (superuser do)
+When to sudo? Any time you see an error message that includes something
+like:
+“Need to be root”
+“Permission denied”
+When to NOT sudo? Almost always.
+
+Making your screen resizable
+
+In your terminal, type:
+cd /media/nicar/VBOXADDITIONS_5.1.14_112924 /
+(Pro tip: Type a bit, hit tab to autcomplete)
+
+Now, display the contents of the directory:
+$ ls
+
+In your terminal, type:
+sudo ./VBoxLinuxAdditions.run
+●
+●
+
+Enter your administrator password (nicar)
+Wait until complete.
+
+●
+●
+
+Power down virtual machine
+Restart virtual machine
+
+Sharing folders (not today!)
+You can also use Guest Additions to create shared folders between your home
+and guest machines.
+●
+
+https://www.virtualbox.org/manual/ch04.html#sharedfolders
+
+Making, moving, deleting files
+touch create an empty file
+nano simple text editor
+cp copy a file or directory
+mv move a file or directory
+rm remove a file or directory
+mkdir make a directory
+
+touch (make an empty file)
+Not much to it:
+$ touch my_empty_file
+$ ls
+bootstrap.sh Desktop
+Downloads
+Templates
+demo
+Documents
+Pictures Public
+Videos
+
+Music
+ILENE
+
+pspp.jnl
+my_empty_file
+
+nano (simple text editor)
+In the beginning you’ll wonder why you are suddenly being transported back
+to the computers of the 80s, but in many cases using a command-line editor is
+much more efficient than hunting around for files.
+To open an existing file:
+$ nano my_empty_file
+$ nano ~/demo/alligators.csv
+To open a new file and start writing:
+$ nano a_brand_new_file
+
+nano (simple text editor)
+Editing is pretty straightforward. You can cut and paste, but not click with your
+mouse to change the position of the cursor.
+To exit a file:
+CTRL + X
+Nano will ask if you want to save your changes:
+Y or N
+If yes, you can then either keep the existing file name or pick a new one.
+
+nano (simple text editor)
+You can view (many) files in nano whether or not you have permission to write
+to the file. A common issue is that you may open and edit a file that you don’t
+have permission to save. Sadly, this will definitely happen to you.
+If you are paying attention, you will see this near the bottom when you open
+such a file:
+[ Read 300 lines (Warning: No write permission) ]
+If you see that, exit (CNTL + X, say N to saving), then re-open using sudo:
+$ sudo nano my_persnickety_file
+
+nano (simple text editor)
+So shouldn’t I just open every file with sudo?
+
+NO.
+Only do this if needed. Otherwise you’ll have lots of files your user can’t
+always access. This is because the root user owns files created with sudo, not
+your personal user. Someday soon, this will come back to haunt you.
+You must understand permissions.
+But it’s too much for today -- you must take that journey on your own.
+
+cp (copy)
+Make a copy of a file or directory and put it somewhere.
+$ ls
+my_file
+$ cp my_file my_file_copy
+$ ls
+my_file
+
+my_file_copy
+
+mv (move)
+Move an existing file or directory to a new filename (rename it) or a new
+location.
+$ ls
+my_file
+$ mv my_file potato_the_file
+$ ls
+potato_the_file
+WARNING: You’re working without a net. Notice it didn’t ask for confirmation.
+
+rm (remove)
+Delete a file or directory.
+WARNING: There is no trash bin. This means deleted. No take-backs.
+$ ls
+my_file
+$ rm my_file
+$ ls
+
+rm (remove)
+You can add the -rf flag to delete entire directories or directories of
+directories. The r stands for “recursive.”
+WARNING: You can easily delete your user’s entire folder in a single
+command if you’re not careful. Seriously, pay attention when you break out
+the -rf flag.
+$ ls
+my_directory
+$ rm -rf my_directory
+$ ls
+
+mkdir (make directory)
+This is very similar to touch, except with directories instead of files.
+$ ls
+my_directory
+$ mkdir my_new_directory
+$ ls
+my_directory
+my_new_directory
+
+It slices, it dices!
+wc word count
+head Show header of file
+tail Show tail end of file
+cat Concatenate files
+| The pipe
+> Redirect
+
+wc (word count)
+How many words (or word-like things) or bytes are in a file?
+$ cd ~/demo
+$ wc alligators.csv
+87182
+
+529874 5227216 alligators.csv
+
+Uh, which is the word count? Luckily, we can ask for help:
+$ wc --help
+
+wc (word count)
+In the help text, we learn that we can ask wc to only output character count by
+passing the -w flag
+$ wc -w alligators.csv
+529874 alligators.csv
+And we can also count characters, byte size or lines:
+$ wc -c alligators.csv ← Byte count
+$ wc -m alligators.csv ← Character count
+$ wc -l alligators.csv ← Line count
+
+head (Output first rows of a file)
+This is very useful for seeing generally what’s in a file without outputting the
+whole thing. This is especially helpful for large files.
+$ head alligators.csv
+By default, head returns the first 10 lines, but you can also specify how many
+you want:
+$ head -n 5 alligators.csv
+
+tail (Output last rows of a file)
+The opposite of head: returns the last 10 rows of a file. Great for checking log
+files.
+$ tail alligators.csv
+Or:
+$ tail -n 100 alligators.csv
+
+cat (Concatenate or print the file)
+This is the blunt instrument of outputting files. It prints the entire file.
+$ cat alligators.csv
+This can be useful in surprising ways.
+
+Input and output
+One of the core strengths of a Unix-based operating system (like Xubuntu) is
+that it’s easy to capture the output of one command and send it to the input
+of another. This deceptively simple concept is very powerful.
+
+| (The pipe)
+The pipe character is used to send the output of one command to the input of
+another. For example:
+$ head alligators.csv | tail -n 5
+The output of head -- the first 10 rows of alligators.csv -- is passed to tail
+instead of a filename. So the result of this is the last five rows of the first 10
+rows -- rows 5-10.
+So the | pipes output to the next command, and also (allegedly) looks like a
+pipe.
+
+> (Redirect)
+The redirect character is similar to the pipe, but sends output to a file instead
+of a command. For example:
+$ head alligators.csv > first_rows.csv
+This command saves the first 10 rows of alligaors.csv to a file called
+first_rows.csv. If that file doesn’t exist, it is created. If it does exist, it is
+overwritten.
+You can APPEND output to the end of a file by doubling up the character:
+$ head alligators.csv >> first_rows.csv
+
+Other fun things
+grep Global Regular Expression Parser
+find Find matching files
+wget Whoa, like, get (download) files
+
+grep (Search for string)
+grep uses regular expressions to search for matches in filenames, files or
+output.
+$ grep “LAKE MARIAN” alligators.csv
+This command searches for all instances of the string “LAKE MARIAN” in
+alligators.csv. Grep has many options. For example, in this case you could also
+get the line numbers of the matches, and make the search case-insensitive:
+$ grep -ni “LAKE MARIAN” alligators.csv
+
+grep (Search for string)
+Grep + the pipe/redirect is very powerful, because together they allow you to
+send nearly anything to the search. For example, what matches can you find
+in the first 100 rows of alligators.csv:
+$ head -n 100 alligators.csv | grep -ni “LAKE MARIAN”
+Or, send all the matches in a file to another file:
+$ grep -ni “LAKE MARIAN” alligators.csv > matches.csv
+
+find (Find matching files)
+Grep is (mostly) for finding things inside of files. If you want to find files rather
+than strings, in most cases, use find. Let’s search in the current directory for
+all files with README in the name:
+$ find . -name “alligators”
+Or, search your entire user directory, case-insensitive, and send results to a
+file:
+$ find ~ -iname “alligators” > alligators_file_list.txt
+
+wget (Downloading files)
+A simple way to download files or webpages:
+$ wget http://nytimes.com -O nytimes_dump.html
+What makes wget so great is that you can specify lots of options. How many
+tries before admitting defeat? Do I want to add header or login information
+(great for scraping)? Do I want to want to download a whole directory of stuff
+recursively? And much more.
+$ wget -r -l1 --no-parent -A .pdf http://www.server.com/dir/
+-r=recursive -l1=one level deep
+-A=accept only this file type
+
+--no-parent=don’t ascend
+
+Updating/installing software
+Using your powers, part 2
+
+What is apt-get?
+A powerful command-line tool, which works with Ubuntu's
+Advanced Packaging Tool (APT)
+It makes installing and maintaining software easy.
+$ sudo apt-get install mysql-server
+
+Keeping up to date
+Make sure to regularly update your package index.
+$ sudo apt-get update
+
+Upgrading packages
+Upgrade a package
+$ sudo apt-get upgrade mysql-server
+
+Installing new software
+Find the right package by Googling or like this:
+$ apt-cache search mysql-server
+mysql-server - MySQL database server (metapackage depending on the latest version)
+
+Install it like this:
+$ sudo apt-get install mysql-server
+
+Removing software
+$ sudo apt-get remove mysql-server
+
+Whoops! We forgot SL
+SL is not useful, but it’s fun. We forgot to install it though :(
+Luckily, you now get your shot at installing something!
+$ sudo apt-get install sl
+$ sl
+
+pip
+pip is like apt, but for Python. It’s a package manager
+for Python programs.
+Remember:
+
+pip is to Python as
+apt is to Ubuntu
+
+pip
+To install a pip package, just type:
+$ pip install <package name>
+For example:
+$ pip install Flask
+In many cases, you’ll need to add sudo to the beginning of that.
+(What’s Flask? See: http://flask.pocoo.org/docs/0.12/installation/)
+
+pip
+You can also do multiple packages at a time and specify versions
+$ pip install Django==1.11
+$ pip install “Django>=1.10”
+$ pip install Django psycopg2 beautifulsoup4
+Or force an upgrade to an existing package:
+$ pip install Django --upgrade
+
+pip exercise: Install miditime
+Let’s install miditime, a library to build data sonifications for Python that we,
+um, happened to build.
+First, let’s prove it’s not installed:
+$ python
+(A new prompt appears, which tells us we’re in the Python shell)
+>>>> import miditime
+Traceback (most recent call last):
+File “<stdin>”, line 1, in <module>
+ImportError: No module named miditime
+
+pip exercise: Install miditime
+OK, so let’s install it. First, exit the Python shell:
+>>>> exit()
+Now that we’re back in bash, use pip to install miditime
+$ pip install miditime
+Hint: If you get an error related to permissions, try sudo.
+
+pip exercise: Install miditime
+Now let’s test that it worked.
+$ python
+>>>> import miditime
+>>>>
+No errors! No news is good news, in this case.
+
+pip exercise: Destroy miditime!
+Nothing lasts forever. Let’s uninstall.
+From the bash prompt (exit Python if you haven’t):
+$ sudo pip uninstall miditime
+You’ll get a list files that uninstalling will delete, and are asked to type Y or N to
+confirm or decline to proceed.
+
+Working with open source
+Using your powers, part 3
+
+Open-source software
+➢
+
+Open source software is software that anyone can (usually) take, use, redistribute,
+modify, and sell without asking for permission from the original author.
+
+➢
+
+Encourages people from all over to learn about a code base and contribute to it
+
+➢
+
+Release early, release often
+
+➢
+
+Software missing a feature? Add it! Main developer won’t add it to core? Fork it and
+roll your own!
+
+➢
+
+Allows coders of different skillsets to work on the same project (and encourage
+better code practices)
+
+➢
+
+Usually, it’s FREE
+
+Finding open source
+➢
+
+Code repositories like Github,
+Bitbucket and
+code.google.com
+
+➢
+
+Academic institutions
+
+➢
+
+Really anywhere on the Internet
+
+NICAR loves open source
+
+Version control
+Using your powers, part 4
+
+Why do we use version control?
+➢ Keep track of changes
+➢ Try out / experiment with features without
+harming the main code
+➢ Allows other folks to collaborate without
+stepping on each other
+➢ Makes your life easier
+
+➢ Lets folks work on the
+same documents (usually
+code) without stepping on
+each others’ toes
+
+➢ Share your code with
+others
+
+➢ A distributed version
+control system
+
+➢ Find open source projects
+
+➢ Lets you collaborate with
+other coders on a project
+
+GitHub 101
+
+GitHub 201
+
+Anna Wiener
+Sat., March 12 at 2:15 p.m.
+Location: Independence
+
+Jordan McCullough
+Sat., March 12 at 4:45 p.m.
+Location: Independence
+
+How to get help
+Using your powers, part 5
+
+“Try not to be a jerk, and people probably will be nice to you.”
+–The Internet
+
+How to not
+get yelled at
+
+RTFM
+
+LMGTFY
+
+Show sample code
+
+Most important: Figuring out what to search for
+
+Official Python docs!
+
+A tutorial!
+
+StackOverflow!
+
+StackOverflow
+Example: http://stackoverflow.com/questions/20639180/python-list-comprehension-explained
+
+➢ Ask specific questions
+➢ Show your code
+➢ When people answer, comment back
+➢ Mark as resolved!
+
+NICAR-L listserv
+➢ Ask specific questions
+➢ Stay on topic
+➢ Don’t get into flame wars
+
+GitHub project repositories
+Example: https://github.com/datadesk/django-bakery
+
+➢ Read the README
+➢ Look for existing tickets before filing
+your own
+➢ Be specific; Be nice
+
+That’s all, folks!
+
+

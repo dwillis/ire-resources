@@ -1,0 +1,103 @@
+Why your editor should let you buy SQL Server
+(a/k/a: How SQL Server can save you time and help get data to more reporters)
+Janet Roberts, Database Editor
+The New York Times
+janetroberts@nytimes.com
+
+2005 IRE National CAR Conference; Hollywood, Calif.
+Panel: Dishing up data in the newsroom:
+SQL Server and MySQL
+
+Desktop management software has taken many a news story far, but as our ambitions become
+larger – and we set our analytical skills to work on larger databases – eventually the day comes
+when Access or Foxpro are no longer the best tools for the task.
+And why should the CAR expert in the corner – the one with the souped-up PC -- have all the
+fun? Moving to a server that makes it easier to share data among all reporters in your
+newsroom broadens the reach of data analysis and makes for smarter news stories.
+Here are some of the main benefits of moving to SQL Server or another industrial database
+manager:
+Database size: Access and Foxpro are great tools – until the day you get a big honkin’
+database that exceeds their size limitation (about 2 gigabytes). Figure out how many hours
+you’d waste busting the database into smaller pieces and then analyzing it in pieces. Multiply
+that by your hourly wage and figure out how long it would take before the cost of your lost
+productivity equals or exceeds the cost of buying SQL Server. Consider these comparisons:
+File size limitation
+Field count limitation
+Record size limitation
+Field size limitation
+
+Access
+2 gigabytes
+255 fields
+2,000 bytes
+255 bytes (excluding
+memo fields)
+
+SQL Server
+How big is your hard drive?
+1,024 fields
+8,000 bytes
+Up to 8,000 bytes (record can’t exceed 8,000;
+fields within the record can be any length,
+totaling 8,000 for all)
+
+Data sharing: Do you share data in your newsroom? You’ve probably already learned the
+frustrations of trying to share large databases across a network. File access is slow for large
+files. You could share versions on different computers, but you lose track of versions – who’s
+done what to which copy of the file? Keeping data in SQL Server eliminates those headaches.
+(Again, consider the time lost to inefficiency, and add that to your cost-benefit analysis.) In SQL
+Server, databases are stored centrally, all of the heavy lifting is done on the server itself, and
+only the results of a query are sent across your network. This means most queries produce
+lightning-fast results.
+Data management tools: SQL Server comes with tools and utilities that make it easier to
+create largely automated import routines for databases you get regularly. And these imports can
+do more than just move data into a table. Using Data Transformation Services (SQL lingo for
+stored data management routines), you can create functions that clean data on the way in. One
+example: I wrote a DTS script that imported Minnesota’s vehicle registration database, parsing
+owner names into last-, first- and rest-of-name fields, converting Cobol dates to SQL datetime
+format and inserting a decimal in the tax field – all on the way in. To do this in Fox or Access, I
+would have had to first split the raw data into four tables because it was more than 6 gigs in
+
+size. Then I would have had to run a series of five or six update queries to clean up the data in
+each table.
+For delimited text files that you want to import quickly without a lot of cleanup, SQL’s bulkinsert routine streams text into a data table quickly. These routines can be written in advance
+and rolled into action on deadline. I made great use of them when the Census Bureau was
+burying us in gigabytes of census 2000 data.
+Think of the time these efficiencies would save you. Add them to your cost-benefit analysis.
+Easier distribution of data to reporters: Just as SQL Server makes it more efficient to bring
+data in, it can make it easier to pump data out to your newsroom. DTS packages can be written
+to export data to spreadsheets, dbf, delimited text, whatever flavor you need. They can be set
+up in advance of a data-heavy day – like the day the school test scores arrive – and run to
+churn out digestible chunks of data to reporters.
+SQL also is happy to talk to your web. You can connect to SQL databases using Active
+Server Pages or middleware such as Cold Fusion and serve up data in web forms for reporters
+who don’t know how to use spreadsheets or write SQL queries. On the flip side, you can use the
+web to help reporters feed information into a database using simple data-entry forms on your
+newsroom intranet.
+More powerful searching: SQL Server comes with full-text indexing, which can be used to
+index fields within your databases and documents on your network. When I worked in
+Minnesota, this solved a problem we’d had for years with a database of civil court cases. We
+wanted an easy search to see if anyone had sued or been sued. But the case title field was a
+mess and virtually impossible to parse into clean defendant/plaintiff fields. With full-text search,
+we didn’t have to parse. We just pointed a full-text search query at that field in the database.
+Among the other cool bells and whistles that are part of SQL Server:
+It can send mail. At the New York Times, we use this feature to notify us when it’s time
+to update one of our data holdings.
+It has a job scheduler. SQL lets you work 24-7. (What editor could pass on this?) You
+can schedule data management jobs to run at any hour of the day or night.
+You can use DTS to transfer data not just in and out of SQL but between any data
+source and any destination – text to Excel, Excel to dbf, etc.
+You can save queries (called “views” in SQL Server) and query them from outside SQL
+Server (e.g., from an ASP page).
+Queries and other routines can be saved as stored procedures, which speed
+performance, and can be called from outside SQL Server.
+It has a backup tool that makes it easy to create and schedule backups.
+Learn more about it: Because it is so widely used, there is a ton of help related to SQL Server
+on the Web. If you get stuck, nine times out of 10, you can find a solution with a Google search.
+Here are some useful sites.
+Microsoft general product information: www.microsoft.com/sql/
+Microsoft developer network: msdn.microsoft.com/sql/
+Microsoft on DTS: www.microsoft.com/sql/evaluation/features/datatran.asp
+SQL Server Central: www.sqlservercentral.com
+
+

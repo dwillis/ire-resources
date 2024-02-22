@@ -1,0 +1,324 @@
+nprapps/app-template · GitHub
+
+$
+PUBLIC
+
+4/3/14, 12:52 PM
+
+This repository
+
+Search or type a command
+
+?
+
+Explore
+
+Features
+
+Enterprise
+
+' nprapps / app-template
+
+⋆ Star
+
+The NPR visuals team's opinionated project template for client-side apps.
+http://blog.apps.npr.org/2013/02/14/app-template-redux.html
+
+2
+
+Sign up
+
+Blog
+
+/ 473 commits
+
+& 8 branches
+
+& branch: master
+
+app-template / 3
+
+& Fork
+
+74
+
+( Code
+
+0 0 releases
+
+1 9 contributors
+
+) Issues
+
+29
+
+* Pull Requests
+
+0
+
++ Pulse
+
+Kill init branch step in setup. Closes #319.
+onyxfish authored 6 minutes ago
+
+799
+
+Sign in
+
+latest commit e56068d425 !
+
+, Graphs
+
+" confs
+
+Backport better way of sourcing env vars. Closes #306.
+
+5 hours ago
+
+" data
+
+Never deploy live-data. #54. Closes #39.
+
+a year ago
+
+" etc
+
+Backport gdocs improvements from dailygraphics. Closes #313.
+
+2 hours ago
+
+HTTPS clone URL
+
+" fabfile
+
+Better errors when lessc and jst aren't installed. Closes #314.
+
+3 hours ago
+
+https://github.com/nprapps/app-te
+!
+
+" jst
+
+Make copytext more flexible. Generate JS equivalent. Closes #190.
+
+8 months ago
+
+" less
+
+deploy assets with 24-hour TTL, closes #278; also fixing bad import c…
+
+3 months ago
+
+" templates
+
+Add config and ticket for GA topics. Closes #292.
+
+" tests
+
+Cleanup print statements.
+
+" www
+
+Improvements to assets rig. Closes #312.
+
+# .gitignore
+
+merge
+
+3 months ago
+
+# LICENSE
+
+Update LICENSE for 2014.
+
+3 months ago
+
+# PROJECT_README.md
+
+Bump year.
+
+a month ago
+
+# README.md
+
+Kill init branch step in setup. Closes #319.
+
+6 minutes ago
+
+# app.py
+
+Register static urls after dynamic ones
+
+3 months ago
+
+# app_config.py
+
+Add config and ticket for GA topics. Closes #292.
+
+# copytext.py
+
+Finish copy test.
+
+4 months ago
+
+# crontab
+
+Tweak crontab syntax.
+
+6 months ago
+
+# gzip_assets.py
+
+Import less files for bootstrap and font-awesome. Closes #186.
+
+8 months ago
+
+# gzip_types.txt
+
+Overhaul gzip+asset deployment.
+
+8 months ago
+
+# public_app.py
+
+Allow port selection for public_app.py.
+
+3 months ago
+
+# render_utils.py
+
+Cleanup render_utils. Closes #296. Closes #307.
+
+4 hours ago
+
+# requirements.txt
+
+remove dulwich from dependencies, closes #311
+
+16 days ago
+
+# run_on_server.sh
+
+Experimental fabcasting support. #202.
+
+8 months ago
+
+# static.py
+
+Factor static routes into static.py. Closes #239.
+
+3 months ago
+
+& Network
+
+https://github.com/nprapps/app-template
+
+2 hours ago
+
+You can clone with HTTPS or
+Subversion. ?
+
+- Clone in Desktop
+. Download ZIP
+
+4 months ago
+3 hours ago
+
+2 hours ago
+
+Page 1 of 3
+
+nprapps/app-template · GitHub
+
+4/3/14, 12:52 PM
+
+4 README.md
+
+nprviz's Project Template
+About this template
+Assumptions
+Copy the template
+Configure the project
+Bootstrap issues
+Develop with the template
+
+About this template
+This template provides a a project skeleton suitable for NPR projects that are designed to be served as flat
+files. Facilities are provided for rendering html from data, compiling LESS into CSS, deploying to S3,
+installing cron jobs on servers, copy-editing via Google Spreadsheets and a whole bunch of other stuff.
+This codebase is licensed under the MIT open source license. See the !LICENSE! file for the complete license.
+Please note: logos, fonts and other media referenced via url from this template are not covered by this
+license. Do not republish NPR media assets without written permission. Open source libraries in this
+repository are redistributed for convenience and are each governed by their own license.
+Also note: Though open source, This project is not intended to be a generic solution. We strongly encourage
+those who love the app-template to use it as a basis for their own project template. We have no plans to
+remove NPR-specific code from this project.
+
+Assumptions
+The following things are assumed to be true in this documentation.
+You are running OSX.
+You are using Python 2.7. (Probably the version that came OSX.)
+You have virtualenv and virtualenvwrapper installed and working.
+You have NPR's AWS credentials stored as environment variables locally.
+For more details on the technology stack used with the app-template, see our development environment
+blog post.
+
+Copy the template
+Create a new repository on Github. Everywhere you see !$NEW_PROJECT_NAME! in the following script, replace it
+with the name of the repository you just created.
+git!clone!git@github.com:nprapps/appFtemplate.git!$NEW_PROJECT_NAME
+cd!$NEW_PROJECT_NAME
+
+https://github.com/nprapps/app-template
+
+Page 2 of 3
+
+nprapps/app-template · GitHub
+
+4/3/14, 12:52 PM
+
+mkvirtualenv!FFnoFsiteFpackages!$NEW_PROJECT_NAME
+pip!install!Fr!requirements.txt
+fab!app_template_bootstrap
+
+This will setup the new repo and will replace !README.md! (this file) with !PROJECT_README.md!. See that file for
+usage documentation.
+By default !app_template_bootstrap! will use !nprapps! as the Github username, and the current directory name
+as the project name and repository name. This is a best practice, but you can override these defaults if you
+need to:
+fab!app_template_bootstrap:$GITHUB_USERNAME,$PROJECT_NAME,$REPOSTORY_NAME
+
+Bootstrap issues
+The app-template can automatically setup your Github repo with our default labels and tickets by running
+!fab!bootstrap_issues!. You will be prompted for your Github username and password.
+
+© 2014 GitHub, Inc.
+
+Terms
+
+Privacy
+
+Security
+
+https://github.com/nprapps/app-template
+
+Contact
+
+5
+
+Status
+
+API
+
+Training
+
+Shop
+
+Blog
+
+About
+
+Page 3 of 3
+
+

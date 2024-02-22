@@ -1,0 +1,377 @@
+Hands-on R class
+www.science.smith.edu /~amcnamara/NICAR2016.html
+
+Your instructors
+This file contains all the code from the NICAR 2016 hands-on R workshop. It was created by your instructors,
+
+Coulter Jones, coulter.jones@wsj.com
+
+Amelia McNamara, amcnamara@smith.edu
+
+Code is available on github, http://bit.ly/NICAR16-R and slides on http://bit.ly/NICAR-Rhtml
+
+Some background info
+R has a bit of a learning curve but once you get used to it, you’re off to the races. Keep in mind you will get a ton of
+errors while you’re learning R — in fact, you’ll still deal with errors even if you’re a master user! Google is your friend
+— copy and paste the error into Google and see what others have written.
+
+PRO TIP: R is VERY VERY VERY case-sensitive. A misplaced capital letter or double-quote where
+there should be a single-quote might just be the culprit to your error.
+
+And don’t forget — save EVERYTHING! RStudio allows you to save your data, your scripts, your history, your entire
+RStudio workspace — save it all and save often.
+
+RStudio
+RStudio is a great interface to the R language. The interface has 4 panes.
+You’ll do your coding in the Console (lower left, looks like Terminal/command line).
+The Environment and History (upper right) panes keep track of everything you have loaded into your environment
+(mostly, data) and all the R commands you have ever typed. This is great because you can search through your past
+code to find commands you may have forgotten.
+The Source pane is on the upper left and displays your data tables, as well as any documents you are reading or
+editing (maybe, you’re looking at this document there!).
+The Files/Plots/Packages/Help/View pane on the lower right does a bunch of stuff — holds files, displays the
+graphs you’ve made, shows the packages you have installed, and more. Perhaps the most important tab of that
+lower right pane is Help. R has two help functions. Forget what an average or mean is? Try this.
+?mean
+or
+
+1/11
+
+help(mean)
+
+Looking for more help?
+Cheatsheets
+Do you like having something printed out and at your side at all times?
+RStudio cheatsheets: http://www.rstudio.com/resources/cheatsheets/ On the RStudio interface, packages
+(dplyr, ggplot2), RMarkdown, etc.
+Minimal R: https://cran.r-project.org/web/packages/mosaic/vignettes/MinimalR.pdf
+
+Website resources
+Online learning/courses
+
+Packages and syntax
+R has “base” functionality that is built into the language, but most of the good stuff comes from user-written
+“packages” that extend the language. We’ll be using the mosaic, ggplot2 and dplyr packages in this class,
+among others. Because R is open source (and was written by statisticians…) it has some strange features
+compared to other programming languages. The most obvious is that its syntax is not consistent. Almost any task
+you want to do, there are three ways to accomplish. And packages can contribute to this nonsense by providing their
+own syntax. We’ll try to point to places where the code we are showing you is just one of many ways to do
+something, but know that when you start googling questions you may see things that don’t look familiar. Don’t be
+afraid!
+To use a package, you have to require() it. Lets start by requiring some packages:
+require(mosaic)
+require(ggplot2)
+
+Data!
+Later in this class, we will show you how to load in external data, but for now we are going to begin by playing with
+some data that comes with R. This will allow us to start playing quickly.
+We’ll start with some data about midwest demographics. To get started, you can read the data in with the data()
+command, and see the first few rows with head().
+data(midwest)
+head(midwest)
+For a spreadsheet-like experience of your data, just click on its name in your Environment tab to see a preview of
+the data in the Source pane. Note that you can only look, you can’t “touch.” R is a programming language, so if you
+see values you want to have changed, or you need to add another variable based on an existing one you have to do
+
+2/11
+
+so programmatically.
+If you want to read about all the variables that are included in the dataset, you can run
+?midwest
+or
+help(midwest)
+A few more handy functions that have to do with datasets are str(), which tells you about the structure of your
+data,
+str(midwest)
+and summary(), which provides a summary.
+summary(midwest)
+You can also get the list of variable names using the names() function,
+names(midwest)
+
+Changing data types
+Sometimes, the way that R has loaded in data is not exactly what we would like. In that case, we might want to
+change the data type. For example, inmetro has values of 0 and 1, with 0 meaning “not in metro” and 1 meaning
+“in metro.” R has considered this to be integer data, but we would rather have it as factor data (R’s word for
+categorical).
+midwest <- midwest %>%
+mutate(inmetro =
+factor(inmetro))
+To do this transformation, we are overwriting the old version of our midwest dataset with a new version. This
+change takes the original dataset, and then “pipes” the data (using the %>% operator) into a mutate() call.
+1. Try running str() on the dataset again. What happened to inmetro?
+2. How would you change the variable category to be a factor?
+
+Plotting in R
+Now that we have data, we can begin doing Exploratory Data Analysis, making some plots to give us a sense of the
+relationships in the data.
+Here’s how we can create a scatterplot:
+
+3/11
+
+xyplot(popwhite~popblack, data=midwest)
+To see the distribution of one variable, try a histogram or a density plot
+histogram(~percprof, data=midwest)
+densityplot(~percprof, data=midwest)
+bwplot(~percprof, data=midwest)
+Maybe you want to compare a few different groups. You could make two plots side by side,
+histogram(~percprof|inmetro, data=midwest)
+bwplot(~percprof|inmetro, data=midwest)
+You could put two plots on the same page,
+densityplot(~percprof, groups=inmetro, data=midwest,
+auto.key=TRUE)
+bwplot(inmetro~percprof, data=midwest)
+Or you could color points by another variable,
+xyplot(poptotal~area, groups=inmetro,
+data=midwest)
+
+Summary statistics
+Another part of exploratory data analysis is finding summary statistics. These work much the same way as plots.
+mean(~popblack, data=midwest)
+Other than mean() you can try median() mode() min() max() sd() and many more. Or, for a best-of function,
+try favstats()
+favstats(~popblack,
+data=midwest)
+If you have two variables and want to see their relationship, you can feed most of these functions several arguments.
+For example,
+mean(popblack~inmetro, data=midwest)
+1. Do metro areas have larger percentages of whites than rural areas? How do you know?
+
+4/11
+
+For categorical data, tally() is useful,
+tally(~inmetro, data=midwest)
+And, it can be used to tally two variables together,
+tally(inmetro~category, data=midwest)
+R is also fond of chaining together functions, or nesting them. So, once you’ve tally-ed your data you can use
+those counts to make a barchart.
+barchart(tally(~category,
+data=midwest))
+
+Sorting and ordering
+Maybe we’re working on a story about the county in the midwest that has the largest percentage of black people. We
+can use the arrange() function to see this.
+midwest %>%
+arrange(percblack)
+But, this is sorting in increasing order, and we want in decreasing order. We could look in the documentation for
+arrange() to see how to change this.
+midwest %>%
+arrange(desc(percblack))
+1. What county has the largest American Indian population (in absolute numbers)?
+
+Second hour of the workshop
+Make sure you have the packages loaded if you don’t already.
+require(mosaic)
+require(ggplot2)
+require(dplyr)
+
+Loading Data
+Most of the time, you won’t be working with data sets available through packages and will need to import data in to
+R. RStudio makes this very simple. On the Environment pane (upper right corner), the Import Dataset icon
+provides a step-by-step process to importing files. Following those steps will not only import the data, but print out
+the code in the Console showing how it was done.
+If you are working on the lab computers, the data is already downloaded for you. If not, you need to go find it at
+
+5/11
+
+bit.ly/IRE15-R.
+docs <- read.csv("/data/Intro_to_R/MAC/PartD_Providers_FORCLASS.csv", header =
+T)
+To import this data set, we used the read.csv() function. The key part of this command is making sure that you
+direct the command to where the file is located on your computer. Check other functionality of ?read.csv if you
+have questions.
+
+Note: The way file directories are referenced in R varies between a Mac and PC.
+
+MAC file directories follow this protocol use “~/file_location”
+
+PC versions would follow this: “C:_lcocation"
+
+Let’s see what our data looks like to make sure it imported correctly. Remember, the str() command tells you the
+structure of your data.
+str(docs)
+The data appears to have imported correctly for reach field. We can move on to some basic summary statistics.
+summary(docs)
+Although interesting, let’s really focus in one field:COST_SUM. favstats, which we used on the other data set will
+show the general flow.
+favstats(~COST_SUM,
+data=docs)
+
+Quick charts with ggplot
+We see from our stats function that the median (298,512) is significantly lower than the mean (401,605.7). We know
+that might be a sign of some outliers on he higher end, particularly if we read Sarah’s Cohen’s Numbers in the
+Newsroom [http://store.ire.org/products/numbers-in-the-newsroom-using-math-and-statistics-in-news-secondedition-e-version]. Let’s chart our data to see the distribution.
+The ggplot library has many charting capabilities, but qplot() function is the quickest way to quickly visualize
+your data. Let’s make a histogram of COST_SUM.
+qplot(COST_SUM, data =
+docs)
+
+6/11
+
+As a function qplot basically works like this: qplot([x_variable], [y_variable], data = [data_frame], geom =
+“[geom_type]”) (Remember, use ?qplot() or help(qplot) if you need help.) The function makes assumptions
+on the best type of chart to use. In the above example, because you only passed one variable it assumed a
+histogram is what is needed. We could explictly tell it to do that.
+qplot(COST_SUM, data = docs, geom =
+"histogram")
+The histogram is revealing, a similar type of chart is density which also shows the distribution.
+qplot(CLAIM_COUNT, data = docs, geom =
+"density")
+So far we’ve only charted one variable. Maybe we want to look at two variables in comparison. For example, How
+the total claims per physician (CLAIM_COUNT) compares to the number of of brand name claims
+(BRAND_COUNT).
+qplot(CLAIM_COUNT, BRAND_COUNT, data =
+docs)
+Maybe, you want to look at that as line graph, instead.
+qplot(CLAIM_COUNT, BRAND_COUNT, data = docs, geom =
+"line")
+That, isn’t super helpful. What we really want to see is a general smooth line showing the general trend.
+qplot(CLAIM_COUNT, BRAND_COUNT, data = docs, geom =
+"smooth")
+Sadly, that isn’t that interesting. The trend shows us the trend AND the individual plotted points to see who is above
+or below the general trend line. You can use the combine function c() to chart both.
+qplot(CLAIM_COUNT, BRAND_COUNT, data = docs, geom = c("point",
+"smooth"))
+
+Altering a data frame in R
+There is plenty to work with for this data, but let’s say we want to alter it slightly and calculate additional fields. If we
+type equations out, the Console wil return the results.
+2+4
+R follows standard mathematical order of operations (PEMDAS). So, this:
+
+7/11
+
+2+4*3^2
+gives you a different result than this:
+(2+4)*3^2
+As journalists, it’s pretty rare to just be type out equations like that. However, it’s not uncommon to use math on our
+existing data to create new fields. Take the CLAIM_COUNT and BRAND_COUNT fields. We know the total number
+of claims each doctor has approved and how many of those claims were filled with brand name drugs. We need to
+divide BRAND_COUNT by CLAIM_COUNT. We can use mutate() to create a field in our data called
+BRAND_PCT with this ratio.
+docs <- mutate(docs, BRAND_PCT =
+BRAND_COUNT/CLAIM_COUNT)
+and head() and str() to take a look at the data field we just created.
+head(docs)
+str(docs)
+1. How many doctors’ claims are entirely brand name drugs?
+While the ratio is correct, if you’d prefer to have it look more like a percentage by multiplying the ratio by 100. We
+can simply overwrite the existing data we just created.
+docs <- mutate(docs, BRAND_PCT =
+(BRAND_COUNT/CLAIM_COUNT)*100)
+head(docs)
+
+Filtering data with DPLYR
+Now this has been interesting, but in many cases we want to pull out specific pieces of our data. What if we’re only
+interested in doctors in Colorado. We can do this with the filter() function, which is part of the dplyr package.
+Remember, if this is our first time using dplyr this sessione we need to require() first.
+require(dplyr)
+filter(data, method you want to filter
+This is how the filter function works. on)
+. If we use it will simply
+print the results in the Console. We can also assign the results to a new dataframe. To find only doctors from
+Colorado:
+colorado_docs <- filter(docs, STATE ==
+"CO")
+View(colorado_docs)
+
+8/11
+
+You don’t have to be limited by one variable. Earlier we looked at high-cost prescribers. Perhaps, we’d like to do that
+just for Colorado doctors. We can use the & to to look at all Colorado doctors who have
+BOOLEANS review: In R we can use two types of Boolean characters
+AND represented by &
+OR represented by |
+& limits our filter because both criteria must be met. | broadens our filter. If either criteria is met the data is included.
+The above code shows doctors just from Colorado who also exceeded $500,000 in costs. Below would give doctors
+who either are from Colorado or have a cost that exceeds $500,000 and could be from any state.
+colorado_high <- filter(docs, STATE == "CO" & COST_SUM >
+500000)
+Now we can view the new data set we created in our Environment or order by using arrange() which you learned
+earlier
+head(colorado_high, 20) %>%
+arrange(desc(COST_SUM))
+
+Grouping with dplyr
+That’s helpful, but what if you want to get a sense of the average salary or total number of doctors in each state. In
+Excel you might use a PivotTable, in SQL you’d used a “Group By”" query. In dplyr the syntax is very similar to SQL
+with the group_by() and summarise() functions.
+You’ll do this in two steps. First, decide which variables to put in to the group_by function.
+state_group <- group_by(docs,
+STATE)
+Then use what you just created to summarise our data and then view the result.
+state_docs <summarise(state_group,
+count = n(),
+median_cost = median(COST_SUM)
+)
+state_docs
+You can add as many summary statistics as you want.
+
+9/11
+
+state_docs <summarise(state_group,
+count = n(),
+median_cost = median(COST_SUM),
+total_cost = sum(COST_SUM),
+high_cost = max(COST_SUM),
+sd_cost = sd(COST_SUM),
+median_scripts = sum(CLAIM_COUNT),
+total_scripts = sum(CLAIM_COUNT)
+)
+If you decided you wanted to group by more than one variable, just add it to the function, separating each variable
+by a comma. To group by city and state would be:
+state_group <- group_by(docs, CITY,
+STATE)
+Then, just re-run the summarise function.
+state_docs <summarise(state_group,
+count = n(),
+median_cost = median(COST_SUM),
+total_cost = sum(COST_SUM),
+high_cost = max(COST_SUM),
+sd_cost = sd(COST_SUM),
+median_scripts = sum(CLAIM_COUNT),
+total_scripts = sum(CLAIM_COUNT)
+)
+
+Other Options
+We’ve shown you several R functions, but keep in mind. If you Google for an answer, you may see different ways to
+do things. The syntax for R’s base package requires users to use a $ to separate the data frame from the variable:
+[data_frame]$[variable]
+So for example, if you want to find the median of the CLAIM_COUNT in the colorado_high data frame:
+median(colorado_high$CLAIM_COUNT)
+Similarly, the base package comes with it’s own charting library. So we can create a histogram hist()
+hist(colorado_high$CLAIM_COUNT)
+plot(x ~
+or simply plot values y)
+
+:
+
+10/11
+
+plot(colorado_high$CLAIM_COUNT ~
+colorado_high$BRAND_COUNT)
+
+Using google to solve all your problems
+In the session, two things came up. - Someone wanted to change the axis labels in their qplot() so it wasn’t
+scientific notation - Someone asked how you get comfortable doing R on your own.
+The answer to both those questions is, “google.” So, lets take the axis label question as an example. I didn’t
+remember how to do this (even though I use ggplot2 a lot), so I googled
+
+change axis labels ggplot2
+
+Looking at the results, I tried clicking on the third result, How to format your chart and axis titles in ggplot2 . This
+didn’t turn out to be super useful, so I changed my query to
+
+change axis labels ggplot2 scientific notation
+
+In this search, the first result was How do I change the formatting of numbers on an axis with ggplot?
+I read through the question and the comments, and was reminded of the scales package. So, I installed it and
+required it
+install.packages("scales")
+require(scales)
+Then, I tried some new code
+qplot(COST_SUM, data = docs, geom = "histogram") + scale_x_continuous(labels = comma)
+and that was what I wanted!
+
+11/11
+
+

@@ -1,0 +1,166 @@
+Finding Errors in Scanned
+FEC Paper Filings
+Rosie Cima, Scripps & Newsy
+(Formerly Center for Public Integrity)
+
+rfcima@gmail.com
+@rosiecima
+
+Question:
+Why was I looking at raw FEC data in the ﬁrst place?
+
+Question:
+Why was I looking at raw FEC data in the ﬁrst place?
+Answer:
+That story hasn’t run yet, I don’t work there anymore,
+leave me alone.
+
+Other Answer:
+I stood on the shoulders of giants.
+
+Other Answer:
+I stood on the shoulders of giants.
+
+Other Answer:
+I stood on the shoulders of giants.
+
+Why raw FEC data?
+●
+●
+●
+
+Available faster (crucial on ﬁling nights)
+More data in it than some of the FEC’s other
+data products
+When something weird like this turns up,
+it’s easier to ﬁgure out what’s going on
+
+Why not raw FEC data?
+●
+
+Single-use quirky AF ﬁle type
+
+●
+
+Several versions, inconsistent structure,
+headers, codings
+
+@zubakskees’ raw FEC tools
+●
+●
+●
+
+Node CSV parser based on @dwillis’
+Fetch (Ruby)
+Manually added mappings for paper
+forms
+Built a loader to iterate the parser
+over a set of .fec ﬁles and insert the
+results in a Postgres db
+
+Also used by the less savvy reporters in the
+newsroom!
+
+@zubakskees’ raw FEC tools
+●
+●
+●
+
+Node CSV parser based on @dwillis’
+Fetch (Ruby)
+Manually added to mappings for a
+subset of paper forms
+Loader to iterate over a set of .fec ﬁles
+and insert the results in a Postgres db
+
+Also used by the less savvy reporters in the
+newsroom!
+And scrubs like me.
+
+Question:
+That’s pretty nifty! Can I use it?
+
+Question:
+That’s pretty nifty! Can I use it?
+Answer:
+Yep!
+https://github.com/PublicI/fec-loader
+
+Back to the errors...
+Some things we tried:
+●
+●
+
+Looked for outliers, mismatched data types
+Compared calculated numbers to reported numbers
+
+Tools we used:
+●
+●
+
+Python
+PostgreSQL
+
+Desk reporting
+FEC contracted a
+company called
+Aurotech which
+used software
+made by
+Captricity which
+transcribed
+documents using
+MechanicalTurk
+
+Develop a theory
+
+Back to Bill
+[[RECEIPT]]
+
+Informed searches (things that ﬁt our theory and were
+problematic):
+●
+●
+●
+●
+
+Names instead of addresses
+Blank names
+Blank dollar amounts
+Nonsense dates
+
+JOIN FILINGS
+TABLE TO
+EXPENDITURES
+TABLE
+
+MISSING DOLLAR
+AMOUNTS
+
+REGEX
+
+[[RESULTS]]
+
+Figure out what you can say without cleaning!
+I didn’t have to ﬁnd all the errors in the paper ﬁlings to say something meaningful
+about the error rate!
+
+Figure out what you can say without cleaning!
+I didn’t have to ﬁnd all the errors in the paper ﬁlings to say something meaningful
+about the error rate!
+House candidates had been ﬁling electronically for years
+A natural control group for people ﬁlling out their forms wrong!
+
+Counted “signiﬁcant errors”
+Looked for filings where the reported summary item was more than +/- 1% off from
+my calculation from the itemized receipts (for the first version of every filing.)
+This happened in 20 percent of the Senate paper filings, compared to 2 percent of
+the House electronic filings.
+
+https://publicintegrity.org/federal-politics/company-us
+ing-foreign-workers-botches-u-s-senate-campaign-fi
+nance-records/
+@rosiecima
+rfcima@gmail.com
+
+

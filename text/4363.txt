@@ -1,0 +1,386 @@
+Basic Statistical Analysis in Excel
+NICAR 15 / Norm Lewis, University of Florida
+
+Installing Analysis ToolPak, Windows 2013
+Click on the Data tab. The Analysis section on the far right should
+look like the box to the left. If it does not, install the ToolPak: 1) Click
+on the File tab. 2) Click on Options at the bottom of the list on the
+left-hand side. 3) Click on Add-Ins, which will trigger the dialog box
+seen at the lower left. 4) At
+the bottom of the box, if
+Manage: Excel Add-ins is
+showing, click on the Go…
+button. Click on the Analysis
+Tool Pak box (seen below),
+then click OK.
+
+Installing Analysis ToolPak, Macintosh 2011
+Microsoft no longer includes the Analysis ToolPak for Macintosh users. (Insert snarky commentary
+about Microsoft leaving Mac users at the curb.) Microsoft support refers us to StatPlus:mac LE
+from AnalystSoft for free, though with encouragement to upgrade to the paid Pro version.
+Average
+The most common statistic journalists use is average. Average comes in three flavors:
+ Mean
+Sum divided by number of items. Excel function: AVERAGE()
+ Median Midpoint of a sorted list. Excel function: MEDIAN()
+ Mode Most frequent occurrence. Excel function: MODE()
+Mean is used so often it’s the default. But it overstates what’s typical for data that have outliers
+such as income, wealth and housing prices. In those cases, the median is better. (Mode is rarely
+used in journalism.)
+
+Calculate Mean and Median
+Open the Faculty sheet. Go to the bottom. Leave a blank row.
+ Write the word Mean. In the next cell, insert this formula: =AVERAGE(e2:e1054)
+ Write the word Median. In the next cell, insert this formula: =MEDIAN(e2:e1054)
+You should get the data below.
+Which of these two figures should you use? The mean is higher
+because it is skewed by some big salaries. Thus, median is a better
+representation of a typical professor on a nine-month contract.
+
+When Average Isn’t Enough: Standard Deviation
+Now let’s put the Analysis ToolPak to use.
+1. Click on a cell with a salary – any single one will do.
+2. Click on the Data tab. On the right, click on Data Analysis.
+3. Choose Descriptive Statistics (below) and then OK.
+
+4. In the ensuing dialog box (right), click
+on the box besides Summary statistics
+
+5. In the Output
+Range box, insert
+G3 or click on the
+cell – this tells Excel
+where to place the
+descriptive statistics
+
+The ensuing data look like this:
+The mean and median are just
+as we calculated them before,
+with the addition of the mode
+
+This tells us the
+smallest and largest
+salary in this data set
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 2
+
+The standard deviation tells us how much this data set varies from
+the mean. That can be useful in evaluating a data set like this,
+which varies considerably.
+Standard deviation is a measure, plus or minus, from the mean.
+One standard deviation includes two-thirds (66.7%) of all of the
+data points – in this case, salaries. The larger the standard
+deviation relative to the mean, the more variance in the data.
+The standard deviation here is 43,139.91. Thus, two-thirds of the
+1,053 salaries in this list are between:
+101,367.50 – 43,139.91 = 58,227.59 and
+101,367.50 + 43,139.91 = 144,507.41
+That’s a fairly large range, which tells us that university salaries
+vary considerably from the mean. Thus, defining “typical” pay is
+difficult if we use just the mean – or even the more representative median.
+Consider another example to see why standard deviation matters. To
+the left is a graphical representation of Amazon customer ratings of a
+book by Ann Coulter. The mean would be about 3 stars. But neither the
+median nor the mean would be representative of what customers think
+about the book. Raters tend to either love or despise the book. Thus,
+the standard deviation would give us an important statistic beyond the
+average.
+
+Correlation
+Correlation measures whether two things are related. Does one go
+up when the other does? Does one go down when the other goes up?
+Consider height and weight, as in the chart to the right. As people
+grow taller, they tend to weigh more. Shorter people tend to weigh
+less. Thus, height and weight are correlated. Further, they are
+positively correlated – as one goes up, the other goes down.
+Consider drinking alcohol and dexterity, as shown in the
+chart to the left. The more drinks one has, the less dexterity
+the person has. As one goes up, the other goes down. This
+is an example of a negative correlation.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 3
+
+Correlations vary between -1 and +1, like this:
+-1
+0
++1
+
+Perfect negative correlation
+No correlation
+Perfect positive correlation
+
+As one thing goes up the other goes down at the same rate (or vice versa)
+The two things have nothing in common
+As one thing goes up the other goes up at the same rate (or both go down)
+
+In the physical world, perfect correlations are not uncommon.
+But in our everyday world of people in the social sciences, few things are correlated beyond -0.7 or
++0.7. That’s because rarely is any one thing solely correlated with something else – usually more
+than one factor is involved. Consider heredity and height.
+Heredity and Height
+Click now on the Height sheet in the Excel data
+set. You’ll see two columns of data from 100 pairs
+of fathers and sons, measuring their height in
+inches. The scatter chart of blue dots illustrates
+that there’s a messy relationship between the two.
+As dads get taller, sons do, too – sort of.
+The chart shows the correlation coefficient is
+0.527803, or 0.53. There’s no negative mark, so
+the number is positive by default.
+This 0.53 means that for each inch of height a father gains, the son gains about half an inch. As
+you might guess, other factors are at play – specifically, the mother’s height and nutrition during
+childhood.
+NFL 2014 Correlations
+(For this data, a hat tip goes to Steve Doig of Arizona State University, who used a similar data set
+in a handout a few years ago.) Open the NFL sheet for the 2014 regular season, according to ESPN
+statistics. Click on the Data tab, and then on Data Analysis on the right-hand side.
+
+You’ll see a dialog box. Choose
+the Correlation option and
+click OK.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 4
+
+With the cursor in the Input Range box, use your mouse/cursor to select the columns with
+numbers in them (in this data set, all but team names). Include the column headers (row 1), as
+below. Then click on the Labels in First Row box.
+
+Click here
+
+Place the cursor in the Output Range box and click on a blank cell, such as J4.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 5
+
+The result looks like this:
+
+Let’s interpret the correlation table.
+These 1’s are
+perfect
+correlations
+because they
+are identical:
+yards gained =
+yards gained
+
+This is the strongest correlation. Points scored
+has the highest correlation with wins.
+
+This area is
+blank because
+it would just
+repeat what is
+below the
+string of 1’s
+
+This also is a strong correlation, in the negative: The
+more points given up, the less likely the team is to win.
+
+Not surprisingly, points scored or points allowed have the strongest correlation with wins. A
+statistician would say the two are “associated.” One cannot say that one “causes” the other – points
+do not “cause” a win. But the two are related. More points scored = more wins. More points
+allowed = fewer wins. Thus, points are associated with wins.
+What else does this table tell us? It tell us that other factors, such as takeaways and giveaways
+(fumbles and interceptions), have a weaker correlation with wins. They matter, but not as much as,
+say, yards gained.
+Correlations give us useful data about associations. We can learn even more through a linear
+regression.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 6
+
+Linear Regression
+While social scientists use linear regression to predict, journalists usually use linear regression to
+determine the amount of change that can be attributed to one factor over another.
+Danger, Will Robinson! Danger! Regression is a much more complicated statistic
+than we can address here. It is very powerful when used correctly. It is
+misleading when used incorrectly. So a little knowledge can be dangerous. If
+you really want to do linear regression, use something more powerful than
+Excel, such as SAS, SPSS or R. And consult a local stats nerd.
+Our purpose here is to use regression to introduce us to a more valuable
+concept: statistical significance.
+Statistical Significance
+Most everything in life is a combination of performance and chance. Statistics help to differentiate
+performance from chance – to tell us when something probably wasn’t just the luck of the draw.
+Note the weasel word – probably. Certainty is illusive in everyday life. For example, let’s say you’ve
+created a new medicine to cure the common cold. In order to justify putting the new medicine on
+the market, you need to show that its effects weren’t just by chance. Generally in medicine, the
+standard is less than 1 in 100 (0.01) or 1 in 1,000 (0.001) that the cure was just dumb luck. You
+can never prove beyond the shadow of a doubt that it works. And like all approved medicines, it
+will work for many but not for all.
+In situations involving people, the standard is usually 5 in 100, or 0.05 (written as p < .05). Why a
+lower standard? Because our social lives involve so many interwoven factors that it’s difficult to
+isolate variables.
+Consider the NFL data. Whether a team wins or loses involves much more than yards gained or
+points allowed. It involves preparation, skill, injuries, motivation, coaching, home-field advantage,
+late-night carousing, etc. In that milieu, getting to a less than 5 percent probability that something
+occurred by luck is, well, pretty good.
+At the same time, the 0.05 standard is a bit of luck itself – created by pioneering British statistician
+R.A. Fisher without any theoretical basis or design. But the 5 percent stuck, and so we credit
+Fisher. (At the same time, Fisher denied that his pipe smoking was associated with an increased
+risk for cancer despite contrary evidence. So maybe he wasn’t such a smarty pants after all.)
+One more point. Statistical significance is often misinterpreted as the “likelihood that something
+happened by chance.” Well, not exactly. It actually reflects whether we can reject the null
+hypothesis – the idea that nothing happened. But that’s a bit complicated. So let’s get back to
+football and see what regression can tell us about statistical significance.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 7
+
+Thinking about Variables
+Click on the NFL data sheet. Consider the column headers as variables.
+
+Yards gained, points, etc. – those are variables (or, things that vary or change).
+Further, one of those variables means the most to us: Wins. (We’re bottom-line oriented here, and
+we want more wins.) So the Wins category is the focus of our attention. Everything depends on
+wins. Thus, we will consider Wins to be our (drum roll, please!) dependent variable. (Some call
+this the criterion variable.) The abbreviation for a dependent variable is DV.
+Everything else is a potential influence on wins. Thus, we consider them independent variables.
+(Some call these the predictor variables.) The abbreviation for an independent variable is IV.
+Here’s a visual way to remember the difference between an independent variable (IV) and the
+dependent variable (DV), drawing from the medical shorthand for intravenous: IV.
+The IV:
+Something that
+influences the patient
+(to get better, we hope!)
+
+The DV:
+The thing we care
+about – in this
+case, the patient
+
+Further, this picture gives us the order. The IV comes first. It goes into the patient to deliver
+medicine and fluids. And if the IV works, the result is the patient gets better.
+Now, let’s translate that to the X and Y language of regression.
+1. The IV (independent variable) comes first. X comes first in the alphabet. So X = the IV.
+2. The DV (dependent variable) comes second. Y comes after X. So Y = the DV.
+Now, let’s get Excel to do some regression.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 8
+
+Linear Regression in the NFL.
+On the NFL data sheet, click on the Data tab. On the far right, choose the Data Analysis option.
+When you do, you trigger this box. Scroll down until you get to regression.
+
+Click on OK to trigger the box below.
+The
+dependent
+variable goes
+in the Y box
+(in this case,
+wins)
+
+Include the
+labels in the
+data you select
+and check this
+box
+
+The independent
+variables go in
+the X box (in this
+case, everything
+but wins)
+The statistics can take up
+space, so use the default
+of a new worksheet
+These are useful but too
+complicated to explain
+here, so leave unchecked
+
+Click in the Input Y Range box and select the dependent variable cells (the Wins column,
+including the column label).
+Click in the Input X Range box and select the independent variable cells (everything else with
+numbers, including the column labels – Yds Gain, Pts Score, Takeaway, Giveaway, Yds Allow, and
+Pts Allow).
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 9
+
+The result looks like this. (Some column widths have been expanded for readability.)
+
+This figure describes how
+well the regression model
+does in predicting the DV.
+But that’s a bit misleading
+here because of the data
+chosen.
+
+These coefficients
+would be useful in
+creating an algorithm
+(remember line and
+slope from algebra?)
+but are less useful for
+us here. Suffice to
+say they’re low.
+
+This is also an
+important
+statistic for
+regression but
+not what we’re
+trying to achieve
+here. (FYI, these
+also are low.)
+
+Excel is giving us scientific
+notation here. The E-12
+means “move the decimal
+point 12 places to the left.”
+Thus, 5.204093 E-12 is
+0.000000000005204093,
+which in nonscientific
+terms is a small number.
+Suffice to say, it’s less than
+0.05.
+
+Here’s what we’re most interested
+in: P-value or probability value.
+The section is enlarged here:
+
+Let’s interpret P-value on the next page.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 10
+
+Interpreting P-value
+Ignore the Intercept line because that has to do with line and slope. Look instead at each of the pvalue scores, compressed here to three decimal points.
+
+Intercept
+Yds Gain
+Pts Score
+Takeaway
+Giveaway
+Yds Allow
+Pts Allow
+
+P-value
+0.055
+0.155
+0.005
+0.584
+0.522
+0.910
+0.000
+
+p < .05
+
+Two variables have P-values less than 0.05 (or, 5 in 100 or 5 percent):
+ Pts Score is 0.005, or 5 in 1,000.
+ Pts Allow is 0.000. We can never have 0 probability, so this would be expressed as p < .001,
+or less than 1 in 1,000.
+How to interpret this? Remember that the P-value addresses the null hypothesis. The null
+hypothesis is the opposite of our guess.
+Our hypothesis is that Points Scored and Points Allowed have something to do with Wins.
+(Otherwise, we would not have included the data, eh?)
+The null hypothesis is the opposite – that Points Scored and Points Allowed have little to do with
+wins.
+The fact that our P-value is below 0.05 means there is a less than a 5 percent chance the null
+hypothesis is true. Thus, we reject the null hypothesis and accept our working hypotheses.
+All the other variables are greater than 0.05. It does not matter how much larger. All that matters
+is none of the other factors are statistically significant – meaning, we cannot reject the null
+hypothesis.
+How to apply this?
+Sports commentators who want to assert that fumbles and interceptions – giveaways (bad) or
+takeaways (good) – result in wins cannot do so from this data because the P-values are not less than
+0.05. The association could just be by chance.
+
+Basic Statistical Analysis in Excel, NICAR 15, Norm Lewis / Page 11
+
+

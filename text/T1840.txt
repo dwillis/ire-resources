@@ -1,0 +1,231 @@
+Data for the Military Beat
+Investigative Reporters and Editors
+Washington, DC
+June 5-8, 2003
+
+1. The 2000 Census has a variety of useful military data. Probably one of the biggest
+crowd-pleasers was Table P40 from the Summary File 3 release, showing the
+number of veterans who served in 21 separate periods, ranging from World War II
+to August 1990, or later.
+
+Several other Census tables are worth looking at. Table PCT68 in Summary File 4
+– currently being released by the Census Bureau – shows the same thing, except
+for more than 330 racial, ethnic and/or ancestral groups, ranging from white alone
+or in combination with other races to Ghanaian and Lithuanian.
+
+Another potentially useful question from the Census, shown in Table P37, gives
+you the number of people living in military quarters in a given area.
+
+The Census Bureau is also in the midst of releasing data from its 1 percent Public
+Use Microdata Sample (PUMS), which can be extraordinarily useful – with
+caveats – for looking at characteristics of veterans. For example, reporters can use
+a very simple SAS script:
+data fbass007;
+infile 'c:\fbass007.dat';
+input
+yr
+1- 2
+hhwt
+3- 6
+stateicp
+7- 8
+perwt
+9- 12
+bpld
+13- 17
+vetstat
+18- 18
+;
+label
+yr="Census year"
+hhwt="Household weight"
+stateicp="State (ICPSR code)"
+perwt="Person weight"
+bpld="Birthplace -- Detailed"
+vetstat="Veteran status"
+;
+…
+
+run;
+data fbass007a;
+set fbass007;
+where vetstat=1 and bpld>=15000;
+format yr yr.
+bpld bpld.
+stateicp stateicp.
+vetstat vetstat.
+;
+run;
+proc freq data=fbass007a order=freq;
+tables bpld * stateicp /missing nocum nopercent norow nocol
+out=fbass007freq;
+weight perwt;
+run;
+
+to generate a table showing the percentage of veterans born overseas and their current
+states of residence:
+bpld
+Mexico
+Mexico
+Cuba
+Philippines
+Mexico
+Vietnam
+Dominican Republic
+Mexico
+El Salvador
+China
+
+stateicp COUNT PERCENT
+California
+3399829 12.90581
+Texas
+1632004 6.195118
+Florida
+604826 2.295931
+California
+589374 2.237275
+Illinois
+534492 2.028942
+California
+376083 1.427618
+New York
+364963 1.385406
+Arizona
+364367 1.383144
+California
+345980 1.313347
+California
+288846 1.096465
+
+Please be advised, though: The PUMS data can be extremely tricky, and you must pay
+attention to the error margins since it’s a sample.
+2. The National Archives and Records Administration’s National Personnel Records
+Center keeps a computerized Military Personnel Registry to facilitate tracking
+down service records for veterans. The registry contains roughly 110 million
+entries and takes up 7 gigabytes; Randy Herschaft, an investigative researcher
+with The AP, has spent more than a year waging a protracted battle for access to
+the entries. So far, NARA has released about 75 million entries, without the
+unique identifiers. Still, it’s a start. The database allows NARA, which receives
+about 12,000 requests daily, to track down records in storage areas that are the
+size of 22 football fields.
+This can be useful in speeding the return of service records, but be warned, it’s expensive
+and the database is quite incomplete.
+
+3. In preparing for the war with Iraq, The AP’s Josh Romonek and Jesse Garnier
+compiled an online casualty database allowing members and AP staffers to keep
+track of service people killed in action. The database, which was maintained by
+Norm Goldstein, also allowed reporters to analyze various aspects of the KIAs,
+such as branch of service, rank, age and incident location. You can also download
+the database in text, Access or XML formats.
+For more information, go to http://datacenter.ap.org/car/casualtyquery/
+The user name is “casualty,” and the password is “iraq2003.”
+
+4. The Department of Veterans Affairs’ National Cemetery Administration is in the
+process of verifying all people buried in national cemeteries. They have two
+databases; one for verified burials, the other for unverified.
+The VA is responsible for 120 cemeteries in 39 states – that is, nearly all except
+Arlington, which is administered by the Department of the Army. The database
+eventually will include records for more than 2 million veterans buried at the VA
+cemeteries.
+Here’s an excerpt from the verified database, which is available via FOIA:
+
+5. The Pentagon maintains a list of reserve units called for service in Iraq at
+http://www.defenselink.mil. The database is updated weekly, on Wednesdays.
+Unfortunately, it’s in PDF format:
+
+The AP’s Josh Romonek has taken the PDF files and converted them into an online
+searchable database at:
+http://datacenter.ap.org/car/reserves
+The user name is “apreserves” and password is “reserves2003.” The reports go back to
+Jan. 15 and continue through this week.
+
+6. NICAR will soon begin selling data from the Air Force Safety Center, which
+keeps track of all accidents, or “mishaps,” as they’re called. The data is extremely
+good for looking at flight accidents that originated at one Air Force Base but that
+might have been missed. It lacks a few categories, though; the most important one
+is the number of flight hours logged by the pilot.
+For a sample of what’s available, you can look at the safety center’s web site:
+http://afsafety.af.mil/AFSC/RDBMS/Flight/SEF%20files/FY02_Mishap_Summary.ppt
+You can use the database to FOIA for more detail on individual accidents. Be advised,
+though, the FOIA office at Kirtland AFB would appear to be fond of black highlighters.
+7. It’s always useful to have a copy of a contracts database on hand from NICAR.
+The database can help you figure out who builds what, and how much they’re
+paid for it. We used the database during the Iraqi war to check on manufacturers
+of individual components. Here’s a simple lookup table for part of the database:
+
+8. Finally, an issue worth keeping an eye on. The FAA asks pilots to keep track of
+all birds that are struck by aircraft. Sometimes, this has fairly horrific
+consequences; in September 1995, several Canada geese were sucked into the
+engine of an AWACS plane, killing all 24 people aboard.
+That wasn’t the last time it occurred, either. Here’s an AP dispatch from June 2, 2003:
+W1264‡asian
+r ibx
+222 08 intjw romp rom mlnj
+^BC-EU-GEN--Italy-Plane Crash, 4th Ld-Writethru<
+^Small plane crashes near cycling race on Milan's
+outskirts<
+^EDS: SUBS grafs 2-3, The two, with victims identified as
+Italian<
+%photo(^With AP Photos<%)
+¶
++MILAN+, Italy (AP) _ A small +plane+ which ran into a
+flock of +birds+ at takeoff crashed into a warehouse Sunday
+near a road on the outskirts of +Milan+ where scores of
+riders were racing in Italy's most famous cycling
+competition, killing the two pilots aboard, authorities
+said.
+¶
+Giuliano Semeraro, a police officer in Peschiera
+Borromeo, a town near crash, said no other crew or
+
+passengers were aboard the aircraft and that no one was in
+the two-story warehouse, which was gutted by fire.
+¶
+Italian state TV said the victims were Italian.
+¶
+Hundreds of cycling fans, lining the race route,
+watched in horror and fear as the +plane+ went down, a few
+hundred meters (yards) away from them.
+¶
+Italy's national agency for flight safety said in a
+statement that the Lear jet had radioed shortly before the
+crash that it had run into +birds+ after takeoff from
++Milan+'s Linate airport on a flight to Genoa.
+¶
+The agency said the +plane+ went down three minutes
+after takeoff.
+¶
+"Right after the takeoff it declared an emergency and
+the desire to get into position for landing," the flight
+safety agency said. "It appears from the last communication
+from the pilot that the emergency was caused by impact with
+some flying +birds+."
+¶
+"It looked like it (the +plane+) couldn't gain
+altitude," Wladimir Belli, one of the cyclists in the Giro
+d'Italia race, said in an interview on RAI state TV. "It
+tried two times to try to straighten itself out and then it
+came down. I heard a big boom and then there was smoke."
+¶
+A policeman, Carlo Colombo, was quoted by ANSA as
+saying "the engine was making a strange noise, right from
+takeoff."
+¶
+Firefighters quickly extinguished the thick black smoke
+which poured from the warehouse.
+¶
+RAI state TV was providing live coverage of the final
+stage of the Giro, Italy's most prestigious cycling race,
+when the +plane+ crashed.
+¶
+The +plane+ crashed a few kilometers (miles) south of
+Linate, one of +Milan+'s two main airports.
+¶
+(fd)
+
+For more information on bird strikes and other animal hazards, go to:
+http://wildlife-mitigation.tc.faa.gov/public_html/index.html
+Happily, the FAA keeps track of more than just birds:
+
+

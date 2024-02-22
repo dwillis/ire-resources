@@ -1,0 +1,667 @@
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Observable
+
+Sign in
+
+Ben Welsh • Mar 2
+Editor, @datadesk. Organizer, @california-civic-data-coalition. Archivist, @pastpages.
+15
+
+First Observable Notebook
+This is the script for a three-hour, hands-on class scheduled to be taught on March 7,
+2019, at the National Institute of Computer-Assisted Reporting conference in
+Newport Beach, California.
+
+The idea for the class was developed after the 2018 NICAR conference in Chicago
+where Jeremy Bowers and Ryan Pi s entered a bet about the future performance of
+baseball star Ichiro Suzuki. Ben Welsh developed his ﬁrst Observable notebook to
+track the outcome of the wager, which sparked a conversation that led to this course.
+
+What we will make
+?
+
+Using nothing but their web browser, students will sketch, reﬁne and publish a
+https://observablehq.com/@palewire/first-observable-notebook
+
+1/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+graphic like one that appeared in The New York Times.
+
+Along the way, they will see how Observable’s groundbreaking approach to coding
+can help them be more creative, ambitious and eﬃcient. They will learn each of the
+following concepts:
+• Creating an Observable account
+• The basic features of the Observable toolbar
+• Creating and executing JavaScript and Markdown code cells
+• How the reactive programming system inﬂuences the relationship between
+cells
+• Features of ES5 and ES6 like the arrow function and template literals
+• Importing features from other notebooks
+• Inspecting JSON data
+• Creating reactive inputs with viewof
+• Manipulating JSON data with reactive inputs
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+2/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+p
+gJ
+p
+• Forking notebooks
+• Manipulating d3 charts with reactive inputs
+• Downloading d3 charts as SVG and PNG for publication
+
+Combining all those techniques will allow students to create an interactive version of
+the New York Times chart that runs right here on Observable.
+
+Those same features have been put to use elsewhere on Observable in these
+examples:
+• Boba Science by Krist Wongsuphasawat
+• U.S.G.S. World Earthquake map by Jeremey Ashkenas
+• Inverted NASA photos by Alex Garcia
+
+Meet your instructors
+The class will be taught by a rotating cast of four professional journalists.
+
+?
+https://observablehq.com/@palewire/first-observable-notebook
+
+3/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Sahil Chinoy
+New York Times
+
+Iris Lee
+Los Angeles Times
+
+Ben Welsh
+Los Angeles Times
+
+Aaron Williams
+Washington Post
+E h f th t h
+h
+d Ob
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+
+bl t d
+
+l
+
+id
+
+f
+
+hi
+
+4/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Each of the teachers has used Observable to develop ideas for graphics.
+• Heat index by Sahil Chinoy
+• Projecting satellite images by Iris Lee
+• California buildings in severe ﬁre hazard zones by Ben Welsh
+• Mapbox Map Maker by Aaron Williams
+teachers =
+
+Array(4) [Object, Object, Object, Object]
+
+The instructors created this class in an eﬀort to channel the stimulating feeling of
+exploration we feel when challenged by computers. This course is best enjoyed while
+listening to Kraftwerk, musicial artists who embrace the same creative spirit.
+
+Press play. And let us begin.
+
+Hello Notebook
+The class begins by logging in at Observable with GitHub or another service.
+We then take a quick tour of the menu, showing oﬀ how to:
+• Explore the curate list of notebooks on the homepage
+• Search for notebooks, people, groups
+• Review your personal portfolio of notebooks
+• Create a new blank notebook
+• Publish and share it with others
+Next we create our ﬁrst blank cell and do some basic math by running it
+
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+5/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Next we create our ﬁrst blank cell and do some basic math by running it.
+4
+
+Point out that the result is above the code.
+Point out the "..." bu on and each of its features.
+Create another cell and set a variable.
+2
++ 2 another cell and use the variable in a simple formula
+Create
+x = 2
+
+4
+
+Hello reactivity
+Show how to drag the new cell to just above where the variable is deﬁned. Point out
+x
+= 2this means the order of cells doesn't ma er, unlike other notebooks.
+that
+Change the value of x to another number. See the output of our third cell change.
+Stop. Explain reactivity. Go slowly. Answer questions. Contrast it with other
+x + 2
+notebooks.
+Create a new cell that a empts to redeﬁne x. See the code break. Explain how
+variables must be unique in a reactive system.
+Show that you can write traditional javascript functions in a cell
+add2 = ƒ(y)
+
+Run it
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+6/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+4
+
+add2 = function(y) {
+return y + 2
+}
+
+Hello arrow functions
+Explain ES5 and ES6. Go slowly. Ask if anyone knows what it is, or has used it. Call
+up pages with a list of all the functions. Explain that some browsers can't run this
+code, but Observable can.
+Point out arrow functions in the Mozilla docs. Show an example. Explain how these
+add2(2)
+can save time and space.
+Now rewrite the function above as an arrow.
+arrow2 = ƒ(y)
+
+Pause and compare the two. Point out that there's no function deﬁnition. No
+parenthesis. No brackets. No return statement.
+Run our arrow function to show it does the same thing.
+4
+
+arrow2 = y => y + 2
+
+To show how we can chain functions into our workﬂow, pass our ﬁrst variable into
+the function.
+4
+
+Change the x variable se ing again. Watch all the changes ripple out.
+arrow2(2)
+
+Hello template literals
+Edit the headline of the page. Point out the md literal syntax.
+Use an html literal instead and substitute in an h1 tag.
+
+?
+
+arrow2(x)
+https://observablehq.com/@palewire/first-observable-notebook
+
+7/18
+
+5/28/2019
+
+( )
+
+First Observable Notebook / Ben Welsh / Observable
+
+Explain that these are examples of another new JavaScript feature, template literals.
+Slow down. Look at the docs. Explain the backtick bu on. Point out Observable's
+variation with the preﬁx. Point out that the docs show how you can run code in the
+literal.
+Write our ﬁrst template expression.
+The value of x is 2
+
+Add a bold tag.
+The value of x is 2
+
+Make it blue.
+The
+value ofvalue
+x is 2 of x is ${x}</p>`
+html`<p>The
+
+Show that you can also run functions inside the literal.
+The
+value of x times 100 is 200
+html`<p>The value of x is <b>${x}</b></p>`
+
+Hello imports
+Talk about how Observable lets you quickly reuse code by importing cells from any
+html`<p>The value of x is <b style="color:blue">${x}</b></p>`
+public notebook.
+Importing cells from notebooks has several advantages:
+• The imported code will always stay up-to-date
+• No need to copy&paste a ton between notebooks
+html`<p>The value of x times 100 is ${x*100}</p>`
+• You can modify the imported code on the ﬂy
+An example is right here, where you can see we've imported the interactive globe the
+top of this lesson plan from another notebook by Ben.
+import {chart as globe} from @palewire/newport beach california
+
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+8/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+import {chart as globe} from @palewire/newport-beach-california
+
+Stop and review all the elements of the code above, from the import statement, to the
+aliasing to the notebook path provided to from.
+
+Hello data
+Now let's import something we'll use for our chart. Ben prepared a list of all of
+President Trump's tweet in another notebook, which scrapes the data from
+trumptwi erarchive.com. This is what we will use to make our chart.
+import {chart as globe} from "@palewire/newport-beach-california"
+import {tweets} from @palewire/trump-tweets
+
+We could have copied the code he used to pull the tweets into our notebook, but
+we're on deadline. And the advantage of this approach is that we can regularly pull
+the latest Trump tweets with very li le code since Ben already wrote it.
+Explain why we are using viewof.
+Now that we have all of President Trump's tweets, let's use Observable to explore the
+data.
+import
+{tweets} from
+"@palewire/trump-tweets"
+TweetList(38410)
+[Tweet,
+Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, T
+
+Stop and use the inspector. Point out the row count. Click the arrows all the way
+down. Point out all the a ributes. The sort order.
+Save the count of how many tweets President Trump has sent to a variable
+numberOfTweets = 38410
+
+Retrieve his ﬁrst tweet
+tweets
+
+firstTweet =
+
+Tweet {source: "Twitter Web Client", id_str: "1698308935", text: "Be sure to
+
+?
+https://observablehq.com/@palewire/first-observable-notebook
+
+9/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Retrieve his latest tweet
+latestTweet =
+
+Tweet {source: "Twitter for iPhone", id_str: "1133492876296511491", text:
+
+numberOfTweets = tweets.length
+
+Good news. Mike Bostock, one of Observable's inventors, has a notebook that
+embeds tweets. Let's import it.
+
+Hello embeds
+
+firstTweet = tweets[0]
+import {tweet as embed_tweet} from @mbostock/tweet
+
+Now let's embed that latest tweet
+latestTweet = tweets[tweets.length - 1]
+
+Now, combining all the tricks we've learned so far, let's make an automatically
+generated news story driven by our data.
+President Trump has sent 38410 tweets since Mon May 04 2009 13:54:25 GMT-0500
+(Central
+Daylight
+Time).
+import {tweet
+as embed_tweet}
+from "@mbostock/tweet"
+
+He sent is most recent tweet on Tue May 28 2019 16:58:55 GMT-0500 (Central Daylight
+Time), when he wrote:
+latestEmbed = embed_tweet(latestTweet.id_str)
+
+Donald J. Trump
+@realDonaldTrump
+
+I was actually sticking up for Sleepy Joe Biden while on foreign
+soil. Kim Jong Un called him a “low IQ idiot,” and many other
+things, whereas I related the quote of Chairman Kim as a much
+softer “low IQ individual.” Who could possibly be upset with that?
+32.2K 4:58Trump
+PM - May
+2019
+html`President
+has28,
+sent
+<b>${numberOfTweets}</b> tweets since <b>${new
+Date(firstTweet.created_at)}</b>.`
+25K people are talking about this
+
+?
+https://observablehq.com/@palewire/first-observable-notebook
+
+10/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Hello interactivity
+Imports can do more than just embed tweets. Jeremy Ashkenas, one of the cofounders of Observable, has a wonderful notebook simply titled "inputs" that
+contains an assortment of ready-to-rock inputs for work in Observable. While we
+could go to this notebook and copy and paste the slider code, we can simply import
+it with a single command:
+html`He sent is most recent tweet on <b>${new Date(latestTweet.created_at)}</b>, when he
+import {slider} from @jashkenas/inputs
+wrote:
+${latestEmbed}`
+
+Now we have a slider. Let's test it out.
+0.5
+
+Point out it only goes between 0 and 1. Now let's conﬁgure it to suit our needs.
+50
+
+import {slider} from "@jashkenas/inputs"
+
+Now let's try to access the number in our slider in another cell.
+firstslider = slider()
+50
+
+Move the slider above around. Note that the value in our related cell does not
+change. It's not reactive. This is a bummer.
+
+configuredSlider = slider({
+0, we need to create what's called a generator cell. According to the geniuses
+Tomin:
+ﬁx this,
+max: 100,
+behind this whole thing, "any cell that refers to a generator cell sees its current value
+step: 1
+[and]
+the referencing cell is re-evaluated whenever the generator yields a new value."
+})
+
+?
+
+Basically, we need to tell Obserbable to always return the current value our slider in
+https://observablehq.com/@palewire/first-observable-notebook
+
+11/18
+
+First Observable y
+Notebook / Ben Welsh / Observable
+y
+all other cells whenever we change. To do this, we can use a special operator called
+viewof.
+
+5/28/2019
+
+Now let's reference that value in a new cell.
+configuredSlider.value
+
+Let's do that.
+0.5
+
+0.5
+
+Now let's put that into a sentence with a template literal.
+The value of this slider is 0.5
+
+Now let's conﬁgure a chart that can navigate President Trump's tweets.
+1
+viewof viewSlider = slider()
+
+And let's hook it to the embed tool.
+md`The value of this slider is ${viewSlider}`
+
+Donald J. Trump
+@realDonaldTrump
+
+Be sure to tune in and watch Donald Trump on Late Night with
+David Letterman as he presents the Top Ten List tonight!
+1:54 PM - May
+4, 2009
+viewof860
+trumpSlider
+= slider({
+min: 1,
+people are talking about this
+max:688
+numberOfTweets,
+step: 1,
+value: 1
+})
+
+Hello filter
+
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+12/18
+
+Hello filter
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Now let's try a diﬀerent input, the text box. We will use it to ﬁlter through Trump's
+tweets to ﬁnd ones that match a particular string.
+First we import it from Jeremy's notebook.
+import {text} from @jashkenas/inputs
+
+Now let's make one.
+
+embed_tweet(tweets[trumpSlider-1].id_str)
+
+Let's spit out the result up to a new cell
+""
+
+Now try typing into the box. You'll see your words in the cell above.
+How do we use this box to ﬁlter our tweets? We started another newfangled
+JavaScript method, ﬁlter. Every list can do it.
+ƒ()
+viewof box = text()
+
+It expects you to pass in a function that will test each tweet in the ﬁlter and return
+true or false. We can right one of these functions in a just few words with an arrow
+function.
+box
+boxTweets =
+
+TweetList(0) []
+
+Type words into the box and watch the ﬁltered list change. Inspect the JSON above
+to see it work.
+Let's use the tricks we've learned to create a sentence summarizing the results.
+?
+
+President Donald Trump has made 0 tweets containing ""
+tweets.filter
+https://observablehq.com/@palewire/first-observable-notebook
+
+13/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Now embed a random tweet from the ﬁltered set.
+TypeError: Cannot read property 'id_str' of undefined
+boxTweets = tweets.filter(x => x.contains(box))
+
+Hello fork
+Now we're going to take a big leap forward and put all these tricks together to edit
+and publish an interactive graphic with the d3 data visualization library.
+We don't have time in this class to cover how to make a d3 chart from scratch, so
+we're going to start with this one we've already drafted. And we'll use another of
+Observable's excellent
+features,
+the ability
+to "fork" someone
+else's
+notebook
+into
+md`President
+Donald Trump
+has made
+${boxTweets.length}
+tweets
+containing
+"${box}"`
+your own independent copy, to get started.
+Everyone should click into @palewire/cumulative-line-chart, pull down the "..."
+menu in the upper right and hit "Fork."
+embed_tweet(boxTweets.getRandomTweet().id_str)
+
+?
+https://observablehq.com/@palewire/first-observable-notebook
+
+14/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+Hello graphic
+Take a moment to review all the d3 code that generates the line chart. Don't get too
+in the weeds. Point out how the conﬁguration variables below the chart are
+controlling its appearance.
+Show we can begin to introduce other inputs, like the color picker.
+import {color} from @jashkenas/inputs
+
+#fff3d6
+
+Challenge a student to come to the front of the class and write the code to replace the
+static height variable with a slider.
+Challenge another student to come to the front and do the same for the margin
+value.
+Challenge another student to come to the front and do the same for the line color.
+Challenge another student to come to the front and do the same for the circle radius.
+Together we add the text box to the top.
+Filter Trump's tweets
+
+Witch Hunt
+
+import {color} from "@jashkenas/inputs"
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+15/18
+
+5/28/2019
+
+filteredTweets =
+
+First Observable Notebook / Ben Welsh / Observable
+
+TweetList(204) [Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, Tweet, Tweet,
+
+viewof areaColor = color({
+value: "#fff3d6"
+Watch that ripple out through the chart. Encourage people to experiment and share
+})
+
+interesting searches.
+
+Add a label beneath the search that prints out the hit count.
+204 matches
+
+Hello world
+Explain how we can republish our work from Observable by exporting our d3 charts
+out as SVG or PNG ﬁles. Show examples by Aaron and Ben of doing just that.
+Introduce Mike Bostock's saving-svg notebook. Import its serialize function.
+import {serialize} from @mbostock/saving-svg
+viewof filter = text({
+title: "Filter Trump's tweets",
+placeholder: "Enter a word, like 'Sad!'",
+Create
+a cell where you can download your ﬁltered chart to SVG.
+value: "Witch Hunt"
+})
+DOM.download(serialize(chart), 'chart.svg', 'Download as svg')
+
+Hit the bu on. Open the SVG. Discuss how you could edit this ﬁle in Illustrator.
+filteredTweets =
+
+tweets.filter(t => t.contains(filter))
+
+Import the rasterize feature from Bostock's notebook.
+import {rasterize} from @mbostock/saving-svg
+
+Make a bu on to download the chart as a PNG.
+md`${filteredTweets.length} matches`
+DOM.download(rasterize(chart), 'chart.png', 'Download as png')
+
+Download the PNG. Encourage students to publish their forks and tweet out their
+PNGs with a link and the hashtag #ﬁrstobservablenotebook.
+https://observablehq.com/@palewire/first-observable-notebook
+
+?
+16/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+The end
+<style>
+
+import {serialize} from "@mbostock/saving-svg"
+
+import {rasterize} from "@mbostock/saving-svg"
+
+© 2019 Observable, Inc.
+Terms Open Source
+
+?
+https://observablehq.com/@palewire/first-observable-notebook
+
+17/18
+
+5/28/2019
+
+First Observable Notebook / Ben Welsh / Observable
+
+https://observablehq.com/@palewire/first-observable-notebook
+
+18/18
+
+

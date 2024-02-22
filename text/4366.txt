@@ -1,0 +1,263 @@
+Behind The Boom
+How the New York Times Analyzed
+Oil Spills in North Dakota, and How
+You Can Apply The Same Techniques
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+Many stories about the economic benefits of the
+North Dakota oil boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+Many stories about the economic benefits of the
+North Dakota oil boom
+• Fewer stories about the environmental issues, and
+those usually about individual spills or incomplete.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+Many stories about the economic benefits of the
+North Dakota oil boom
+• Fewer stories about the environmental issues, and
+those usually about individual spills or incomplete.
+• Times sends correspondent to size up the
+situation, hoping for quick turnaround story.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+Many stories about the economic benefits of the
+North Dakota oil boom
+• Fewer stories about the environmental issues, and
+those usually about individual spills or incomplete.
+• Times sends correspondent to size up the
+situation, hoping for quick turnaround story.
+• Once she realizes extent of the issue, and how
+difficult it will be to document, a project is born.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+There were no official stats on oil spills — the
+Feds regulate pipelines, everything else is left to
+the states.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+•
+
+There were no official stats on oil spills — the
+Feds regulate pipelines, everything else is left to
+the states.
+North Dakota has lots of public info on oil
+production, but it’s mostly in PDFs
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+•
+
+•
+
+•
+
+There were no official stats on oil spills — the
+Feds regulate pipelines, everything else is left to
+the states.
+North Dakota has lots of public info on oil
+production, but it’s mostly in PDFs
+Spills were recently posted online, but the format
+isn’t very analyze-able– it’s not searchable, you
+have to read incidents one at a time.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Over the summer,
+speaking to farmers in the
+town of Antler, Lynn D.
+Helms, the director of the
+Department of Mineral
+Resources, announced “a
+little bit of good news”:
+The spill rate per well was
+“steady or down.”
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Database
+1) Downloading the incident records required a scraper. In this
+case we used a browser emulator to go through the site and
+download the pages
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Database
+1) Downloading the incident records required a scraper. In this
+case we used a browser emulator to go through the site and
+download the pages
+browser = Watir::Browser.new :firefox
+browser.goto
+'http://www.ndhealth.gov/ehs/foia/spills/defaultOGContained.aspx’
+opening_page = Nokogiri::HTML.parse(browser.html)
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Database
+2) Cleaning up the mess — standardizing company names,
+incident types, correcting errors — initial report said zero
+spilled, but full text of incident said something else.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Database
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Production Data
+2) Downloading monthly PDF files — able to use WGET all for this, then
+Monarch to parse the info
+We built a list of report URLS in Excel for WGET:
+
+https://www.dmr.nd.gov/oilgas/mpr/2006_09.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2006_10.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2006_11.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2006_12.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2007_01.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2007_02.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2007_03.pdf
+https://www.dmr.nd.gov/oilgas/mpr/2007_04.pdf
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Production Data
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Creating Our Own Production Data
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Putting It All
+Together
+I created an internal
+Web site that served
+not just as a way to
+share latest data and
+findings with
+colleagues, but a way
+to help us split
+administrative tasks,
+and to conceptualize
+our analytical points.
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Putting It All Together
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Putting It All Together
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Putting It All Together
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Putting It All Together
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+ENFORCEMENT
+“…reported that the Department of Mineral
+Resources could not provide details regarding rule
+violations that led to 45 enforcement actions against
+oil companies. The fact is … was invited to visit the
+Department of Mineral Resources where he could
+review each case file for the information he sought,
+but he chose not to. “
+-- complaint from ND officials about a previous story about ND
+enforcement
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+ENFORCEMENT
+
+“The Times found that the Industrial Commission
+wields its power to penalize the industry only as a last
+resort. It rarely pursues formal complaints and
+typically settles those for about 10 percent of the
+assessed penalties. “ -- what we found after pulling
+all the paper and typing it into a database
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+Behind The Boom
+Finally:
+The series itself:
+http://www.nytimes.com/interactive/2014/11/23/us/north-dakota-oilboom-downside.html
+Sample code for scraping and parsing the North Dakota data
+https://github.com/gebelo/nd_oil_incidents
+All handouts from this panel and this conference (via @macdiva)
+http://j.mp/nicar15
+
+Robert Gebeloff -- @gebeloffnyt--NICAR 2015
+
+

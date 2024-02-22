@@ -1,0 +1,156 @@
+The most recent version of this file is at ​http://tinyurl.com/2017cmd
+
+Getting started with the Windows command line
+By Mike Stucka, The Palm Beach Post, for NICAR 2017
+You’ve maybe seen the command line -- normally a black box with white text. People type.
+People hit enter. Computer does something.
+The basic Windows command line tools are building blocks. On their own they’re not particularly
+important; but without them, you’d struggle to do some pretty amazing stuff. If you get to know
+your way around the command line, you can do pretty amazing stuff -- color correct satellite
+imagery, figure out where on the Earth thousands of addresses are, get your boss off your back
+by turning a PDF into a spreadsheet.
+
+Getting to the command line
+In some version of Windows, you can get to the command line by typing in one particular spot
+this command:
+cmd
+In Windows 10, you’ll type that in the search bar near the Windows logo. In Windows 7, you’ll
+click the Windows logo to open a menu and type it inside the white bar just above the logo. Hit
+Enter. You now have your own little black box to type stuff in.
+
+Finding your way around
+Until you know where you are, you can’t figure out how to get to where you’re wanting to go
+somewhere. Windows typically will dump you into your own user folder, which is different from
+your desktop folder. To get there,​ then, you can use the ​cd command, which stands for change
+directory. It should look something like this:
+C:\Users\stucka>cd desktop
+C:\Users\stucka\Desktop>
+This will not win you a Pulitzer. But it does start showing you a little bit about how Windows’
+directories (folders) are set up. In this case, Desktop is inside of stucka. Stucka is inside of
+Users. Users is on the C drive.
+You can tell Windows to go to a particular spot, such as
+cd \mysql\bin
+cd %userprofile%
+The “%userprofile%” is a special variable holds the name of your home directory.
+
+Another shortcut is particularly helpful. To go one directory back, use “..”, which is a reference to
+the previous directory:
+cd ..
+To go to the main directory or folder, sometimes called “root” like the root of a tree:
+cd \
+Let’s get back to where we were:
+cd %userprofile%
+cd Desktop
+
+More stuff with directories
+We know now that “cd” is short for “change directory.” Likewise, “md” is short for “make
+directory”; you can also use “mkdir”:
+md deleteme
+You can delete a folder pretty simply:
+rmdir deleteme
+
+Whatcha got?
+What most people call folders these days used to be called directories. The way to see what’s
+inside a directory is a command named after directories. Let’s make a folder again, and see
+what’s what:
+md deleteme
+dir deleteme
+dir
+The first command makes the “deleteme” folder. The second one shows what’s inside of it. Mine
+looks something like this:
+C:\Users\stucka\Desktop>dir deleteme
+Volume in drive C is Acer
+Volume Serial Number is C262-A4AD
+Directory of C:\Users\stucka\Desktop\deleteme
+03/01/2017
+03/01/2017
+
+10:08 PM
+<DIR>
+.
+10:08 PM
+<DIR>
+..
+0 File(s)
+0 bytes
+2 Dir(s) 604,621,029,376 bytes free
+
+It’s showing … nothing, basically. The single period/dot, “.”, is the current directory of the listing.
+The two dots, we learned earlier, is the parent directory. There’s nothing here -- which makes
+sense, since we just made the directory.
+But the third command, just plain d
+​ ir, shows what’s in whatever directory you run the command
+from. Filenames are listed to the right. Here’s one of mine:
+01/04/2012
+
+12:03 PM
+
+12,518,912 RSASecurIDToken411.msi
+
+It’s some installer for security software. It’s a file, about 12 million bytes big, 12 megabytes. It’s
+just a file.
+So let’s try copying it. The copy command for one file to another can look something like this:
+copy oldfile.txt oldfilebackup.txt
+So if we wanted to put this in our “deleteme” folder, we COULD type, if we wanted to do this
+right:
+copy RESASecurIDToken411.msi deleteme
+We could type that, but we already have a typo. So, meet the TAB key. If you have a file in
+mind, try typing “copy “ followed by the first few characters of your filename. Hit the tab key, and
+the rest should get put in automatically. Another space, “deleteme”, enter, and you’ve copied the
+file into your deleteme folder.
+You can also use asterisk to copy a set of files, like:
+copy * c:\temp
+
+BUT
+Big but. “Copy *” will only grab files, not subfolders and the stuff inside them. If you want to copy
+a whole set of files including subfolders, you’ll want to use a utility called x​ copy. With the “/s”
+switch, xcopy will copy everything including those subdirectories. For example, we can create a
+backup folder one folder behind, then copy stuff from the current folder into it:
+mkdir ..\projectbackup
+xcopy /s . ..\projectbackup
+
+Copypasta
+The command line isn’t so helpful when you have to just type stuff in. Sometimes you need to
+copy-paste things in. Normally, you can highlight what you want to copy and either hit Enter, or
+highlight what you want to copy, RIGHT-click on the bar at the top of your command line
+window, and select copy.
+To paste, you have to RIGHT-click on the bar at the top of your command line window, then
+left-click on paste.
+
+Running stuff
+Ultimately, you’re learning this stuff to run other stuff. “Notepad” is the standard Windows editor.
+You can use this, for example, to start editing a file:
+notepad sometestfile.txt
+You can look at stuff:
+type sometestfile.txt
+You can look at stuff one screenful at a time:
+more sometestfile.txt
+
+And then …
+What sort of stuff can you do once you can fake your way through the command line?
+-- Automate many commands into one through something called a batch file
+-- Use programs like csvkit, which will let you convert data from one file format to another, create
+a routine to bring the data into a database program, and even run database-like joins on the
+original data files.
+
+And after that …
+A bunch of tools that started as Unix utilities, like those used on Macs and in Linux computers,
+are available for Windows:
+http://gnuwin32.sourceforge.net/packages/coreutils.htm
+Among them:
+●
+●
+●
+
+●
+●
+
+grep -- Search for a word or phrase within a bunch of files
+head -- Take a look at the top of a file
+tail -- Look at the end of a file. With an extra option, “tail -f”, you can keep looking at the
+end of a file -- so if it updates, you’ll see it. This is helpful for logs and a bunch of other
+stuff.
+sort -- sort a file so each line appears in alphabetical order
+uniq -- show only unique lines from each file.
+
+

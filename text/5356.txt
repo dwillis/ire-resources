@@ -1,0 +1,264 @@
+Docs we will be working with today
+Desktop/hands_on_classes/Unleash_the_data_T
+ools_and_tricks_for_taming_PDFs_1155
+Also please go to https://www.cometdocs.com/
+And create a free account
+
+PDF Wrangling
+Chad Day
+The Associated Press
+@ChadSDay
+
+The problem
+Fairly often most of us run into something like this
+
+So we have learned to cope...
+
+Goals
+1. Extract data from pdfs
+2. Break up and assemble some pdfs
+3. Get some info out of a pdf
+4. Make a pdf searchable using OCR
+
+Tools
+1. Cometdocs
+2. Tabula
+3. Pdftk
+4. pdfinfo
+5. OCR tools (some free/some that cost $)
+
+We will also use the command line
+The command line is a power tool built right into
+your computer. Learning to use it can help you
+save time and rid yourself of repetitive tasks such
+as working with difficult pdfs.
+
+How to find the command line
+Windows: Go to your start menu and type
+“command” in the search bar
+Linux/Unix: This is your terminal
+
+To get started
+
+echo “This is not scary”
+
+Cometdocs https://www.cometdocs.com/
+
+Cometdocs key features
+● Free (IRE members get free premium accts)
+● Online (so access from anywhere)
+● Lots of options
+● Easy to use
+● No coding
+● iOS/Windows/Google apps
+● Also supports Openoffice products
+
+Cometdocs on the web
+
+Cometdocs desktop
+
+Still requires clean up
+
+Tabula
+
+Tabula key features
+● Free
+● Local to your computer
+● Easy to use
+● Much cleaner data extraction
+● Multiple methods of extraction
+● No coding (but can be used)
+
+Choose your file
+
+Using command line tools
+
+Where am I?
+Windows: chdir
+Displays your current directory
+Linux/Unix: pwd
+Or print working directory
+
+What’s in here?
+Windows: dir
+Displays files and subdirectories in your current
+directory
+Linux/Unix: ls
+
+Navigating your computer
+cd -- change directory
+cd path/to/directory
+cd .. -- go up a directory
+
+Tab completion
+Command line supports tab completion.
+Start typing the first few letters of a folder
+or file and press tab
+
+To our directory
+Desktop/hands_on_classes/Unleash_the_data_T
+ools_and_tricks_for_taming_PDFs_1155
+
+pdftk
+Type pdftk
+Type pdftk -h (fuller help explanation)
+(the -h is called a “flag”)
+
+Manafort indictment
+
+Just tables
+
+pdftk
+Pull out specific pages we want
+pdftk manafort_indictment.pdf cat 7-14 output
+just_tables.pdf
+pdftk manafort_indictment.pdf cat 1 4 10 output
+specific_pages.pdf
+
+pdftk
+Add files from multiple pdfs into one
+Pdftk A=just_tables.pdf B=specific_pages.pdf cat
+A1-2 B1-2 output new_file.pdf
+
+pdftk
+Break a pdf into individual pages
+Pdftk manafort_indictment.pdf burst
+Put it back together
+Pdftk *.pdf cat output new_man.pdf
+
+xpdf/pdfinfo
+Pdfs have a lot of data connected to them that you can’t see.
+This metadata can tell you a lot about the document that you
+have and can aid in reporting.
+
+pdfinfo
+
+pdfinfo
+Now pdfinfo in the command line can give you even more information.
+It can also help you avoid outing sources.
+
+pdfinfo
+Pdfinfo file_name.pdf
+Pdfinfo -meta file_name.pdf
+
+Making Image PDFs searchable
+
+OCR (Optical character recognition)
+Many times you will get PDFs that are image
+files, not native computer generated pdfs. You
+can’t search image files and when you get
+hundreds and hundreds of pages that’s a
+problem. That’s where OCR comes in.
+
+No code options
+●
+●
+●
+●
+
+Abbyy Finereader
+Adobe Acrobat Pro or DC
+Document Cloud
+Cometdocs
+
+Document Cloud
+●
+●
+●
+●
+●
+●
+●
+●
+
+Free
+Much more than just making pdfs searchable
+Uses Tesseract
+Allows for collaboration
+Allows for sharing, publishing and embedding of documents
+Used by most major news outlets
+Very user friendly
+Only OCRs and allows searchability within interface/does not create an
+OCR’d version of your file locally
+
+Document Cloud
+
+Abbyy Finereader
+●
+●
+●
+●
+●
+●
+●
+
+Does cost (about $199)
+But incredibly powerful
+Fast and accurate OCR
+Multiple languages
+Also combines the functionality of Adobe Acrobat (can split and organize
+pdfs)
+Desktop utilities as well
+Quick conversion (drop down after right click)
+
+Abbyy Finereader
+
+Abbyy Finereader ($$)
+
+Pypdfocr
+●
+●
+●
+●
+●
+●
+●
+
+Free
+Powerful
+Good accuracy with English
+Easy to use command line utility
+Introduces you to code
+Uses Tesseract
+Takes some install and some familiarity with python and bash
+○
+○
+
+Pip install
+Python2.7 (native on macs)
+
+Pypdfocr
+Add photos of pypdfocr walk thru here
+
+Documentation
+
+Cometdocs
+https://www.cometdocs.com/
+Tabula
+http://tabula.technology/
+
+Documentation
+Pdftk
+https://www.pdflabs.com/tools/pdftk-server/
+xpdf/pdfinfo
+
+Documentation
+
+DocumentCloud
+https://www.documentcloud.org/
+Pypdfocr
+Install and documentation here:
+https://pypi.python.org/pypi/pypdfocr
+
+Documentation
+
+Abbyy Finereader
+https://www.abbyy.com/en-us/finereader/
+
+Questions?
+Chad Day
+The Associated Press
+cday@ap.org
+@ChadSDay
+
+

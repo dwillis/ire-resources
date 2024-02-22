@@ -1,0 +1,253 @@
+Data analysis with Pandas
+Digging through data
+
+http://bit.ly/nicar19-pandas
+
+The slides: http://bit.ly/nicar19-pandas
+The code:
+https://github.com/lamthuyvo/python-data-nicar201
+9
+Other materials: http://lamivo.com/tips.html
+A book for you to learn from:
+http://bit.ly/social-media-data-book
+@lamthuyvo
+
+What is pandas?
+●
+●
+●
+
+Panel data! Not animals! (womp womp)
+Library developed
+Excel and Sheets are limited in capacity
+and you can do the same in pandas but
+on a massive scale!
+
+Today
+Get to know your data!
+●
+●
+
+how to open and read in a csv
+spreadsheet
+how to look at the data we have
+
+How to modify data and do basic math with
+it:
+●
+●
+
+how to select columns
+how to do some math with them
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+Outside of creating your own data frame you
+can turn a csv into one:
+census_data =
+pd.read_csv('../data/2016_cens
+us_data.csv')
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+To look at the ﬁrst few rows of our data set
+we can use a function called .head(). This
+function takes an integer as its argument. So
+if you want to see the ﬁrst 10 rows of your
+dataset you could run a cell with this line:
+census_data.head(10)
+To see the last 10 rows of a data frame
+you can use the .tail() function, which
+follows the same structure:
+census_data.tail(10)
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+The way you can transpose your data set to
+see the column headers as rows and your
+data as columns is by using .T. This method
+allows us to basically ﬂip our data frame — it
+looks a little like bit like we just rotated it 90
+degrees counterclockwise. The way you
+would use it is like this:
+census_data.T
+To see all the column names as a list you can
+use this line of code:
+census_data.columns
+
+To get a summary of all the data types that your data
+frame contains you can use .dtypes:
+
+Pandas
+
+census_data.dtypes
+
+1.
+2.
+3.
+
+Last but not least, you can use good old vanilla Python to
+ﬁnd out the number of rows in your data frame.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+Remember the function we used to display information in
+the interactive shell, print()? And how about the function
+we used to ﬁnd the length of a string or the number of
+items in a list, .len()? Let’s use them to see how large our
+data frame is. We can do that by using this line:
+
+print(len(census_data))
+We can ﬁnd the total number of columns like this:
+
+print(len(census_data.columns))
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+When tacked onto the variable that contains our
+data frame, square brackets can allow us to select
+different subsets of our data. For instance, to view
+a speciﬁc column you can use square brackets and
+specify the column name inside the brackets as a
+string. In the line below, we are selecting the
+column with the label title:
+
+census_data['title']
+Secondly, we can view multiple columns using
+these square brackets, by parsing a list into them:
+column_names = ['author',
+'title', 'ups']
+census_data[column_names]
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+There are also nifty ways to isolate individual rows.
+As we learned earlier in this chapter, each row has
+an index, which acts kind of like a row label. By
+default pandas assigns each row a number as an
+index (we can assign each row different indexes,
+too but that is not important for this exercise). In
+programming lingo that is referred to
+integer-location based indexing. Based on that we
+can use the .iloc[] method to call on any given row
+by placing the index number label of that row inside
+of those square brackets:
+
+census_data.iloc[4]
+
+Pandas
+1.
+2.
+3.
+
+Load a csv
+Explore your data frame
+Explore speciﬁc parts of your data
+frame
+
+Last but not least, we can combine these two
+methods. If, for instance, we wanted to call up the
+column that is labeled as title and only display the
+value shown on the ﬁfth row, we can do that with
+the following code:
+
+census_data['title'].iloc[4]
+
+Now that you know your data,
+you have so many questions
+about it!
+1.
+2.
+
+How do I ﬁlter my data? (via
+dropping columns)
+How do I do simple math?
+
+Dropping columns by specifying which ones you
+wanna keep:
+
+You have so many questions
+
+census_data['black_alone']
+
+1.
+
+Or:
+
+2.
+
+How do I ﬁlter my data? (via
+dropping columns)
+How do I do simple math?
+
+column_names = ['black_alone', 'native']
+census_data[column_names]
+
+You can do summary math equations using the
+following functions:
+
+You have so many questions
+1.
+2.
+
+How do I ﬁlter my data? (via
+dropping columns)
+How do I do simple math?
+
+census_data['black_alone'].mean()
+census_data['black_alone'].median()
+census_data['black_alone'].sum()
+census_data['black_alone'].describe()
+
+Time for you!
+Ok! I just gave you a bunch of tools. Do this:
+1. Create a variable called asian_population and isolate the
+column for the values stored under the asian column (hint: you
+can use brackets to isolate your data)
+2. Using the .describe() function ﬁnd summary data for the asian
+column
+
+

@@ -1,0 +1,412 @@
+#SPACEJOURNALISM
+Derek Watkins
+The New York Times
+@dwtkns
+
+RESOURCES
+http://bit.ly/nicar-space
+
+Al Shaw
+ProPublica
+@A_L
+Brian Jacobs
+National Geographic
+@btjakes
+
+Lela Prashad
+NiJeL
+ASTER
+@lelap
+
+http://maps.nypl.org/warper/maps/17757#Preview_Rectified_Map_tab
+
+http://oceanservice.noaa.gov/news/weeklynews/nov12/ngs-sandy-imagery.html
+
+REMOTE SENSING
+CRASH COURSE
+
+http://imagine.gsfc.nasa.gov/
+Harold Fisk, 1944
+
+PASSIVE VS. ACTIVE
+Radar (Radio Detection and Ranging)
+Scatterometer (microwave radar)
+Lidar (Light Detection and Ranging)
+Laser Altimeter
+GRACE
+
+Harold Fisk, 1944
+
+RESOLUTION
+SPATIAL / SPECTRAL / TEMPORAL
+
+Harold Fisk, 1944
+
+TIMS-derived image
+of Scottsdale, AZ
+with bands from the
+thermal infrared.
+
+(Christensen, 1999)
+
+Harold Fisk, 1944
+
+Landsat 8 scene / bands
+File
+
+LC80140322014139LGN00_B1.TIF
+LC80140322014139LGN00_B2.TIF
+LC80140322014139LGN00_B3.TIF
+LC80140322014139LGN00_B4.TIF
+LC80140322014139LGN00_B5.TIF
+LC80140322014139LGN00_B6.TIF
+LC80140322014139LGN00_B7.TIF
+LC80140322014139LGN00_B8.TIF
+LC80140322014139LGN00_B9.TIF
+LC80140322014139LGN00_B10.TIF
+LC80140322014139LGN00_B11.TIF
+LC80140322014139LGN00_BQA.TIF
+LC80140322014139LGN00_MTL.txt
+
+Band
+Name
+
+Bandwidth
+(µm)
+
+Resolution
+(m)
+
+Coastal
+Blue
+Green
+Red
+NIR
+SWIR 1
+SWIR 2
+Pan
+Cirrus
+TIRS 1
+TIRS 2
+
+.43 – 0.45
+0.45 – 0.51
+0.53 – 0.59
+0.64 – 0.67
+0.85 – 0.88
+1.57 – 1.65
+2.11 – 2.29
+0.50 – 0.68
+1.36 – 1.38
+10.6 – 11.19
+11.5 – 12.51
+
+30
+30
+30
+30
+30
+30
+30
+15
+30
+100
+100
+
+metadata
+
+Landsat 8 Band Combinations
+Natural Color
+False Color (urban)
+Color Infrared (vegetation)
+Agriculture
+Atmospheric Penetration
+Healthy Vegetation
+Land/Water
+Natural With Atmospheric Removal
+Shortwave Infrared
+Vegetation Analysis
+
+432
+764
+543
+652
+765
+562
+564
+753
+754
+654
+
+http://blogs.esri.com/esri/arcgis/2013/07/24/band-combinations-for-landsat-8/
+
+Case Study: “Losing Ground”
+
+@A_L
+
+http://j.mp/nicar-louisiana
+
+NASA Landsat, processed by ProPublica
+
+http://www.nwrc.usgs.gov/factshts/2005-3101/2005-3101.htm
+
+http://theadvocate.com/news/neworleans/5827922-148/areas-gone-on-noaa-charts
+
+1956
+
+1972
+
+“Wagon wheel,” Venice, La.
+
+2013
+
+USGS Aerials
+
+Investigative Space Journalism!
+
+NASA
+
+Acquiring Imagery
+
+http://earthexplorer.usgs.gov
+
+landsat-util
+https://github.com/developmentseed/
+landsat-util
+landsat search --download --cloud 4 --start "january 01 2014"
+--end "january 10 2014" pr 009 045
+landsat process path/to/LC80090452014008LGN00.tar.bz
+
+TBA command line processing hotness:
+Jeff Larson’s lightning talk tomorrow
+
+Landsat 8
+
+NASA
+
+Landsat 8
+
+NASA
+
+http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/10/22/how-to-make-a-true-color-landsat-8-image/
+
+https://www.mapbox.com/blog/
+putting-landsat-8-bands-to-work/
+http://earthobservatory.nasa.gov/blogs/
+elegantfigures/2013/10/22/how-to-make-a-truecolor-landsat-8-image/
+
+https://www.mapbox.com/blog/
+processing-landsat-8/
+
+charlie-loyd.rake
+
+http://j.mp/charlie-loyd-rake
+
+charlie-loyd.rake
+
+charlie-loyd.rake
+
+stitch scenes together and reproject
+ImageMagick on the command line
+save geo headers to use files with Photoshop or ImageMagick
+add geo headers back in
+convert between formats
+
+More!
+
+https://github.com/dwtkns/gdal-cheatsheet#raster-operations
+
+4/3/2
+
+NASA
+
+7/5/3
+
+NASA
+
+4/3/2 + 5 mask
+
+Creating “land”
+
+Buras, La. land loss 1932 to present via USGS, over 2014 Landsat 8
+
+Creating “land”
+
+Buras, La. land loss 2009 via USGS, over 2014 Landsat 8
+
+http://pubs.usgs.gov/sim/3164/
+
+Creating “land”
+
+http://pubs.usgs.gov/sim/3164/
+
+Creating “land”
+
+http://pubs.usgs.gov/sim/3164/
+
+Creating “land”
+
+For each time period, create an
+image by combining land loss
+from the current period to the
+last period, and land gain from
+the first period to the current
+period
+
+http://pubs.usgs.gov/sim/3164/
+
+Buras, La.: 1932-2014
+
+pixels = `convert #{file} -colorspace rgb -colors 10 -format "%c"
+histogram:info:`
+transPixels = pixels.match(/[^:]*/)
+transPct = `convert #{file} -format "%[fx:100*#{transPixels}/(w*h)]%%" info:`
+
+projects.propublica.org/louisiana
+
+projects.propublica.org/louisiana
+
+projects.propublica.org/louisiana
+
+What is the state doing about this?
+
+http://coastal.la.gov/a-common-vision/2012-coastal-master-plan/
+
+http://coastal.la.gov/a-common-vision/2012-coastal-master-plan/
+
+Marsh Creation: Lake Hermitage
+
+Google Maps (2012 USGS imagery)
+
+Sediment Diversions: West Bay
+
+Google Maps (2012 USGS imagery)
+
+Imagery: 2012—now?
+
+Lake Hermitage
+
+Lake Hermitage
+
+http://www.propublica.org/nerds/item/reporting-from-the-youngest-land-in-the-world
+
+When you have to
+buy imagery:
+Digital Globe
+
+Digital Globe, USGS
+
+West Bay Diversion
+
+West Bay Diversion
+
+West Bay Diversion
+
+West Bay Diversion
+
+projects.propublica.org/larestoration
+
+Almost
+10,000px
+
+Graphic at
+is.gd/UzGntf
+
+For "true color" Landsat 8, use bands
+
+432
+Red
+
+Green
+
+Blue
+
+8 bit = 255 shades of R, G, B per pixel.
+16 bit = 65,536 shades of R, G, B.
+More data means more flexibility!
+
+Also see
+benefits of using 16bit images in Photoshop.
+
+Photoshop clobbers geographic metadata.
+Before
+
+After
+
+Command line tools can re-attach the metadata to the file.
+
+There's also the "Geographic Imager" plugin ($700).
+
+is.gd/Ik9LrW
+
+Web graphic at
+is.gd/9OaZ9I
+
+Over the course of a month,
+blue areas
+and
+in the satellite image.
+
+June 28
+
+July 30
+
+Change
+
+By
+
+QGIS
+
+ERDAS Imagine
+
+Apparently these
+folks don't really
+have a logo
+
+Open source GIS
+
+Industrial strength remote
+sensing software
+
+NDVI
+
+Plants absorb visible light for energy
+But reflect a ton of infrared light.
+NDVI is a ratio of infrared light to visible light.
+So, it can be used to tell how healthy plants are.
+
+Data or a picture?
+
+HOT OSM
+Humanitarian
+OpenStreetMap
+
+UNOSAT
+Imagery analysis branch of
+the United Nations
+
+NAIP
+National Agriculture
+Imagery Program
+
+Planet Labs
+Tons of teensy satellites
+
+Skybox
+Lots of small satellites;
+owned by
+
+Google Earth Engine
+Image processing
+IN THE CLOUDS
+
+Tutorials for using Photoshop
+with Landsat imagery:
+"How To Make a True-Color Landsat 8
+Image" by Rob Simmon
+is.gd/1lT8tn
+Tom Patterson's Landsat 8
+Photoshop tutorial
+is.gd/LlFIa6
+
+

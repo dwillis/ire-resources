@@ -1,0 +1,218 @@
+9/30/2016
+
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+\=======================================================================
+WHAT WE TALK ABOUT WHEN WE TALK ABOUT DATA SMELLS
+\=======================================================================
+Facilitators:
+* Jacob Harris ‐ New York Times @harrisj
+* Aurelia Moser ‐ CartoDB @auremoser
+* Chris Keller ‐ KPCC @ChrisLKeller
+What we're going to do:
+In software development, the term "code smells" refers to telltale signs that indicate poorly‐written
+code should be refactored.
+As journalists working with data we encounter common problems in every project we work on. It's time
+to get organized and share some of these "data smells" that we've encountered.
+In this panel, let's inventory some of these, and start to refine an idea for an prototyped
+encyclopedia to collect and categorize these data smells.
+\=======================================================================
+GOALS
+\=======================================================================
+We're not building a site here, but at a minimum we'll explore of the concept of data smells, and
+should leave this panel with examples of data smells that could be housed in a compendium. We'll
+gauge whether participants want to split into groups to tackle different topics, or just offer them
+up in a large group setting.
+From there we will discuss several questions about how to build a site for cataloguing data smells.
+\=======================================================================
+EXAMPLES OF DATA SMELLS
+\=======================================================================
+What's a data smell? Why are data smells a problem?
+One reason is we return often to the same data sources and the work to learn their idiosyncrasies is
+a non‐trivial full‐time job that changes with every iteration.
+Consider some published outcomes ‐ dare we say data fails ‐ that resulted from smelly or
+misunderstood data, and what Jacob and Aurelia found:
+* Nigerian kidnappings:
+* Mapping Kidnappings in Nigeria:
+* http://53eig.ht/1jgrkpo
+* 538: Errors, Plotting Crises, And The Protocol Of Reprocessing Data:
+* http://bit.ly/1sU2MEB
+* The trouble with Kansas:
+* Who Watches More Porn: Republicans Or Democrats?
+* http://www.buzzfeed.com/ryanhatesthis/who‐watches‐more‐porn‐republicans‐or‐democrats
+* Distrust Your Data
+* https://source.opennews.org/en‐US/learning/distrust‐your‐data/
+* Pre‐packaged "data" is coming your way
+* A wave of P.R. data
+* http://www.niemanlab.org/2014/12/a‐wave‐of‐p‐r‐data/
+* Sloppy P.R. charticles considered harmful
+* http://www.niemanlab.org/2015/01/sloppy‐p‐r‐charticles‐considered‐harmful/
+\======================================================================
+THE CAR & DATA JOURNALISM COMMUNITY WANTS YOUR EXAMPLES & IDEAS
+\======================================================================
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+1/4
+
+9/30/2016
+
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+We've outlined several potential knowledge areas below. There are more. Add your examples, ideas on
+how to identify and combat these smells, potential solutions and suggestions for the bullet points
+below. If tweeting is your thing, add #DATASMELLS to it.
+Any content to flesh out the list is welcome:
+* Description of Error
+* Things to look for
+* Examples
+* Examples of smells
+* Context
+* Check previous year's data before working with a new release (did the methodology change?)
+* Check the metaconversation around the dataset, sometimes on the site itself
+* Check a few descriptive statistics on fields/row counts (e.g., was there a huge jump in the
+average of an amount field)
+* When importing data and doing some transformation (e.g., type‐cast) checking the number of
+distinct values and the frequencies of those values. Are they different? If so, you should know why.
+* Is it a regularly updated dataset? How big are the backward revisions?
+* GeoCoding Fails
+* Lat / long reversed
+* projection errors
+* NYPD crime data uses street intersections, rather than precise location of crime
+* postal city vs actual city / metro area — some cities have multiple districts so getting city‐
+level counts of info can be tough if you don't know those clusters (Brooklyn/Queens vs NYC, happens
+in Tokyo too)
+* Excessively specific data (down to the 14th decimal point, don't assume they know position to
+the millimeter)
+* Mapping by zip code. Zip codes are not areas.
+* Reference: http://www.georeference.org/doc/zip_codes_are_not_areas.htm
+* Precision (significant figures, overprecise measurements)
+* Centroid data smells
+* Null Island
+* Centroid, KS (if newsnerds are gonna buy/create a town, we should buy this one)
+* Every city, state, etc. has a "Centroid"
+* Scale Comparisons
+* Nulls/blanks
+* Is your data shooting blanks? This can be an import issue.
+* Is there a comprehensive list of NULL equivalent values?
+* Scale Comparisons
+* radius errors (more of a mistake than a smell...)
+* You're Not My Type
+* Implicit type coercion
+* European date formats opened in US software, then all your data is in the first twelve days of
+the months
+* FIPS codes have leading zeros taken off
+* Outliers
+* Data can have legit outliers, but sometimes it's more nefarious.
+* The "Bed of Procrustes" (data that is truncated or expanded to fit)
+* Shapefiles have a hard 2GB limit
+* System that collects data might have field limits. There might be disparate and ad‐hoc
+conventions for truncating or combining multiple values in a limited field width.
+* Scaling: Admin level + Population Density comparisons
+* Time zones
+* UTC time stamps not being local time in your area
+* Selection Errors
+* Ecological Fallacies/Boundaries
+* Projection errors and smells
+* Unhelpful helpers
+* I.e. UC Berkeley's TIMS takes accident data from the state of California and geocodes all
+accidents where there's an injury. But it's only *partial* (leaving out many accidents) something
+that TIMS doesn't make clear.
+* Change in census methodology
+* Canadian National Household Survey http://globalnews.ca/news/873012/who‐filled‐out‐the‐
+national‐household‐survey‐and‐why‐did‐statscan‐cut‐its‐census‐standards‐in‐half/
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+2/4
+
+9/30/2016
+
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+* Specific Tools
+*
+‐ QGIS‐q[a'''''
+* Associate metadata with smells ‐ which tools have which problems?
+* Location Specific Issues
+* Canadian Census Data ‐ Redistricting affecting data
+* Can gitwe get a Mr. Yuck‐style sticker for total crap datasets like this? Or the lone one‐off
+flawed dataset from an otherwise reliable source (like Canada)?
+* What are all the points in the reporting process where errors occur? Is there a hierarchy of
+smells?
+* Data might smell from the beginning.
+* Other smells arise only after you interview and clean it.
+* Some frightening examples might arise just as a piece based on the data is published.
+* How could you collect data smells?
+* How could we organize data smells?t
+* What are some features of a compendium?
+* Visual reference resource like Data Visualization Catalogue?
+* http://www.datavizcatalogue.com/
+* What would an entry look like?
+* What can we do to automate the tedious process of vetting a data set? Are checklists the answer?
+* Can we bundle smells for common types of data into guides?
+* Can we make the data smells idea approachable for readers?
+ADD YOUR GITHUB USERNAMES HERE:
+* duner
+* bchartoff
+* myersjustinc
+* ecarewgrovum
+* gordonje
+* csessig86
+*patiencehaggin
+* albertid
+* thomasthoren
+* abrahamhyatt
+* chagan
+* grantmeaccess
+\=======================================================================
+PREVIOUS DOCUMENTATION
+\=======================================================================
+* DataSmells @SRCCON
+* https://etherpad.mozilla.org/data‐smells
+* How Not to Skew with Stats @SRCCON
+* https://etherpad.mozilla.org/bOwBSAeLe5
+* Handguns and Tequila @SRCCON
+* https://etherpad.mozilla.org/MmSOTIOIDg
+* More about not making data smellier, but still might have some relevant examples
+* DataSmells GitHub repository
+* https://github.com/OpenNewsLabs/datasmells
+* Journalists Guide to Datasets GitHub repository
+* https://github.com/ryanpitts/journalists‐guide‐datasets
+* A primer on the Defense Logistics Agency's 1033 program data
+* https://github.com/SCPR/kpcc‐data‐team/blob/master/guides/primer‐on‐defense‐logistics‐agencys‐
+1033‐program‐data.md
+\=======================================================================
+CHECKLISTS
+\=======================================================================
+* Civic Software Checklist
+* http://civicpatterns.org/checklist/
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+3/4
+
+9/30/2016
+
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+* Bulletproofing Checklist
+* https://github.com/propublica/guides/blob/master/data‐bulletproofing.md
+* News Apps Styleguide
+* https://github.com/propublica/guides/blob/master/news‐apps.md
+* Data Smells: Ensuring Accuracy in Data Journalism
+* https://github.com/nikeiubel/data‐smells/wiki/Ensuring‐Accuracy‐in‐Data‐Journalism
+\=======================================================================
+REFERENCES
+\=======================================================================
+* Distrust Your Data
+* http://bit.ly/1sYG9Na
+* Naked Statistics
+* http://amzn.to/1kW4EHA
+* Data Cuisine
+* http://mzl.la/1pcWiMS
+* Spurious Correlations
+* http://www.tylervigen.com/
+
+https://old.etherpad­mozilla.org/nicar­datasmells
+
+4/4
+
+

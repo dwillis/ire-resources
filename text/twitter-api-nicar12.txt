@@ -1,0 +1,47 @@
+Scrape Twitter or Die Tryin’
+Daniel Lathrop, The Dallas Morning News
+Jacob Harris, The New York Times
+Alasdair Dant, The Guardian
+
+@lathropd
+@harrisj
+@ajdant
+
+Twitter dev site
+https://dev.twitter.com/docs
+
+DataSift is a nonprogrammers source
+for Twitter data
+http://datasift.com
+
+TweeSV.rb
+require 'HTTParty’
+options = {:result_type => 'recent', :rpp => 100, :show_user =>false, :include_entities => 't' }
+delimiter = "|"
+url = "http://search.twitter.com/search.json"
+query = "#nicar12”
+if ARGV[0] do
+query = ARGV[0]
+end
+options[:q] = query
+data = HTTParty.get url, :query => options
+puts ['id', 'time', '@user', 'user_name', 'photo', 'geo', 'tweet' ].join(delimiter)
+data['results'].each do |row|
+puts [ row['id'], row['created_at'], row['from_user'], row['from_user_id'],
+row['from_user_name'], row['profile_image_url'], row['geo'],row['text']].join(delimiter)
+end
+
+What’s in there???
+http://genesysguru.com/blog/files/2011/05/image-55.jpg
+
+Miso Project
+Guardian’s open source project of
+components for interactive news
+graphics
+@themisoproject
+
+coupon for discount awesome
+O’Reilly book
+“DSUG”
+
+

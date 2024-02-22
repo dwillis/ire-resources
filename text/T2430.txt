@@ -1,0 +1,76 @@
+IRE 2005
+
+Using Federal Campaign Expenditure Data
+Derek Willis, The Washington Post ~ dwillis@gmail.com
+
+The Universe of Expenditure Data
+Electronic filing has been required by the Federal Election Commission since 2001 for all
+political committees save Senate candidates and the two senatorial party committees, which
+continue to file on paper. Some committees filed electronically beginning in 1998, but these
+are few in number, so 2001 is a good starting point. While the FEC’s website does not permit visitors to search expenditure data or to download composite files of expenditures, it
+does allow you to download individual filings that contain expenditures.
+
+Getting Started
+Because electronic expenditures are not aggregated in single files, you’ll need to approach
+them in a slightly different way than contributions. Filings are important because committees often file amended reports, so a set of expenditures may be replaced by another, and
+the responsibility for figuring that out and making changes lies with you, not the FEC. If
+you’re keeping track of a small number of committees, you can probably get by with bookmarking the page listing electronic filings. Grabbing a larger set means you should approach it systematically; for example, I wrote a Python script to download the list of nonamended (ie, current) filings for all party committees.
+
+The Different Types of Expenditures
+Next, you’ll need to become familiar with the layouts of expenditure data. Layouts? Yes,
+there are more than one type of expenditure. In general, expenditures made entirely with
+“hard money” are known as Schedule B expenditures, and they share a common layout. Filings by candidate committees and most political action committees contain only Schedule
+B expenditures. State and local political parties and a few other PACs are able to spend a
+mix hard money and non-federal (“soft”) money, and these are detailed in Schedule H. Expenditures marked as H4 are a mix of hard and soft money, with the total amount and hard/
+soft breakdown listed. Expenditures marked H6 contain a type of soft money known as
+“Levin” funds, and can only be spent by state and local party committees. Two other types,
+independent expenditures and coordinated expenditures, are known as Schedule E and
+Schedule F, respectively, although both have long been available from the FEC. To recap:
+• Schedule B - Hard money expenditures
+• H4 - Mix of hard and soft money
+• H6 - Levin fund expenditures
+• Schedule E - Independent expenditures
+• Schedule F - Coordinated expenditures
+
+Using Federal Expenditure Data - Derek Willis, The Washington Post - IRE 2005
+
+1
+
+IRE 2005
+
+Using Federal Campaign Expenditure Data
+Derek Willis, The Washington Post ~ dwillis@gmail.com
+
+Working With the Data
+You can get electronic filings two different ways: the first is through the FEC’s Electronic
+Filing Search, which is good if you’re looking for a single committee or a small list of committees. The search results will list filings and give you the option of viewing them online or
+downloading the file. If you’re tracking expenditures over time or a broad set of committees,
+it may be better to opt for the FEC’s FTP site, which has each day’s set of electronic filings
+contained in a zip file (the files are in the /electronic/ folder and are labeled 20050603.zip,
+for example). Around the due dates for filings these can become quite large. Either way, the
+end result in the same - each filing is a single comma-delimited text file with both contributions and expenditures inside, piled on top of each other.
+That means you’ll need to separate the expenditures from the rest of the file (which also has
+summary details at the top) in order to work with them. A tip: don’t just import the entire
+filing straight into a database. If you’re working with a small number of small filings, you
+can open them in Excel and then transfer records to other worksheets. But if you’re going
+to be doing this more than once or twice, you should think about a more programmatic approach. The FEC does have import formats for Schedules B & H4 available for download,
+and these can be used straightaway or to develop your own system.
+
+Things to Watch For
+• Dates are typically entered in the data in YYYYMMDD format and must be converted either during import or after.
+• Names are, depending on the software used, either contained in a single field near the
+beginning of each record or broken into multiple fields at the end of the record. If you’re
+importing a large number of records into a new table, make sure to put some records with
+fields at the end at the top of your file.
+• When a filing has multiple name fields, it will have one for a non-individual and 4-5 for
+individuals (last, first, middle, suffix and optionally prefix)
+• The name fields can contain other delimiters, particularly the carat (^) character.
+
+Final Tips
+If you’re going to be tracking filings over time, set up a table of filings and when amendments come in, don’t delete the original filings - just mark them as old. Also, it helps to include the filing number (the name of the individual filing ending in .fec) with your expenditure data. This way if you need to replace a single filing you don’t have to swap out a committee’s entire set of data.
+
+Using Federal Expenditure Data - Derek Willis, The Washington Post - IRE 2005
+
+2
+
+

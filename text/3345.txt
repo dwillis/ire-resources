@@ -1,0 +1,155 @@
+2010 CAR Conference (Phoenix, Arizona)
+
+Essential SQL Queries (To Me, At Least)
+For a session of five-minute “lightning talks” at this week’s 2010 Investigative Reporters and
+Editors conference in Phoenix, I contributed “Five Essential Queries for SQL Server.” Aside
+from the basic SELECT statement, these are five techniques that, at least for me, either solved a
+tricky problem or made coding life more efficient. They came to me after some trial and error or
+from using the coder’s best friend, Google.
+I realize that many journalists prefer the open source (free) MySQL to Microsoft’s product, so
+I’ve replicated the five queries below in MySQL syntax. You can download script files for either
+syntax here:
+– Five essential queries (MS SQL Server) (http://www.anthonydebarros.com/wp‐
+content/themes/portfolio_ad/docs/FiveEssentialSQLQueries_SQLServer.sql)
+– Five essential queries (MySQL) (http://www.anthonydebarros.com/wp‐
+content/themes/portfolio_ad/docs/FiveEssentialSQLQueries_MySQL.sql)
+Feedback and your ideas are welcome. Here they are:
+1. Create a temporary table with identity column.
+Temp tables are handy for storing and manipulating data when you need a table but don’t want to
+make it part of your actual schema. In SQL Server, the table variable is held in memory and
+disappears once the query finishes executing.
+DECLARE @tmp TABLE (
+id int identity(1,1),
+FirstName varchar(50))
+INSERT INTO @tmp (FirstName) VALUES ('Bob')
+INSERT INTO @tmp (FirstName) VALUES ('Joe')
+INSERT INTO @tmp (FirstName) VALUES ('Sally')
+SELECT * FROM @tmp
+
+2. Use a CASE expression to update a field based on values in another field.
+Here, we create a temporary table that has FirstName and NickName fields. If we want to update
+the NickName field based on the values found in FirstName, we can use a standard UPDATE
+statement with CASE embedded.
+DECLARE @tmp TABLE (
+id int identity(1,1),
+FirstName varchar(50),
+NickName varchar(50))
+INSERT INTO @tmp (FirstName) VALUES ('Robert')
+INSERT INTO @tmp (FirstName) VALUES ('Joseph')
+INSERT INTO @tmp (FirstName) VALUES ('Elizabeth')
+
+http://www.anthonydebarros.com/2010/03/11/essential‐sql‐queries/
+
+2010 CAR Conference (Phoenix, Arizona)
+UPDATE @tmp
+SET Nickname =
+CASE
+WHEN FirstName = 'Robert' THEN 'Bob'
+WHEN FirstName = 'Joseph' THEN 'Joe'
+WHEN FirstName = 'Elizabeth' THEN 'Liz'
+END
+SELECT * FROM @tmp
+
+3. Join a table to itself using aliasing.
+Sometimes, it’s handy to be able to join a table to itself or to join the results of two or more
+queries. Using aliases is a helpful way to do this. In this example, we create a table to hold
+information on eating contests. Each row has the result for one contestant and includes name,
+contest date and their result.
+Let’s say we want to know, for each contestant, their most recent contest and how well they did.
+First we need to find the maximum date for their name and then find the result on that date. We
+do both operations as separate queries and assign each an alias — in this case, A and B. We can
+then join those to query them as if they were two separate tables.
+DECLARE @EatingContests TABLE (
+id int identity(1,1),
+FirstName varchar(50),
+cDate datetime,
+Result int)
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Bill','3/2/2010','4')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Bill','5/18/2010','3')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Bill','12/19/2010','1')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lisa','3/2/2010','6')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lisa','12/7/2009','1')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lisa','1/6/2010','2')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lou','3/2/2010','3')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lou','4/4/2010','5')
+INSERT INTO @EatingContests (FirstName, cDate, Result) VALUES
+('Lou','9/16/2009','1')
+SELECT A.FirstName, A.MaxDate, B.Result
+FROM
+(SELECT FirstName, Max(cDate) AS 'MaxDate'
+FROM @EatingContests
+GROUP BY FirstName)
+AS A
+
+http://www.anthonydebarros.com/2010/03/11/essential‐sql‐queries/
+
+2010 CAR Conference (Phoenix, Arizona)
+LEFT JOIN
+(SELECT FirstName, cDate, Result
+FROM @EatingContests)
+AS B
+ON A.FirstName = B.FirstName AND A.MaxDate = B.cDate
+
+4. Rank query results.
+SQL Server has a very handy RANK function that will return the rank of a value we specify in
+the query.
+Here we have a table of names and salaries. We use RANK to order the names by salary and
+provide the rank. Note that RANK shows that two people tied for 2nd and then ranks the next
+person 4th.
+DECLARE @tmp TABLE (
+id int identity(1,1),
+FirstName varchar(50),
+Salary int)
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Robert','25000')
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Jan','36000')
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Mike','48000')
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Sarah','51000')
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Lisa','48000')
+INSERT INTO @tmp (FirstName, Salary) VALUES ('Steve','22000')
+SELECT FirstName, Salary, RANK() OVER (ORDER BY Salary DESC) AS 'Rank'
+FROM @tmp
+
+5. Concatenate row values into one field
+The table created with the script below has names and test scores. For some applications, it’s
+handy to present these values in a list, such as “82, 93, 74″.
+MySQL’s GROUP_CONCAT function does this easily, but there’s no similar option in SQL
+Server. It can be done, though, and this syntax (which I stumbled upon after an eternity of
+Googling), makes use of both the STUFF function and the FOR XML PATH output option.
+STUFF inserts text inside another piece of text.
+CREATE TABLE #tmp (
+id int identity(1,1),
+FirstName varchar(50),
+Score varchar(10))
+INSERT INTO #tmp (FirstName, Score) VALUES ('Dana','82');
+INSERT INTO #tmp (FirstName, Score) VALUES ('Dana','93');
+INSERT INTO #tmp (FirstName, Score) VALUES ('Dana','74');
+INSERT INTO #tmp (FirstName, Score) VALUES ('Tammy','92');
+INSERT INTO #tmp (FirstName, Score) VALUES ('Tammy','98');
+SELECT
+FirstName,
+STUFF((
+SELECT ', ' + t.Score
+
+http://www.anthonydebarros.com/2010/03/11/essential‐sql‐queries/
+
+2010 CAR Conference (Phoenix, Arizona)
+FROM #tmp t
+WHERE t.FirstName = #tmp.FirstName
+ORDER BY t.Score DESC
+FOR XML PATH('')
+),1,1,'') as Scores
+FROM #tmp
+GROUP BY FirstName
+DROP TABLE #tmp
+
+http://www.anthonydebarros.com/2010/03/11/essential‐sql‐queries/
+
+

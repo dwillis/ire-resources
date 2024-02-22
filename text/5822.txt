@@ -1,0 +1,403 @@
+Finding needles in haystacks
+with fuzzy matching
+@maxharlow
+
+Phil C. Harris
+Baron Harris of Peckham
+Philip Harris
+Philip Charles Harris
+Philip C Harris
+The Right Honourable Lord Harris of Peckham
+P Harris
+Lord Harris
+
+Finding needles in haystacks
+with fuzzy matching
+@maxharlow
+
+What is fuzzy matching?
+
+Matching up two sets of names of things that aren’t quite
+the same, but refer to the same thing.
+Typically in journalism that’s names of people or names
+of companies.
+
+CSV Match
+github.com/maxharlow/csvmatch
+
+Getting started with the terminal
+
+What folder am I in?
+aka. ‘Print Working Directory’
+
+$ pwd
+
+What files and folders are here?
+
+$ ls
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd foldername
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd Desktop
+
+$ cd hands_on_classes
+
+$ cd finding_needles_in_haystacks_with_fuzzy_matc
+
+$ ls
+bloomberg-billionaires.csv
+
+forbes-billionaires.csv
+
+cia-world-leaders.csv
+
+forbes-china-billionaires.csv
+
+davos-attendees-2019.csv
+
+un-sanctions.csv
+
+Open current folder in the Finder
+
+$ open .
+
+Exact matches
+
+Which names on the Forbes billionaires list
+are also on the Bloomberg billionaires list?
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 Name
+
+Robert Smith,Robert Smith
+Zhang Bangxin,Zhang Bangxin
+Judy Faulkner,Judy Faulkner
+Radhakishan Damani,Radhakishan Damani
+Stein Erik Hagen,Stein Erik Hagen
+Jiang Rensheng,Jiang Rensheng
+Xu Jingren,Xu Jingren
+Seo Jung-Jin,Seo Jung-Jin
+Mike Cannon-Brookes,Mike Cannon-Brookes
+Scott Farquhar,Scott Farquhar
+Gordon Getty,Gordon Getty
+Kei Hoi Pang,Kei Hoi Pang
+Tom Morris,Tom Morris
+Sun Hongbin,Sun Hongbin
+Reed Hastings,Reed Hastings
+Zhou Hongyi,Zhou Hongyi
+Jack Dorsey,Jack Dorsey
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 Name
+
+a flag
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+-1 name \
+-2 Name
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 Name \
+> billionaires-in-both.csv
+
+Getting the columns we want
+
+$ csvmatch \
+forbes-billionaires.csv \
+bloomberg-billionaires.csv \
+--fields1 name \
+--fields2 Name \
+--output 1.name 1.realTimeRank 2.Rank \
+> billionaires-in-both-ranked.csv
+
+--output 1.name 1.realTimeRank 2.Rank \
+
+--output 1.name 1.realTimeRank 2.Rank \
+
+--output 1.name 1.realTimeRank 2.Rank \
+
+--output 1.name 1.realTimeRank 2.Rank \
+
+--output 1.name 1.realTimeRank 2.Rank \
+
+Naive approaches to fuzzy
+
+Things we might be able to ignore
+Ignore case
+Ignore common name prefixes (Mr, Ms, etc)
+Ignore other domain-specific words
+Ignore non-alphanumerics
+Ignore non-latin characters (é, å, ß, etc)
+Ignore the order the words are in
+
+Things we might be able to ignore
+Ignore case
+
+-i
+
+--ignore-case
+
+Ignore common name prefixes (Mr, Ms, etc)
+
+-t
+
+--ignore titles
+
+Ignore other domain-specific words
+
+-l
+
+--filter
+
+Ignore non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Ignore non-latin characters (é, å, ß, etc)
+
+-n
+
+--as-latin
+
+Ignore the order the words are in
+
+-s
+
+--sort-words
+
+Orbán, Viktor
+Viktor Orban
+
+Orban, Viktor
+Viktor Orban
+
+Orban Viktor
+Viktor Orban
+
+Orban Viktor
+=
+Orban Viktor
+
+Which names from the CIA world leaders
+list are also on the Davos attendees list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+davos-attendees-2019.csv \
+--fields1 name \
+--fields2 full_name
+
+$ csvmatch \
+cia-world-leaders.csv \
+davos-attendees-2019.csv \
+--fields1 name \
+--fields2 full_name \
+--ignore-case \
+> leaders-at-davos.csv
+
+Things we might be able to ignore
+Ignore case
+
+-i
+
+--ignore-case
+
+Ignore common name prefixes (Mr, Ms, etc)
+
+-t
+
+--ignore titles
+
+Ignore other domain-specific words
+
+-l
+
+--filter
+
+Ignore non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Ignore non-latin characters (é, å, ß, etc)
+
+-n
+
+--as-latin
+
+Ignore the order the words are in
+
+-s
+
+--sort-words
+
+$ csvmatch \
+cia-world-leaders.csv \
+davos-attendees-2019.csv \
+--fields1 name \
+--fields2 full_name \
+-i -a -n -s \
+> leaders-at-davos-2.csv
+
+$ csvmatch \
+cia-world-leaders.csv \
+davos-attendees-2019.csv \
+--fields1 name \
+--fields2 full_name \
+-ians \
+> leaders-at-davos-2.csv
+
+Fuzzy algorithm #1:
+
+Levenshtein
+
+Max Harlow
+→ 90%
+
+=
+
+Max Harkow
+
+?
+
+Max Harlow
+→ 10%
+
+=
+
+John Dales
+
+?
+
+Which names from the CIA world leaders
+list are also on the Forbes billionaires list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+forbes-billionaires.csv \
+--fields1 name \
+--fields2 name \
+--fuzzy levenshtein \
+> billionaire-leaders.csv
+
+False positives & false negatives
+
+you’re pregnant
+
+FALSE POSITIVE
+
+you’re not
+pregnant
+
+FALSE
+NEGATIVE
+
+Fuzzy algorithm #2:
+
+Metaphone
+
+Catherine
+→ YES!
+
+David
+→ NO!
+
+=
+
+Kathryn
+
+= Dave
+
+?
+
+?
+
+Which names from the CIA world leaders
+list are also on the United Nations
+sanctions list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+un-sanctions.csv \
+--fields1 name \
+--fields2 name \
+--fuzzy metaphone \
+> sanctioned-leaders.csv
+
+JON Kyong Nam
+
+=
+
+YO'N CHO'NG NAM ?
+
+Fuzzy algorithm #3:
+
+Bilenko
+
+John Kennedy
+→
+
+=
+
+Jim Kennedy ?
+
+Rob Ford =
+→
+
+Robert J Ford ?
+
+Which names from the CIA world leaders
+list are also on the Davos attendees list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+davos-attendees-2019.csv \
+--fields1 name \
+--fields2 full_name \
+--fuzzy bilenko \
+> leaders-at-davos-3.csv
+
+name: KHALID bin Ahmad bin Muhammad Al Khalifa
+name: Khalid Bin Ahmed Al Khalifa
+Do these records refer to the same thing? [y/n/s/f] y
+name: Patrick FABER
+name: Patrick Foulis
+Do these records refer to the same thing? [y/n/s/f] n
+name: Muhammad al-JADAN
+name: Mohammed Al-Jadaan
+Do these records refer to the same thing? [y/n/s/f]
+
+Here be caveats
+Same name doesn’t mean it’s the same person!
+Medium sized data only
+Every row needs to be matched against every other row
+To work out how many comparisons that means take the number of rows in the two
+files, and multiply them
+Both files will need to be completely loaded into your computer’s memory -- if their
+combined size is bigger, it won’t work
+
+@maxharlow
+github.com/maxharlow/csvmatch
+Slides? bit.ly/2H4xv23
+
+

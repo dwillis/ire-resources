@@ -1,0 +1,248 @@
+Make A Map Your Way
+A beginning class with ArcView 3.0
+Advanced Bootcamp, University of North Carolina, May 1997
+By Andy Lehren, database administrator for the National Institute for Computer-Assisted
+Reporting. Phone: 573-882-0684. Email: andy@nicar.org
+Ojectives
+•
+•
+•
+•
+•
+
+Get familiar with the basic concepts in desktop mapping, and start learning some of
+the basic buttons for maneuvering through ArcView.
+Learn how to bring a map into ArcView.
+Learn how the Legend Editor is ArcView’s analysis engine, how it can change a
+map’s appearance, and how it can bring meaning to your information.
+Learn how attribute tables can be linked with other data.
+Map a statistical index to find the levels of segregation in your community.
+
+A Brief Overview
+Mapping with a computer is more than eye candy for your story. It can let you probe
+information in ways that cannot be done with traditional computer-assisted reporting
+tools like spreadsheets and database programs.
+A lot of what makes up a mapping program is familiar ground. Mapping programs still
+use data stored in tables. They may let you point-and-click your way through a question,
+but the language running behind those mouse moves is still SQL. But these programs go
+several steps further -- allowing you to link data to maps, and to slice and dice data based
+on where it fits on the globe. But you know all this already.
+The goal of this class is to show you how you can take easily available maps into
+ArcView, join it to a database, and analyze the data for patterns.
+Let’s Get Started: Bringing Maps Into ArcView
+ArcView lets you set aside a work area for what you want to do. This work space is called
+a project. It’s similar to the way a database works in Access and a project works in the
+latest versions of FoxPro. You can store tables inside them, and a whole lot more. Open
+ArcView and you start with a screen like this:
+
+We’re about to start a brand-new project. This is something you can do in any part of the
+country – looking at the ethnic and racial diversity in your community. You can find the
+places where people of different backgrounds live together, and where they live apart
+from one another.
+Let’s begin by bringing a map into ArcView. The one we’re using comes courtesy of the
+Missouri Spatial Data Information Service. Start by double-clicking the Views icon. And
+then take your mouse to the Add Theme button on the tool bar. It’s the one just below
+Edit:
+
+After you click it, your screen will change to something like this:
+
+Double click on stlouis.shp. This is a map that carves St. Louis based on U.S. Census
+Bureau tracts. Tracts, by the way, are not the smallest cut done by Census. The smallest is
+a block, which is about the size of a city block. About four to six blocks make up a block
+group. And then block groups are combined to form tracts.
+When you brought in the tracts map, your view changed, listing something called
+Stlouis.shp. But still no map. To actually see it, click into the little raised box to the left
+of Stlouis.shp. The click will put a little check mark in the box, and you will now see the
+city of St. Louis:
+
+Looking Better
+This is not bad, but it could be better. The city is all one color. Here at NICAR, people
+thought it resembles a medical book’s version of a stomach, or a turtle going uphill. The
+census tracts are there – the craggy lines inside. But they could be more distinct. So let’s
+improve our map and get more familiar with ArcView. But first, let’s save what we’ve
+done so far. Go to File…Save Project… Save the project in a folder designated by your
+instructor. Let’s call it diversity.apr. OK, now let’s proceed with improving our map.
+Let’s begin by going on the top menu bar to Theme…Edit Legend… ArcView thinks of a
+map like this as a theme, and we’re going to alter the looks of this theme. By the way, you
+can also bring up the Legend Editor by double clicking the theme name in the view’s
+Table of Contents. Inside the Legend Editor box, begin on the line Legend Type: Click
+the down arrow and you get a bunch of choices. Pick Unique Value, because we want to
+see every tract clearly. The Legend Editor box changes appearance a bit. A line called
+Values Field now appears. Click its down arrow and you get more choices. This is your
+first peek inside an attributes table for a map. Attributes are data that goes with the map.
+You get some standard choices like Area and Perimeter. Let’s scoot down to Polid. This
+is actually a field that combines the state, county, and tract codes into a unique identifier.
+You’ll understand why we kept this name later. But for now, ignore the left five digits in
+this label if you want to know just the tract number. Now, in the line at the bottom for
+Color Schemes, let’s pick something dramatic: The High Seas.
+
+Now we get a table showing a smattering of colors that will help us see each tract more
+clearly:
+
+But our map has not changed yet. To do that, hit the Apply button in the lower right
+corner. Close your Legend Editor box by hitting the X on the upper right corner. Your
+map should look like this:
+
+What’s In The Tool Chest
+This won’t make it into your newspaper, but at least it’s colorful and you can see every
+tract. Let’s take a few moments getting familiar with some tools and buttons that come
+with ArcView. Let’s say you’re curious about that northern most tract. Which one is it?
+What data do we have on it so far? To do that, make sure your Identify tool is pressed in.
+It probably is as a default setting. The Identify tool is just below File:
+
+With that button pressed in, you can now take your mouse and go and click on that tract.
+The cursor is no longer an arrow, but a plus sign with the identify circle next to it. Click
+on it and you get a pop-up box:
+
+It doesn’t tell us much, but it gives you a glimpse into how a mapping program thinks.
+It divides the world into points, lines and polygons. A polygon includes information on
+how it looks – its area and perimeter. This is technical information, but you will find this
+useful as you get more into mapping. We really don’t learn much else about this tract
+except its U.S. Census Bureau tract number (in this case 1084.00). We’ll fetch more data
+for all tracts later on. For now, close your identify box and proceed.
+Let’s learn some other handy buttons and tools. There are a couple quick ways to zoom in
+and out. Here is a list. Play with them a bit to get an idea how they work.
+This button lets you zoom in. Each time you click it, your map gets bigger.
+This is its doppleganger. Each time you click it, your map gets smaller.
+
+Click this and the mouse cursor changes into a magnifying glass to zoom in. Just
+click and drag a box around the area you want to see close up.
+This is its contrary sibling, the demagnifying glass. Just click and drag a box around
+the area you want to see reduced.
+This hand lets us move the map around. Just click and drag the map.
+There are three buttons that let you zoom around based on the theme you’ve selected
+and what you’ve done with it. The middle one, shown here, lets you go to the active
+theme. In other words, St. Louis is our active theme. It’s the only one we’re working on.
+Hit this button and the city fills your view screen.
+With this, our mouse’s cursor returns back to the normal arrow.
+
+Checking Attributes
+OK, so now you’re a bit familiar with bringing a map into ArcView and altering some of
+its appearances. It’s time to take this one step further and learn how we can use this to
+analyze data. Let’s begin by looking at the attributes database that goes with
+computerized map. To do this, click on the Open Theme Table button:
+
+This pulls up the entire database that defines each census tract. Remember when we used
+the identify arrow and saw some information about a particular tract? ArcView was
+pulling a record from this table. Let’s organize our screen a bit so we can use both the
+table and the map. Drag your table below your map so your screen looks something like
+this:
+
+Let’s say we were covering city hall and just got an urban renewal plan that called for
+work in census tract 1121, and we were unsure about its location. No problem. Take your
+arrow and, in the attributes table, click on the column Polid, as shown above. Now go to
+your handy tool bar. Pick the Find tool to help us hunt for this tract:
+
+You get a pop up window asking what you want to find. Punch in the tract number. See
+what happens to your map? The tract is highlighted in yellow. We can hunt for things.
+ArcView offers more advanced ways to ask questions. This is a shortcut for a simple one.
+To get rid of the selection and the yellow highlight, go to the Clear Selected Features
+button:
+
+Now that we’re familiar with some of the basics, let’s get some census data to start
+digging deeper. Go to your projects window – the one you named earlier – and, with the
+Table icon highlighted, hit the Add button. You get a menu choice. Pick motract.dbf. This
+is raw census data telling us about the demographics in each tract all in a database. Scroll
+through it to get a bit familiar with this data. You may notice it begins with a lot of
+geographical codes and information. Scroll past that, to the right, and about half-way you
+will begin to see demographic information. The column called Total_pop is the total
+population in the census tract. To the right after that is a racial breakdown – white, black,
+American Indian, Asian, and Hispanic. These columns are the basis for the diversity
+analysis we will soon undertake.
+Time To Join
+Notice that about two-thirds of the way through the table is a column called Polid. And
+remember that, in our attributes table for the map, we also have a column called Polid.
+Just like in any database manager, we can join tables. All we need is a field to make that
+link. We’re going to use the Polid column in both tables. Here’s how we’ll do it:
+Step One: In motract.dbf, click on the gray column header for the Polid column. It should
+now be highlighted.
+Step Two: In the attributes table, click on the gray column header for the Polid column. It,
+too, should now be highlighted. ArcView is particular that you do this operation in this
+order; first you click the field in the table you’re joining, then you click the field in the
+table you want to attach it to. If you have any trouble with this join operation, please
+check that you’ve done this correctly.
+Your column header for Polid in both tables should look like this:
+
+We’re all set to join the two tables on the Polid column, which consists of a unique
+identification number for each census tract. Go to the button bar and click on the join
+button. It looks like this:
+
+You’ve just joined the two tables. Take a look at your work. Scroll through your
+attributes table. It now includes the demographic information from the census table. Click
+on your map. Go to the top and hit the identify button. Go back to that same northern
+most track and click on it. You should now be able to scroll down the pop-up window
+
+and see that 1077 people lived there in the 1990 census. And you can see the racial
+breakdown.
+
+< INSERT NORMALIZING FUNCTIONS
+
+Analyzing For Racial And Ethnic Diversity
+At the end of this lesson is a detailed explanation on the formula developed by Phil
+Meyer and Shawn McIntosh for analyzing diversity. It’s a formula that takes several steps
+and looks at the probability for finding someone of a particular race or ethnicity. The
+resulting index runs on a scale of 0 to 1, with the smaller number signifying greater
+segregation.
+For doing this analysis, the thing to know is you’re one column calculation shy of being
+able to measure diversity. We’ll need to add a column and fill it with data derived from
+our population numbers. Here’s how to do it:
+Step One: Click on your attributes table. Go up to your menu bar and pick Table…Start
+Editing…
+Step Two: Now go over to Edit…Add Field. We get a pop-up window that asks us about
+the nature of this field. For the name, call it Diversity. The type should be numeric. The
+width can remain 16 digits. For decimal, put in 14. Your result should look like this:
+
+Calculating Diversity
+
+Hit OK. You’ve just added the column that will measure diversity. All we need to do is
+finish our calculations. What’s missing is the part that tabulates the racial and Hispanic
+vs. Non-Hispanic breakdown. We’ll take care of that now.
+Step One: On the menu bar, go to Field…Calculate….
+Step Two: You get a pop-up window. Now we pick our formula. It knows we want to fill
+in the diversity field. The formula is 1 - (Ph*Pr). Ph and Pr are two columns at the end of
+the table that calculate the probability of ethnic and racial diversity. Your result should
+look like this:
+
+Hit OK. We’ve now created the index for diversity. It’s time to see how this maps out.
+Running A Query
+There are a couple ways to run a query in ArcView. For this lesson, let’s begin by
+clicking on our map. Now go up to our menu bar, and pick Theme…Query….
+We get a pop-up window. Let’s pick our criteria so we’re seeing which tracts have a
+diversity index below .2. Pick the field, less than symbol and the first value more than .2:
+
+Hit New Set. Not only does the query highlight the rows affected in your table, it also
+maps the results. Look at your map. We can now see the places in St. Louis that are not
+deeply integrated. We could run more queries like this. But there is a way that will help
+us better analyze our diversity index.
+But before we do that, hit your clear selection icon. If you forgot what it looks like, check
+your Checking Attributes section in this lesson.
+Finding The Ranges
+Click on your map. We are now going to rearrange it based on its level of integration.
+Go to Theme…Edit Legend….
+In the pop-up box, pick Graduated Color for the Legend Type.
+For the classification type, pick the field Diversity. For color ramps, pick red
+monochromatic. Let’s do some more editing.
+For the last row, under Value, change the upper end of the range to .99. We’re doing this
+because those with values of 1 are places where no one lives. You can check the data to
+make sure.
+For our range labels, let’s change these to words: Segregated, Less Segregated, Middling,
+Less Integrated, Integrated.
+Your results should look like this:
+
+Now for one more step. See the + button? Hit it to add a category. For value, type 1. For
+Label, type Not Populated.
+Hit the Apply button and close out of the Legend Editor box. You now have a map that
+lets you see the patterns of integration in St. Louis. The poorly integrated tracts in the
+south tend to be white; the ones in the north are black. But you know how to check the
+details of those tracts. You could do this analysis for your city, region or state.
+ArcView automatically suggests these ranges based on the natural breaks in the numbers.
+It’s a complex formula that you don’t need to worry about now. What it’s doing is finding
+clusters of numbers, and trying to avoid breaking a cluster into two different groups.
+Also, notice that you can normalize your data. That’s a five-dollar word for doing things
+like dividing population by area to find the most densely populated regions in your map.
+If you still have time in the lesson, you can add the Stlouisco.shp (for St. Louis County)
+map to your current project and look at its levels of integration. Notice that the county
+map fits snugly around the city. Retrace your steps through the process. The data set –
+motract.dbf – includes information for those tracts, too.
+
+

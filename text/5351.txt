@@ -1,0 +1,118 @@
+Hands on with health data
+NICAR 2018
+Charles Ornstein & Ryann Grochowski Jones
+(This tipsheet can be found at ​http://bit.ly/nicaropioids​)
+For our hands on class, we will be working with data sets released by the ​Centers
+for Medicare and Medicaid Services​ (CMS) and the ​Centers for Disease Control
+and Prevention​ (CDC). Medicare is the federal public health insurance program for
+the elderly and disabled. Medicaid is a state-federal public health insurance
+program for the poor. The CDC is the main U.S. agency dedicated to public health.
+The data for this session are available here:
+Part_D_Opioid_Geographic_Data.zip
+Medicare_Part_D_Opioid_Prescriber_Summary_File_…
+
+Also: ​https://www.cdc.gov/drugoverdose/maps/rxcounty2016.html​ and
+https://www.cdc.gov/drugoverdose/maps/rxcounty2015.html
+Please note: A tipsheet on opioid data can be found at ​www.bit.ly/opioid-data​.
+
+Dataset #1: Part D Opioid Geographic Data
+This dataset can be downloaded at the link above or here:
+https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-an
+d-Reports/Medicare-Provider-Charge-Data/Downloads/Part_D_Opioid_Geographi
+c_Data.zip
+When you unzip the file, you will see an Excel spreadsheet. In it are worksheets
+for State, County and ZIP Code. This data represents 2013-2015 data from
+Medicare Part D, Medicare’s prescription drug program. As of March 2018, this is
+the most-recent data. The program covers billions of prescriptions to seniors and
+disabled people.
+
+We will use this data to work on sorting and filtering.
+Dataset #2: Medicare Part D Opioid Prescriber Summary File
+This dataset can be downloaded at the link above or here:
+https://data.cms.gov/Medicare-Part-D/Medicare-Part-D-Opioid-Prescriber-Summ
+ary-File-201/6i2k-7h8p
+This is a large file. When you download it, you can look up prescribing patterns of
+individual doctors in the Medicare Part D program. This data includes only 2015
+data, but CMS publishes it for 2013 and 2014, as well. Once you have identified a
+state or ZIP code of interest in the first dataset, you can drill down into the data,
+looking for individual doctors, in this dataset.
+Again, we will be working on sorting and filtering.
+Dataset #3 and 4: CDC data on opioid prescribing rates
+This data covers 2015 and 2016.
+First, you will want to open up a new Excel workbook. ​Then, and this is very
+important, you will want to go to Column C, highlight it, right click, select format
+cells and select text. ​It will look like this:
+
+The reason you want to do this is that we will be pasting data into this column
+that we want to be ingested as text. If you do not do this step, it will come in as a
+number (and Excel will drop the leading zero.)
+Next, go to this website:
+https://www.cdc.gov/drugoverdose/maps/rxcounty2016.html
+Scroll below the map and highlight everything beginning with “County” until the
+bottom of the spreadsheet:
+
+Now, go back to Excel and paste this into your workbook. ​DO NOT PASTE IT
+NORMALLY. Rather, paste it special. And select text. You do this by clicking on
+the triangle under the paste button. Do not click the paste button and don’t use
+Control V.
+
+Your data will look pretty:
+
+At the bottom of the Excel workbook, title your sheet 2016.
+
+Now open another worksheet and do the same thing for the 2015 data.
+https://www.cdc.gov/drugoverdose/maps/rxcounty2015.html​ Remember to
+reformat column C. Then label this spreadsheet 2015.
+At this point, you should have two nicely formatted sheets.
+For this assignment,​ we will go over sorting, filtering and VLOOKUP. We’ll also
+talk about the importance of comparing measures over time.
+
+Using lookups in Excel
+One of the most powerful tools in a database manager is the ability to join tables.
+Excel has some tools that allow you to join data from multiple sheets.
+In the CDC datasets, we’re going to use a tool called VLOOKUP, which will let us
+pull data from 2015 into our chart for 2016.
+First, we have to get our data ready to join. To do that,
+1) You must have followed the steps above to prepare your data.
+2) Next, you’ll need to create a unique ID field upon which to match the
+sheets. Luckily, our datasets have a FIPS code, a unique ID for counties and
+states. ​NOTE: It is necessary to put your unique key in column A for this to
+work.
+3) In your 2015 sheet, cut Column C and insert the cut cells in Column A. This
+will move your FIPS code to the first column, which is required for this task.
+This is what each spreadsheet will look like:
+
+Do the same thing in the 2016 file.
+Now you are ready for the VLOOKUP.
+We want to compare prescribing rates in 2016 to 2015. They are in different
+sheets. So in the 2016 sheet, you want to add a column to the right of column D
+and call it, “2015 prescribing rate.”
+In cell E2, we’ll add our formula:
+=VLOOKUP(A2, 2015!A$1:$D3144,4,FALSE)
+Let’s walk through this formula:
+A2​ is the cell that contains the location ID in the 2016 file.
+2015!A$1:$D3144 is the range of cells in the spreadsheet called 2015. The dollar
+signs are there because as you copy the formula down, Excel will want to
+increment them. This prevents the formula from changing to A2:C112 and
+A3:C113 and so on…
+4​ is the column that contains the information you want to pull in, in this case 2015
+prescribing rate. The lookup code MUST be the first column. You actually need to
+count the columns and not use the column letter.
+False​ means that your data has to match 100% (remember, nerds in closets
+invented this software – it’s not always intuitive)
+Just like with most formulas, copy it down to the bottom of the spreadsheet.
+Check out what you’ll see.
+
+One last thing you’ll want to do is add a Column F and call it “DIFFERENCE.” (Write
+the word “DIFFERENCE” in cell F1). Now in F2, enter this formula =D2-E2. What
+this is telling Excel is
+= We are doing math
+D2-E2 Take the value in D2 and subtract the value in E2 from it. Take 2016’s rate
+and subtract out 2015’s rate.
+Finally, you’ll want to filter out the #VALUE (This happens because you aren’t
+subtracting numbers.)
+You can now compare prescribing rates in 2016 to 2015 without going back and
+forth among different spreadsheets.
+With thanks to Jennifer LaFleur for the VLookup template.
+
+

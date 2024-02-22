@@ -1,0 +1,336 @@
+IRE 2018
+Data Cleaning With OpenRefine
+Workshop
+Intro and housekeeping
+Download this document and dataset from http://bit.do/ire18
+
+Who knows:
+• OpenRefine?
+• vlookup in Excel?
+• regular expression?
+• Wikidata, dbpedia or reconciliation services?
+
+There is probably too much to covers in one hour. My goal is to go over the main functionality of
+OpenRefine to give you a sense of what you can accomplish with OpenRefine. This document is meant
+as guidance during this workshop so that you can reproduce each screenshot.
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+1
+
+About OpenRefine
+Key Points:
+•
+•
+•
+•
+•
+
+Open source project since 2009 – previously known as Google Refine (2010 - 2013)
+Support from Google News Initiative since Dec 2017
+Runs on your local machine: Windows, Mac, Linux
+Used by journalists, librarians, statistician, semantic web, academic, open data enthusiasts
+Handle up to 1M records - but you need to give it more memory.
+
+For more comprehensive materials:
+•
+•
+•
+
+Online course;
+Carpentry courses OpenRefine for Social Science and for Librarian;
+Book Using OpenRefine;
+
+Where to ask questions after this workshop:
+•
+•
+
+StackOverflow OpenRefine tag
+User Mailing List
+
+This workshop is adapted from Sarah Ryley NICAR 2018 session.
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+2
+
+Table of Contents
+Intro and housekeeping.........................................................................................................................1
+About OpenRefine.................................................................................................................................2
+1. Create a project..................................................................................................................................4
+2. Data Exploration................................................................................................................................5
+2.1 Search for the most common city in the field CITY_52.............................................................5
+2.2 Search in LAST_NAME_44 for name containing LAM..............................................................5
+2.3 Search for the largest contribution in the AMOUNT_72............................................................6
+2.4 Analyze the contribution date (field DATE1_10).......................................................................9
+2.5 Combine multiple facets...........................................................................................................10
+2.6 Remove Empty Columns..........................................................................................................11
+3. Data Transformation........................................................................................................................12
+3.1 Search and replace using facet..................................................................................................12
+3.2 Clustering..................................................................................................................................16
+3.3 Operation History.....................................................................................................................17
+4. Advance editing using GREL..........................................................................................................20
+5. Join two OpenRefine projects (vlookup).........................................................................................21
+5.1: Create the transaction project.......................................................................................................21
+5.2 Import the transaction name in the Donavan project................................................................23
+6. Bonus: Using A Reconciliation Service..........................................................................................24
+6.1 Prepare the project....................................................................................................................24
+6.2 Using Wikidata reconciliation service......................................................................................24
+6.3 Review the results.....................................................................................................................25
+6.4 Add new columns from on Wikidata........................................................................................26
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+3
+
+1. Create a project
+Start OpenRefine: double click on the icon
+Choose "Create Project,” then upload Donovan-A75335.csv
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+4
+
+2. Data Exploration
+2.1 Search for the most common city in the field CITY_52
+
+2.2 Search in LAST_NAME_44 for name containing LAM
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+5
+
+2.3 Search for the largest contribution in the AMOUNT_72
+Change the field to number
+
+Create the facet
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+6
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+7
+
+Alternative option: sort by number
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+8
+
+2.4 Analyze the contribution date (field DATE1_10)
+Change the field to date
+
+Create the facet
+
+Remove outliner
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+9
+
+2.5 Combine multiple facets
+Search for contribution after 201-01-19 outside of the NY State
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+10
+
+2.6 Remove Empty Columns
+Facet by Blank
+
+Reorganize columns
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+11
+
+3. Data Transformation
+3.1 Search and replace using facet
+1. Create a facet for CONTRIB_CODE_20,
+2. Trim and remove spaces
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+12
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+13
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+14
+
+Normalize the data via the facet editor
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+15
+
+3.2 Clustering
+Create a facet for the field CORP_30 and select Cluster
+
+Try different clustering algorithm.
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+16
+
+3.3 Operation History
+1. View the history
+2. Undo your edits
+3. Extract your changes
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+17
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+18
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+19
+
+4. Advance editing using GREL
+(Generic Refine Expression Language)
+Use facet by Blank to find entries with a first name but without last name
+In that case, we need to extract the last name from the CORP_30 field.
+In LAST_NAME_44 invoke the Transform option to edit only rows selected in your facet.
+
+Build your expression:
+1. Copy data from the CORP_30 field: cells['CORP_30'].value
+2. Replace the value from the FIRST_NAME_40 field by nothing using the replace command:
+cells['CORP_30'].value.replace(cells['FIRST_NAME_40'].value,'')
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+20
+
+5. Join two OpenRefine projects (vlookup)
+5.1: Create the transaction project
+Open the file Donovan_data_dictionary.txt and copy 2. Transaction Code (Scedule):
+
+Create a new project from the Clipboard and past the results:
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+21
+
+1. Set the column
+parsing
+2. Load the 17
+first rows
+3. Name it
+transaction
+
+Once the project created:
+•
+
+trim all column
+
+•
+
+Remove the column
+with the dash
+
+•
+
+Rename the column
+code and name
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+22
+
+5.2 Import the transaction name in the Donavan project
+Select the field TRANSACTION_CODE and invoke Add a Column based on this column
+Note this operation can also be done using the VIB-Bits plugin.
+
+enter the following GREL expression: cell.cross("transaction", "code")[0].cells["name"].value
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+23
+
+6. Bonus: Using A Reconciliation Service
+6.1 Prepare the project
+1. Create a new project based with the Fortune 500 list from this page:
+http://archive.fortune.com/magazines/fortune/fortune500/full_list/
+2. Remove the stock code from the Company field with the following expression:
+value.replace(/\(([^\)]+)\)/, " ")
+
+6.2 Using Wikidata reconciliation service
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+24
+
+6.3 Review the results
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+25
+
+6.4 Add new columns from on Wikidata
+
+Martin Magdinier
+
+IRE 2018 – Data Cleaning with OpenRefine
+
+26
+
+

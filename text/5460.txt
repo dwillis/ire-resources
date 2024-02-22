@@ -1,0 +1,374 @@
+Finding needles in haystacks
+with fuzzy matching
+@maxharlow
+
+Phil C. Harris
+Baron Harris of Peckham
+Philip Harris
+Philip Charles Harris
+Philip C Harris
+The Right Honourable Lord Harris of Peckham
+P Harris
+Lord Harris
+
+What is fuzzy matching?
+
+Matching up two sets of names of things that aren’t quite
+the same, but refer to the same thing.
+Typically in journalism that’s names of people or names
+of companies.
+
+CSV Match
+github.com/maxharlow/csvmatch
+
+Getting started with the terminal
+
+What folder am I in?
+aka. ‘Print Working Directory’
+
+$ pwd
+
+What files and folders are here?
+
+$ ls
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd foldername
+
+Move into a different folder
+aka. ‘Change Directory’
+
+$ cd Desktop
+
+$ cd hands_on_classes
+
+$ cd Finding_needles_in_haystacks_with_fuzzy_matc
+
+INTERMISSION
+See notes for links to data files
+⬇
+
+$ ls
+cia-world-leaders.csv
+
+forbes-billionaires.csv
+
+forbes-china-billionaires.csv
+
+un-sanctions-jan-2018.csv
+
+white-house-visitors.csv
+
+Open current folder in the Finder
+
+$ open .
+
+Exact matches
+
+How many names on the Forbes world
+billionaires list are also on their China
+billionaires list?
+
+$ csvmatch \
+forbes-billionaires.csv \
+forbes-china-billionaires.csv \
+--fields1 name \
+--fields2 name
+
+Chu Jinfu
+Lucy Peng
+Fang Tonghua
+He Yamin
+Wu Daohong
+Fu Kwan
+Swift Xie
+Jin Huiming
+Lu Jonathan
+Chanchai Ruayrungruang
+Yao Xinyi
+Lo Siu Yu
+Wen Pengcheng
+Cai Xiaoru
+Liu Zhendong
+Wang Zhenghua
+Zhang Xinghai
+
+$ csvmatch \
+forbes-billionaires.csv \
+forbes-china-billionaires.csv \
+--fields1 name \
+--fields2 name
+
+a flag
+
+$ csvmatch \
+forbes-billionaires.csv \
+forbes-china-billionaires.csv \
+-1 name \
+-2 name
+
+$ csvmatch \
+forbes-billionaires.csv \
+forbes-china-billionaires.csv \
+--fields1 name \
+--fields2 name \
+> billionaires-from-china.csv
+
+Getting the columns we want
+
+$ csvmatch \
+forbes-billionaires.csv \
+forbes-china-billionaires.csv \
+--fields1 name \
+--fields2 name \
+--output 1.name 1.rank \
+> billionaires-from-china-2.csv
+
+Naive approaches to fuzzy
+
+Things we might be able to ignore
+Ignore case
+Ignore common name prefixes (Mr, Ms, etc)
+Ignore other domain-specific words
+Ignore non-alphanumerics
+Ignore non-latin characters (é, å, ß, etc)
+Ignore the order the words are in
+
+Things we might be able to ignore
+Ignore case
+
+-i
+
+--ignore-case
+
+Ignore common name prefixes (Mr, Ms, etc)
+
+-t
+
+--ignore titles
+
+Ignore other domain-specific words
+
+-l
+
+--filter
+
+Ignore non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Ignore non-latin characters (é, å, ß, etc)
+
+-n
+
+--as-latin
+
+Ignore the order the words are in
+
+-s
+
+--sort-words
+
+Orbán, Viktor
+Viktor Orban
+
+Orban, Viktor
+Viktor Orban
+
+Orban Viktor
+Viktor Orban
+
+Orban Viktor
+=
+Orban Viktor
+
+Which names from the CIA world leaders
+list are on the White House visitors list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+white-house-visitors.csv \
+--fields1 leader_name \
+--fields2 visitor_name
+
+$ csvmatch \
+cia-world-leaders.csv \
+white-house-visitors.csv \
+--fields1 leader_name \
+--fields2 visitor_name \
+--ignore-case \
+> leaders-visiting-trump.csv
+
+Things we might be able to ignore
+Ignore case
+
+-i
+
+--ignore-case
+
+Ignore common name prefixes (Mr, Ms, etc)
+
+-t
+
+--ignore titles
+
+Ignore other domain-specific words
+
+-l
+
+--filter
+
+Ignore non-alphanumerics
+
+-a
+
+--ignore-nonalpha
+
+Ignore non-latin characters (é, å, ß, etc)
+
+-n
+
+--as-latin
+
+Ignore the order the words are in
+
+-s
+
+--sort-words
+
+$ csvmatch \
+cia-world-leaders.csv \
+white-house-visitors.csv \
+--fields1 leader_name \
+--fields2 visitor_name \
+-i -a -n -s \
+> leaders-visiting-trump-2.csv
+
+$ csvmatch \
+cia-world-leaders.csv \
+white-house-visitors.csv \
+--fields1 leader_name \
+--fields2 visitor_name \
+-ians \
+> leaders-visiting-trump-2.csv
+
+Fuzzy algorithm #1:
+
+Levenshtein
+
+Max Harlow
+→ 90%
+
+=
+
+Max Harkow ?
+
+Max Harlow
+→ 10%
+
+=
+
+John Dales ?
+
+How many Chinese billionaires appear in
+the CIA world leaders list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+forbes-china-billionaires.csv \
+--fields1 leader_name \
+--fields2 name \
+--fuzzy levenshtein \
+> billionaire-chinese-leaders.csv
+
+Fuzzy algorithm #2:
+
+Metaphone
+
+Catherine
+→ YES!
+
+David
+→ NO!
+
+=
+
+Kathryn
+
+= Dave
+
+?
+
+?
+
+Which world leaders from the CIA list are
+on the United Nations sanctions list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+un-sanctions-jan-2018.csv \
+--fields1 leader_name \
+--fields2 name \
+--fuzzy metaphone \
+> sanctioned-leaders.csv
+
+JON Kyong Nam
+
+=
+
+YO'N CHO'NG NAM ?
+
+Fuzzy algorithm #3:
+
+Bilenko
+
+John Kennedy
+→
+
+=
+
+Jim Kennedy ?
+
+Rob Ford =
+→
+
+Robert J Ford ?
+
+Which names from the CIA world leaders
+list are on the White House visitors list?
+
+$ csvmatch \
+cia-world-leaders.csv \
+white-house-visitors.csv \
+--fields1 leader_name \
+--fields2 visitor_name \
+--fuzzy bilenko \
+> leaders-visiting-trump-3.csv
+
+leader_name: Robert ATIYAFA
+leader_name: Robert Moore
+Do these records refer to the same thing? [y/n/s/f] n
+leader_name: Haydar al-ABADI
+leader_name: Haider al-Abadi
+Do these records refer to the same thing? [y/n/s/f] y
+leader_name: Enda KENNY
+leader_name: Enda Kenny
+Do these records refer to the same thing? [y/n/s/f]
+
+Here be caveats
+Same name doesn’t mean it’s the same person!
+Medium sized data only
+Every row needs to be matched against every other row
+To work out how many comparisons that means take the number of rows in the two
+files, and multiply them
+Both files will need to be completely loaded into your computer’s memory -- if their
+combined size is bigger, it won’t work
+
+@maxharlow
+Slides: bit.ly/2FcqOdP
+
+

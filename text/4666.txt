@@ -1,0 +1,244 @@
+Lessons from a Computational
+Political Scientist
+Dr. Amber Boydstun
+Associate Professor, Political Science
+University of California, Davis
+Prepared for NICAR
+March 10, 2016
+
+Two Main Lessons
+1.
+
+Text is awesome (political science) data.
+
+2.
+
+There are so many tools we can use.
+
+2
+
+LESSON 1. Text is awesome
+(political science) data.
+3
+
+Language is the Currency of Politics
+• Nearly all phenomena in politics can be studied
+in some way using text.
+• Consider:
+– Legislative priorities (e.g., bill development)
+– Lobbying (e.g., financial statements)
+– Public opinion (e.g., open-ended survey questions)
+– Media attention (e.g., news stories / transcripts)
+
+4
+
+Two More Examples
+1.
+
+Finding patterns in Chinese censorship1
+
+Two More Examples
+1.
+
+Finding patterns in Chinese censorship1
+
+Two More Examples
+1.
+
+Testing the “etch-a-sketch” hypothesis2
+
+Two More Examples
+1.
+
+Testing the “etch-a-sketch” hypothesis2
+Obama Rhetoric 2008
+
+Romney Rhetoric 2012
+
+LESSON 2. There are so many
+tools we can use.
+9
+
+Example 1: Clinton’s Email Network4
+
+4 SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+Example 1: Clinton’s Email Network4
+
+4 SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+12
+
+SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+13
+
+SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+14
+
+SOURCE: Rudis, Bob. “Working with the Clinton State Dept Email Dumps in R.”
+http://rud.is/b/2016/02/20/working-with-the-clinton-state-dept-email-dumps-in-r-part-1-graphs/?
+imm_mid=0e120d&cmp=em-data-na-na-newsltr_20160302
+
+15
+
+Example: Laughter in the FOMC3
+
+The FOMC:
+A Powerful Fishbowl
+
+How Do We Measure the FOMC’s
+Mood?
+
+• Sentiment analysis is useful, but:
+
+– text-based sentiment is removed from latent variable
+of interest
+– operationally tricky (domain specific and noisy)
+
+• How about laughter?
+– physiological response to language
+– observable
+
+19
+
+Data
+• Transcripts of all FOMC meetings, 2005–2008
+• 41 meetings
+– 32 in person
+– 9 conference calls
+
+• Unit of analysis: sentence
+– Max: 4,191 (December 15-16, 2008)
+– Min: 217 (August 10, 2007)
+
+• 84,463 sentences
+– 83,295 non-humorous
+– 1,168 humorous
+20
+
+21
+
+22
+
+23
+
+Has the mood of the FOMC
+changed?
+
+24
+
+Sentiment
+• Options: word lists or sentiment classifiers
+• We used: word lists developed by Loughran and
+McDonald (2011) for financial texts
+• Three non-mutually exclusive lists:
+– Positive (e.g., “encouraging,” “favorable,” “strong”)
+– Negative (e.g., “collapse,” “poor,” “shutdown”)
+– Uncertain (e.g., “indefinite,” “maybe,” “seems”)
+
+25
+
+26
+
+27
+
+28
+
+29
+
+Has the type of humor changed?
+
+30
+
+Types of Humor
+(using manual content analysis)
+• Out-group: Taking aim at an outgroup (usually
+Congress)
+• Self-deprecation: Making fun of one’s self
+• Process: Humor about the schedule, wording of
+the statement, lunch or coffee breaks, and other
+logistics
+• Content (i.e., issue): Humor directly related to
+the issue or topic at hand
+• Playful banter: Humor about the dynamics
+between members of the FOMC
+31
+• Collective self-deprecation: Making fun of the
+
+Example of Process-Oriented
+Humor
+• “And we stipulate that the addition of that word,
+which is not legally required, be expunged from
+the record!” [Laughter] (Mr. Greenspan,
+January 31, 2006)
+
+32
+
+Example of Playful Banter
+• “I want to say a good word about President
+Poole. I have sat next to him since I got here. I
+would give him hyperbolic praise if he hadn’t
+handed me the IT Oversight Committee;
+otherwise, I think he is a wonderful human
+being.” [Laughter] (Mr. Fisher, January 1,
+2008)
+
+33
+
+34
+
+Some Tools We Use
+•
+
+NLTK: http://www.nltk.org/ -- provides lots of different NLP tools (and data sets) in Python. NLTK
+is a library you can call from within Python.
+
+•
+
+scikit-learn: http://scikit-learn.org/stable/ -- provides lots of different machine learning tools in
+Python. Scikit-learn is a library you can call from within Python. Chase Davis ran a tutorial on using
+scikit-learn at NICAR 2015: https://github.com/cjdd3b/nicar2015
+
+•
+
+Stanford CoreNLP: http://stanfordnlp.github.io/CoreNLP/index.html -- provides lots of different
+state-of-the-art NLP tools in Java. You can use it by running the Java program on your data
+(processed appropriately) with appropriate command lines options. We used this to
+tokenize our FOMC data and split it into sentences. We also used it to do sentiment analysis before
+we realized that the sentiment analyzer in CoreNLP is trained on movie or product reviews.
+
+•
+
+Mallet: https://github.com/mimno/Mallet -- Mallet is another Java program. It provides various NLP
+tools, but you should ignore all of
+them except the topic modeling tools. For topic modeling, Mallet is state-of-the-art. It is incredibly
+fast. You can use Mallet for nearly all your topic modeling needs. We used Mallet when we ran LDA
+on our FOMC data early on in our project.
+
+•
+
+pandas: http://pandas.pydata.org/ -- provides data structures and simple data analysis tools in
+Python. Use Pandas when you want to read
+in a CSV (pandas' CSV-processing library is better than anyone else's) and then count things or
+general aggregate and filter things and plot things. We used pandas for our FOMC project. We read 35
+in CSVs produced by Stanford CoreNLP and then we counted various things of interest (like
+
+Thank you!
+Amber Boydstun
+aboydstun@gmail.com
+
+

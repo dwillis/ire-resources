@@ -1,0 +1,197 @@
+“London is still the money-laundering capital of the world.”
+“For an African despot or a serious international criminal,
+London is the best place to put their money, because they
+can trust the bankers to look after it and not to steal it from
+them.”
+-Kenneth Clarke (former UK Chancellor) 2016
+
+PSC register
+
+People who own and profit from the company
+
+The old way of finding a beneficial owner…
+
+Parent
+
+Secrecy jurisdictions
+Company
+
+New register ...
+
+Parent
+
+Secrecy jurisdictions
+Company
+
+Installing XSV
+$ brew install xsv
+
+$ cd Desktop
+$ cd hands_on_classes
+$ cd Finding_your_target
+And tab complete ….
+$ ls
+
+Column headings in our data
+$ xsv headers pscs.csv
+1 company_number
+2 data.address.address_line_1
+3 data.address.country
+4 data.address.locality
+5 data.address.postal_code
+6 data.address.premises
+7 data.country_of_residence
+8 data.kind
+9 data.name
+10 data.nationality
+11 data.natures_of_control
+12 data.notified_on
+
+data.nationality,Irish,62291
+data.nationality,Polish,51065
+data.nationality,Indian,47699
+data.nationality,Chinese,40023
+data.nationality,Italian,36993
+data.nationality,Romanian,36304
+data.nationality,German,31582
+data.nationality,Uk,30420
+data.nationality,French,27805
+data.nationality,American,24194
+data.nationality,Pakistani,21229
+data.nationality,Scottish,18098
+data.nationality,Australian,17602
+data.nationality,Nigerian,16463
+data.nationality,Bulgarian,15157
+
+data.nationality,Spanish,13590
+data.nationality,Dutch,13238
+data.nationality,Filipino,12837
+data.nationality,Lithuanian,11757
+data.nationality,Welsh,11599
+data.nationality,Swedish,10587
+data.nationality,Greek,9878
+data.nationality,Portuguese,9824
+data.nationality,Hungarian,9372
+data.nationality,South African,9239
+data.nationality,Turkish,8647
+data.nationality,Norwegian,8192
+data.nationality,New
+Zealander,7645
+data.nationality,Canadian,7493
+data.nationality,Russian,7400
+data.nationality,Zimbabwean,7122
+data.nationality,Northern Irish,7003
+data.nationality,Belgian,5816
+data.nationality,Danish,5378
+
+data.nationality,Latvian,4844
+data.nationality,Bangladeshi,4723
+data.nationality,Ukrainian,4692
+data.nationality,Czech,4623
+data.nationality,Malaysian,4623
+data.nationality,Swiss,4560
+data.nationality,Slovak,4511
+data.nationality,Austrian,3961
+data.nationality,Sri Lankan,3660
+data.nationality,Iranian,3455
+data.nationality,Israeli,3172
+data.nationality,Ghanaian,3145
+
+Kjeld Kirk
+Kristiansen
+
+Len Blavatnik
+
+$ xsv search -s
+data.name ‘Trump’
+pscs.csv > trump.csv
+$ open trump.csv
+
+Donald Trump
+
+Donald Trump Jr
+
+Allen Weisselberg
+
+$ xsv search -s
+column ‘search term’
+input.csv > output.csv
+blavatnik.csv
+kristiansen.csv
+
+$ xsv search -s
+data.nationality -i
+‘America’ pscs.csv >
+american_pscs.csv
+
+Land registry data
+https://data.landregistry.gov.uk/
+
+OCOD_NEW
+
+CCOD_NEW
+
+Overseas
+Companies
+Ownership Data
+97k rows
+
+UK Commercial
+and Corporate
+Ownership Data
+3.5m rows
+
+Column headings in our data
+$ xsv headers CCOD_NEW.csv
+1 Title Number
+2 Tenure
+3 Property Address
+4 District
+5 County
+6 Region
+7 Postcode
+8 Multiple Address Indicator
+9 Price Paid
+10 Proprietor Name (1)
+11 Company Registration No. (1) ...
+
++
+americans_pscs.csv
+
+CCOD_NEW.csv
+
+$ xsv join company_number
+american_pscs.csv 'Company
+Registration No. (1)'
+CCOD_NEW.csv > results.csv
+
+$ xsv headers blavatnik.csv
+1 company_number
+2 data.address.address_line_1
+3 data.address.country
+4 data.address.locality
+5 data.address.postal_code
+6 data.address.premises
+7 data.country_of_residence
+8 data.kind
+9 data.name
+
+$ xsv join company_number
+blavatnik.csv 'Company
+Registration No. (1)'
+CCOD_NEW.csv >
+results_blavatnik.csv
+
+●
+●
+●
+●
+●
+●
+
+Leila Haddou
+Data Journalist
+@leilahaddou
+leila.haddou@thetimes.co.uk
+
+

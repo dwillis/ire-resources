@@ -1,0 +1,149 @@
+Adventures in Trend-spotting
+The problem: Take a decade's worth of air pollution data and show whether the long-term trend shows
+improvement or degradation, or something in between.
+The data source: California's Air Resources Board, which offers a free CD with data, maps and a nifty
+interactive program for displaying both. The web site (http://www.arb.ca.gov/aqd/aqdcd/aqdcd.htm) also
+has hourly data back to 1980 available for download. Almost all states collect and distribute similar data.
+The process: Most of the data is in DBF files that can be
+imported into Access with a couple of keystrokes. From
+there, you can construct queries to extract data for a
+single monitoring station (station ID numbers and
+locations are in a separate file) and export the resulting
+data to Excel.
+The files have readings for a dozen pollutants, presented
+more than 20 different ways. Here's an excerpt with the
+maximum daily one-hour and eight-hour average ozone
+readings for the Clovis monitor, which is important
+because it's about two miles from my house (see right):
+Unfortunately, what we have here is just a jumble of
+numbers. Even if you scanned the entire file from top to
+bottom, it would be impossible to figure out the trend.
+You can use the Excel Chart Wizard to create a line
+graph for columns A and B, the date and one-hour ozone
+levels, but even that doesn't help much (below):
+Because ozone is a
+summertime pollutant,
+the levels are high in the
+summer and approach
+zero in the winter. If you
+eyeball this graph, it
+looks as if the
+summertime peaks are
+edging upward, but it's hard to say for sure. Besides, it's not just the peaks
+that we're worried about. There are a whole lot of values in the middle of
+this chart that are high enough to cause problems for the most sensitive
+people, and it's not at all clear which way those values are going.
+What we need is a way to boil down these peaks and valleys to a long-term
+trend.
+_____________________________________________________________
+_________________________
+Produced for the IRE Annual Conference, Washington DC, June 5-8, 2003, by
+Russell Clemings, The Fresno Bee, 1626 E St., Fresno CA 93786, (559) 441-6371
+or <clemings@cris.com>. The project for which this work was done is at http://www.valleyairquality.com
+
+Adventures in Trend-spotting, page 2
+
+One of the ways that statisticians find patterns in data is to do a linear regression, and Excel fortunately has
+a built-in way to add a regression line to the chart we were building on the last page. After you've finished
+the chart, just
+right-click on the
+data line and click
+"Add Trendline,"
+and you can lay
+down a nice, clean
+regression line
+over the data, just
+like this:
+This clearly shows
+a long-term rising
+trend in the data.
+There's just one
+thing wrong: As
+any competent
+statistician will
+tell you (and lucky
+for me, one did), a
+simple linear
+regression doesn't
+work with data
+that involves a "time series" like this one. The full explanation of that, I am sure, would be too boring to go
+into even if I understood it. What it comes down to, though, is this: The seasonal pattern in this data is so
+strong that it overwhelms any other pattern that a regression analysis might show you.
+This problem is not unique to air pollution data.
+Economists run into it when they’re studying things like
+retail sales, which rise and fall with the calendar. And
+there are tools available for dealing with it, such as the
+Census Bureau's X-ARIMA model. But even if you have
+the intellectual capacity to use something like that,
+you're still left with a significant problem -- explaining it
+to your readers. Just saying, "Trust me, my computer
+says there's a trend here" probably isn't the best
+approach.
+Here's another alternative: A 365-day (or annual)
+moving average. It's not too hard to explain -- for each
+day, it's just the average of the past year's daily values.
+That's why it's called a "moving" average. If today is
+June 5, 2003, then the 365-day moving average for today
+is the average of all daily values from June 6, 2002,
+through today. Tomorrow's 365-day moving average, in
+turn, would be the average of daily values from June 7,
+2002, through June 6, 2003.
+Here's how you write a formula to get that from Excel
+(at right). Note that we can't compute the 365-day
+average until we have 365 days of data, so we start with
+the 365th day (in row 366; row 1 has the column names):
+On the next page, we'll graph this average.
+
+Adventures in Trend-spotting, page 3
+Here it is:
+I've also added data from a second
+station to the graph, so that we can
+compare trends in two different parts of
+the state.
+We're on a little bit firmer ground now.
+With this graph, and an explanation of
+what a 365-day moving average is, we
+can say with some confidence that the
+1990s saw one-hour daily ozone peaks
+decline in Azusa, a traditional ozone hot
+spot in southern California. At the same
+time, the peaks edged upward in Clovis.
+Beginning sometime in 1996, as one can
+see, ozone levels at the central
+California station began to exceed those
+at the southern California station.
+At this point in our reporting, we are
+ready for quality control. When we did this in real life, we showed our graphs to various experts at the state
+and local air pollution control agencies. We also explained how we did the analysis and asked for their
+comments on it.
+All agreed that the 365-day moving average was a valid way to show the long-term trend. But one expert at
+the Air Resources Board went a step further. He encouraged us to throw out the winter values and look
+only at the summer data. His reasoning: Although no one knows for sure, it's considered likely that very
+low levels of ozone are not a health threat. The state's one-hour ozone standard of 0.09 parts per million is
+exceeded regularly in the summer. But in winter, typical levels are far less than that. And an increase from
+0.02 to 0.03 is clearly not as important as an increase from 0.12 to 0.13. Yet our 365-day moving average
+would regard them both as important.
+The ARB expert suggested a number of alternative
+approaches. We decided that some of them were
+inappropriate, such as using the number of times each
+station's ozone value exceeded the standards each year
+(among other problems, that approach would treat a
+value of 0.20 as no different from a value of 0.13).
+We finally chose one that was doubly elegant, being
+both easy to calculate and easy to explain. For each
+year, we calculated and plotted just one value -- the
+average daily peak for the summer smog season, May
+1 through October 31.
+Here's what that table looks like (at right):
+
+Adventures in Trend-spotting, page 4
+
+Here's what the
+resulting graph looks
+like in Excel:
+
+And in the newspaper, with more recent data
+added, along with a corresponding graph for
+eight-hour ozone readings:
+
+

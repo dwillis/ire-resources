@@ -1,0 +1,162 @@
+How to use “PDFtoTEXT” to convert PDFs into text
+By Jeff Porter, IRE database library director, jeff@ire.org
+4 pages April 14, 2005
+Edited By Debbie Wolfe, technology training editor, St. Petersburg Times: Web: http://canyonwolfephoto.com
+
+You’ve seen the Acrobat Reader files containing columns and rows of numbers waiting
+to be analyzed. The problem: Acrobat files – ending with .PDF – can’t be directly read
+(a.k.a. imported) by a spreadsheet (Excel) or database (Access) program. Now, there’s a
+FREE tool to convert a PDF file into formatted text, ready to import into the application
+of your choice, including a word processing program (Word) where you can do edits.
+
+How to install the “PDFtoTEXT” or Xpdf software
+(1) Make a folder on the hard drive of your computer. For our
+example, we’ll call it “xpdf” so the full path or address is: C:\xpdf
+(2) To download the software file, first go to the following Web
+site: http://www.foolabs.com/xpdf/download.html, then click
+the “/pub/xpdf directory:” link and locate the following file to
+download: xpdf-3.00pl3-win32.zip
+OR go directly to this URL: ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.00pl3-win32.zip
+(3) Download the file into the C:\xpdf folder you
+created on the hard drive of your computer in step 1.
+(4) Unzip the file as you would unzip any compressed
+file. The Unzip application should place the
+PDFtoTEXT software files in a subfolder under your
+C:\xpdf folder. The folders and files will look similar
+to this screen shot from Windows Explorer:
+Note: The path of the unzipped subfolder on the hard
+drive is: C:\xpdf\xpdf-3.00pl3-win32
+
+(5) For simplicity’s sake, move all the files from the
+subfolder called C:\xpdf\xpdf-3.00pl3-win32 into
+the main folder you created earlier: C:\xpdf. The
+folders and files should now look similar to this:
+
+That’s it – the software is now installed on
+your computer!
+
+1
+
+How to use the PDFtoTEXT converter program
+(1) Find a PDF file you want to convert. Ideally, the file is a simple table of columns and
+rows; not that PDFTOTEXT can’t handle other types, but keeping things simple will save
+some cleanup later. For example, you can download the following PDF file about
+homeland security grants for practice. It contains three pages, each formatted differently.
+http://www.dhs.gov/dhspublic/interweb/assetlibrary/Grants-ODP-04.pdf
+Note: The name of the file is: Grants-ODP-04.pdf
+
+(2) Save the file you’ve chosen into the same folder you created earlier: C:\xpdf.
+Now, you’re ready to convert the content of the PDF file to text.
+(3) Click Start Æ Run… and when you see the Run window, type cmd in the “Open:”
+box, then click the OK button.
+
+You’ll get this little command window (yours might look a little different):
+
+(4) You’ll need to navigate to the correct folder using old DOS keyboard commands.
+Here’s how: (4. a) If you start on the same drive, but have some folders identified as in
+the example above, type cd.. then, (4. b) press the Enter key. Repeat these two steps until
+you only get C:\> on the bottom line (take a look at the illustration, below).
+
+(5) Now, change your directory to C:\xpdf with another “cd” command. Type: cd xpdf
+then press the Enter key. Your screen should look something like this:
+
+Now you’re ready to run a simple command on the file you downloaded earlier.
+
+2
+
+(6) Type the following at the C:\xpdf> prompt:
+pdftotext –layout Grants-ODP-04.pdf
+
+^
+
+^
+
+space
+
+space
+
+(7) Press the Enter key.
+Let’s decode the command you just typed. By the way, C:\xpdf> simply identifies the
+folder you’re looking into. The next part (pdftotext) is the name of the program you’re
+telling the computer to use. The next part (-layout) is telling that program to use an
+option to retain the appearance, spacing and all, of the PDF file you’re converting. The
+last part (Grants-ODP-04.pdf) is the name of the file you have selected.
+(8) When the conversion is done, the screen will take you back to the C:\xpdf> line. Type
+“exit” then press the Enter key.
+(9) Navigate to the C:\xpdf folder and there you’ll find a text file named
+Grants-ODP-04.txt (or, what ever file name you’ve chosen)
+Open it with Notepad, a word processing program that comes free with all versions of
+Windows. Compare the original PDF tables with the text file and you’ll notice that the
+layout is quite similar.
+Note: Always print out at least part of the PDF so you can easily compare the two.
+
+How to import a converted PDF text file into Excel
+Note: If you used the practice file we suggested, you should run Excel’s “text import
+wizard” three times since each of the three converted PDF pages contain tables that are
+structured slightly differently. In other examples, especially if the converted PDF data
+have lots of blank spaces, you’ll get a few numbers slightly off-kilter. A text word
+processing program like Notepad, or even a fancier word processor like Microsoft Word,
+can help you fix these types of problems.
+(1) If the file you wish to import is open, close it. Open Excel.
+(2) On the menu bar in Excel, click File Æ Open and navigate to C:\xpdf
+(3) In the pop-up window, look for the “Files of Type” box near the bottom. Using the
+drop-down arrow, choose “Text” so only files ending in .txt will be displayed. Click to
+highlight your text file, then click the Open button. This will trigger Excel’s “Text
+Import Wizard.” The wizard has three windows.
+(4) In the first window of the wizard, Excel should guess correctly that the data are fixed
+width. Note that below this, Excel will ask you where to start your import. By reading the
+original PDFs, you’ll often choose to start below row number 1. In this case, let’s choose
+to start at row 4, where the headers of the data begin. Click Next.
+(5) In the second window of the wizard, a new dialog box allows you to make, delete or
+adjust columns. Before you click Next, scroll down entirely. You’ll catch a couple of
+problems. First, note that one of the “state” names, “Northern Mariana Islands,” is too
+long. Click on the break line and move it to position 24. Second, note below that, there
+are two other sets of numbers. For now, ignore them. We’ll have to deal with that
+material in two more imports. Now, click Next.
+3
+
+(6) In the third window wizard window, it’s tempting to just click Finish BUT resist this
+temptation and review a couple of things. This is the point at which you can made
+decisions on whether a column should be labeled as text, a number or a date. “General”
+means you’ll allow Excel to guess and it’s correct most of the time like in the case of
+dollar amounts being imported as numbers. It’ll also correctly guess that state names are
+text. However, if a column contains a number beginning in ZERO, you must change the
+column’s label from “General” to “Number” otherwise any leading zeros will be lost
+and you won’t be able to fix it later except by re-doing all of Excel’s “Text Import
+Wizard” steps. The same thing is true with columns containing date data.
+(7) Click Finish, and you’re almost there.
+(8) Scroll down to row 62, and you’ll see that the second set of numbers is formatted
+differently. So let’s get rid of those by clicking on the number 62 itself to highlight the
+entire row, then while still holding the left mouse button down, scroll (drag) the mouse
+pointer down the screen until you get to the bottom of the data area, highlighting each
+row as you go. Release the left mouse button.
+
+(9) On the menu bar, click Edit Æ Delete and the problem rows will disappear.
+You’re done with the first page!
+(10) Now, start another Excel workbook and use the Text Import Wizard again. Choose
+row 71 and bring in the second set of numbers from page two. Make one more pass to
+capture the third set on page three. After you’re finished, you’re a true expert!
+
+Some caveats
+ PDFtoTEXT won’t work at all if the file is a scanned image (for example, a 990
+form from www.guidestar.org).
+
+ If the file is encrypted, PDFtoTEXT won’t convert it. Some government agencies
+are using Acrobat to password protect Acrobat Reader files in a way that prevents
+you from doing a copy/paste. The PDFtoTEXT program will not “crack” an
+Acrobat Reader file that is password protected. If you know the password, then
+that’s another story: In these cases, PDFtoTEXT can help you.
+ The more complicated the layout, the more text editing you’ll need to do later.
+
+Advanced tips
+ For more heavy-duty text editing, consider using UltraEdit (www.ultraedit.com)
+or VEdit (www.vedit.com).
+
+ For the ultra-geek information, read the accompanying text file called
+pdftotext.txt, located in your C:\xpdf folder. Note that you can tell PDFtoTEXT
+
+to start and stop at certain page numbers in the Acrobat Reader file.
+
+4
+
+

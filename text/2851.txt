@@ -1,0 +1,205 @@
+The Len Function
+Len(string) returns the number of characters in the string. You can specify the string itself in quotation marks, or you can specify the field that contains the text string.
+Expression
+
+Result
+
+Len("Northwind")
+
+9
+
+Len("Robert
+King")
+
+11
+
+Len([LastName])
+
+Depends on the contents of the LastName field. For example, if you are referring to the first record in the Employees table in the Northwind sample database, the
+value of the LastName field is Davolio, and the expression returns 7.
+
+The Left Function
+Left(string, length) returns a specified number of characters from the left side of a string. The first argument, string, specifies the text string, or the field containing the string, that you want
+to extract the result from. The second argument, length, specifies the number of characters that you want to return.
+Expression
+
+Result
+
+Left("Northwind", 5)
+
+North
+
+Left("Robert King", 6) Robert
+
+The Right Function
+Right(string, length) returns a specified number of characters from the right side of a string. String specifies the text string, or the field containing the string, that you want to extract the
+result from; length specifies the number of characters that you want to return.
+Expression
+
+Result
+
+Right("Northwind",4)
+
+Wind
+
+Right("Robert King",4) King
+
+The Mid Function
+Mid(string, start, length) returns a specified number of characters from within a string. String specifies the text string, or the field containing the string, that you want to extract the result
+from; start specifies the starting position you want returned; length specifies the number of characters that you want to return.
+Expression
+
+Result
+
+Mid("404-526-5348",4,3)
+
+526
+
+Mid("36-584-7-A-525",4,3) 584
+
+The InStr Function
+InStr([start, ]string1, string2[, compare]) returns a number specifying the position of the first occurrence of one string within another.
+The first argument, start, is optional, and it is a number that specifies the position of the character where you want to begin searching. For example, if start is 3, the search begins at the
+third letter in the string. If you omit this argument, the search begins at the first character in the string.
+The second argument, string1, is the string, or the field containing the string, that you are searching in.
+The third argument, string2, is the string, or the field containing the string, that you are searching for.
+The fourth argument, compare, is optional, and it determines how the InStr function compares string1 and string2. The default comparison type is binary and therefore case-sensitive.
+Expression
+
+Result
+
+InStr(1, "Northwind", "r")
+
+3
+
+InStr("Northwind", "r")
+
+3
+
+InStr("Northwind", "x")
+
+0
+
+InStr("Northwind","wind") 6
+InStr("Robert King", " ")
+
+7
+
+Using expressions to return one of two values
+Expression
+
+Description
+
+=IIf([Confirmed] = "Yes", "Order Confirmed", "Order Not
+Confirmed")
+
+Uses the IIf function to display the message "Order Confirmed" if the value of the Confirmed field is Yes;
+otherwise, it displays the message "Order Not Confirmed."
+
+=IIf(IsNull([Country]), " ", [Country])
+
+Uses the IIf function to display an empty string if the value of the Country field is Null; otherwise, it displays the
+value of the Country control.
+
+=IIf(IsNull([Region]), [City] & " " & [PostalCode], [City] & " " &
+[Region] & " " & [PostalCode])
+
+Uses the IIf function to display the values of the City and PostalCode fields if Region is Null; otherwise, it
+displays the values of the City, Region, and PostalCode fields.
+
+The syntax for an IIf function is IIf(expression, truepart, falsepart) and is based on the following parts and descriptions:
+Expression
+
+Expression you want to evaluate.
+
+Truepart
+
+Value or expression returned if expression is True.
+
+Falsepart
+
+Value or expression returned if expression is False.
+
+The IIf function always evaluates both the truepart and the falsepart, even though it returns only one value. Because of this, you
+should watch for undesirable side effects. For example, if evaluating the falsepart results in a division by zero error, an error occurs
+even when the expression is True.
+
+Splitting strings in Microsoft Access
+First Name
+Original Entry in [Name]: "John Doe"
+Returned by Expression: John
+Expression: Expr: Left([Name],InStr(1,[Name]," ")-1)
+First Name
+Orignial Entry in [Name]: "Doe, John"
+Returned by Expression: John
+Expression: Expr: Right(Trim([Name]),Len(Trim([Name]))-InStr(1, [Name]," "))
+
+First Name
+Original Entry in [Name]: "John P. Doe"
+Returned by Expression: John
+Expression: Expr: Left([Name],InStr(1,[Name]," ")-1)
+Last Name
+Original Entry in [Name]: = "John Doe"
+Returned by Expression: Doe
+Expression:Expr: Right(Trim([Name]),Len(Trim([Name]))-InStr(1, [Name]," "))
+Last Name
+Original Entry in [Name]: "Doe, John"
+Returned by Expression: Doe
+Expression: Expr: Left([Name],InStr(1,[Name],",")-1)
+Last Name
+Original Entry in [Name]: "John P. Doe"
+Returned by Expression: Doe
+Expression: Expr: Right(Trim([Name]),Len(Trim([Name]))-InStr(InStr(1, [Name]," ")+1,[Name]," "))
+Last Name
+Original Entry in [Name]: "John Doe" or "John P. Doe"
+Returned by Expression: Doe
+Expression: Expr: IIf(InStr(InStr([Name]," ")+1,[Name]," ") <>0, Right([name],Len([name])-InStr(InStr([Name]," ")+1, [Name]," ")),Right([Name],Len([Name])-InStr([Name],"
+")))
+Middle Initial
+Original Entry in [Name]: "John P. Doe"
+Returned by Expression: P.
+Expression Expr: Trim(Mid([Name],InStr(1,[Name]," ")+1,InStr(InStr(1, [Name], " ")+1,[Name]," ")-InStr(1,[Name]," ")))
+Middle Initial
+Original Entry in [Name]: "Doe, John P."
+Returned by Expression: P.
+Expression: Expr: Right(Trim([Name]),Len(Trim([Name]))-InStr(InStr(1, [Name]," ")+1,[Name]," "))
+
+Zip Code
+Original Entry in [ZipCode]: "98052-6399"
+Returned by Expression: 98052
+Expression: Expr: Left([ZipCode],5)
+Area Code
+Original Entry in [Phone]: (425) 635-7050
+Returned by Expression: 425
+Expression: Expr: Mid([Phone], 2, 3)
+Phone Number
+Original Entry in [Phone]: (425) 635-7050
+Returned by Expression: 635-7050
+Expression: Expr: Right(Trim([Phone]),8)
+
+Function to split first, last and middle names regardless of format
+Function ExtractName(strName As String, strSection As String) As String
+'*******************************************
+'Name:
+ExtractName (Function)
+'Purpose:
+Extracts the First, Middle, or Last name from a string with the format "Smith, Joe A"
+'*******************************************
+Select Case strSection
+Case Is = "First"
+If InStr(1, Right(strName, 2), " ") > 0 Then
+ExtractName = Mid(strName, InStr(1, strName, ",") + 2, Len(strName) - InStr(1, strName, ",") - 3)
+Else
+ExtractName = Mid(strName, InStr(1, strName, ",") + 2, Len(strName) - InStr(1, strName, ",") - 1)
+End If
+Case Is = "Last"
+ExtractName = Left(strName, InStr(1, strName, ",") - 1)
+Case Is = "Middle"
+If InStr(1, Right(strName, 2), " ") > 0 Then
+ExtractName = Right(strName, 1)
+End If
+Case Else
+End Select
+End Function
+
+

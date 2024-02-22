@@ -1,0 +1,327 @@
+Busting data out of PDFs
+Formats:
+
+
+Scanned images
+o
+
+
+
+To make scanned images useable, you will need to see if you can apply
+Object Character Resolution to make the text readable by a computer. You
+can do this with a premium (paid version of CometDocs, or you can also
+upload the PDF into DocumentCloud, which will OCR it. Tabula only works
+with text-based PDFs so far.
+
+Text
+o
+
+Today, we are focusing on files that have already been OCR’d.
+
+CometDocs
+Nothing to download. Has a free version and a premium version. Can
+convert PDFs into Word or Excel files. Limited to five conversions per
+week with the free version. With the premium version, you can do
+many conversions as well as OCR a document and convert it all at
+once.
+
+Tabula
+
+Free, open-source software geared toward pulling data out of PDFs by
+using the location coordinates of the text on each page – focus is on
+tabular data and it is easy to select small data sets within a PDF.
+
+Let’s go to www.cometdocs.com
+You don’t even need to set up an account for the free version. Click on the green button
+that says Go to WebApp.
+Next, you’ll get a prompt to upload your file. Click on the green upload button and find
+the file on your desktop. We’ll be using TomRodney2013-tabulardata.pdf
+
+Select the file and it will appear in the CometDocs upload window. (See below).
+Now, you just need to select the Convert function in the tab below the box and select the
+type of conversion. We’ll select convert and then convert it to Excel.
+
+When you select the convert button, the window expands and you drag your file down
+into the conversion window. Then, you simply select the file type. We will select Excel
+and then click on the green convert button that appears.
+
+Within seconds, we should see our file or you will get a notice that an email will be sent
+to you when your data is ready:
+
+Click on the XLS file and what was trapped in a PDF is now in a spreadsheet, ready for
+analysis.
+There is still a little cleanup needed, but it is much faster than laboriously hand-typing all
+of this data into the spreadsheet.
+This is a very small data set, but you can see with a larger PDF, you could really benefit.
+Now, let’s try it out with Tabula. First, you will want to launch Tabula. Navigate to the path
+below on your computer:
+C:\Users\Public\Documents\Tabula
+Then double-click on the Tabula icon.
+
+We’re going to upload the same file just for comparison purposes. So go ahead and
+browse to the TomRodney2013-tabulardata.pdf file again.
+Click on the Submit button. Tabular will process the PDF and then ask you to define the
+data you want. You click and drag a rectangular box over the data in PDF to select what
+you want. This works well in tables that are included in PDFS.
+Tabula will then give you the option of repeating that same shape for subsequent pages:
+
+We’ll click on the Repeat this section box and then select at the to right, Download All
+Data.
+Now, you can see that Tabula did select the rest of the data, but didn’t get it quite right.
+We can adjust the selection.
+
+Click on the top edge of the rectangle and you will get a double-headed arrow. Simply
+drag the edge of the box up one row. Do the same thing at the bottom to get rid of the
+blank space.
+That looks better:
+
+Tabula has problems with headers, so we leave those off.
+Then, we can select Download All Data on the top right of the screen and we’ll get this:
+
+With that window, we can select download CSV and then open that up in Excel. A nice,
+clean data-set.
+Tabula is good to use when you have specific selections of data you want to pull out of a
+large PDF.
+It’s not perfect. You have to add the headers back in, and you’ll have to watch for stray
+characters and fix those manually. But again, better than hand-typing it all in.
+
+Data cleaning in Excel
+The dirty data we’re using is a list of building permits from the city of Auburn. We got the data in
+PDF format and converted it to Excel using CometDocs. If you open up the file, you’ll see that
+CometDocs did a pretty good job getting all the data in the correct column. To test this, go to
+column H and hit ctrl+down arrow. This should put you on the last possible row (1,048,576) of
+the worksheet. This is good because if there had been any data in that column our cursor would
+have stopped. This tells us we only have data from A to G.
+However, we do have a problem. The data for one building permit wraps around and covers
+multiple rows in the spreadsheet. Here’s how it looks now:
+
+What we’d rather see is one row of data for each building permit. So, that will be our goal in
+cleaning up this spreadsheet.
+First, you never want to do anything until you’ve saved the file with a new name. Let’s call this
+auburnpermits WORKING.xlsx. Now, you’ll notice that at the top (and all throughout the
+worksheet) is a lot of useless header information and blank rows that came from the top of each
+page in the PDF. We’d like to have our first row be column headers, so let’s just type “junk1” in
+A1. Now, click in that cell and drag the thin black cross to the right until column G. Here’s a
+before and after screenshot:
+Before:
+
+After:
+
+You’ll see that Excel automatically increases the number so we now have unique column
+names. (We just called it “junk” at this point because we don’t have nicely structured columns
+and rows yet. But we’ll get there!)
+Now delete rows 2 through 12 so it looks like this:
+
+So, now we have unique headers and the data begins in row 2. We’re ready to start cleaning.
+(Tip: you might want to keep a note file documenting each step in the cleaning process.)
+
+Next, I try to always insert an ordering column that I can use to keep the rows in the proper
+order. This is particularly helpful in cases like this where one record wraps around multiple rows.
+For example, row 3 is a part of the building permit ADM03-0003, but we only know this because
+of its location directly underneath row 2. If we sort this, we’d lose that connection.
+Right click on column A and insert a new column. We’ll call it Order. In cell A2, type =row() and
+hit enter. This function will simply return the row number. Copy this down using the double click
+method. Scroll down and you’ll see that the formula stopped at 47 because our dirty data table
+has a lot of blank rows. To get around this we could click and drag the mouse all the way to the
+bottom of the data table. But this is a pain.
+Instead, click in cell A47, hold down the ctrl+shift keys at the same time then hit the down arrow
+once. It should highlight all the cells from A47 to the bottom of the entire worksheet. Click the
+Home menu, and then Find & Select and Go To Special, check Blanks and hit OK. Without
+clicking in a cell, type =A47+1. Finally, and this is the IMPORTANT step, hold down Ctrl and hit
+Enter.
+So, what we just did is tell Excel we want to fill in all the Blank cells below A47 with the contents
+of the cell above plus 1. This will increase each cell with a number that’s one higher than the
+previous. Normally, we like to leave formulas in place so we can see what we did. However, in
+this case, the formulas could become inaccurate if we sorted the sheet. So, we want to use
+Paste Special to get rid of the formulas: highlight Column A, Copy (Ctrl+C), right click and
+choose Paste Special and then check Values. Now we’ve got this column, we can sort the data
+safely knowing we can always get back to the original order.
+The next step to find a pattern we can use to identify a unique building permit. To make things a
+bit simpler, we only care about the first two rows on the building permit. (Some records have a
+third row, but it is only the property’s legal description which we don’t care about.) It looks like
+the permit type always had “BUILDING” in the column we’re calling junk2. But let’s test that…
+Turn on the filter under Data, Filter. Then, in junk2, filter for BUILDING. You should get 2,296
+records. Browse the junk1 column. These all appear to be legitimate permit numbers. Just to be
+sure, let’s sort junk1 in ascending order by clicking on the Sort button. You can see (by looking
+at the top and bottom of junk1) that these are all building permit numbers.
+Turn off the filter then resort the entire table by the Order column. Click on column B and insert
+a new column. We’ll call this Record order. Because we only care about the first two rows of
+each building permit, we’re going to number each permit beginning with 1. To do that will take a
+conditional formula in B2:
+=IF(D2="BUILDING",1,B1+1)
+So, this checks our junk2 column for the word “BUILDING”, which identifies the first row of the
+building permit. If it finds “BUILDING”, then it puts a 1 in the cell. If not, it puts what’s in the cell
+above it and adds 1 to that. Like the order column, this will automatically increment the value by
+1 UNTIL it finds a new permit record (when it hits “BUILDING” again). Copy the formula down.
+
+Now we want to add another column (highlight C, right click, insert) and call it Permit number.
+We’ll do a very similar formula to copy down the permit number for all rows. In cell C2:
+=IF(E2="BUILDING",D2,C1)
+Copy this down and you’ll see that we have the correct permit number attached to all the rows
+of data for each building permit. For both of these formulas we just entered, we want to copy
+and paste the values to get rid of the formulas. Highlight both column B and C, Copy (Ctrl+C),
+Paste Special then check Values.
+At this point, save the file. Then make a new version of the spreadsheet, calling it
+auburnpermits FINAL. It’s helpful to save the spreadsheet at different points along the way, so
+you can go back without having to repeat any of the work. In the final version, we’re going to
+delete some of the rows/fields we don’t need.
+Working in the FINAL spreadsheet, sort the entire table on Record Order (ascending) then
+Order (ascending). This will put all of the 1 and 2 rows in the order they came off the original
+PDF. Scroll down to where Record Order 2 becomes 3. (An easy way is to highlight column B,
+do Ctrl+F and search for 3.) You should be at row 4594. Highlight the entire row by clicking on
+the 4594. Now hold down Ctrl+Shift and it should highlight all the rows down to the bottom of
+the table. If so, hit the delete key. Remember, we only care about the information in rows with a
+1 or 2.
+We now need find the beginning of the Record Order 2. Use the same method as above. (It
+should be row 2298.) What we want to do is highlight all of the Record Order 2 rows. This is a
+bit tricky, however, because the data is not filled in for all the columns. The easiest way to do
+this is to click in cell A2298. Then hold down Shift and hit the Right Arrow 8 times. This will get
+you to column I. Then, hold down Ctrl (continue to hold Shift) and hit the Down Arrow once. This
+is a bit tedious, but I found it’s the easiest way to highlight all the data we want.
+Now, cut this block of text using Ctrl+X. Go up to cell L2 and paste it there. We put it in L2 and
+not K2 because that is the row where our actual data begins. First let’s extend our junk headers.
+Click on J7 and with the copy tool (thin black plus sign), drag to the right to column T. You
+should now have “junk17” as your last column header. Then in cell K2, put this formula:
+=N2=D2
+This is a simple test that will return true if the permit numbers are the same. Copy this down. An
+easy way to make sure they all came back as TRUE, is with the filter. Go to Data, Filter to turn it
+on and see if there are any bad matches. If not, go ahead and turn off the filter.
+At this point, we’ve got the data all lined up so that the first row and second row from the PDF
+are all on one record in our spreadsheet. But there are some redundant fields that we can now
+delete. I would probably get rid of (or hide) these columns: Record order, junk1, junk8, junk9,
+junk10, junk11, junk16, junk17. Note: I kept the Order column we added at the beginning.
+Sometimes it’s useful to know where in your PDF a particular record came from (especially one
+that is not searchable).
+Now rename the columns to something useful. Go back to the original PDF to help with that.
+Here’s what my final spreadsheet looked like:
+
+BONUS! More dirty data…
+You’ve probably already noticed that in some cases the valuation amount is in the owner field.
+This was a problem with CometDocs and is often the case when converting PDFs to Excel. But
+now that we have the data in a tabular format, we can handle this pretty easily.
+First, to make things easier, freeze the header row by going to View, Freeze Panes then Freeze
+Top row. Now sort the entire table by Valuation in ascending order. Go to the bottom of the table
+(Ctrl + Down Arrow) and you’ll see the problem cells.
+Click on the first problem cell (E2237). Hold down Ctrl + Shift and hit the Down Arrow. This
+should highlight all the problem cells. Now, go to the Data tab at the top and click Text to
+Columns. We’re going to split the valuations from the owner name, using the dollar sign. In step
+1 of the wizard, make sure Delimited is chosen. Click Next. In step 2, uncheck Tab and check
+Other then type $ in the box next to Other. Click Next. Then click Finish. You should see all the
+valuations move to the F column.
+Things are looking pretty good. One final bit of cleaning, and we’ll be done. The date issued is
+not really functioning like a date. (To test this out, sort the table by Date Issued in ascending
+order. It won’t sort like a date.) To fix this, we need to convert this text date into a true date. First,
+click on column J, insert a new column and name it New date. Then type this formula:
+=DATEVALUE(I2)
+Hit enter, format the cell as a date then copy down the formula. Now, you’ve got a true date. Go
+ahead and sort the table to see when the first and last building permit was issued.
+
+OpenRefine
+
+To open, go to the public documents folder and double-click on the
+OpenRefine icon. My default browser is set to Chrome, which seems
+to work best. OpenRefine used to be called GoogleRefine and was
+supported by Google. Now it is supported by volunteers. The program
+runs in the browser, but it runs locally, not on the Internet.
+The next step is to simply import some data.
+
+Start a new project by opening a delimited-text file or Excel spreadsheet. We will open some
+hospital data.
+
+“Open” and (from left) “Create Project”
+Choose files: “nj-hospital-2012.xls”
+The data is arranged in a familiar spreadsheet format. Clicking on an individual cell lets
+
+you edit it. Clicking on a column header brings up a submenu of operations, including
+sorting.
+
+Faceting
+
+Refine’s faceting feature allows us to summarize the unique values in a column. The
+easiest way to see its effect is to try it. Clicking on the companies.name column header
+brings up a pop-up menu, from which we choose Facet -> Text Facet.
+
+Clustering
+
+Refine gives you five algorithms for guessing the similarity of names. It starts you off
+with the fingerprint function, which uses the strictest – and safest –
+formula. Fingerprintassumes that two names have identical alphabetical characters and
+spacing, regardless of capitalization and punctuation.
+So, “Johnny R. Cash,” “JOHNNY R. CASH,” and “Cash, Johnny R,” when translated by
+the fingerprint function, all end up being equivalent to “cash johnny r."
+Refine conveniently lets us click on which of the three variations you want to settle on.
+Or you can choose Select All, and Merge Selected and Re-Cluster, and Refine will make the
+choices for you. With the fingerprint function, you can feel pretty confident that the
+names it clusters together are indeed equivalent.
+This data is pretty messy with everything in one column. Let’s split them
+Drop-down “Edit columns” | “split into several columns” (first choice)
+Uncheck “remove this column”
+Look at the zip codes. They are only 4 characters. Why? They’re in NJ, which has
+zip codes that start with zeros.
+Undo: Click “undo/redo” and step 0. We’re now back at that step.
+Try it again
+a) “Edit columns” | “split into several columns” (first choice)
+b) uncheck “remove this column”
+c) uncheck “guess cell type”
+Hospital names are inconsistent. Let’s standardize them
+a) drop-down: “Edit Cells” | “Common transformation” | “to titlecase”
+b) now they’re standardized
+Export and you’ve got the cleaned data.
+Create project about Lottery winners
+1) Double click the Refine icon (opens in browser, but running locally)
+2) Click choose files and select from the desktop folder, the refine subfolder
+
+and pick the file called “Lotterywinners.csv”
+3) “Next” and it loads into memory
+4) This is the preview. Update options as necessary. (everything is OK)
+5) Click “Create project”
+6) Copy column
+a) hit drop-down on “w_town”
+b) “Edit Column” then “Add column based on this column”
+c) name it “town” and click OK
+d) in orange at the top it says what just happened And undo is possible.
+7) show Sort function
+drop-down, “Sort…” | “Sort” (and mention various options)
+8) Text Filter
+drop-down | “text filter” | use box at left
+but you didn’t come here to learn an Excel alternative. Here comes the real deal:
+9) Facet
+a) click the drow-down on Town and select “Facet” and “Text Facet”
+b) “Blomfield” vs. “Bloomfield”
+1) edit “Blomfield” to be “Bloomfield”
+2) It didn’t reconcile. why not? (trailing spaces)
+3) Look at “Berkeley Heights”
+c) drop-down | “Edit Cells” | “Common Transformation” | “Trim leading and
+trailing whitespace”
+that collapsed the Berkeley Heights into one entry. Down to 573
+entries!
+10) Cluster | Let’s fix some abbreviations and bad spelling
+a) click “Cluster”
+b) “E. Orange” and “E Orange” are the same
+c) click “merge” and click on the prefered one. or type something new, like
+“East Orange” (Wood ridge is OK. those are different towns.)
+d) “Merge selected and recluster” (repeat as many times as necessary)
+e) switch methods: “key collision”/”ngram-fingerprint” produces many more
+fingerprint: looks for idential characters “John Smith” and “Smith John”
+metaphone: looks for similar sounds “smith” and “smyth”
+PPM: partial matches. (and increase the radium)
+nearest neighbor: clusters of characters that are identical (“Fred” and
+“Frederick”)
+Levenshtein: the number of edits it would take to get from one to
+another
+(“Roberto Rocha” to “robertorocha” is 3
+11) We’re done cleaning this file. Let’s export it.
+a) click “Export” and select a file type.
+b) now you’ve got a cleaned version for what you want to do next
+
+Now, we’ll try this again with our lawmaker data. Go ahead and open that data into OpenRefine.
+You will see a field for income-source. This is the source of each income stream reported by the
+lawmaker. But it’s not standardized at all. We’ll use OpenRefine to help with that.
+First, select that field and click the drop-down arrow. Select Edit columns/add column based on
+this column. A dialogue box will open. We will name our new column incomesourcestandardized. That new column appears right next to the old one. This way, we are preserving
+the original data.
+Now select Facet/Text Facet on the dropdown for the new column. Refine gives us some
+choices of fields to merge. Let’s go ahead and work through this together, and also on our own
+to get a feel for how it all works.
+
+

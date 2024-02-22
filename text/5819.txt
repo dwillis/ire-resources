@@ -1,0 +1,258 @@
+csvkit
+NICAR 2019
+
+@leilahaddou
+
+What’s the situation?
+Efficiency?
+New data?
+Large file?
+Short on time?
+Irrelevant columns?
+
+Convert to a
+different filetype?
+
+Lots of files
+containing the same
+information?
+
+What is csvkit?
+A suite of command line tools for doing everyday tasks
+including:
+● Converting filetypes
+● Understanding your dataset
+● Basic statistics
+● Sorting, filtering and selecting specific columns
+● Joining and combining datasets
+
+Introducing the terminal
+
+$
+This is the command
+prompt. Don’t type the
+dollar sign, just what
+comes after it!
+
+Introducing the terminal
+Leilas-MacBook:~ leilahaddou$
+
+pwd [Print Working Directory]
+cd [Change Directory]
+ls [List]
+..[go up one level in the tree]
+mkdir [Make Directory]
+
+Class data
+
+bit.ly/nicar-forbes
+
+in2csv
+$ in2csv
+forbes-billionaires.xlsx >
+forbes-billionaires.csv
+$ ls
+
+csvlook
+$ csvlook
+forbes-billionaires.csv
+
+csvlook
+$ csvlook
+forbes-billionaires.csv |
+less -S
+Pipe!
+
+Press Q to exit !
+
+How the command line works...
+
+csvcut
+$ csvcut -n
+forbes-billionaires.csv
+1: name
+2: lastName
+3: uri
+4: imageUri
+5: worthChange
+6: source
+7: industry
+8: gender
+9: country
+10: timestamp
+11: realTimeWorth
+12: realTimeRank
+13: realTimePosition
+14: squareImage
+
+Flag!
+
+csvcut
+$ csvcut -c
+forbes-billionaires.csv
+This flag stands
+for column
+
+csvcut
+$ csvcut -c 1,6,7,8,9,11
+forbes-billionaires.csv >
+forbes-billionaires-cut.csv
+
+csvcut
+$ csvcut -c 1,6,7,8,9,11
+forbes-billionaires.csv >
+forbes-billionaires-cut.csv
+
+csvcut
+$ csvcut -c 1,6,7,8,9,11
+forbes-billionaires.csv >
+forbes-billionaires-cut.csv
+$ csvlook
+forbes-billionaires-cut.csv |
+less -S
+
+csvcut
+$ csvcut -c
+name,source,industry,
+gender,country,realTimeWorth
+forbes-billionaires.csv >
+forbes-billionaires-cut.csv
+
+Alternatively we could list
+the column headers
+
+csvstat
+$ csvcut -c
+name,realTimeWorth
+forbes-billionaires.csv |
+csvstat
+
+csvstat
+$ csvcut -c
+name,realTimeWorth
+forbes-billionaires.csv |
+csvstat
+
+csvstat
+$ csvcut -c
+name,realTimeWorth
+forbes-billionaires.csv |
+csvstat
+
+csvsort
+$ csvcut -c
+name,realTimeWorth
+forbes-billionaires.csv |
+csvsort -c realTimeWorth |
+csvlook
+
+csvsort
+$ csvcut -c
+name,realTimeWorth
+forbes-billionaires.csv |
+csvsort -c realTimeWorth
+-r | csvlook
+
+csvgrep
+$ csvcut -c name,source,
+country,realTimeWorth
+forbes-billionaires.csv |
+csvgrep -c name -m 'Richard
+Branson'| csvlook
+
+Second & third datasets
+
+bit.ly/nicar-crime-jan
+bit.ly/nicar-crime-feb
+
+csvstack
+$ csvstack
+
+1: DR Number
+2: Date Reported
+3: Date Occurred
+4: Time Occurred
+5: Area ID
+6: Area Name
+7: Reporting District
+8: Crime Code
+9: Crime Code Description
+10: MO Codes
+11: Victim Age
+12: Victim Sex
+13: Victim Descent
+14: Premise Code
+15: Premise Description
+16: Weapon Used Code
+17: Weapon Description
+18: Status Code
+19: Status Description
+20: Crime Code 1
+21: Crime Code 2
+22: Crime Code 3
+23: Crime Code 4
+24: Address
+
+1: DR Number
+2: Date Reported
+3: Date Occurred
+4: Time Occurred
+5: Area ID
+6: Area Name
+7: Reporting District
+8: Crime Code
+9: Crime Code Description
+10: MO Codes
+11: Victim Age
+12: Victim Sex
+13: Victim Descent
+14: Premise Code
+15: Premise Description
+16: Weapon Used Code
+17: Weapon Description
+18: Status Code
+19: Status Description
+20: Crime Code 1
+21: Crime Code 2
+22: Crime Code 3
+23: Crime Code 4
+24: Address
+
+csvstack
+$ csvstack
+la-crime-jan-2019.csv
+la-crime-feb-2019.csv
+> la-crime-2019.csv
+
+Challenge!
+1. Create a new file with only the core information on
+the dates, times,descriptions of the crime and victim
+gender and age.
+2. Find out the summary stats for the victim’s age
+column and the crime code description
+3. Search for a crime type you’re interested to look into
+
+The commands we’ve covered today
+in2csv
+csvlook
+csvcut
+csvstat
+csvsort
+csvgrep
+csvstack
+
+Other useful csvkit tools!
+● csvjoin
+● csvsql
+
+https://csvkit.readthedocs.io
+NICAR session: Finding needles in haystacks with fuzzy
+matching with Max Harlow 14:15 Copper Cover today or
+9am Sunday morning
+
+Leila Haddou
+Data Journalism Editor
+@leilahaddou
+leila.haddou@thetimes.co.uk
+
+

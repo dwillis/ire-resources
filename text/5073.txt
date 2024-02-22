@@ -1,0 +1,607 @@
+Beginner PDF Data Extraction
+Presentation: http://bit.ly/1XuWixF
+Presentation files: https://goo.gl/gEJJDP
+
+Miguel Barbosa
+
+Email: miguel@citizenaudit.org
+Twitter: @MiguelABarbosa
+
+Today’s Goals
+1. Develop Basic Knowledge of PDF Types
+2. Matching proper tools to PDF Problems
+3. Walk away being able to use some basic tools
+
+Agenda
+I. Command Line Overview
+II. Overview of PDFs
+A.
+B.
+C.
+
+What is a pdf ?
+Types of pdfs
+Typical pdf workflow
+
+III. Tools
+A.
+B.
+
+Landscape
+What we will use today
+
+IV. Hands-on Practice
+V. Conclusion & Additional Resources
+
+Before we begin.…
+
+Let’s talk about the Terminal
+Many of you know it as “the command line”, it looks like this:
+
+So you might be asking, “why do we need to talk about this?
+We’re here to learn about pdfs.”
+Because some of the best tools for extracting data from pdfs
+require a basic understanding/use of the command line.
+
+The Terminal Continued
+Most of you are familiar with clicking around & opening
+programs on your computer.
+The terminal is a more precise way to interact with your
+computer (by typing commands).
+Almost everything we do visually on a computer can be
+done via the terminal with commands.
+
+The Terminal Continued
+For example to open a folder on your desktop via the terminal:
+You would type: cd desktop
+
+To list everything that’s on your desktop:
+You would type: ls
+
+To create a folder on your desktop:
+You would type: mkdir
+
+The Terminal Continued
+The most important commands for this class will be
+●
+●
+●
+●
+●
+
+cd = which stands for change directory
+ls = list
+clear = which clears the screen
+key which will automatically pull up the last command you typed
+tab key which will automatically complete a filename for you
+
+There are many other commands that are very useful.
+I recommend these additional resources for you to explore.
+●
+●
+
+Quick guides: 1, 2, in-depth tutorial
+In-depth books: Unix/Linux, Unix/Linux, Mac, Windows
+
+The Terminal Continued
+Warning!!
+●
+●
+●
+
+There are NO friendly warnings to help you know when you are about to
+screw up - i.e. accidentally delete an important file etc.
+In other words, there are no ‘are you sure you want to do xyz’
+So it is possible to completely delete everything from your computer and
+cause lots of harm.
+
+Never ever type: rm -rf in to your terminal
+List of commands to avoid typing on your machine. Please read this!
+
+So, Let’s make sure your computers are setup
+1.
+
+Let’s make sure you have all of the files:
+● Hold the Command Key & Press Spacebar
+● In the search type: terminal (hit enter)
+
+2.
+
+Inside the terminal type the following:
+●
+●
+
+●
+●
+●
+
+cd Desktop (hit enter)
+cd Hands-on_Data (hit the tab key)
+● you will see that it will auto complete the following “Hands-on\ Classes/”
+● (hit enter)
+cd PDFs (hit enter)
+cd _Beginner_PDF (hit enter)
+ls (hit enter)
+
+4. You should see the following pdf files & 1 folder
+●
+●
+●
+
+5.
+
+2013-official-general-election-voter-turnout.pdf
+Nevada_Voter_Reg_Feb_2016.pdf
+SpringfieldSchoolDistrict.pdf
+
+Leave the terminal minimized for now (yellow jellybean button on top left corner of your window)
+
+Part 1: Overview
+
+Why do PDF’s matter?
+- PDFs are everywhere
+- Public agencies produce reports all the time -- usually in
+PDF format
+- Producing data tables in PDF format is the preferred
+method of tormenting journalists
+- Learning how to deal with them can help you turn
+stories more quickly.
+
+Types of PDFs
+- Native (aka Text Based): typically the most friendly
+-
+
+Mostly text-based
+Produced from a spreadsheet or other electronic report
+Many can be handled with open-source tools
+
+- Image or Scanned (Aka Image Based): not always
+friendly
+-
+
+OCR is the way to go
+Can be handled with open source tools, depending on quality
+
+Embedded Text (Combination of Image & Text)
+-
+
+The document has images but there's a layer of invisible text added
+to the document, so you can select text.
+
+Important
+So how do you know what kind of pdfs we are dealing with?
+Simple answer: Open the pdf, can you highlight text? If yes, then native.
+
+Hands-On 0: Let’s discover if a PDF is Native or Scanned
+On your desktop
+●
+●
+●
+●
+●
+
+Open Hands-On_Data (Folder)
+Open PDFS (Folder)
+Open _Beginner_PDF (Folder)
+Now Open each of the 3 pdfs
+Check whether they can be highlighted or not
+
+So what’s the verdict? What kind of PDFs are these?
+
+There are other ways to determine if a pdf is native or scanned take a look below.
+Source, Source Source, Source
+
+Checklist for Grabbing PDF Processing
+Before you begin any project you should think things through.
+1.
+
+Take Inventory of your PDFs
+●
+●
+●
+●
+●
+●
+●
+
+How sensitive is the content in your pdfs? Is it locked/encrypted?
+Are your pdfs native or scanned? What language(s) are they in?
+How many pdfs are you trying to convert?
+How large is each pdf?
+Do you need all pages or just a few?
+Are you looking for specific type of field/data/table?
+How accurate do you need to be (fair - extremely accurate)?
+
+2. Determine your budget/constraints (time, money, and computation wise)
+3. Assess your skill level (clueless, command line proficient, can code, superstar)
+4. Select tool & convert pdf (for scanned pfs there will be additional steps)
+
+PDF Processing Workflows
+Understand Documents
+
+Analysis
+
+Checklist
+
+Extract Text From PDFS
+
+Pdf Manipulation
+
+Coherent PDF
+Docsplit
+MuPdf
+PDFBox
+PDFTK
+ImageMagick
+
+Image
+Conversion
+
+Data Capture
+
+ImagMagick
+
+Mechanical
+Turk
+
+Data Entry
+OCR
+
+Tesseract
+
+Do something with the text
+
+Text Post
+Processing
+
+Text Storage
+
+NLTK
+PdfMiner
+PdfPlumber
+Pdftotext
+RegEx
+TIKA
+
+ElasticSearch
+MongoDb
+Neo4j
+PostGres
+
+Part 2 Tools for Grabbing PDF Data
+
+The PDF Conversion Landscape
+There are 3 dimensions for categorizing pdf tools:
+● Native v.s. Scanned Images (non ocr v.s. ocr)
+● Command Line vs User Friendly (command line vs graphic user interface)
+● Free vs Paid (proprietary vs open source)
+
+PDF Tools Landscape
+
+Scanned Pdfs
+‘I Need OCR’
+
+highlighted tools are free!
+
+User Friendly
+‘I’d like to avoid the command line’
+Abby Fine Reader
+AbletoExtract
+Adobe Acrobat Pro or DC
+DocumentCloud
+Captricity, Cogniview
+Tabula
+CometDocs
+Document Cloud
+ILovePdfs
+DataWatch Debenu
+Evernote
+Google Drive
+Microsoft OneNote
+Omnipage, Overview
+Abby Flex Capture
+MathOCR
+Tesseract
+OCRAD
+OCROPUS
+PDFplumber
+PDFsandwich
+
+Native Pdfs
+‘I don’t need OCR or
+have already OCRD’
+
+PDF Miner
+PDF Plumber
+Tabula Java
+Xfoolabs (PdfToText, Pdf to
+html)
+
+Command Line Based
+‘I’m comfortable with the command line’
+
+Optical Character Recognition (OCR)?
+OCR software converts images of text into machine-encoded text (i.e. text files)
+
+Used For :
+● Data entry for business documents, e.g depositing money
+● Automatic number plate recognition
+● Extracting business card information into a contact list
+● Quickly make textual versions of printed documents, e.g. book scanning
+● Make images of printed documents searchable, e.g. Google Books
+
+More Tools
+Tools to unlock pdfs
+●
+
+Unlocking a pdf
+
+Tools to manipulate pdfs
+●
+●
+●
+●
+●
+
+Coherent PDF
+ImageMagick
+MuPdf
+PDFBox
+PDFTK - Server
+
+Advanced combinations
+●
+●
+●
+●
+●
+●
+●
+
+ImageMagick + Mechanical Turk
+ImageMagick + Tesseract + Mechanical Turk
+ImageMagick + Tesseract + Regex
+ImageMagick + Tesseract + Apache Tika + Elastic Search or SOLR
+Document Cloud & Overview
+Jigsaw
+Captricity
+
+Tools we will use today
+Tools for our Hands On
+●
+●
+
+Tabula
+PDFToText by Xfoolabs
+
+Why These tools?
+●
+●
+●
+
+Our other session covered other tools
+Both are free
+One is user friendly & one is a command line tool
+
+Part 3. Hands-on Practice
+
+Hands-on 1
+The story:
+It’s 2013 you are working on a story about the election in New Jersey & you
+need data from the following pdf:
+“2013-official-general-election-voter-turnout.pdf”
+Do the following:
+●
+●
+●
+
+Go to the terminal window that you minimized
+Type: pdftotext 2013-official-general-election-voter-turnout.pdf (hit enter)
+Now type: open 2013-official-general-election-voter-turnout.txt (hit enter)
+
+But wait, what about formatting?
+●
+●
+
+Type: pdftotext -layout 2013-official-general-election-voter-turnout.pdf
+Now type: open 2013-official-general-election-voter-turnout.txt
+
+Hands-on 1 continued
+Let’s recap what we just typed:
+pdftotext 2013-official-general-election-voter-turnout.pdf
+pdftotext -layout 2013-official-general-election-voter-turnout.pdf
+Software
+
+specific command
+
+file name
+
+Breakdown:
+pdftotext tells your computer to run pdftotext software
+-layout maintains original physical layout of the file
+2013-official-general-election-voter-turnout.pdf the file you’re processing
+
+Hands-on 2
+The story:
+It’s Feb 2016 you are trying to predict which political parties will win in Nevada
+on a county by county basis to do this you need data from the following pdf:
+“Nevada_Voter_Reg_Feb_2016.pdf”
+Turn to your neighbor (i.e. person next to you) and take turns teaching
+each other how to do the following:
+●
+●
+
+Extract the text without preserving any layout formatting
+Extract the text and preserve the layout
+
+Hands-on 2 continued
+Who would like to volunteer which commands worked for
+them?
+Hint there’s a prize if you volunteer :)
+
+Hands-on 2 continued
+Let’s recap what we just typed:
+pdftotext Nevada_Voter_Reg_Feb_2016.pdf
+pdftotext -layout Nevada_Voter_Reg_Feb_2016.pdf
+Software
+
+specific command
+
+file name
+
+Breakdown:
+pdftotext tells your computer to run pdftotext software
+-layout maintains original physical layout of the file
+Nevada_Voter_Reg_Feb_2016.pdf the file you’re processing
+
+Hands-on 3
+The story:
+It’s 2013, you are reporting on schools in Springfield Illinois, they recently released their
+annual report & you need data from this pdf:
+“SpringfieldSchoolDistrict.pdf”
+You are interested in the following:
+●
+●
+
+The Statement of revenues & expenditures (page 37)
+10 Years of School Building Data (pages 131 - 134)
+
+Work with your neighbor on the following:
+●
+●
+●
+
+HINT: Before you begin you might want to try typing pdftotext -h into the terminal
+there might be a command there to help you
+Extract text from page 37 while preserving the layout
+Extract pages 131 - 134 while preserving the layout and saving the file as
+‘10_years_of_school_data.txt”
+
+Hands-on 3 continued
+Who would like to volunteer and share which commands
+worked for them? Hint there’s a prize if you volunteer :)
+
+Hands-on 3 continued
+Let’s recap what we just typed:
+pdftotext -layout -f 37 SpringfieldSchoolDistrict.pdf 10_years_of_school_data_file1.txt
+pdftotext -layout -f 131 -l 134 SpringfieldSchoolDistrict.pdf 10_years_of_school_data_file2.txt
+
+Breakdown:
+●
+●
+●
+●
+●
+●
+
+pdftotext starts the pdftotext program
+-layout maintains the layout of the file
+-f first page to start extracting
+-l last page to extract
+SpringfieldSchoolDistrict.pdf your data source
+10_years_of_school_building_data.txt file you are saving your data to
+
+Hands-on 4
+Now we are going to use a friendlier tool to do the same
+things.
+It’s called tabula.
+Tabula was created by journalists for journalists who were
+frustrated of working with pdfs containing tables.
+
+Hands-on 4 continued
+●
+
+●
+●
+●
+●
+●
+●
+●
+
+Open the hands-on folder on your desktop
+○ Open the PDFs folder
+○ Open the Tabula Folder
+○ Click on Tabula icon (should look like a green pdf icon)
+○ Double click to run the program (it will open in your browser)
+Click browse
+Locate the folder with our hands-on pdfs find the following file:
+2013-official-general-election-voter-turnout.pdf
+Select it and click on import
+Now let’s draw a box around the table we would like to extract
+Hit preview & export data
+From export format, select CSV
+Hit Export
+
+Hands-on 4 Continued
+Now, do the following:
+Use Tabula to extract data from the pdfs we used in hands-on exercises 1 thru 3.
+
+Pretty neat, right.
+So why can’t we use Tabula for everything?
+Tabula has limitations, table quality limitation, language limitations, headers,
+doesn’t handle ocr, etc.
+
+PDF2 Text - Foolabs XPDF - Continued
+Most Typical Code / Commands:
+pdftotext yourfilename.pdf
+pdftotext -layout yourfilename.pdf
+pdftotext -table yourfilename.pdf
+pdfinfo -- dumps a PDF file's Info dictionary (plus some other useful information)
+pdffonts -- lists the fonts used in a PDF file along with various information for each
+font
+pdfdetach -- lists or extracts embedded files (attachments) from a PDF file
+pdftoppm -- converts a PDF file to a series of PPM/PGM/PBM-format bitmaps
+pdfimages -- extracts the images from a PDF file
+For batches of pdfs run : for i in *pdf; do b=`basename "$i" .pdf`; pdftotext "$i" "$b.txt" ; done
+
+Part 4. Conclusion
+
+Final Thoughts
+●
+●
+●
+
+●
+●
+
+Always save original document(s) & create copies to work with
+Understand the nature of your project
+○ Use the pdf workflow/checklist
+Study your PDFs
+○ Are they native or scanned?
+○ Address your constraints (budget, time, etc)
+Play around with several tools to see what works.
+Learn a tiny bit of command line & coding
+○ Start by learning how to use the command-line / terminal
+○ Then learn some very basic and intermediate excel
+○ Finally learn some python
+○ Learn how to use databases & regular expressions
+
+Part 5. Additional Resources
+
+TIP SHEETS — All IRE tip sheets about pdfs
+Here are some of my favorites:
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+
+Parsing Prickly Pdfs Jacob Fenton & Jeremey Singer Vine
+https://github.com/jsfenfen/parsing-prickly-pdfs
+Busting Data out of PDFS - Tyler Dukes http://ire.org/resource-center/tipsheets/4208/
+PDF Madness - Cheryl Phillips, & Tyler Dukes http://ire.org/resource-center/tipsheets/4207/
+PDF with Tabula - Manuel Aristaran & Jeremy B Merril, Mike Tigas
+http://ire.org/resource-center/tipsheets/4187/
+PDFs to Excel in Windows - Jeff Porter
+FROM PDF to Searchable, Sortable Data - Kevin Schaul
+PDF Utilities - John Perry
+PDF To Text - Chris Milholland
+PDF to Text - Jeff Porter
+
+

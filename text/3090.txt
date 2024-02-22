@@ -1,0 +1,81 @@
+Data for tracking the subprime story
+IRE TIPSHEET
+
+MIAMI 2008
+
+John Maines
+CAR Editor
+South Florida Sun Sentinel (Fort Lauderdale)
+954-356-4737
+jmaines@sun-sentinel.com
+Beginning in 2004, the Federal Financial Institutions Examination Council (FFIEC)
+required lenders to report “high-interest” loans in their annual filings required under the federal
+Home Mortgage Disclosure Act. These are loans that are at least three percentage points above
+the Treasury rate for first mortgages, and 5 percent above Treasury for subordinate-lien loans.
+While banks will argue that “high-interest” loans are not necessarily subprimes, which are
+based on the credit status of an individual borrower, these 3- and 5-point “spreads” have become
+the standard measure for finding high rates of subprime lending.
+The database is released annually in September by the FFIEC, and is available from the
+agency for $10 at http://www.ffiec.gov/hmda/orderform.htm. The database is also sold by NICAR
+at http://www.ire.org/datalibrary/databases/databases.php and includes a Readme for reporters
+new to working with the data. NICAR’s data is also available the same day it is ordered.
+Since it is large, the database requires use of database manager software such as Access
+or MySQL. If you’re not experienced with these, find someone to help.
+
+Querying the data
+When querying the data to extract subprimes, these criteria are typical (Found on page 35
+of the 2006 users guide. These are for home purchases. Consult the guide for information on
+home improvement and refinancing)
+Prop_Type: Code 1 for one- to four-family dwellings, including condos. Code 2 for
+manufactured homes.
+Purpose: Code 1 for home purchases. (Code 3 for refinancing).
+Action: Code 1 for Loan Originated.
+Spread: This is the field indicating a high-interest loan. Set for >= 3. (Greater than or equal
+to 3 percentage points above the Treasury rate).
+LienStatus: Code 1 for Secured by a First Lien.
+A database query of this types returns subprimes on home purchases. From there, it’s a
+simple matter to count the number of subprimes by census tract, and then calculate the percent
+subprimes by census tract.
+
+So what interest rate did the buyer actually pay? HMDA does not tell you that, but The
+Treasury rate changes daily, so it’s not a simple matter to calculate the rate. The FFIEC requires
+lenders to use the interest rate on the 15th of the month prior to loan lock-in date. For example, if
+today is June 5, a loan locked in today will use the Treasury rate on May 15. See the FFIEC
+spread calculator at http://www.ffiec.gov/ratespread/default.aspx
+
+Foreclosures
+The foreclosure story is a natural companion to the subprime story – in fact, with
+the subprime business already melted down, foreclosures of properties sold in the
+heyday of predatory lending is the story most newspapers focus on today.
+Foreclosure data is available from companies like RealtyTrac, which often
+provides the information for free to reporters. DataQuick is another source for
+nationwide foreclosure data. Also, check to see if local companies in your area sell or
+provide foreclosure data. Sometimes they provide the information as long as you don’t
+publish it or post it online, but use it for analysis purposes only. If the addresses are
+included, analysis can be done by ZIP Code or, with geocoding, at the street level.
+The biggest hassle with this data is that a borrower’s name often can appear
+multiple times. The process for foreclosure is usually comes in three steps:
+ A filing with the local courthouse that puts the borrower and other creditors on
+notice that a foreclosure is pending. Usually this comes after about three
+months of missed payments.
+ The setting of the date for the sale of the properties. In states with a “judicial
+foreclosure” process, this date is set by a judge, who also rules on the
+amount owed to the lender – including fines and attorney fees. Some states
+do not have a judicial foreclosure, where the loan document includes a power
+of sale clause that allows the lender to sell a property when the borrower is in
+default.
+ The sale of the property.
+Important: Remember that a database or number count can include the same
+borrower at each of these three steps, resulting in abnormally high numbers.
+For information on foreclosure laws on your state, contact your local court clerk or see
+state statutes. These days there also numerous web sites with simple information about
+the law, such as Foreclosures.com
+
+Other Sources
+Federal Financial Institutions Examination Council -- http://www.ffiec.gov/hmda/.
+These are the HMDA guys.
+
+Federal Reserve Board, consumer page (lots of mortgage info) -http://www.federalreserve.gov/consumerinfo/mortgages.htm
+--30--
+
+

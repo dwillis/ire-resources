@@ -1,0 +1,306 @@
+TIP SHEET FOR REAL-TIME REPORTING
+ON RISING SEA LEVELS
+Deborah Nelson, Ryan McNeill, Duff Wilson
+Water’s Edge, Reuters
+
+Climate change isn’t a future threat.
+It is happening now. Whether drought, increased
+rainfall, higher average temperatures, greater
+extremes, look for ways to document the changes
+and impact of what already has occurred.
+Here are tips focused on finding evidence in your
+community of the effects rising sea levels have
+had on the shoreline.
+
+1. Do your own survey of people living on, working on or responsible for protecting the shoreline. Have
+they noticed any flooding? Any increase in flooding? How often are roads closed? Has erosion
+increased? Have a checklist of questions: Because the changes have occurred slowly over time, people
+don’t always connect them with sea level rise.
+2. Avoid using loaded words associated with climate change during the reporting process, so people
+provide accurate information rather than a political or ideological response. E.g. substitute recurrent
+flooding, erosion, storm surge for rising sea levels.
+3. You can find the flood-level thresholds for your nearest tide gauges on NOAA’s Sea Level Rise Viewer
+under the flood frequency tab. http://coast.noaa.gov/digitalcoast/tools/slr Check the historic data for the
+for how often flood threshold is reached.
+http://tidesandcurrents.noaa.gov/stations.html?type=Historic+Water+Levels Is there an upward trend in
+days or hours at flood level over time? Compare to historic sea level rise over the same period.
+http://tidesandcurrents.noaa.gov/sltrends/sltrends.html
+Menu of NOAA data: http://oceanservice.noaa.gov/facts/find-tides-currents.html#tides
+4. Keep an eye on the daily real-time tide readings. http://tidesandcurrents.noaa.gov/map/ Visit the
+shoreline when conditions are ripe for flooding, e.g. high tides and/or strong winds, storms or heavy rains.
+5. If flooding is increasing, what affect does that have on the local community? Potential impacts: Gravityflow sewers back up into street and basements during high tides or tropical storms. Flooding from tropical
+storms of similar nature causes more damage, because surges start from a higher platform. Salination of
+water supplies. Business closings.
+6. Look for changes in the flora and fauna. Have trees and plants native to freshwater tidal marshes
+begun to die? Have saltwater marsh plants replaced them?
+7. Is subsidence exacerbating the effects of rising seas? What’s causing the subsidence? Groundwater
+withdrawal is a major cause of subsidence. Subsidence is monitored by states, and the quality and
+consistency of data vary. But U.S. Geological Survey can be a good source for making sense of what’s
+there, such as this report on the Chesapeake region. The US Geological Survey
+http://pubs.usgs.gov/circ/1392/pdf/circ1392.pdf if subsidence is human-driven, is it caused by industry or
+communities or both? Has there been any attempt to curb water usage? For an excellent subsidence
+project and more resources see “Pumped Dry” by The Desert Sun | USA Today.
+http://www.desertsun.com/pages/interactives/groundwater/
+
+8. Besides climate change, what other human-driven forces are contributing to the problem, especially
+navigation and erosion-control projects by the Army Corps of Engineers that solve one problem but
+created another.
+9. How had the local, state and federal government responded? What are the trends in shoreline
+development? We looked at Census data for calculating increases in housing units and population in a
+coastal strip of block groups about 1/8th mile wide. Housing units was a better gauge of development than
+population, because so many residents live on the coast part-time so are not included in the Census
+count. Are programs still encouraging development through zoning, subsidies, etcetera?
+10. The federal government owns a LOT of coastal land and it’s controlled by an array of agencies – DOD,
+National Parks, Fish and Wildlife, NASA. Look for differences in the way they are responding.
+
+http://www.reuters.com/investigates/special-report/waters-edge-the-crisis-of-rising-sea-levels/
+
+Major types of documents we used
+NOAA Coastal Change Analysis Program (C-CAP) regional land cover data
+NOAA GIS files of the Mean Higher High Water coastline
+NOAA GIS data showing low-lying areas already subject to coastal flooding.
+National Weather Service flood threshold data
+Census data for calculating increases in housing units and population in a coastal strip of block groups
+Army Corps of Engineers coastal protection project files. (online) and database (FOIA) USACE initially
+denied having a national database, eventually coughed one up but it was, by the agency’s own admission,
+too unreliable to use.
+U.S. Fish and Wildlife Service Coastal Barrier Resource System records (online and paper)
+Coastal construction permit data and individual case files. (Public records request)
+Federal Emergency Management Agency databases on hazard mitigation grants, property acquisitions,
+community rating systems, disaster spending, flood insurance premiums and payouts by state and year
+(online and a special run)
+Beach renourishment projects (online and special run, Western Carolina University dataset)
+Federal, state and local hurricane reports (online)
+Florida property tax rolls and parcel boundary GIS data.
+Florida property tax and sales records (online)
+Internet sources
+To examine flooding, we used the NOAA Center for Operational Oceanographic Products and Services
+API (http://tidesandcurrents.noaa.gov/api/). This allowed programmatic access to historic hourly tide data
+for gauges across the country.
+Census data for 2010 was obtained from the National Historical Geographic Information System
+(NHGIS) site (https://www.nhgis.org/), which is a project of the University of Minnesota. This is also where
+we obtained Census 2010 block group and block boundary GIS data. We used the Census website to
+download numerous other GIS boundary files, such as counties and states.
+
+We obtained state property tax rolls and corresponding parcel boundary GIS files for every county in
+Florida from the state’s Department of Revenue site
+(http://dor.myflorida.com/dor/property/resources/data.html). Separately, we used the St. Johns County,
+Florida site to obtain that county’s property rolls and corresponding parcel boundaries.
+We obtained NOAA C-CAP data from the agency website.
+(http://coast.noaa.gov/digitalcoast/data/ccapregional).
+To examine tide gauges worldwide, we downloaded data for sites worldwide from the Permanent
+Service for Mean Sea Level (http://www.psmsl.org/).
+Federal Emergency Management Agency data let us examine government subsidies of shoreside
+development and bailouts after the inevitable storms and flooding. (http://www.fema.gov/data-feeds).
+We obtained nationally authoritative beach nourishment data -- that is, how much sand has been poured
+on what beaches at what cost -- from Western Carolina University’s Program for the Study of Developed
+Shorelines. (http://psds.wcu.edu/projects-research/beach-nourishment/ and
+https://docs.google.com/spreadsheet/ccc?key=0Ai5L0L8AXQAdExmRmNrY203UXZWVndzNlg4aFBILUE&usp=sharing)
+Data on payroll, businesses and employment in hurricane flood zones was obtained from the Bureau of
+Labor Statistics site (http://www.bls.gov/cew/hurricane_zones/home.htm).
+To examine worldwide population in vulnerable areas, we downloaded data from the Socioeconomic
+Data and Applications Center, hosted at Columbia University. (http://sedac.ciesin.columbia.edu/)
+To examine the increase of flooding along America’s coastline, we wrote a Ruby program to download
+historic hourly tide gauge readings from the NOAA API. The API only allows access to one year’s worth of
+hourly readings at a time, so the Ruby script cycles through each year for each station and downloads the
+data. The program then downloaded historic monthly means for each station. The downloaded data was
+fed to R to do calculations. We had three main analyses:
+--- First, we used the hourly readings to compute the
+number of unique days in a meteorological year where a
+tide gauge reported seas meeting or exceeding flood
+thresholds established by the National Weather Service.
+For a year to be included, we required data from at least
+292 days, or 80 percent of the days in a typical year. This
+was done to prevent false undercounts because of
+missing data.
+--- Second, we devised a conservative way to determine
+whether flooding had increased. We examined the annual
+average of flood-level days prior to 1971 and compared it
+to 2001-present averages. Again, to ensure a sufficient
+universe of data existed for a quality analysis, we only
+used gauges with data spanning at least five decades.
+This meant only 25 gauges were included in our final
+analysis.
+.
+--- Finally, we also computed the annual mean sea level for each gauge. For quality control purposes, we
+only included years where at least 11 months of data were available we also did additional analyses for
+the interactive:
+--- We adjusted the mean sea level measurements so that the first reported year started at zero. This
+served two purposes: To avoid having to explain tidal datums to readers and to better show how heights
+have changed in an easily understandable graphic.
+--- For the interactive showing every individual flood-level day at each gauge, we faced a problem: How do
+you account for the addition of new gauges over time? We did this by computing an average number of
+flood-level days per station that updates on the fly.
+To examine growth in population and housing along tidal waters, we used the ⅛-mile boundary we
+created from the MHHW coastline data. Block groups and blocks with at least some area within the ⅛-mile
+boundary were extracted with PostGIS, a database manager with geospatial extensions. Both the 1990
+data from GeoLytics and the 2010 data from NHGIS were joined to the extracted shapes.
+
+For interactive purposes, we also extracted Census blocks within the ⅛-mile boundary to show 2010
+population and housing data. This was done to show readers a more granular breakdown of the
+population within the larger block groups.
+We also used the ⅛-mile boundary to extract St. Johns County properties near the coastline. The
+property tax rolls were then joined to the extracted parcels to show how much the county depends on
+coastal development.
+The Florida DEP’s BCMS database had dozens and dozens of tables. Documentation was not ideal. So
+it took a large amount of reverse engineering to extract accurate data. We used paper records and asked
+questions of a staffer to better understand the data. Finally, to ensure accuracy, we presented our findings
+to DEP staff and asked whether they challenged the results. They did not.
+For part three, a key finding is the value of property within about ⅛ of a mile from tidal shores. Reuters
+used data from RealtyTrac, which provided more than 40 million records from counties selected by
+reporters. This was done by identifying counties intersected by the ⅛-mile boundary mentioned earlier.
+Once the data was obtained, it was loaded into PostGIS. Properties within ⅛-mile from tidal shores were
+extracted. Because not all properties had a value estimated by RealtyTrac (see part C of this question),
+we decided on the following logic: When an estimated value wasn’t available, the analysis used the
+taxable values of properties, often lower than the market value. When taxable value also wasn’t available,
+the analysis used the total value of outstanding loans secured by the property. Properties for which values
+could not be assigned were ignored.
+In a separate analysis for part three, Reuters showed that about 24,000 acres along tidal shores
+changed from wetlands to developed land from 1996 to 2010. The analysis used data from the National
+Oceanic Atmospheric Administration’s Coastal Change Analysis Program, which shows dominant land
+use in 30-square-meter areas.
+To do that, after consulting with NOAA scientists, we extracted areas within about ⅛-mile of the tidal
+shore and examined areas where wetlands, such as estuarine emergent wetlands or palustrine forested
+wetlands, changed over to developed land. Louisiana was excluded because of insufficient data to extract
+areas along tidal shores (see part B of this question).
+In part four, we used annual means data obtained from the Permanent Service for Mean Sea Level. The
+data was cleaned and uploaded into SQL Server, a database manager, for analysis. The analysis included
+ignoring records flagged by owners of the gauges around the world.
+To smooth year-to-year variations, we created three-year rolling averages to examine the changes in
+readings over a 50-year period that started between 1958 and 1963 and ended between 2008 and 2013.
+Software
+We used numerous pieces of software, programming languages and database managers: R, Ruby,
+ArcGIS, QGIS, PostGIS and SQL Server.
+
+Ryan McNeill @McNeill_Tweets
+Deborah Nelson @Newshawks www.investigatewashington.org
+Duff Wilson @duffwilson reporter.org/desktop
+
+7/5/16
+
+PART 1: RISING SEAS
+
+PART 2: RISING RISKS
+
+REUTERS
+Reporting: Deborah Nelson, Duff Wilson, Ryan McNeill, Alister Doyle, Bill Tarrant
+Data: Ryan McNeill | Web programming: Charlie Szymanski
+Design: Troy Dunkley | Graphics: Matthew Weber, Maryanne Murray,
+Christine Chan, Charlie Szymanski
+Video: Zachary Goelman, Angie Teo, Eve Johnson
+Editing: John Blanton | Photo editing: Jim Bourg, Stelios Varias, Thomas White
+
+h(p://bit.do/reuterswaters-edge
+
+SEE TIP SHEET AT BOTTOM FOR LINKS TO DATA & OTHER RESOURCES
+
+News coverage of rising sea levels has largely focused on
+dire predictions of what’s ahead 100 years from now.
+
+I HEADED FOR THE COAST TO LOOK FOR CLUES
+
+Climate change skeptics in the U.S. have seized on the time
+gap to sow doubt and give politicians cover to do nothing.
+So I proposed to Reuters that we do a project that focuses
+on the present.
+Sea levels have risen an average of 8 inches over the past
+century. Let’s do a data-driven narrative on the impact that’s
+having on coastal communities.
+Local officials and coastal residents
+thought flooding had increased over
+time. But no one had kept count.
+
+A chart created by a Virginia scientist
+of trends at a tide gauge near his home
+found buried in a state report
+gave me an idea…..
+
+I thought tide gauges might be able to help us.
+Ryan figured out how.
+First he found a dataset at the National Weather Service
+with historical water levels for each tide gauge.
+
+http://tidesandcurrents.noaa.gov/stations.html?type=Historic+Water+Levels#Maryland
+
+1
+
+7/5/16
+
+Then he found another at the NOAA that provided the level
+at which local flooding would occur for each tide gauge…
+
+When he put the two datasets together…
+AVERAGE # OF DAYS PER YEAR OVER DECADES
+THAT WATER REACHED FLOOD LEVEL
+
+which for some reason the government had (at the time) only used to
+predict future flooding due to SLR.
+
+MEANWHILE, BACK AT THE COAST…......
+
+http://coast.noaa.gov/digitalcoast/tools/slr
+
+Annapolis April 30 – May 1, 2014
+Ry
+an
+’s
+
+cal
+l
+
+h(p://www.reuters.com/invesIgates/special-report/waters-edge-the-crisis-of-rising-sea-levels/
+
+Part 2 RISING RISKS: GOVERNMENT RESPONSE:
+
+AND WHERE IT IS HAPPENING MOST…
+Census 2010 block group, block boundary GIS data –
+NHGIS h(ps://www.nhgis.org/.
+GIS boundary ﬁles, eg counIes & states -- Census.gov
+
+… AND WHERE IT IS HAPPENING MOST
+
+LTO
+WA
+
+NC
+
+O
+
+2
+
+7/5/16
+
+I DUG INTO WHO’S DOING IT
+
+DUFF DOCUMENTED WHY
+
+ANSWER: EVERYONE IS DOING IT
+# APPLICATIONS FOR PERMITS TO BUILD RESIDENTIAL
+STRUCTURES ON FLORIDA’S 825 MILES OF BEACHES
+SINCE 2000: 3,302
+# OF APPLICATIONS DENIED: 114
+LTO
+WA
+
+N
+
+CO
+
+Florida DEP BCMS database & case ﬁles
+
+“RISING WATERS” PANEL
+IRE 2016 Annual Conference
+New Orleans
+
+Deborah Nelson @Newshawks
+
+Associate professor of invesIgaIve journalism
+Philip Merrill College of Journalism
+University of Maryland
+dnelson4@umd.edu
+
+www.INVESTIGATEwashington.org
+
+3
+
+

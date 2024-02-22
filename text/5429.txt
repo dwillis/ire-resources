@@ -1,0 +1,116 @@
+Tips on using new IRS 990 data
+NICAR18 - Chicago
+Andrea Fuller
+Data Reporter, Wall Street Journal
+andrea.fuller@wsj.com / @anfuller
+
+Todd Wallack
+Investigative/Data Reporter, Boston Globe
+todd.wallack@globe.com / @twallack
+Presentation online at: http://bit.ly/2C9DuQV
+Tipsheet: http://bit.ly/NICAR18-IRS
+
+This is an IRS Form 990
+
+New Data
+
+What’s online
+More than 2 million IRS
+filings processed since
+2011
+• Form 990
+• Form 990EZ
+• Form 990PF
+
+What’s missing
+• Organizations that file by paper
+• Tiny groups that file a 990-N
+• Nonprofits that don’t file at all
+• Forms that haven’t been processed yet
+• Forms processed before 2011
+
+Also missing: Cats.
+
+Format: XML
+
+Key data in tags
+
+How to find files
+
+Indexes
+
+–JSON
+–CSV
+
+JSON
+
+CSV
+
+Computer Programing Time!
+
+Todd’s approach
+Write scripts to:
+1) Download index files
+2) Download every XML file listed in indexes
+3) Loop through XML files
+4) Grab key fields
+5) Save data in new CSV files
+https://github.com/TWALLACK/IRS
+
+Andrea’s approach
+• Download the JSON files with Python
+• Parse the JSON and put the information into a SQL
+table
+
+Andrea’s approach contd.
+• Get the URLS from the JSON files and download all
+the XML files
+
+Andrea’s approach contd.
+• Parse every data point in each XML file to get:
+– Filename
+– Sequence number (for repeated tags)
+– Field name and parent fields
+– Value of the field
+
+Andrea’s approach contd.
+• Write each field/value pairing to a text file
+• Upload text file to SQL Server
+
+Andrea’s approach contd.
+Figure out the field maps
+
+Make your tables
+
+Caveats with data
+• Amended forms
+• Typos in forms
+• Missing tags/fields
+• 1/True = Yes. 0/False = “No.”
+• Tags can vary between forms and years. For
+instance:
+2016 form: <FormationYr>1994</FormationYr>
+2013 form: <YearFormation>1994</YearFormation>
+
+Examples of stories
+
+Other sources of 990 data
+Propublica’s Nonprofit Explorer
+https://projects.propublica.org/nonprofits/
+CitizenAudit
+https://www.citizenaudit.org/
+National Center for Charitable statistics.
+http://nccs-data.urban.org/data.php?ds=core
+
+Additional data sets from the IRS
+• IRS Exempt Organizations Business Master File Extracts
+database. https://www.irs.gov/charities-nonprofits/exempt-organizations-business-master-fileextract-eo-bmf
+• IRS Annual Extract of Tax-Exempt Organization Financial
+Data. https://www.irs.gov/statistics/soi-tax-stats-annualextract-of-tax-exempt-organization-financial-data
+• Microdata. https://www.irs.gov/statistics/soi-tax-stats2014-charities-and-other-tax-exempt-organizationsmicrodata-files
+
+Overwhelmed?
+
+Hit us up with questions!
+
+

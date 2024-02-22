@@ -1,0 +1,342 @@
+Analyzing satellite imagery
+with Google Earth Engine
+<bit.ly/geecar17>
+Confidential + Proprietary
+
+Sign up for Earth Engine:
+<bit.ly/geesignup>
+
+Agenda
+
+Introduction
+
+Telling stories with satellites
+
+Earth Engine
+
+What is Earth Engine?
+
+Applications
+
+Data Catalog, API
+
+Coding
+
+Hands-on workshop
+
+Telling stories with
+satellites
+Eric Sagara | Reveal
+Confidential + Proprietary
+
+Satellites are a treasure trove
+of data for reporters
+● Decades of data
+● Continuously updated
+● Global coverage
+
+Traditionally images look like this
+
+They consist of three bands - the
+visible light we can see
+
+Red
+
+Green
+
+Blue
+
+But sensors on satellites
+capture light in
+wavelengths we can’t see
+
+Landsat 8 Bands
+Coastal Aerosol
+
+Red
+
+Green
+
+Blue
+
+Near Infrared
+
+SWIR 1
+
+SWIR 2
+
+Panchromatic
+
+Cirrus
+
+Thermal 1
+
+Thermal 2
+
+QA
+
+Combining these bands in
+different ways allow us to
+tell different stories
+
+Landsat 8 Bands
+Coastal Aerosol
+
+Red
+
+Green
+
+Blue
+
+Near Infrared
+
+SWIR 1
+
+SWIR 2
+
+Panchromatic
+
+Cirrus
+
+Thermal 1
+
+Thermal 2
+
+QA
+
+Color Infrared Image
+
+Landsat 8 Bands
+Coastal Aerosol
+
+Red
+
+Green
+
+Blue
+
+Near Infrared
+
+SWIR 1
+
+SWIR 2
+
+Panchromatic
+
+Cirrus
+
+Thermal 1
+
+Thermal 2
+
+QA
+
+False Color Composite
+
+But there’s more
+
+Images are composed of pixels
+
+These pixels are actually numbers...
+
+… which means we can do math with them.
+
+(Near Infrared - Red)
+NDVI =
+(Near Infrared + Red)
+
+Normalized Difference Vegetation Index
+
+Earth Engine 101
+Chris Herwig | Google
+Confidential + Proprietary
+
+earthengine.google.com
+Confidential + Proprietary
+
+To organize the world's Earth
+observation information and
+make it universally accessible
+and useful
+
+Make substantive progress on
+the world's biggest
+challenges
+
+> 5 Petabytes of Earth observation
+data (imagery, weather, etc.)
+
+Google + planetary-scale
+computation
+
+Simple, yet powerful
+browser-based JavaScript* API
+
+* python too!
+
+Earth Timelapse
+A global, zoomable time-lapse
+video that allows you to see and
+explore changes to the Earth's
+surface from 1984 to 2016
+Pan, zoom, search, just like you
+would with a regular web map.
+g.co/earthtimelapse
+
+Google Confidential and Proprietary
+
+Over 200 analysis-ready Earth
+observation geospatial datasets
+
+Landsat
+30m/15m/px
+1970s - today
+
+Image: NASA/Goddard Space Flight Center
+Conceptual Image Lab
+
+16 day revisit
+
+Sentinel 2A
+10m/px
+2015 - today
+
+Photo: ESA/ATG medialab
+
+10 day revisit
+
+Modis
+250/500m/px
+1999 - today
+
+Photo: NASA/Goddard Space Flight Center
+Scientific Visualization Studio
+
+2 global images every day
+
+imageCollection.reduce(ee.Reducer.median())
+
+coding
+
+Google Confidential and Proprietary
+
+Proprietary + Confidential
+
+Office hours:
+9:30 to 11am Friday, lobby cafe
+@esagara @hrwgc @vanessagene
+<bit.ly/geecar17>
+
+Thank you!
+
+Confidential + Proprietary
+
+Proprietary + Confidential
+
+Appendix
+
+Proprietary + Confidential
+
+Working with one image
+
+// single image from L8 TOA collection
+var l8 =
+ee.Image('LC8_L1T_TOA/LC80160392017017LGN00');
+var vis = {
+min: 0,
+max: 0.34,
+gamma: 1.6,
+bands: ['B4', 'B3', 'B2']
+};
+Map.addLayer(l8, vis);
+Map.centerObject(l8);
+
+Proprietary + Confidential
+
+Reduce an image collection
+
+// L8 TOA collection
+var collection = ee.Image('LC8_L1T_TOA');
+var meanPixel = collection
+.reduce(ee.Reducer.mean());
+var mosaic = collection
+.mosaic();
+
+MODIS: Two global images every day
+
+imageCollection.reduce(ee.Reducer.median())
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.median())
+.visualize({min:0, max:5000, gamma:1.6});
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.mean())
+.visualize({min:0, max:5000, gamma:1.6});
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.mode())
+.visualize({min:0, max:5000, gamma:1.6});
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.min())
+.visualize({min:0, max:5000, gamma:1.6});
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.intervalMean(20,30))
+.visualize({min:0, max:5000, gamma:1.6});
+
+var modis = ee.ImageCollection('MODIS/MOD09GA')
+.filterDate('2016-01-01','2016-08-31')
+.reduce(ee.Reducer.percentile([15]))
+.visualize({min:0, max:5000, gamma:1.6});
+
+What can Earth Engine do?
+Get an image
+Pick your: projection, resolution,
+bands, bounding-box, visualization
+
+What can Earth Engine do?
+Get an image
+Apply an algorithm to an image
+Use library functions or script your own
+
+What can Earth Engine do?
+Get an image
+Apply an algorithm to an image
+Filter a collection
+Time, Space & Metadata Search
+
+What can Earth Engine do?
+Get an image
+Apply an algorithm to an image
+Filter a collection
+Map an algorithm over a collection
+N → N
+
+What can Earth Engine do?
+Get an image
+Apply an algorithm to an image
+Filter a collection
+Map an algorithm over a collection
+Reduce a collection
+N → 1
+
+or
+
+N → M
+
+What can Earth Engine do?
+Get an image
+Apply an algorithm to an image
+Filter a collection
+Map an algorithm over a collection
+Reduce a collection
+Compute aggregate statistics
+
+

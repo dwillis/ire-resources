@@ -1,0 +1,120 @@
+Reverse-Engineering
+Algorithms
+Rob Arthur
+Freelance journalist
+3/10/2018
+
+Algorithms are pervasive, but often hidden
+• Algorithms guide a lot of government/corporate decision-making
+• In criminal justice: risk assessment, predictive policing, forensics, etc.
+• Elsewhere: credit scores, home buying, public health, etc.
+
+But…
+• Public entities often reluctant to provide information
+• Private companies run many algorithms (not able to FOIA)
+
+An algorithm turns inputs into outputs
+Input
+A
+Input
+B
+Input
+C
+
+The Algorithm
+
+Outputs
+
+The algorithm itself is often not accessible
+Input
+A
+Input
+B
+
+The Algorithm
+
+Outputs
+
+Sometimes built/run by
+a third party
+(company, university,
+etc.)
+
+Results of outputs—the
+decisions--are also
+often public records
+
+Input
+C
+
+Often public records
+
+Example: Chicago’s “heat list”
+Arrest
+date
+Previous
+involvement
+in crime
+
+Age
+
+Black box algorithm
+
+Strategic Subject List
+
+We can reverse-engineer the algorithm
+with a statistical model
+Arrest
+date
+Previous
+involvement
+in crime
+
+Black box algorithm
+
+Age
+
+glm(SSL_score~Age+DV_Arrest+Gang_affiliation+…, data=SSL)
+
+Strategic Subject List
+score
+
+Reverse-engineering revealed that the
+algorithm was surprisingly simple
+
+Sometimes it’s easier to FOIA inputs/outputs
+than the algorithm itself
+Successfully requested
+(filed August 2016)
+
+Successfully requested
+(filed August 2016)
+Arrest
+date
+Previous
+involvement
+in crime
+
+-Simple linear model
+Black box algorithm
+-Age, victimization largest factors
+
+Age
+Waiting on a FOIA request
+Filed 6/7/2017
+
+List of who to
+arrest/target for
+intervention
+
+It’s not always this easy…
+• Usually, omitted variable bias is a larger issue.
+• Some entities are savvy enough not to provide the information
+necessary to reverse-engineer their algorithms.
+• But even a partial reverse-engineering is often newsworthy. For
+example, discovering that race informs an algorithm is a story in and
+of itself.
+
+Does it work?
+
+

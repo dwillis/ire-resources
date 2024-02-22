@@ -1,0 +1,114 @@
+Burrowing into HMDA
+John Byczkowski
+The Cincinnati Enquirer
+johnb@enquirer.com
+513-768-8377
+n Buy: Home Mortgage Lending: How To Detect Disparities by Jo Craven McGinty, from IRE.
+This covers all the basics and will save you a lot of time.
+n Buy: Data from IRE. They’ve got HMDA data going back to 1992, and it’s cheaper than buying
+it from the Fed, except for the newest data. Through 1995, the data is in *.dbf format, and it
+imports easily into Access. Starting in 1996, the data comes with its own software, and must be
+extracted to a text file. Email me if you need Access import specs.
+n Buy new data: From the Federal Financial Institutions Examination Council. Raw data is $50
+per year. New data is released by the last day of July. You want “Loan Application Register (LAR)
+& Transmittal Sheet (TS) Raw Data.”
+http://www.ffiec.gov/hmda/publicdata.htm
+n Run the data: Again, refer to McGinty for guidelines on dealing with tables and for the basic
+aspects of how to consider data. Play with it; run ranks and crosstabs any way you can think of:
+Count up loans approved and rejections by bank, by race, by bank and race. (Rank ‘em.
+Who’s doing the most business?)
+Consider income levels. (use Census Bureau breakdowns for low/mod/mid/high at
+http://www.census.gov/hhes/income/histinc/ie1.html). Who’s doing the most business
+with low income borrowers? High-income borrowers?
+Add up loan amounts. Which banks are lending the most money?
+Consider census tract. This can be tough because the HMDA data contains information
+on population and minority population, but it’s still – through the 2002 data – based on
+1990 census data. Come up to speed on 2000 census data for your area.
+n Run rejection rates, but be careful. The rejection rate is rejections divided by approvals-plusrejections (read McGinty for tips on calculating this). Two things distort rejection rates. First, many
+big subprime lenders reject 50 percent to 80 percent of all applicants, and this causes problems
+with regional totals on rejections.
+Second, when you look at rejections by census tract, you may find that most rejections are
+coming from lenders who make no loans at all in that tract, and that the lenders who are making
+loans aren’t rejecting many applicants.
+It is useful to look at each lender’s rejection rate, in total, by race, by income.
+n Get the list of subprime lenders:
+http://www.huduser.org/datasets/manu.html
+The HMDA data does not distinguish between mainstream lenders and subprime lenders, who
+target consumers with less-than-perfect credit. (Read the McGinty book for tips on dealing with
+HMDA’s list of institutions.) I created a “subprime?” yes/no check-box in the institutions table,
+then checked off the subprime lenders named in HUD’s list. In 2001 there were only 178
+subprime lenders, so it doesn’t take that long. Also, the keeper of the list, Randall Scheessele
+(email: Randall_M._Scheessele@HUD.GOV) is very helpful.
+Run counts on loans by subprime lenders. This is especially important if you’re looking at
+refinancings.
+n Get CRA reports on banks: CRA stands for Community Reinvestment Act, and it basically
+requires banks to loan money back into the neighborhoods that provide deposits. Banks are
+generally reviewed only for the business they do in their home markets or home states. It’s not
+likely an Ohio bank will be reviewed for loans it makes in Florida. Few lenders fail this test, but
+you can still get good information out of these reports.
+
+Create another column in the institutions table in the HMDA data – a yes/no checkbox – to
+check whether the institution gets a CRA review for lending in your area. Then, calculate how
+many loans are made by lenders who get reviewed for lending in your area. In Cincinnati, lenders
+who get CRA reviews for their lending in the region account for only 31 percent of the loans
+made.
+Keep in mind that the CRA evaluation is based on income, not race, and only tracks low- and
+moderate-income activity. The evaluation does contain an opinion regard fair lending standards –
+which are race based – but this section is usually only a few sentences long and provides almost
+no useful details.
+You may have to check several different sources to find local lenders:
+Federal Reserve
+http://www.federalreserve.gov/DCCA/CRA/crarate.cfm
+Office of Thrift Supervision
+http://www.ots.treas.gov/crasql/cra-search-form.cfm?catNumber=69
+Comptroller of the Currency
+http://www.occ.treas.gov/crainfo.htm
+note: This site has a lousy search function. Where the other sites search just for CRA reports, this one
+searches its entire site for the report. Use a precise name for the search.
+
+n The difference between race “not provided” and “not applicable.”
+“Not provided” (race code “7” in the data, gender code “3”) indicates the loan application was
+taken by telephone or by mail. Through 2002, lenders were not required to collect gender and
+race information from those who apply by mail or phone.
+In Cincinnati, the share of home purchase loans with no race information was 19 percent in
+2001, up from 2 percent in 1992. Are the not-provideds more black than applications overall? I’ve
+seen nothing to indicate that. Run these numbers by census tract to see which tracts generate
+them.
+“Not applicable” (race code “8” in the data, gender code “4”) means there’s no person there.
+You should not see 8’s under information for the primary loan applicant. When this shows up
+under the coapplicant, it means there is no coapplicant.
+HMDA does not give information on marital status. If there’s no coapplicant, it could mean the
+applicant’s partner has been left off the application for some reason (the partner’s credit could be
+so bad, for instance, that he/she is best left off the application) or there just is no coapplicant.
+Among blacks in Cincinnati, nearly half of all primary applicants are women, and 86 percent of
+them cite no coapplicant on the application. It would square with census data to say that these
+are mostly single women.
+
+Changes coming in HMDA data
+n Nothing for 2002 data. It’ll look just like 2001.
+n For 2003:
+•
+•
+•
+
+It’ll use 2000 census tracts and population information.
+Lenders taking applications by telephone must collect information on gender and race.
+“Hispanic” will no longer be a race. The data will come from a new, separate question on
+ethnicity.
+
+n For 2004: The Fed is becoming increasingly concerned with subprime and predatory lending,
+and will institute a number of changes to track these loans.
+•
+•
+
+•
+
+Lenders must report if the interest rate on the loan is 300 basis points above that of a
+comparable Treasury security.
+Lenders must report if the loan falls under the protection of the Home Ownership and
+Equity Protection Act (HOEPA) – that is, if the loan rate is 800 basis points or more
+above that of a comparable Treasury security, or if the loan’s fees equal more than 8
+percent of the loan amount.
+Lenders must report denials of pre-approvals.
+
+

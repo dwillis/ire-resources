@@ -1,0 +1,309 @@
+Ruby Tipsheet
+How ruby does basic programming concepts—a tip-sheet of reminders for exploratory programming.
+Popular accessories: • R
+​ails​
+(application framework) • R
+​ake​
+(a build utility, Ruby’s version of m
+​ake)​• R
+​ubyGems
+(packages of common components and community tools)
+
+Types
+Comments
+Null
+Booleans
+Integers, Floats, hex, binary, etc
+Ranges, inclusive or non-inclusive
+String, Interpolated String
+Regular Expressions
+Arrays
+Hash (associative array)
+Symbols
+TypeErrors
+Changing Types (Coercion)
+Assignment (​
+Declaring Variables)
+Locally scoped variable
+Instance scoped variable
+Class scoped variable
+Globally scoped variable
+Constant
+
+#comments follow behind an octothorpe
+nil
+true, false #
+​in irb, try 1 == 1 and 1 == 2
+123, 1.23e‐4, 0xFF00, 0b01100, 0244 #
+​this is an octal
+[0..5] or [0...5] #
+​loops make this clearer
+'String', "Interpolated #{curseword} String"
+/regex/
+sample = ['array','of',4,'things']
+Thing = {1 => 2, :symbol =>'string', :lang => 'Ruby'}
+Thing[:lang] #=> 'Ruby' #
+​try the other implied variations
+address + ' ' + street #=> T
+​ypeError: String can't be
+coerced into Fixnum
+address.to_s + ' ' + street #=> "1600 Pennsylvania Avenue"
+
+local
+@instance
+@@class
+#
+​if you need these...you may be venturing
+$global
+#
+​into deep waters
+Constant #
+​or very complicated app design
+
+Conditionals (Logic Evaluation)
+equals, does not equal
+greater-than, less-than, etc
+‘and’ condition
+‘or’ condition
+if/else, unless, switch statements
+
+==, !=
+>=, >,<, <=
+&& or AND #
+​and is less strict than ampersands, go figure
+|| or OR #
+​or is less strict than pipes, ditto
+
+inline!
+ternary
+
+<%= "Name: #{Thing[:lang]}" unless Thing[:lang].empty? %>
+(1 == 2) ? 'yep' : 'nope' #
+​parens can help readability
+
+if x == y
+#
+​code
+elsif y > x
+#
+​code
+else
+#
+​code
+end
+
+unless x == y
+#
+​code
+else
+#
+​code
+end
+
+case n
+when 0
+#
+​zero
+when 1
+#
+​one
+else
+#
+​default case
+end
+
+Iteration (Looping)
+puts
+while, until, do, for
+
+puts 'hello' #
+​outputting things to logs
+while i < 100 do ['a','b','c'].each do |x|
+puts 1
+puts x
+end
+end
+
+[1,2,3].map do |i|
+puts i
+end
+
+inline block iteration (e.g. .
+​each)​ [1, 2, 3].each{ |x| puts x } #
+​<‐‐the best
+break, continue break, next
+Enumerables (Arrays & Objects)
+Ruby does C.R.U.D. patterns:
+Create, Read, Update, Delete
+
+null-checking help
+Frequently Used Methods
+Functions, Modules and Classes
+functions
+
+#create
+orgs = ['IRE','ONA','SND']
+#=> ['IRE','ONA','SND']
+
+#update
+orgs << 'OOP'
+orgs.push('OOP') #
+​if you like pop
+#=> ['IRE','ONA','SND','OOP']
+
+#delete
+orgs.delete('OOP')
+orgs.pop #
+​remove last
+#=> ['IRE','ONA','SND']
+
+#read
+orgs = ['IRE','ONA','SND']
+orgs[1] #=> ?
+​??
+orgs[0] #=> ?
+​??
+
+.present?, .nil?, .empty? #
+​?s help convey true/false evals
+.uniq, .compact, .zip, .flatten, .collect,​etc.
+def decriptive_function_name(arg1, arg2: nil)
+#
+​your logic; you can pass in args & even set default values
+end
+
+Modules
+
+module ModuleName #capitalized to stand out
+#
+​can help package stuff for 'import' into other scripts
+def unit_converter(units1, units2)
+#
+​code for converting units
+end
+end
+#then, in your script
+include ModuleName
+ModuleName.unit_converter('stone','pounds')
+
+Classes
+
+class ClassName() #capitalized to stand out
+#
+​support multi‐instances, e.g. new Contributor(arguments)
+end
+
+Gems
+Packages of c​
+ommon components
+and community tools​
+.
+
+Commonly used Gems:
+
+Model-View-Controller patterns
+Most Ruby on Rails apps follow the
+MVC pattern, as a general best
+practice.
+
+View
+
+MVC will be a focus of subsequent Ruby
+classes at NICAR ‘16. However, Jake
+Harris has a p
+​ublic github repository for
+his Ruby + Sinatra talk​
+, from NICAR ‘15,
+with all his code and a solid explanatory
+README. His project builds on these
+foundations to guide you through
+building a ‘quick’ Ruby web app.
+
+Model
+
+Googling Ruby Like a Pro
+
+Other Good Tipsheets
+Compare Ruby to other languages side-by-side:
+http://hyperpolyglot.org/scripting​
+(node.js, php, python & ruby)
+
+RubyDocs, e.g. "​
+ruby string trim
+docs​
+"
+Stack Overflow, e.g. “​
+ruby string
+trimming stackoverflow​
+”
+Putting Some Pieces Together
+A sample Class with
+- attributes (getters/setters)
+- properties (variables/constants)
+- methods (functions)
+#in IRB
+puts contrib.inspect
+#=>​#<Contributor:0x100189ec0
+@affiliations=["ABA", "BCB",
+"CAC"], @age=35,
+@name="Contributor Name"
+@birth_date=#<DateTime:
+1972‐01‐01T00:00:00+00:00
+((2441318j,0s,0n),+0s,2299161j)>
+Intermediate: modules and classes can
+have segments marked as public,
+protected or private. This controls what
+methods & properties are exposed,
+versus used to help internal logic.
+
+-
+
+Typhoeus, HTTParty or Nokogiri (fetch & parse by URL)
+JSON (tools to work with json, like J
+​SON.stringify)​
+rake (“ruby’s make”, a build utility you can customize)
+Sass (enhanced CSS)
+Byebug (inline debugging breakpoints)
+Gems import their own gem dependencies, which can be challenging.
+
+Views are the user interface of your app, presenting the data to your user.
+Most often, Views are markup with embedded Ruby logic that expects data
+from a specific Model. E.g., <
+​cite><%= pullquote_attribution %></cite>
+
+A model represents the information (data) of the application and the rules to
+manipulate that data. Often, models are best organized as Classes.
+
+Controller
+Controllers “glue” together our Models and Views. In Rails, Controllers
+process incoming requests, apply Models to the data, then pass the modelled
+data to the Views for presentation.
+
+Another good Ruby tipsheet, with longer explanations:
+https://dzone.com/refcardz/essential-ruby
+
+class Contributor
+attr_accessor :name, :sex, :birth_date, :affiliations
+contribution_limit = 18
+def total_contributions
+#
+​return current count of contributions
+#
+​or error, if too_few?
+end
+def most_recent_contribution
+#
+​return most recent Contribution data/model
+end
+private
+def too_few?
+contributions < contribution_limit
+end
+end
+#a new instance of a Class, for a brand new Contributor
+contrib = Contributor.new
+contrib.name = "Contributor Name"
+contrib.birth_date = "01/01/1972"
+contrib.affiliations = ["ABA", "BCB", "CAC"]
+
+

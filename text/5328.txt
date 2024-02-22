@@ -1,0 +1,218 @@
+Tips On Using New IRS 990 Data
+NICAR - Chicago
+March 19, 2018
+Andrea Fuller
+Data Reporter, Wall Street Journal
+andrea.fuller@wsj.com / @anfuller
+Todd Wallack
+Investigative/Data Reporter, Boston Globe
+todd.wallack@globe.com / @twallack
+
+What is the data?
+After losing a FOIA lawsuit, the Internal Revenue Service recently started uploading
+machine-readable versions of forms that nonprofits file electronically with the
+government each year.
+Time frame:​ The IRS has posted forms processed since 2011. The forms are
+uploaded monthly. (Note: There is typically a lag of a few months between the time an
+organization files a return and it is processed by the IRS.)
+Types of forms:
+990 (may also be listed as 990EO or 990O)
+990EZ (filed by smaller organizations)
+990PF (filed by private foundations)
+What’s not available:
+990-N (filed by very small nonprofits with gross receipts of $50,000 or less)
+Forms filed on paper
+How many organizations file:
+More than 378,000 organizations filed electronic 990s, 990EZs or 990PFs in 2016.
+There are about 1.5 million nonprofits in the United States, though most forms on paper
+
+or file the 990-N - basically a postcard asserting that they are too small to file a full
+return. Churches are non-profits but do not have to file the forms.
+The electronic data is typically required for organizations with at least $10 million in
+assets and 245+ employees, though others also choose to file online.
+Format:
+Each form is posted on AWS web server in XML format (which looks a bit like HTML with all the data sandwiched between tags).
+Here are some random examples of what the forms look like:
+https://s3.amazonaws.com/irs-form-990/201722269349300317_public.xml
+https://s3.amazonaws.com/irs-form-990/201742279349100209_public.xml
+So the first portion of a form might look like this:
+<Return xmlns="http://www.irs.gov/efile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+returnVersion="2015v3.0" xsi:schemaLocation="http://www.irs.gov/efile">
+<ReturnHeader binaryAttachmentCnt="0">
+<ReturnTs>2017-08-15T08:46:25-07:00</ReturnTs>
+<TaxPeriodEndDt>2016-09-30</TaxPeriodEndDt>
+<PreparerFirmGrp>
+<PreparerFirmName>
+<BusinessNameLine1Txt>SKEEN & CO CPAS</BusinessNameLine1Txt>
+</PreparerFirmName>
+<PreparerUSAddress>
+<AddressLine1Txt>615A BROOKSIDE AVE</AddressLine1Txt>
+<CityNm>REDLANDS</CityNm>
+<StateAbbreviationCd>CA</StateAbbreviationCd>
+<ZIPCd>92373</ZIPCd>
+</PreparerUSAddress>
+</PreparerFirmGrp>
+<ReturnTypeCd>990PF</ReturnTypeCd>
+<TaxPeriodBeginDt>2015-10-01</TaxPeriodBeginDt>
+
+How to find the files:
+The IRS also has posted two sets of indexes to the files, one in JSON and the other in
+CSV. ***WARNING: Clicking on the JSON link my crash your browser. Access it via the
+command line.***
+The indexes follow this format:
+https://s3.amazonaws.com/irs-form-990/index_2017.json
+
+https://s3.amazonaws.com/irs-form-990/index_2017.csv
+The JSON entries look like this:
+{"EIN":"042662873", ​This is the tax ID for the charity, like a SSN
+"TaxPeriod":"201603", ​This is the year/month corresponding to the end of the fiscal year
+covered by the return
+"DLN":"93493243000066",
+"FormType":"990", ​Will also say “990PF” or “990EZ”
+"URL":"​https://s3.amazonaws.com/irs-form-990/201612439349300006_public.xml​”, ​Path to the
+XML that contains all the text in the 990
+
+"OrganizationName":"ELKS BUILDING CORP OF NORWOOD",
+"SubmittedOn":"2017-01-04", ​Date processed by the IRS
+"ObjectId":"201612439349300006",
+"LastUpdated":"2017-01-11T22:15:15"}
+The CSV entries are slightly different:
+RETURN_ID
+14054169
+FILING_TYPE
+EFILE
+EIN
+42662873
+TAX_PERIOD
+201603
+SUB_DATE
+1/4/2017 10:27
+TAXPAYER_NAME ELKS BUILDING CORP OF NORWOOD
+RETURN_TYPE
+990O
+DLN
+93493243000066
+OBJECT_ID
+201612439349300000
+Note: The CSV index is missing the full URL
+But it you can create it by using the OBJECT_ID
+https://s3.amazonaws.com/irs-form-990/​ + OBJECT_ID + _public.xml
+The IRS has posted some basic information here:
+https://www.irs.gov/newsroom/irs-makes-electronically-filed-form-990-data-available-innew-format
+https://aws.amazon.com/public-datasets/irs-990/
+Note​: Organizations sometimes file multiple forms in the same year, because they
+have amended their returns or changed their fiscal year.
+
+Understanding the tags:
+Every field in the 990 form should be contained in the XML. (The data should be
+identical to the data in the PDF version.)
+The IRS has published some stylesheets online, such as this one:
+https://www.irs.gov/e-file-providers/current-valid-xml-schemas-and-business-rules-for-ex
+empt-organizations-modernized-e-file
+Or you can just look at an example of the XML and search for the information you are
+looking for. (Or compare it to a PDF version of the same form.)
+Note: ​For yes and no questions, filers often use “0” or “False” to mean “No,” while “1”
+and “True” mean “Yes.”
+
+Pitfalls with the XML tags:
+● The tags can vary between forms. So you might need to look for one tag for the
+standard 990 form and a different one for the 990PF.
+● Not all the tags are contained in every filing. So certain tags might be missing
+(like the year an organization was formed) when organizations leave that entry
+blank.
+● The tags can vary between years. For instance, a 2016 filing uses the tag
+<FormationYr>1994</FormationYr> for the year an organization was formed. A
+2013 filing for the same organization would look like this:
+<YearFormation>1994</YearFormation>. We agree, this is nuts.
+● For notes in schedules, it’s even messier. Organizations typically just manually
+note which part of the form the note goes with. But sometimes they put that
+notation within different tags, write the line number differently, or shove notes for
+different questions into the same item.
+● Organizations sometimes make typos (including in the organization name or
+EIN).
+Some different approaches to harnessing the data:
+Todd took this approach:
+
+Wrote a program in Python to:
+1) Download the CSV index files.
+2) Use the index files to identify the URL and download all the XML filings
+Then Todd wrote a separate program to:
+Loop through all the XML files, grabbed key fields, and put them in new CSV data files
+An example of the programs is available here:
+https://github.com/TWALLACK/IRS
+Andrea took this approach:
+1) Download the JSON files with Python.
+2) Parse JSON and put the information into a SQL table.
+3) Get the URLS from the JSON files and download all the XML files
+4) Parse all the XML using PHP.1 You will use this information:
+a) Filename: the actual name of the file
+b) Sequence Number: some tags will be repeated, i.e. names of directors.
+Our code figures out if there are repeat tags.
+c) Field Names: The tag and all of its parent tags. From our XML example
+above, the city of the tax preparer would be
+ReturnHeader|PreparerFirmGrp|PreparerUSAddress|CityNm
+d) Value: The actual content of the tag (Redlands)
+5) Write the above output to a TXT file and upload that file into SQL Server. This will
+be about 1 billion records so you need a lot of space.
+6) Make individual tables based on the field names you need.
+Examples of stories we’ve written using the data:
+Charity Officials Are Increasingly Receiving Million-Dollar Paydays
+About 2,700 people had seven-figure pay packages at the nonprofits in 2014, a number
+that was up a third in three years, newly searchable IRS data show
+Data used​: Form 990, Schedule J, Part II
+Art College’s President Draws Lucrative Pay Package
+
+1
+
+Full Credit: Tom McGinty wrote this part in PHP because Andrea messed it up in Python.
+
+Paula Wallace, president of the Savannah College of Art and Design, earned $9.6
+million in 2014. That made her not just the top paid college leader, but also the
+eighth-highest-paid nonprofit employee.
+Data used​: Form 990, Schedule J, Part II, Officers, Directors, Trustees, Key Employees
+and Highest Compensated Employees
+Carl Icahn’s Charity Supports Education—It Also Lent Him $119 Million
+According to a Wall Street Journal tally, more than 1,800 public charities reported
+outstanding loans in fiscal 2014.
+Data Used​: Form 990, Schedule L, Part II, Loans and/or From Interested Persons
+Hundreds of People Made Gifts of Stock With Great Timing
+Michael Milken was among hundreds of people who donated stock to charities near
+price peaks or a few weeks before the stocks tanked, a Wall Street Journal analysis of
+federal data shows. Such donations occurred more often than chance would dictate.
+Data Used: ​Form 990PF, Schedule B, Part II, Noncash Property
+Employee theft ‘shockingly common’ at nonprofits
+More than 1,100 tax-exempt organizations nationwide have reported theft,
+embezzlement, or other major diversions of assets over the past seven years, according
+to electronic filings with the Internal Revenue Service.
+Other sources of nonprofit data:
+● Propublica’s Nonprofit Explorer​ includes summary data for nonprofit tax
+returns and PDFs of full Form 990 documents.
+https://projects.propublica.org/nonprofits/
+● CitizenAudit​, which has converted millions of 990s to text, is testing a new
+feature to identify and download lists of nonprofits that have checkmarked certain
+boxes on the forms. Offers discounted subscriptions to news organizations
+https://www.citizenaudit.org/
+● IRS Exempt Organizations Business Master File Extracts database​.
+Contains basic information on nonprofits, including location and asset size.
+https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-fi
+le-extract-eo-bmf
+● IRS Annual Extract of Tax-Exempt Organization Financial Data​. Contains key
+fields for those nonprofits filing the 990, 990PF, and 990EZ. It will have the
+answer to most yes/no questions in the return (is it a hospital, does it have bond
+issues), as well as fields that ask for financial data (sources of revenue, types of
+
+expenses). It does not contain information from any schedules, or any free-text
+fields. ​For non-programmers, this is a really good bet to get started with
+Form 990 data analysis.
+https://www.irs.gov/statistics/soi-tax-stats-annual-extract-of-tax-exempt-organizati
+on-financial-data
+● Microdata.​ Enhanced version of the previous data but only for select 990s.
+Contains sample data from all of the largest charities and just 1% of small
+charities. From 1985-2014, so this hasn’t been updated in a while. Contains
+select schedules including J (Compensation), H (Hospitals), K (Bonds).
+https://www.irs.gov/statistics/soi-tax-stats-2014-charities-and-other-tax-exempt-or
+ganizations-microdata-files
+● National Center for Charitable statistics.
+http://nccs-data.urban.org/data.php?ds=core
+
+

@@ -1,0 +1,134 @@
+Wrangling federal
+campaign finance data in
+a ‘real’ newsroom
+Jacob Fenton ( as Chris Schnaars )
+Main presentation link:
+bit.ly/CAMPFIN2015
+
+Some assumptions, if Ben hasn’t
+already said ‘em
+- Y’all know campfin already, right? Kidding.
+Almost no one knows *all of it*. But you guys
+are smart, and we assume use the web.
+- We’re gonna go quick, leave time for
+questions, and include links to detailed
+guides. But we’ll go over stuff in more detail
+later if you guys want. Sarah and I work with
+this data *all the time* so bug us later.
+
+The obvious
+- Campaigns file reports and you can get them from FEC,
+especially on filing deadline
+- Get the campaigns to give them to you ahead of the
+deadline!
+- Some spending isn’t reported to FEC. Or to anyone.
+USA! USA! More on this later.
+- There are some good stories that aren’t on deadline.
+- Senate files on paper. SOPR?
+
+Sidebar: “a tired charade” - Paul Ryan, CLC
+Hillary Clinton: The Clinton Foundation is *definitely not* serving as an
+exploratory committee
+Scott Walker: "Our American Revival" is a 527
+Jeb Bush "Right to Rise PAC", "Right to Rise SUPER PAC"
+Bobby Jindal: Super PAC
+Ted Cruz, Rand Paul, Marco Rubio have Leadership PACs
+Arkansas Gov. Mike Huckabee and former Pennsylvania Sen. Rick Santorum:
+501(c)(4) organizations
+See: http://host.madison.com/news/local/govt-and-politics/with-group-scottwalker-joins-long-list-of-candidates-pushing/article_20c217b7-f592-5419-bc8a6a7fc6db2e6c.html#ixzz3TcwQXx1U
+
+Disclosure
+- I built a site for doing realtime campaign
+finance (and more) to handle the things that
+FEC and CRP don’t really do.
+- FEC is getting better. 18F!
+- We’re retooling for the new cycle, and things
+are a little odd as we switch. I’ve been bad.
+- Upside of retooling is that we’re adding stuff,
+so if you want a feature
+
+On deadline
+- You’ll want to look at candidate reports!
+- FCC’s e-filing feed is here ( use IFTTT!):
+http://efilingapps.fec.gov/rss/display?input
+- Don’t trust me? Trust Derek, who I ripped
+off: http://itemizer.herokuapp.com/
+- My thing is here -- set up alerts! : http:
+//realtime.influenceexplorer.com/newestfilings/ also--note the download links!
+
+What to look for in the reports?
+- I don’t need to answer that, right?
+- A pitch for CRP: they do donor
+standardization and coding, and we don’t
+bother to do it immediately. You *were* at
+the machine learning talk Chase just did
+where he explained how to solve this, right?
+
+New rules: there’s always a deadline
+- “independent expenditures” are reported within 24
+hours. Sometimes there are *a lot*. Do you care?
+- Get a source!
+- Issue ads on TV don’t count!
+- Get alerts sent to you! IE page is here: http://realtime.
+influenceexplorer.com/outside-spending/
+- FEC has a page here: http://fec.
+gov/data/IndependentExpenditure.do but ! Danger !
+Candidate ids missing on reports aren’t added
+
+Show me the (bulk) data
+- Campaign finance--it isn’t just a once-a-quarter story!
+You probably need data.
+- Simple answer--there’s lots of data in lots of different
+places. I’m gonna show you where, and talk about it, but
+not do the download dance here
+- Chris has a great explainer on how to handle some of
+these filing
+
+FEC ftp data
+-cycle-by-cycle detailed files of contributors, payees,
+candidates, committees
+- contributors, payees updated weekly.
+- leaves out street addresses
+- takes care of amendments for you!
+- still have to worry about ‘memoized expenses’
+- relational files--need to join tables
+- Worry about transaction codes -- joint fundraisers!
+
+Sunlight, CRP bulk data
+Sunlight ‘realtime’ data: pretty current and
+generally don’t need to join, but is raw, and
+uses line numbers. Includes street addresses.
+CRP: lags a little, but has donor ids and
+industry codes. The gold standard. Oddly hard
+to find (you need an account).
+
+FEC summary files
+Oddly split between two places: FTP and the ‘data catalog’
+FTP includes: candidate financial summary, all candidates,
+PAC summary
+Data catalog includes: administrative fines, bundled
+contributions, candidate disbursements, candidate
+summary, committee summary, electioneering
+communications, independent expenditures,
+lobbyist/registrant committee statements of organization,
+new committee registrations
+
+FEC raw files
+FEC is awesome because it makes the raw
+electronic filings available before it does any
+procesing on them. See chris’ guide, or use
+some code to process it. Most difficult (but how
+Sunlight, and Itemizer do it).
+FEC also makes the converted OCR
+documents available via FTP. Also need code
+for this--consult the vendpak.
+
+Code / APIs
+APIs: NYT ; Sunlight realtime; sunlight
+influence explorer (older data; NIMSP data
+included though lags a lot).
+FECH NYT’s polished ruby gem ; there’s also
+lots of python hackery.
+FEC will have an API, thanks to 18F-ers!
+
+

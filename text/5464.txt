@@ -1,0 +1,446 @@
+Scraping
+without
+programming
+Samantha Sunne
+
+What's scraping?
+
+How do journalists get data?
+...from humans?
+
+ay :)
+
+Easy w
+
+Ask
+nicely
+
+...from computers?
+
+ay :(
+
+Hard w
+
+FOIA
+
+Download
+
+ay :)
+Easy w
+
+Scrape
+
+ay :(
+Hard w
+
+Scraping is...
+catching, collecting or coaxing data off the web.
+Web scrapers are often called:
+
+EXTRACTORS
+if they pull data from
+a single webpage
+
+CRAWLERS
+or
+
+if they pull data from
+multiple webpages
+
+You'll need a basic
+understanding of HTML
+
+HTML is meant for computers, but some of it is understandable to humans.
+Sometimes the code itself is interesting.
+
+Jeb Bush’s
+campaign site
+
+Summary of the
+movie “Die Hard”
+
+Browser
+
+HTML
+
+You can see it by right-clicking and clicking View Source.
+This is called looking “under the hood."
+
+Technique 1:
+import HTML with Google Sheets
+
+HTML content is wrapped in tags that look like this:
+<>content content</>
+There are a lot of tags, and a lot of them have different abbreviations, so you'll need to refer to an
+HTML dictionary.
+Some of them are intuitive, like tables:
+<table>
+Here is my table, right here inside these table tags.
+</table>
+
+How to scrape an HTML table with Google Sheets
+You can use this Google Sheets formula to scrape a table or a list:
+=ImportHTML(“url”, “element”, number of element)
+The "url" is the link you are scraping.
+The "element" is the HTML tag.
+The number is the order the element is in.
+
+ed? Try this
+Still confus
+
+tutorial
+
+Example 1
+=importHTML("sample.com",”table”,0)
+This would import the first table on sample.com
+(If it’s the first element, it’s number 0. I know, weird, it’s a computer thing.)
+You can use View Source to figure out what element and number you want.
+
+ed? Try this
+Still confus
+
+tutorial
+
+This scrapes
+<table>'s
+
+For example, the IRE
+Job Center
+
+I used this formula
+to scrape the IRE
+jobs board:
+https://www.ire.org
+/jobs/
+
+It also scrapes lists
+(<ol>'s and <ul>'s)
+Again, refer to the HTML
+dictionary if you need to know the
+HTML abbreviation for lists
+
+This time, I scraped a list.
+Remember, this isn’t just
+any old list, but the first
+“list” HTML element on the
+page.
+If you aren't sure if there is
+a List element, check the
+source code. (Right click >
+View Source > Ctrl+F for
+"<li>")
+
+The importHTML formula can
+only scrape lists and tables.
+
+Technique 2:
+import XML with Google Sheets
+
+Browser
+
+XML
+
+HTML
+
+XML is also source code, but it's
+in more of a "tree" format.
+
+You can see
+it by right
+clicking and
+clicking
+"Inspect."
+
+With XML, you can find the "XPath"
+An XPath is like an address, or a map, to a very specific spot in the webpage’s code.
+It looks like this:
+This webpage, in the "wikitable" table, in the first row, in the fourth column
+//table[@class='wikitable']/tr[1]/td[4]
+On this
+page
+
+the
+table
+
+with the class
+“wikitable”
+
+in the first the fourth
+column
+row
+
+It's easiest to highlight the element you want and Right Click > Inspect on it.
+
+How to scrape XML data with Google Sheets
+You can scrape everything at a particular XPath using this Google Sheets formula:
+=importxml(“url”,”XPath”)
+For example,
+=importxml(“sample.com”,”//table[2]//tr”)
+returns all the table rows ("tr") from the second table ("table[2]") in sample.com
+
+ed? Try
+Still confus
+
+this tutorial
+
+Here, I scraped:
+the first column (<td>)
+from all the table rows (<tr>)
+in the table (<table>)
+on ire.org/jobs
+
+But what if your
+data isn't in a
+<table>?
+Like the Talking Biz News
+job board
+
+Here, the page source
+told me that all the job
+titles are headers.
+So I only scraped <h2>'s
+
+XPaths open up a whole new world
+all bold text:
+
+//b
+
+all large text (known as headers):
+
+//h1
+
+all headers with the word 'Parish':
+
+//h1[contains(.,'parish')]
+
+all headers with the class 'Parish_name':
+
+//h1[@class='parish_name']
+
+r an aweso
+See here fo
+
+me tutorial!
+
+For instance, the
+dates on the
+Talking Biz News
+job board are
+paragraph (<p>)
+elements with
+the class
+'post-date'
+
+Technique 3:
+import RSS feeds with Google Sheets
+
+This job board is
+available as an RSS
+feed
+The Arab Reporters for
+Investigative Journalism
+
+How to scrape an RSS feed with Google Sheets
+Google Sheets has a third import function you can use for scraping:
+=importFeed(“source”,”items”)
+It scrapes data from an RSS feed,
+which is useful if you want to scrape something at regular intervals.
+But we’re not going to do that in this session.
+If you’re interested, check out this tutorial.
+
+Here, I filled the first
+column of my Google
+Sheet with the item
+titles - which in this
+case, are the job
+positions
+
+Technique 4:
+Writing code!
+
+What a simple scrape would look like in Ruby
+require 'Nokogiri'
+require 'open-uri'
+require 'csv'
+url = "https://ire.org/jobs/"
+html = Nokogiri::HTML(open(url))
+csv = CSV.open("ire_jobs.csv", "w",{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
+html.xpath('//table//tr').each do |row|
+tarray = []
+row.xpath('td').each do |cell|
+tarray << cell.text
+end
+csv << tarray
+end
+csv.close
+
+is scrip
+Copy th
+
+t here...
+
+Now for the easy part
+Now that we understand HTML and XPath (more or less),
+we can understand what a point-and-click scraper tool is doing
+when we point and click.
+
+OutWit Hub
+
+OutWit Hub is a desktop
+app that can identify each
+HTML element on a
+webpage and scrape it.
+(The free version limits how
+many elements you can scrape.)
+
+OutWit Hub is a desktop app that can
+identify each HTML element on a
+webpage and scrape it.
+
+import.io
+
+import.io is a desktop app with a “magic”
+function that scrapes static webpages.
+It’ll probably work on a simple webpage like an HTML table.
+
+import.io is a desktop app
+with a “magic” function
+that scrapes static
+webpages.
+It’ll probably work on a
+simple webpage - like an
+HTML table.
+
+import.io
+
+If that doesn’t work,
+you’ll need to manually
+build an extractor.
+For detailed
+instructions on building
+an extractor, see the
+notes of this slide.
+
+If that doesn’t work, you’ll need to
+manually build an extractor.
+For detailed instructions on building an
+extractor, see the notes of this slide.
+
+import.io
+import.io also lets you
+build crawlers. See the
+notes of this slide for
+detailed instructions.
+It will pull data into one
+spreadsheet from
+multiple webpages.
+BUT each of these data
+points has to have the
+same XPath, or it won’t
+work.
+
+import.io also lets you build crawlers. See
+the notes of this slide for detailed
+instructions.
+
+import.io
+
+The fourth and final scraper
+you can create with import.io
+is what they call a Connector.
+You record yourself
+performing an action on a
+webpage, such as entering a
+search term or login info.
+
+The fourth and final scraper you can
+create with import.io is what they call a
+Connector.
+
+some other good tools
+●
+
+DownThemAll (Firefox add-on)
+○
+○
+
+●
+
+Zapier and IFTTT (websites)
+○
+○
+
+●
+
+These automation tools can help keep track of new data, such as new Instagram posts or tweets
+Try: save RSS feed content to a Google Sheet or get emailed tweets from a certain area
+
+Web Scraper (Chrome extension)
+
+○
+●
+
+Highlights a whole list of links (or images/media) and downloads them
+Not as robust as OutWit Hub
+
+Has you build a sitemap for a site to be crawled
+
+CloudScrape (web service)
+○
+○
+
+One of the few services that will run a scraper on a regular schedule
+Costs $30/month :-(
+
+I wouldn’t recommend...
+●
+
+Kimono (desktop app)
+○
+
+●
+
+ConvExtra and Scraper (Chrome extensions)
+○
+
+●
+
+Extremely basic Chrome extensions that can only handle the simplest of tables. You’re better off with Google
+Sheets
+
+Helium Scraper and Junar (desktop apps)
+○
+
+●
+
+This used to be a Chrome extension that was discontinued. The desktop version doesn’t automatically scrape
+new data, which was best part
+
+Work like other scraping tools, but cost a lot of money. (Although they do have free trials)
+
+InfoExtractor (website)
+○
+
+Claims to pull metadata on a URL, such as the number of views or comments on a YouTube, Wikipedia or blog
+page. But I don’t think it actually works. You’re better off looking at the API (see tutorial here).
+
+If you want to delve further...
+How to Feel Like You’re Hacking
+
+My tutorial on getting data and metadata off the web
+Using the web inspector for complex scrapes
+
+Eric Sagara’s tutorial on using Python or Ruby for more advanced scraping
+
+For more tools
+I reviewed OutWit Hub and
+DownThemAll for my newsletter, Tools
+for Reporters. You can find new, useful
+tools there - scraping and otherwise every week.
+For questions, contact me at
+samanthasunne@gmail.com or
+@samanthasunne. If I don’t know an
+answer, I can point you to one.
+xkcd
+
+

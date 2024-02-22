@@ -1,0 +1,145 @@
+OpenReﬁne
+Tutorials:
+h#p://enipedia.tudel0.nl/wiki/OpenReﬁne_Tutorial
+h#p://openreﬁne.org/
+
+Crea3ng a project:
+OpenReﬁne opens in a browser window, but it works oﬄine. It tends to open best in Chrome.
+SomeCmes there’s a lag, but if it won’t open, try closing Chrome completely.
+Choose "Create Project,” then upload Donovan-A75335
+EFSRECB.TXT is the record layout
+Donovan_data_dicConary is the data dicConary
+Choose CSV as the ﬁle type. You can also import other ﬁle types, then export them as a CSV. This
+is helpful for converCng formats like JSON and XML.
+For this ﬁle, the columns are separated by commas. You can also paste any delimiter into
+“custom.” For example, federal campaign contribuCon ﬁlings are o0en pipe-delimited.
+Keep the opCon checked to parse the ﬁrst line as column headers. SomeCmes your data won’t
+have column headers — for example, quarterly campaign data that you’ll append to the
+previous ﬁlings. You can either manually enter column header names in OpenReﬁne, or export
+the data without column headers. Once you create a data cleaning script in OpenReﬁne, you
+can re-run it on new data, so this is really helpful if you’re working with regular releases of the
+same dataset.
+Rename the ﬁle “Donovan” and click "create project" in the top right corner.
+
+Your row count is at the top — 2,045 rows.
+Show 50 rows at a Cme, and on the top right, scroll through the data by clicking “next."
+You'll also noCce new columns: Stars (good records), Flags (bad records), and the record
+number.
+Remove the empty columns: CONTRIB_TYPE_CODE_25 is always empty, so click the down arrow
+on the column, click Edit Column, Remove This Column:
+
+You can also collapse columns you don’t need to see. Click the down arrow on the column, click
+“View,” “Collapse Column.” The column is hidden but will remain in the same place when you
+export your data. You can also collapse all columns to the le0 or right of a column.
+Under “Edit column,” select “Rename this column,” then change “E_Year” to “Year.”
+
+TRANSFORMATIONS
+Text Transforma3ons:
+To see the categories (or "facets") for each column, click the down bu#on, "facet" and then the
+type of facet (text, number, etc). We'll start with CONTRIB_CODE. Select "text facet.”
+
+We have some issues: COM and Com, LLC and llc, should not be coming up as separate
+variables. This is easy to ﬁx with OpenReﬁne’s built-in common transformaCons.
+Under CONTRIB_CODE, select “Edit cells,” “Common TransformaCons,” “To uppercase.”
+
+You sCll have duplicates. This is probably because of spaces in the data, another common issue
+that will make your analysis inaccurate. To check, click one of the duplicate facets (CORP ), then
+click the cell, and you can see there is a space. You can just remove that space and then click
+"apply to all similar cells.”
+You can also select “Trim all trailing and leading white space” under common transformaCons.
+Now change CORPORATION to CORP and INDIV to IND.
+If you sort by count, you’ll see that the top Contrib_Code is “IND” with 1,156 records.
+Close this window by clicking the upper le0 corner of the window.
+
+Duplica3ng Columns:
+Duplicate the “TRANSACTION_CODE” column by selecCng “Edit Column” then “Add column
+based on this column.” You should get a screen like this. In “Expression” just leave it as “value”
+because we’re only doing an exact duplicate of the column.
+
+You can also write expressions. Under language, you have the opCon of GREL, Python/ Jython,
+or Clojure. Here is a list of some GREL funcCons to play around with:
+h#ps://github.com/OpenReﬁne/OpenReﬁne/wiki/GREL-FuncCons
+Now do a text facet on the new transacCon code. Reference the data dicConary to add the
+deﬁniCons for the transacCon codes.
+
+Date Transforma3ons:
+On the “New_Date” column, select “Sort,” “As date.” You'll noCce it doesn't sort. That's because
+the column is not forma#ed as a date.
+Under “Common TransformaCons” transform the column to a date. You can then do a “Timeline
+Facet” and ﬁlter your data by the date. This allows you to see any strange outliers. For example,
+someCmes your data may a few records with inaccurate years. You can easily see that here.
+
+If you made a mistake, you can always go back a few steps, even months later. Your change
+history is saved with your project forever. In the upper-le0 corner, next to Facet/ Filter, click
+"Undo/ Redo," then go back to your third step.
+Under this opCon, you can also “Extract” your change history and “Apply” it to other datasets:
+
+Numeric Facet:
+Change “AMOUNT_70” to a number format. You’ll know it’s forma#ed as a number because it
+turns green.
+View this column as a numeric facet. A chart will show you the contribuCon range: 0 to
+$310,000.
+Adjust the slider to view his contribuCons between $300,000 and $310,000. You’ll see just one
+from Tusk Strategies Inc.
+You can also view the same informaCon as a text facet. Sort by “Count” and you’ll see $500 was
+his most common contribuCon amount.
+
+CLUSTERS
+View “CORP_30” as a text facet and scroll down. You'll see a lot of examples of two contributors
+that are the same but are wri#en slightly diﬀerently. If you do your analysis without ﬁxing this, it
+will be wrong. But there are too many to change them all manually.
+When making substanCal changes to a column (beyond just converCng to all caps or deleCng
+spaces), it’s o0en a good idea to create a duplicate column so you don’t lose the original as your
+reference point. Company names are perfect examples — someCmes a slight diﬀerence in one
+or two characters really does mean it’s a totally diﬀerent company backed by a totally diﬀerent
+group of people. You wouldn’t want to do a story that Donovan got $1 million in contribuCons
+from Corrupt LLC (combining his contribuCons from Corrupt Corp and Corrupt Inc), only to ﬁnd
+that Corrupt Inc is backed back a totally diﬀerent group of corrupt people who only gave
+$50,000 for poliCcal favors.
+Call the new column “CORP_C” (“C” stands for Clean).
+Under text facet, you have 545 categories. If you trim trailing and leading white space, collapse
+consecuCve whitespace, and convert to uppercase, you should get 530 categories.
+Now take out the commas and periods by going under “Edit cells,” and “Transform”:
+value.replace("," ,"")
+value.replace(“.” ,"")
+The le0-hand column shows the original data; the right-hand column the data with your
+expression applied:
+
+You can always undo your transformaCons if you’ve made a mistake. Your history also shows
+how many cells were transformed by a funcCon:
+
+Before you “Cluster,” sort the CORP_C column by text value. Then, in the text facet box, select
+“Cluster.”
+There are a variety of cluster funcCons. You’ll see the selected values to cluster, an opCon of
+whether to merge them, and the new suggested value, which you can change.
+Select all the ones that are the same, “Merge Selected & Recluster.” You can then just click
+through all the keying funcCons.
+
+If you’re not sure if two clusters are the same enCty, you can select “Browse this cluster” by
+hovering over the bo#om right of the two selecCons. Just those records will open in a new
+window. Since they have the same address, they are likely the same enCty.
+
+SPLITTING AND TRANSPOSING COLUMNS
+Duplicate your “First Name” column, creaCng a new column called “New_Name.” We're going
+to put the middle iniCals into their own column.
+Under edit column, select “Split into several columns.”
+Split by separator, and instead of a comma, make the separator a space. You can also split by
+character length, taking the ﬁrst two characters, for example, if you have place codes at the
+beginning of a record number.
+You'll see this actually created four columns. See why with a text facet. Since this is only a few
+records, you can just manually ﬁx them.
+Delete the empty columns.
+Now under edit cells, cluster, and then run an expression to remove the periods. We want to
+now transpose NEW_NAME_2 with MID, calling it NEW_MID.
+You can check to see if there are any records with informaCon in both the NEW_NAME_2
+column and the MID column with an inverted ﬁlter on NEW_NAME_2:
+
+Chose “Transpose,” then “Cells Across Columns into Rows,” selecCng columns NEW_NAME_2 to
+MID_INIT_42 into one new column, called NEW MID. Do not ignore the blank cells.
+
+Do custom facet by number of characters, and ﬁlter for only those above two characters. You
+can add a column based on the results called MID LONG, then do the same for those with only
+two characters called MID SHORT.
+Export the ﬁle as an Excel spreadsheet.
+
+

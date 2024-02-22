@@ -1,0 +1,326 @@
+Tableau Tutorial Using Canadian Arms Sales Data
+1) Your data comes from Industry Canada’s Trade site.
+2) If you don’t want to download the data yourself, use this file. You
+can also download it from the website we’ve created for this
+session. (Note: Click on this file to learn how to transpose tables)
+3) Open a Tableau workbook
+4) Data – new data source
+
+5)
+6) Browse for your Excel file
+7) Select the arms sales workbook that we downloaded.
+8) Double-click “WorkingCopy_2-Tableau” sheet or drag and drop
+the sheet in the “Drag sheets here” area
+
+9)
+10)
+
+Select “Sheet 1”
+
+11)
+12)
+Double-Click on the “Countries” icon in the “Dimensions”
+section to produce your map.
+
+13)
+
+14)
+You’ll notice that at the bottom right-hand corner, there’s
+an icon which indicates that there are “7 unknown” countries. We
+can clean those up later.
+15)
+Rename the worksheet from the generic “Sheet 1” to
+“Countries” by double-clicking on the “Sheet 1” label and typing
+the new name.
+16)
+To obtain the country names, select Map/Map Layers in the
+top menu. In the left Map Layers window, check Country/Region
+Names
+
+17)
+18)
+Close the Map Layers window
+19)
+To make the map look more interesting, you can drag the
+“Countries” icon into the “Color” section under “Marks”.
+
+20)
+21)
+
+In marks, select Filled Map
+
+22)
+23)
+We can always return to the countries tab. But for now,
+let’s move on and create a new one by clicking on the icon to the
+right of your “Countries” tab.
+24)
+Rename it “Arms Sales”.
+25)
+Drag the “Countries” icon into the table’s “Rows” section.
+
+26)
+27)
+
+Drag the “Amount” onto the table’s “Columns” section.
+
+28)
+29)
+The visualization we want is a horizontal bar chart. So select
+that option in the “Show Me” panel to the right of the table,
+which is the horizontal bar chart icon highlighted in red.
+
+30)
+Now we want the country that buys the greatest number of
+our arms to be at the top. But this chart is organizing the
+countries in ascending order.
+31)
+To change this, hover your mouse over the “Amount” label
+below the number 500M ( which we will reformat as currency ), to
+produce an icon that allows you to sort in descending – if the
+arrow is pointing down – or ascending if the arrow is pointing up.
+
+32)
+If you wanted to display the sales as a conventional chart,
+select the icon with the numbers in the “Show Me” box.
+
+33)
+
+34)
+You’ll also notice that selecting this option places the “SUM”
+of the arms sales into the “Text” option under “Marks” on the left.
+35)
+Let’s return to the horizontal bar chart because it’s a more
+interesting visual.
+
+36)
+37)
+Before we go too much farther, let’s reformat the sales
+figures at the bottom.
+38)
+To do this, hover your mouse over the “SUM(Amount) tab in
+the “Columns” section until you see an arrow to the right.
+39)
+Click on the arrow to produce a drop-down menu.
+40)
+From the menu, select “Format” to produce a menu to the
+left of the table.
+
+41)
+42)
+Click on the on the arrow to the right of the
+“Numbers”option and choose “Currency (Custom)” and no
+decimal places.
+
+43)
+44)
+45)
+
+Okay, that’s better.
+Create another worksheet, we’ll call “Sales by Year”
+
+46)
+
+Drag “Amount” into the “Drop field here” in the data canvas.
+
+47)
+Drag “Year” into Columns.
+48)
+Hover your cursor over the “Year” tab to obtain an arrow.
+Click on the arrow and select “Discrete” from the drop-down
+menu.
+49)
+Drag “Countries” into “Rows”.
+
+50)
+51)
+Make the Year in Columns “Discrete” by right-clicking on the
+Year tab to get choose the “Discrete” option.
+
+52)
+53)
+Sort the dollar “Amounts” by hovering your cursor over the
+word “Amount” at the bottom of the first table to the left, and
+double-click on the icon that appears to the right.
+54)
+To get rid of the format box, click on the “X” at the top righthand corner of the box.
+
+55)
+Before we create a dashboard, let’s return to those seven
+countries that Tableau doesn’t recognize.
+56)
+Return to the “Countries” tab, right-click anywhere in the
+map to obtain a drop-down menu, and click on the “Edit
+locations” option.
+
+57)
+We can see that there are seven “Unrecognized” countries.
+58)
+Double-click on the first name, which produces a blank
+rectangle to your right, and plug in the correct name, in this case
+
+“Bosnia and Herzegovina”.
+
+59) For the rest, get rid of the parenthetical bits of information to the
+right of the remaining six country names.
+60) The “Matching Location” section to the right contains the correct
+country names.
+
+61)
+62) Now we’re going to create two NEW columns: Sum of Total and
+Percent of Total. Sum of Total will add the arms sales to all countries
+for each year. The Percent of Total will calculate the arms sales per
+country as a percent of the total arms sales for any given year.
+63) To create the “Sum of Total” column, right click anywhere within
+the “Measures” section to the left, and from the drop-down menu,
+chose the “Create calculated field” option.
+64) Let’s call the new column “Sum of Total.”
+
+65)
+In the space below, type the formula <<{fixed [Year] :
+SUM([Amount])}>>
+66)
+Your formula should look like this:
+
+67)
+You’ll notice the Tableau is informing us that the
+“calculation is valid”. If this were not the case, we’d receive an
+invalid message highlighted in red.
+68)
+Repeating the same steps, we must now create a second
+field, which we’ll call “Percent Of Total”.
+69)
+Your formula should look like this:
+
+70)
+Since this new calculation is a percentage we need to
+change the format for the field. Right-click on “Percent of Total”
+
+under Measures. Choose Default Properties…/Number
+format…/Percentage with one decimal place.
+71)
+Now we want to show the filter with all the countries,
+allowing us to make choices.
+72)
+Take the “Countries” tab and drag it into the Filters section.
+Click on the “Countries” tab and select the “Show filer” option.
+Your screengrab should look like this:
+
+73)
+Now let’s use the Percent Of Total Column we calculated, by
+dragging the field into the “Columns” section to the right of
+
+“SUM(Amount)”.
+
+74)
+Make the labels for the columns are sum([amount]) and
+Percent of Total in the second column. Make sure that Year is
+Discrete as we did in step 51.
+
+75)
+To change the colors to make each column distinct, have a
+look at the menu to the left of the table.
+
+76)
+Tableau has placed the aggregated amount and percent of
+total into the “Marks section
+77)
+Tableau’s default colour is blue. So that colour can remain
+for the column that has summed the sales amounts. To change
+the colour for the Percent of Total, click on the AGG(Percent OF
+
+Total) label to produce a palette.
+
+78)
+Click the “Color” icon and choose something different to
+create two tables that are distinguishable from each other.
+
+79)
+80)
+Hovering your cursor over any of the horizontal bars
+produces the Country, Year, Amount and Per cent of Total.
+
+81)
+Now we can use the filter on the far right to full effect. This
+is where the power of Tableau is on full display. Select a country,
+say, the United States.
+
+82) Now we can create a dashboard, that combines visualizations of
+the map and aggregates of sales and their percent of totals.
+
+83) We’ll do this in a new tab. Right click on the empty tab to the right
+to obtain a short-cut menu and select “New dashboard”.
+
+84) Drag “Countries” into the drop space to the right.
+
+85) Click on the countries filter to produce a grey bar across the top,
+which gives you the option to make it disappear by clicking on the
+
+“X” to the top right-hand side.
+
+86) Drag and place the “Sales by Year” tab just below the map, by
+clicking on the icon, dragging it to the bottom of the table until your
+table and then letting go. It’s tricky. So you may have to do it a
+
+couple of times.
+
+87) You’ll also notice that I renamed the dashboard.
+
+88) Get rid of the “Countries” filter, by repeating step 85.
+
+89) Looks pretty good.
+90) Name the dashboard with something like Canadian Arms Sales.
+
+91) Give the visualization a title by clicking on the radio box next to
+the “Show Title”.
+
+92) The title becomes the label you’ve given to your dashboard.
+
+93) If you want to change the title, clicking on the actual title to
+produce an “Edit Title” dialog box.
+
+94) You can plug in and format a new title.
+95) Now to link the two tables, we will ask Tableau to use the map as
+a filter, meaning what clicking on a country produces the
+corresponding sales figures in the table below.
+96) To do this, click on the map to produce a grey bar at the top.
+
+97) From the drop-down menu, choose the “Use as filter” option.
+
+98) Now when you click on a country, you’ll get the corresponding
+values.
+
+99) To recoup all the countries, click anywhere inside the map.
+100) Export the result, by going to the “Server” portion on your menu,
+then to “Tableau Public”, then to “Save to Tableau Public”, which
+
+produces a “Tableau Public Sign In” dialog box.
+
+101) To upload your visualization to Tableau’s server, select the “Save”
+option under “File” from the menu. Do this if you’re using the
+
+Tableau Public version.
+
+102) Once the visualization is in your browser, click on the “share”
+icon. To get the “share” option, use the vertical scroll bar to the right
+of the visualization to get to the bottom.
+
+103) You’ll be given the Embed Code and Link. To chose the former,
+click on the script copy and paste it into your blog post’s HTML view.
+
+104) You can see what I’ve done, by clicking here.
+105) If you’re using the Tableau Desktop version, the process has a few
+more steps.
+106) Go to “Data”, click on your file name, select “Extract Data”.
+107) Select the “Extract” tab.
+108) To go “File”, “save as”, browse to the location you want to save
+the file, select “Tableau Packaged Workbook with the “twbx”
+extension.
+109) Go to “Server’ on the menu, “Tableau Public”, “Save to Tableau
+Public”.
+110) You’ll get a sign-in prompt.
+111) Type your password to sign in.
+112) Once the file is uploaded, you can get the embed code and URL
+from hitting the share icon.
+
+

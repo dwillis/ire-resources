@@ -1,0 +1,546 @@
+Digging​ ​Deep​ ​Into​ ​Data​ ​with​ ​SQL
+Lauryn​ ​Schroeder
+San​ ​Diego​ ​Union-Tribune
+lauryn.schroeder@sduniontribune.com
+@LaurynSchroed
+
+Daniel​ ​Wheaton
+San​ ​Diego​ ​Union-Tribune
+daniel.wheaton@sduniontribune.com
+@theheroofthyme
+
+Jonah​ ​Newman
+The​ ​Chicago​ ​Reporter
+jnewman@chicagoreporter.com
+@jonahshai
+
+Ronald​ ​Campbell
+NBC​ ​Owned​ ​Television​ ​Stations
+ron.campbell@nbcuni.com
+@campbellronaldw
+
+These​ ​class​ ​notes​ ​are​ ​available​ ​at​ ​bit.ly/IRE17SQL
+Class​ ​1:​ ​Intro​ ​to​ ​SQL
+Class​ ​2:​ ​Grouping​ ​and​ ​Summing
+Class​ ​3:​ ​Joins
+
+CLASS​ ​1
+SQL:​ ​The​ ​language​ ​of​ ​databases
+
+Structured​ ​Query​ ​Language,​ ​SQL​ ​for​ ​short​ ​and​ ​pronounced​ ​“sequel,”​ ​is​ ​the​ ​secret​ ​sauce​ ​of
+relational​ ​databases.​ ​Whether​ ​you’re​ ​talking​ ​high​ ​cost​ ​database​ ​engines​ ​such​ ​as​ ​Oracle​ ​and
+SQL​ ​Server​ ​or​ ​open-source​ ​products​ ​such​ ​as​ ​MySQL​ ​and​ ​PostgreSQL,​ ​they​ ​all​ ​rely​ ​on
+dialects​ ​of​ ​this​ ​same​ ​powerful​ ​language.​ ​Some​ ​of​ ​them​ ​have​ ​complex​ ​features​ ​that​ ​take
+months​ ​or​ ​years​ ​to​ ​master.​ ​But​ ​at​ ​their​ ​core​ ​is​ ​something​ ​remarkably​ ​simple:​ ​SQL.
+(Dad​ ​Joke​ ​Alert)
+
+Put​ ​it​ ​this​ ​way:​ ​If​ ​a​ ​foreign​ ​language​ ​were​ ​as​ ​easy​ ​to​ ​understand​ ​as​ ​SQL,​ ​the​ ​typical​ ​high
+school​ ​Spanish​ ​curriculum​ ​would​ ​look​ ​something​ ​like​ ​this:
+● 1st​ ​semester:​ ​Master​ ​Spanish​ ​vocabulary​ ​and​ ​grammar.
+● 2nd​ ​semester:​ ​Read​ ​and​ ​discuss​ ​One​ ​Hundred​ ​Years​ ​of​ ​Solitude​ ​(1967)​ ​by​ ​Gabriel
+Garcia​ ​Marquez​ ​in​ ​the​ ​original​ ​Spanish.
+● 3rd​ ​semester:​ ​Read​ ​and​ ​discuss​ ​Don​ ​Quixote​ ​(1605)​ ​by​ ​Miguel​ ​de​ ​Cervantes​ ​in​ ​the
+original​ ​Spanish.
+● 4th​ ​semester:​ ​Write​ ​a​ ​series​ ​of​ ​short​ ​stories​ ​or​ ​a​ ​novel​ ​in​ ​Spanish.
+In​ ​this​ ​series​ ​of​ ​three​ ​classes​ ​we’re​ ​going​ ​to​ ​do​ ​the​ ​equivalent​ ​of​ ​that​ ​first​ ​semester.​ ​You’ll
+learn​ ​the​ ​basic​ ​vocabulary​ ​and​ ​grammar​ ​of​ ​SQL,​ ​using​ ​SQLite​,​ ​by​ ​using​ ​an​ ​open-source
+database​ ​extension​ ​for​ ​Firefox​ ​called​ ​SQLite​ ​Manager​.
+And​ ​if​ ​you​ ​want​ ​to​ ​learn​ ​more,​ ​enough​ ​to​ ​do​ ​advanced​ ​work​ ​and,​ ​eventually​ ​the​ ​journalistic
+equivalent​ ​of​ ​a​ ​novel​ ​--​ ​a​ ​major​ ​project​ ​--​ ​why​ ​not​ ​go​ ​to​ ​the​ ​NICAR​ ​conference​ ​for​ ​some
+training?​ ​Mark​ ​your​ ​calendars:​ ​The​ ​next​ ​conference​ ​is​ ​March​ ​8-11,​ ​2018​​ ​in​ ​Chicago.
+
+Installation
+First​ ​we’ll​ ​open​ ​Firefox,​ ​click​ ​on​ ​Tools​ ​and​ ​then​ ​on​ ​SQLite​ ​Manager.​ ​(You​ ​must​ ​first​ ​install
+SQLite​ ​Manager,​ ​which​ ​again​ ​is​ ​a​ ​free​ ​extension.​ ​To​ ​install,​ ​click​ ​on​ ​“Tools”​ ​then​ ​click​ ​on
+“Add-ons.”​ ​On​ ​the​ ​Add-ons​ ​page,​ ​search​ ​for​ ​“SQLite​ ​Manager”​ ​and​ ​then​ ​click​ ​the​ ​“Install”
+button.​ ​You​ ​will​ ​then​ ​need​ ​to​ ​restart​ ​Firefox​ ​to​ ​finish​ ​the​ ​installation.)
+
+To​ ​start,​ ​click​ ​on​ ​the​ ​“New​ ​database”​ ​icon​ ​
+​ ​and​ ​create​ ​a​ ​name​ ​(I​ ​chose​ ​arizona_census).​ ​It
+will​ ​add​ ​the​ ​“.sqlite”​ ​extension​ ​automatically.​ ​NOTE:​ ​You’ll​ ​be​ ​typing​ ​this​ ​multiple​ ​times,​ ​so​ ​it’s
+good​ ​practice​ ​to​ ​make​ ​it​ ​something​ ​simple,​ ​yet​ ​descriptive.​ ​Avoid​ ​long​ ​names​ ​if​ ​you​ ​can.
+
+Now​ ​it’s​ ​time​ ​to​ ​get​ ​some​ ​data​ ​for​ ​our​ ​new​ ​database.​ ​This​ ​new​ ​data​ ​will​ ​go​ ​into​ ​tables,​ ​which​ ​is
+what​ ​we’ll​ ​create​ ​next.​ ​In​ ​the​ ​menu​ ​bar,​ ​you’ll​ ​see​ ​several​ ​icons;​ ​look​ ​for​ ​the​ ​blue​ ​disk​ ​with​ ​the
+green​ ​arrow​ ​pointing​ ​into​ ​it​ ​--​ ​
+
+--​ ​that’s​ ​the​ ​“import”​ ​icon.
+
+When​ ​you​ ​click​ ​on​ ​the​ ​blue​ ​import​ ​disk,​ ​a​ ​pane​ ​opens​ ​to​ ​the​ ​right​ ​with​ ​options​ ​for​ ​importing
+data.
+
+A​ ​button​ ​toward​ ​the​ ​upper​ ​right​ ​says​ ​“Select​ ​file.”​ ​Click​ ​on​ ​that​ ​button​ ​and​ ​browse​ ​until​ ​you​ ​find
+your​ ​file​ ​called​ ​ACS_15_5YR_B05012.csv​ ​(2015​ ​American​ ​Community​ ​Survey​ ​data​ ​for​ ​the
+foreign-​ ​and​ ​native-born​ ​population​ ​in​ ​Arizona​ ​census​ ​tract).
+The​ ​standard​ ​import​ ​settings​ ​in​ ​SQLite​ ​--​ ​first​ ​row​ ​contains​ ​column​ ​names,​ ​fields​ ​separated​ ​by
+comma,​ ​fields​ ​enclosed​ ​by​ ​double-quotes​ ​if​ ​necessary​ ​--​ ​work​ ​fine​ ​with​ ​this​ ​table.​ ​The​ ​only
+change​ ​will​ ​be​ ​to​ ​click​ ​the​ ​box​ ​for​ ​“First​ ​row​ ​contains​ ​column​ ​names”.​ ​Hit​ ​“OK”​ ​at​ ​the​ ​bottom​ ​of
+the​ ​pane.
+On​ ​the​ ​next​ ​panel,​ ​rename​ ​the​ ​table​ ​(I​ ​chose​ ​“native_foreign”).​ ​This​ ​is​ ​also​ ​a​ ​chance​ ​to
+rename​ ​confusing​ ​column​ ​names​ ​on​ ​the​ ​left.​ ​Like​ ​the​ ​database​ ​itself,​ ​make​ ​the​ ​table​ ​and
+column​ ​names​ ​as​ ​simple​ ​as​ ​possible.
+Next​ ​we’ll​ ​select​ ​the​ ​data​ ​types​ ​for​ ​each​ ​column.​ ​This​ ​is​ ​very​ ​important,​ ​because​ ​incorrect
+formatting​ ​will​ ​limit​ ​your​ ​ability​ ​to​ ​manipulate​ ​the​ ​data​ ​through​ ​queries.​ ​There​ ​is​ ​a​ ​more​ ​detailed
+description​ ​of​ ​each​ ​data​ ​type​ ​at​ ​the​ ​bottom​ ​of​ ​this​ ​tip​ ​sheet.
+For​ ​this​ ​exercise,​ ​ID,​ ​ID2​ ​and​ ​Geography​ ​will​ ​be​ ​VARCHAR,​ ​which​ ​means​ ​“Various
+Characters.”​ ​Everything​ ​else​ ​will​ ​be​ ​INTEGER.​ ​Hit​ ​OK.​ ​It​ ​will​ ​then​ ​ask​ ​you​ ​a​ ​final​ ​time​ ​if​ ​you
+want​ ​to​ ​import​ ​the​ ​rows.​ ​Hit​ ​OK​ ​again.​ ​The​ ​table​ ​should​ ​import​ ​in​ ​a​ ​few​ ​moments​ ​with​ ​1,526
+records.
+Now​ ​it’s​ ​time​ ​to​ ​put​ ​away​ ​your​ ​data​ ​mechanic​ ​hat​ ​and​ ​put​ ​on​ ​your​ ​data​ ​journalist​ ​hat.​ ​We’re
+going​ ​to​ ​interview​ ​the​ ​data.
+
+Selecting​ ​your​ ​data
+
+After​ ​the​ ​import​ ​is​ ​successful,​ ​click​ ​on​ ​the​ ​“Browse​ ​&​ ​Search”​ ​tab​ ​in​ ​the​ ​right​ ​window.​ ​This
+allows​ ​you​ ​to​ ​see​ ​the​ ​first​ ​100​ ​rows​ ​of​ ​the​ ​data​ ​we​ ​just​ ​imported.​ ​I​ ​like​ ​to​ ​check​ ​here​ ​before
+anything​ ​else​ ​to​ ​make​ ​sure​ ​everything​ ​went​ ​as​ ​planned​ ​during​ ​the​ ​import.
+SELECT​ ​and​ ​FROM
+The​ ​two​ ​most​ ​basic​ ​SQL​ ​commands​ ​are​ ​SELECT​ ​and​ ​FROM.​ ​For​ ​every​ ​SQL​ ​query,​ ​you​ ​will​ ​always
+need​ ​to​ ​state​ ​which​ ​columns​ ​you​ ​want​ ​(SELECT)​ ​and​ ​the​ ​table​ ​where​ ​those​ ​columns​ ​are​ ​located
+(FROM).
+To​ ​select​ ​all​ ​columns​ ​and​ ​data​ ​from​ ​the​ ​native_foreign​ ​table,​ ​click​ ​on​ ​the​ ​“Execute​ ​SQL”​ ​tab​ ​and​ ​enter
+this:
+SELECT​ ​*
+FROM​ ​native_foreign;
+
+The​ ​*​ ​is​ ​a​ ​wildcard​ ​character,​ ​which​ ​means​ ​everything​ ​in​ ​this​ ​context.​ ​Click​ ​Run​ ​SQL.​ ​It​ ​should​ ​give​ ​you
+the​ ​same​ ​thing​ ​we​ ​saw​ ​in​ ​the​ ​“Browse​ ​&​ ​Search”​ ​tab.​ ​Now​ ​let's​ ​select​ ​specific​ ​columns​ ​from​ ​the
+native_foreign​ ​table.
+SELECT​ ​ID,​ ​ID2,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+If​ ​the​ ​column​ ​names​ ​aren't​ ​clear​ ​or​ ​are​ ​difficult​ ​to​ ​remember,​ ​you​ ​can​ ​rename​ ​the​ ​column​ ​headers​ ​in
+your​ ​output​ ​easier​ ​to​ ​make​ ​them​ ​easier​ ​to​ ​understand.​ ​Use​ ​the​ ​AS​ ​command​ ​to​ ​rename​ ​a​ ​column.​ ​Let’s
+rename​ ​the​ ​Geography​ ​column​ ​to​ ​“geog.”
+SELECT​ ​ID,
+Geography​ ​AS​ ​geog
+FROM​ ​native_foreign;
+
+We'll​ ​stick​ ​with​ ​the​ ​spreadsheet's​ ​default​ ​column​ ​names,​ ​but​ ​remember​ ​this​ ​trick​ ​if​ ​you​ ​ever​ ​get​ ​bogged
+down​ ​in​ ​too​ ​many​ ​abbreviations.
+Try​ ​searching​ ​for​ ​various​ ​columns​ ​to​ ​explore​ ​the​ ​data.​ ​You​ ​can​ ​rearrange​ ​the​ ​order​ ​of​ ​column​ ​names​ ​in
+the​ ​SELECT​ ​statement​ ​to​ ​tailor​ ​how​ ​data​ ​is​ ​presented​ ​in​ ​the​ ​output.
+Formatting
+The​ ​capitalization​ ​of​ ​SQL​ ​syntax​ ​words​ ​is​ ​not​ ​necessary,​ ​but​ ​helps​ ​to​ ​differentiate​ ​between​ ​SQL
+commands​ ​and​ ​other​ ​information.​ ​I​ ​find​ ​it​ ​easier​ ​to​ ​scan​ ​this​ ​way​ ​too.​ ​This​ ​is​ ​also​ ​why​ ​I​ ​include​ ​the​ ​new
+lines​ ​for​ ​each​ ​successive​ ​SQL​ ​command.​ ​They​ ​make​ ​reading​ ​easier​ ​but​ ​are​ ​not​ ​necessary.
+The​ ​semicolon​ ​at​ ​the​ ​end​ ​of​ ​each​ ​command​ ​is​ ​not​ ​required​ ​by​ ​all​ ​SQL​ ​software,​ ​but​ ​it​ ​is​ ​by​ ​many​ ​so​ ​it's
+a​ ​good​ ​habit​ ​to​ ​get​ ​into.
+
+Filtering​ ​the​ ​data
+WHERE
+Now​ ​we're​ ​going​ ​to​ ​look​ ​at​ ​one​ ​of​ ​the​ ​most​ ​useful​ ​parts​ ​of​ ​SQL.​ ​The​ ​WHERE​ ​command​ ​lets​ ​you​ ​filter
+your​ ​data​ ​based​ ​on​ ​any​ ​number​ ​of​ ​criteria.​ ​If​ ​a​ ​row​ ​matches​ ​the​ ​given​ ​criteria,​ ​that​ ​row​ ​is​ ​returned.
+For​ ​example,​ ​we​ ​can​ ​limit​ ​the​ ​rows​ ​to​ ​only​ ​just​ ​the​ ​population​ ​in​ ​Maricopa​ ​County​ ​using​ ​the​ ​following
+query.​ ​The​ ​output​ ​will​ ​include​ ​all​ ​rows​ ​where​ ​the​ ​statement​ ​ID_Co​ ​=​ ​'13'​ ​is​ ​true.
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​ID_Co​ ​=​ ​13;
+In​ ​addition​ ​to​ ​equals​ ​(=),​ ​other​ ​common​ ​comparison​ ​operators​ ​include​ ​does​ ​not​ ​equal​ ​(!=),​ ​greater​ ​than
+(>),​ ​less​ ​than​ ​(<),​ ​greater​ ​than​ ​or​ ​equal​ ​(>=)​ ​and​ ​less​ ​than​ ​or​ ​equal​ ​(<=).​ ​Of​ ​course,​ ​your​ ​data​ ​must​ ​be
+numeric​ ​in​ ​order​ ​to​ ​use​ ​mathematical​ ​operators​ ​such​ ​as​ ​>​ ​or​ ​<.​ ​That​ ​wouldn't​ ​make​ ​much​ ​sense​ ​when
+comparing​ ​two​ ​words​ ​or​ ​phrases.
+LIKE
+Perhaps​ ​you​ ​only​ ​know​ ​a​ ​part​ ​of​ ​the​ ​text​ ​that​ ​you​ ​are​ ​seeking.​ ​For​ ​example,​ ​say​ ​you​ ​didn’t​ ​know​ ​that
+Maricopa​ ​County’s​ ​census​ ​ID​ ​was​ ​13.​ ​SQL​ ​offers​ ​a​ ​useful​ ​command​ ​that​ ​lets​ ​you​ ​search​ ​by​ ​pieces​ ​of
+text.​ ​The​ ​%​ ​acts​ ​as​ ​a​ ​wildcard​ ​character,​ ​meaning​ ​it​ ​can​ ​represent​ ​zero​ ​or​ ​more​ ​characters​ ​on​ ​either
+side​ ​of​ ​a​ ​word,​ ​phrase​ ​or​ ​letter.
+For​ ​the​ ​query​ ​below,​ ​any​ ​cells​ ​in​ ​the​ ​geography​ ​column​ ​that​ ​contain​ ​‘Maricopa’​ ​will​ ​be​ ​returned:
+
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​geography​ ​LIKE​ ​'%Maricopa%';
+You​ ​could​ ​also​ ​use​ ​it​ ​to​ ​only​ ​show​ ​features​ ​that​ ​start​ ​or​ ​end​ ​in​ ​a​ ​certain​ ​phrase.​ ​With​ ​the​ ​wildcard​ ​%
+before​ ​Arizona,​ ​it​ ​will​ ​search​ ​for​ ​anything​ ​that​ ​ends​ ​with​ ​that​ ​phrase.
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​geography​ ​LIKE​ ​'%Arizona';
+AND​ ​and​ ​OR
+AND​ ​and​ ​OR​ ​are​ ​two​ ​more​ ​useful​ ​filtering​ ​tools​ ​that​ ​can​ ​help​ ​us​ ​answer​ ​some​ ​questions​ ​about​ ​the
+data.​ ​Such​ ​as​ ​which​ ​Arizona​ ​tracts​ ​have​ ​more​ ​than​ ​500​ ​foreign-born​ ​residents​ ​and​ ​less​ ​than​ ​1,000
+native-born​ ​residents?​ ​To​ ​capture​ ​both​ ​the​ ​more​ ​than​ ​and​ ​less​ ​than​ ​rows,​ ​we​ ​can​ ​use​ ​the​ ​AND​ ​filter:
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​foreign_born​ ​>​ ​500
+AND​ ​native​ ​<​ ​1000;
+We​ ​can​ ​also​ ​filter​ ​by​ ​two​ ​different​ ​columns.​ ​This​ ​query​ ​will​ ​show​ ​us​ ​which​ ​census​ ​tracts​ ​in​ ​Maricopa
+County​ ​have​ ​more​ ​than​ ​1,000​ ​foreign-born​ ​residents:
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​ID_Co​ ​=​ ​13
+AND​ ​foreign_born​ ​>​ ​1000;
+With​ ​OR​ ​we​ ​can​ ​bring​ ​another​ ​county​ ​into​ ​the​ ​mix.
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​(ID_Co​ ​=​ ​13​ ​OR​ ​ID_Co​ ​=​ ​19)
+AND​ ​foreign_born​ ​>​ ​500;
+With​ ​OR,​ ​rows​ ​are​ ​returned​ ​as​ ​long​ ​as​ ​they​ ​match​ ​at​ ​least​ ​one​ ​of​ ​the​ ​filters.
+Notice​ ​the​ ​use​ ​of​ ​parentheses​ ​around​ ​the​ ​OR​ ​operator​ ​in​ ​the​ ​above​ ​query.​ ​This​ ​groups​ ​the​ ​result​ ​of
+that​ ​comparison,​ ​which​ ​is​ ​then​ ​used​ ​in​ ​the​ ​AND​ ​comparison.​ ​The​ ​parentheses​ ​help​ ​to​ ​stay​ ​organized.
+
+Sorting​ ​your​ ​data
+
+ORDER​ ​BY
+Since​ ​we're​ ​exploring​ ​populations,​ ​it​ ​might​ ​help​ ​to​ ​rank​ ​the​ ​tracts​ ​by​ ​largest​ ​to​ ​smallest.​ ​This​ ​is​ ​where
+we’ll​ ​use​ ​the​ ​ORDER​ ​BY​ ​command.​ ​You​ ​can​ ​select​ ​the​ ​column​ ​which​ ​will​ ​determine​ ​the​ ​order​ ​of​ ​the
+rows.
+This​ ​query​ ​returns​ ​the​ ​tracts​ ​in​ ​Maricopa​ ​and​ ​Pima​ ​Counties​ ​with​ ​a​ ​foreign-born​ ​population​ ​of​ ​500​ ​or
+more,​ ​and​ ​ranks​ ​them​ ​from​ ​largest​ ​to​ ​smallest​ ​based​ ​on​ ​their​ ​total​ ​population​ ​values.
+SELECT​ ​Id2,​ ​ID_Co,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+WHERE​ ​(ID_Co​ ​=​ ​13​ ​OR​ ​ID_Co​ ​=​ ​19)
+AND​ ​foreign_born​ ​>​ ​500
+ORDER​ ​BY​ ​total​ ​DESC;
+The​ ​default​ ​setting​ ​for​ ​ORDER​ ​BY​ ​is​ ​ascending​ ​order.​ ​In​ ​the​ ​above​ ​query,​ ​ASC​ ​order​ ​could​ ​be
+achieved​ ​by​ ​writing​ ​“...ORDER​ ​BY​ ​total​ ​ASC”​ ​or​ ​“...ORDER​ ​BY​ ​total.”
+LIMIT
+The​ ​LIMIT​ ​command​ ​forces​ ​your​ ​query​ ​to​ ​only​ ​return​ ​the​ ​specified​ ​number​ ​of​ ​rows.​ ​This​ ​is​ ​commonly
+used​ ​in​ ​conjunction​ ​with​ ​ORDER​ ​BY​ ​to​ ​show​ ​a​ ​small​ ​set​ ​of​ ​ranked​ ​rows​ ​("The​ ​10​ ​largest​ ​census​ ​tracts
+in​ ​Maricopa​ ​and​ ​Pima​ ​County").
+This​ ​query​ ​orders​ ​the​ ​results​ ​in​ ​ascending​ ​order​ ​(the​ ​default​ ​order),​ ​based​ ​on​ ​the​ ​total​ ​population
+values,​ ​and​ ​only​ ​returns​ ​the​ ​first​ ​10​ ​values:
+SELECT​ ​Id2,​ ​ID_Co,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+WHERE​ ​(ID_Co​ ​=​ ​13​ ​OR​ ​ID_Co​ ​=​ ​19)
+ORDER​ ​BY​ ​total​ ​DESC
+LIMIT​ ​10;
+This​ ​query​ ​will​ ​show​ ​you​ ​the​ ​10​ ​tracts​ ​with​ ​the​ ​smallest​ ​foreign-born​ ​population​ ​in​ ​Arizona​ ​(Because
+there​ ​are​ ​blanks​ ​in​ ​some​ ​column​ ​entries,​ ​we​ ​can​ ​filter​ ​out​ ​those​ ​rows​ ​using​ ​the​ ​WHERE​ ​command):
+SELECT​ ​Id2,​ ​ID_Co,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+WHERE​ ​foreign_born​ ​>​ ​1
+ORDER​ ​BY​ ​Foreign_born​ ​ASC
+LIMIT​ ​10;
+
+Aggregate​ ​functions
+SQLite​ ​offers​ ​built-in​ ​functions​ ​to​ ​perform​ ​basic​ ​calculations​ ​on​ ​your​ ​data.​ ​COUNT,​ ​MAX,​ ​MIN,​ ​and
+AVG​ ​are​ ​some​ ​common​ ​ones.​ ​You​ ​can​ ​read​ ​more​ ​about​ ​them​ ​here​.
+COUNT
+Return​ ​the​ ​number​ ​of​ ​rows​ ​matching​ ​your​ ​query.​ ​This​ ​is​ ​especially​ ​useful​ ​when​ ​combined​ ​with​ ​WHERE
+statements​ ​to​ ​understand​ ​how​ ​many​ ​rows​ ​match​ ​your​ ​filters.​ ​This​ ​shows​ ​us​ ​how​ ​many​ ​census​ ​tracts
+there​ ​are​ ​in​ ​Maricopa​ ​County:
+SELECT​ ​COUNT(*)
+FROM​ ​native_foreign
+WHERE​ ​ID_Co​ ​=​ ​13;
+AVG
+This​ ​command​ ​is​ ​especially​ ​helpful​ ​with​ ​population​ ​data.​ ​The​ ​below​ ​query​ ​tells​ ​us​ ​the​ ​average
+population​ ​of​ ​each​ ​census​ ​tract​ ​in​ ​Arizona:
+SELECT​ ​AVG(total)
+FROM​ ​native_foreign;
+Or​ ​in​ ​Maricopa​ ​County:
+SELECT​ ​AVG(total)
+FROM​ ​native_foreign
+WHERE​ ​ID_Co​ ​=​ ​13;
+MAX
+Return​ ​the​ ​greatest​ ​value​ ​for​ ​the​ ​column​ ​specified.
+SELECT​ ​MAX(foreign_born)
+FROM​ ​native_foreign;
+MIN
+Return​ ​the​ ​smallest​ ​value​ ​for​ ​the​ ​column​ ​specified.
+SELECT​ ​MIN(native)
+FROM​ ​native_foreign;
+
+A​ ​few​ ​more​ ​notes
+We​ ​all​ ​make​ ​mistakes
+Writing​ ​SQL​ ​queries​ ​can​ ​be​ ​tedious​ ​work,​ ​and​ ​it​ ​can​ ​all​ ​go​ ​wrong​ ​if​ ​a​ ​column​ ​is​ ​misspelled​ ​or​ ​a​ ​comma
+is​ ​left​ ​out.​ ​SQLite​ ​Manager​ ​will​ ​alert​ ​you​ ​when​ ​this​ ​happens​ ​and​ ​it’s​ ​easier​ ​to​ ​correct​ ​the​ ​mistake​ ​if​ ​you
+understand​ ​the​ ​language​ ​in​ ​an​ ​error​ ​message:
+
+In​ ​this​ ​error,​ ​SQLite​ ​is​ ​saying​ ​it​ ​doesn’t​ ​recognize​ ​the​ ​column​ ​I’m​ ​asking​ ​it​ ​to​ ​filter​ ​with​ ​a​ ​WHERE
+command.​ ​When​ ​you​ ​hit​ ​OK,​ ​SQLite​ ​will​ ​also​ ​tell​ ​you​ ​where​ ​the​ ​error​ ​is​ ​in​ ​your​ ​query.​ ​In​ ​this​ ​example,​ ​I
+wrote​ ​the​ ​column​ ​name​ ​incorrectly​ ​(it​ ​should​ ​say​ ​“ID_Co”).
+
+Stay​ ​organized
+As​ ​your​ ​queries​ ​grow​ ​more​ ​and​ ​more​ ​complex,​ ​it​ ​helps​ ​to​ ​write​ ​comments​ ​within​ ​your​ ​SQL​ ​code​ ​to​ ​note
+what​ ​a​ ​particular​ ​command​ ​shows​ ​or​ ​explain​ ​why​ ​you’re​ ​using​ ​that​ ​query​ ​in​ ​the​ ​first​ ​place.
+If​ ​you​ ​are​ ​familiar​ ​with​ ​other​ ​programming​ ​languages,​ ​then​ ​you​ ​are​ ​probably​ ​familiar​ ​with​ ​the​ ​idea​ ​of
+comments​ ​in​ ​your​ ​code.​ ​These​ ​are​ ​lines​ ​that​ ​are​ ​not​ ​executed​ ​and​ ​only​ ​exist​ ​for​ ​people​ ​reading​ ​the
+code.
+In​ ​SQL,​ ​you​ ​can​ ​write​ ​comments​ ​in​ ​two​ ​ways.​ ​For​ ​a​ ​single​ ​line,​ ​you​ ​can​ ​use​ ​two​ ​hyphens​ ​(--)​ ​to​ ​begin
+your​ ​comment.​ ​For​ ​example:
+SELECT​ ​Id2,​ ​ID_Co,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+WHERE​ ​(ID_Co​ ​=​ ​13​ ​OR​ ​ID_Co​ ​=​ ​19)​ ​--​ ​Maricopa​ ​13.​ ​Pima​ ​19.​ ​Two​ ​largest​ ​in​ ​Arizona.
+ORDER​ ​BY​ ​total​ ​DESC
+LIMIT​ ​10;
+
+Another​ ​more​ ​flexible​ ​way​ ​to​ ​write​ ​comments​ ​is​ ​using​ ​the​ ​/*​ ​Comments​ ​here.​ ​*/​ ​syntax.​ ​These​ ​can​ ​be
+used​ ​for​ ​a​ ​single​ ​line​ ​or​ ​multiple​ ​lines.​ ​For​ ​example:
+SELECT​ ​Id2,​ ​ID_Co,​ ​Geography,​ ​Total,​ ​Native,​ ​Foreign_born
+FROM​ ​native_foreign
+WHERE​ ​(ID_Co​ ​=​ ​13​ ​OR​ ​ID_Co​ ​=​ ​19)
+/*
+Everything​ ​inside​ ​here​ ​is​ ​a​ ​comment​ ​and​ ​won't​ ​be​ ​executed​ ​in​ ​the​ ​SQL​ ​query.
+This​ ​query​ ​shows​ ​me​ ​the​ ​largest​ ​tracts​ ​by​ ​total​ ​population​ ​in​ ​Maricopa​ ​and​ ​Pima​ ​County.
+*/
+ORDER​ ​BY​ ​total​ ​DESC
+LIMIT​ ​10;
+Data​ ​types
+Stay​ ​aware​ ​of​ ​the​ ​different​ ​types​ ​of​ ​data​ ​in​ ​your​ ​tables.​ ​Common​ ​types​ ​include​ ​integers​ ​(whole
+numbers),​ ​floats​ ​(numbers​ ​with​ ​decimals),​ ​booleans​ ​(True​ ​or​ ​False),​ ​text​ ​and​ ​dates.
+This​ ​is​ ​very​ ​important​ ​when​ ​you​ ​have​ ​data​ ​containing​ ​a​ ​leading​ ​zero​ ​(e.g.​ ​zip​ ​code​ ​07712).​ ​If​ ​you​ ​were
+to​ ​convert​ ​that​ ​to​ ​an​ ​integer​ ​(7,712),​ ​it​ ​would​ ​lose​ ​its​ ​meaning.​ ​You​ ​should​ ​also​ ​make​ ​sure​ ​numeric​ ​data
+is​ ​stored​ ​as​ ​numbers​ ​and​ ​not​ ​text​ ​so​ ​that​ ​you​ ​can​ ​make​ ​use​ ​of​ ​mathematical​ ​operators​ ​(=,​ ​<​ ​and​ ​>).
+Differences​ ​in​ ​SQL​ ​syntaxes
+The​ ​various​ ​flavors​ ​of​ ​SQL​ ​(SQLite,​ ​MySQL,​ ​PostgreSQL,​ ​SQL​ ​Server,​ ​etc.)​ ​all​ ​have​ ​slightly​ ​different
+syntaxes,​ ​but​ ​they​ ​are​ ​mostly​ ​the​ ​same​ ​when​ ​it​ ​comes​ ​to​ ​basic​ ​usage.​ ​This​ ​can​ ​be​ ​annoying​ ​when
+switching​ ​between​ ​the​ ​SQL​ ​languages,​ ​but​ ​the​ ​good​ ​news​ ​is​ ​that​ ​they​ ​all​ ​have​ ​been​ ​around​ ​for
+decades.​ ​That​ ​means​ ​most​ ​syntax​ ​fixes​ ​are​ ​well-documented​ ​and​ ​only​ ​a​ ​quick​ ​Google​ ​search​ ​away.
+IRE​ ​tip​ ​sheets​ ​can​ ​be​ ​a​ ​great​ ​resource​ ​as​ ​well!
+NULL
+One​ ​confusing​ ​point​ ​with​ ​SQL​ ​and​ ​programming​ ​languages​ ​is​ ​the​ ​idea​ ​of​ ​NULL.​ ​In​ ​databases,​ ​you​ ​can
+declare​ ​whether​ ​or​ ​not​ ​a​ ​column​ ​allows​ ​NULL​ ​entries,​ ​meaning​ ​whether​ ​or​ ​not​ ​they​ ​can​ ​lack​ ​any
+values.​ ​This​ ​is​ ​a​ ​subtle​ ​but​ ​significant​ ​difference​ ​between​ ​an​ ​empty​ ​value.​ ​An​ ​empty​ ​value​ ​means​ ​the
+emptiness​ ​is​ ​reported,​ ​whereas​ ​a​ ​NULL​ ​value​ ​means​ ​nothing​ ​is​ ​reported​ ​at​ ​all.​ ​It​ ​is​ ​the​ ​lack​ ​of​ ​anything.
+You​ ​can​ ​filter​ ​based​ ​on​ ​whether​ ​a​ ​cell​ ​is​ ​NULL​ ​or​ ​not​ ​using​ ​IS​ ​or​ ​IS​ ​NOT​ ​as​ ​the​ ​comparison​ ​operators,
+instead​ ​of​ ​=​ ​or​ ​!=.​ ​Again,​ ​this​ ​is​ ​because​ ​NULL​ ​is​ ​not​ ​really​ ​equal​ ​to​ ​anything;​ ​it's​ ​the​ ​absence​ ​of​ ​any
+value.
+SELECT​ ​*
+FROM​ ​native_foreign
+WHERE​ ​foreign_born​ ​IS​ ​NULL;
+
+CLASS​ ​2
+Heavy​ ​analysis:​ ​Grouping​ ​and​ ​summing
+In​ ​the​ ​earlier​ ​class,​ ​you​ ​got​ ​to​ ​see​ ​some​ ​of​ ​the​ ​basics​ ​of​ ​SQL,​ ​the​ ​language​ ​of​ ​databases.​ ​Now​ ​let’s
+learn​ ​some​ ​power​ ​moves.​ ​To​ ​do​ ​that,​ ​we’re​ ​going​ ​to​ ​turn​ ​to​ ​a​ ​new​ ​dataset:​ ​Immunization​ ​rates​ ​in
+kindergartens​ ​across​ ​Arizona.
+Vaccine​ ​immunization​ ​has​ ​been​ ​a​ ​big​ ​issue​ ​in​ ​recent​ ​years,​ ​as​ ​the​ ​“anti-vaxx”​ ​movement,​ ​spurred​ ​in
+part​ ​by​ ​a​ ​discredited​ ​researcher​ ​who​ ​has​ ​attempted​ ​to​ ​link​ ​vaccines​ ​to​ ​autism,​ ​has​ ​spread​ ​across​ ​the
+country.​ ​In​ ​2015,​ ​a​ ​huge​ ​measles​ ​outbreak​ ​at​ ​Disneyland​ ​brought​ ​the​ ​issue​ ​back​ ​to​ ​the​ ​forefront.​ ​This
+dataset,​ ​put​ ​out​ ​by​ ​the​ ​Arizona​ ​Department​ ​of​ ​Health​ ​Services​,​ ​shows​ ​the​ ​percent​ ​of​ ​students​ ​who
+have​ ​received​ ​certain​ ​vaccines--and​ ​the​ ​percent​ ​who​ ​have​ ​filed​ ​for​ ​exemptions--in​ ​every​ ​kindergarten
+across​ ​the​ ​state​ ​(schools​ ​are​ ​required​ ​to​ ​report--see​ ​the​ ​README​ ​for​ ​more​ ​information​ ​about​ ​the
+dataset).
+Using​ ​this​ ​data,​ ​we’re​ ​going​ ​to​ ​learn​ ​how​ ​to​ ​use​ ​grouping​ ​and​ ​summing​ ​in​ ​SQL.​ ​These​ ​are​ ​basic​ ​math
+functions​ ​that​ ​will​ ​help​ ​you​ ​get​ ​a​ ​better​ ​picture​ ​of​ ​your​ ​data​ ​--​ ​and​ ​will​ ​lead​ ​you​ ​to​ ​better​ ​stories.
+The​ ​list​ ​of​ ​basic​ ​functions​ ​in​ ​SQLite​ ​are​ ​found​ h
+​ ere​.
+Before​ ​we​ ​do​ ​anything,​ ​we​ ​need​ ​to​ ​import​ ​the​ ​data.​ ​You​ ​can​ ​find​ ​the​ ​dataset​ ​here​​ ​or​ ​at
+bit.ly/IRE17immunizations​.​ ​Download​ ​it​ ​and​ ​save​ ​it​ ​to​ ​the​ ​desktop,​ ​so​ ​it’s​ ​easy​ ​to​ ​find.
+Now,​ ​using​ ​the​ ​same​ ​method​ ​as​ ​before,​ ​we’ll​ ​import​ ​the​ ​data.​ ​We​ ​don’t​ ​need​ ​to​ ​create​ ​a​ ​new
+database--we​ ​want​ ​this​ ​data​ ​table​ ​to​ ​be​ ​part​ ​of​ ​the​ ​same​ ​database​ ​(this​ ​will​ ​come​ ​in​ ​handy​ ​in​ ​class​ ​3,
+when​ ​we​ ​learn​ ​more​ ​about​ ​relational​ ​databases.​ ​Go​ ​ahead​ ​and​ ​click​ ​
+​ ​again​ ​to​ ​import​ ​the​ ​data.
+Navigate​ ​to​ ​the​ ​Desktop​ ​and​ ​select​ ​the​ ​file.​ ​In​ ​the​ ​table​ ​name​ ​field,​ ​go​ ​ahead​ ​and​ ​name​ ​it
+“immunizations.”​ ​Make​ ​sure​ ​the​ ​check-box​ ​next​ ​to​ ​“First​ ​row​ ​contains​ ​columns​ ​names”​ ​is​ ​checked.​ ​Click
+OK.​ ​When​ ​the​ ​pop-up​ ​appears,​ ​click​ ​“OK”​ ​to​ ​modify​ ​the​ ​table.
+We’re​ ​going​ ​to​ ​leave​ ​most​ ​of​ ​these​ ​table​ ​names​ ​alone.​ ​But​ ​we’ll​ ​make​ ​the​ ​column​ ​called​ ​“ENROLLED”
+and​ ​the​ ​column​ ​called​ ​“COUNTY_ID”​ ​into​ ​INTEGER​ ​columns.​ ​And​ ​we’ll​ ​make​ ​all​ ​of​ ​the​ ​columns​ ​that
+start​ ​with​ ​‘PCT’​ ​into​ ​FLOAT​ ​columns​ ​(Reminder:​ ​As​ ​we​ ​discussed​ ​above,​ ​INTEGER​ ​columns​ ​are​ ​whole
+numbers​ ​are​ ​FLOAT​ ​columns​ ​are​ ​numbers​ ​with​ ​decimals.)
+Now,​ ​before​ ​we​ ​start,​ ​let’s​ ​get​ ​a​ ​handle​ ​on​ ​the​ ​idea​ ​of​ ​grouping.​ ​It’s​ ​one​ ​of​ ​the​ ​most​ ​powerful​ ​features
+of​ ​SQL,​ ​but​ ​it​ ​can​ ​be​ ​a​ ​little​ ​difficult​ ​to​ ​conceptualize​ ​at​ ​times.​ ​A​ ​walk​ ​through​ ​an​ ​imaginary​ ​grocery
+store​ ​aisle​ ​can​ ​help.
+Let’s​ ​say​ ​you’re​ ​in​ ​the​ ​produce​ ​section.​ ​The​ ​most​ ​basic​ ​way​ ​to​ ​group​ ​the​ ​stuff​ ​there​ ​is​ ​by​ ​type:​ ​there​ ​are
+fruits​ ​and​ ​there​ ​are​ ​vegetables.​ ​Everything​ ​in​ ​the​ ​produce​ ​aisle​ ​fits​ ​into​ ​one​ ​of​ ​those​ ​two​ ​categories.
+
+Another​ ​is​ ​by​ ​color:​ ​let’s​ ​say​ ​you​ ​were​ ​on​ ​a​ ​new​ ​diet​ ​that​ ​allowed​ ​you​ ​to​ ​only​ ​eat​ ​yellow​ ​stuff.​ ​There
+could​ ​be​ ​lemons,​ ​but​ ​also​ ​squash.​ ​You’ve​ ​created​ ​a​ ​new​ ​group:​ ​things​ ​that​ ​are​ ​yellow.​ ​It​ ​will​ ​include
+both​ ​fruits​ ​and​ ​vegetables.​ ​But​ ​not​ ​cherries​ ​or​ ​beets.​ ​(Unless​ ​you’re​ ​at​ ​one​ ​of​ ​those​ ​artisanal​ ​places
+that​ ​sells​ ​yellow​ ​cherries.)
+You​ ​can​ ​also​ ​create​ ​groups​ ​within​ ​groups:​ ​think​ ​of​ ​all​ ​citrus​ ​fruits.​ ​There​ ​are​ ​lemons,​ ​limes,​ ​grapefruits.
+Or​ ​vegetables​ ​grown​ ​below​ ​ground:​ ​peanuts,​ ​potatoes​ ​and​ ​radishes.​ ​And​ ​vegetables​ ​grown​ ​above
+ground:​ ​corn,​ ​lettuce,​ ​and​ ​artichokes.
+The​ ​point​ ​of​ ​this​ ​extended​ ​culinary​ ​metaphor​ ​(hungry​ ​yet?)​ ​is​ ​that​ ​everything​ ​in​ ​the​ ​produce​ ​section​ ​has
+a​ ​series​ ​of​ ​characteristics​ ​that​ ​can​ ​be​ ​used​ ​to​ ​place​ ​them​ ​into​ ​categories.​ ​The​ ​same​ ​applies​ ​to​ ​data.
+Grouping​ ​is​ ​the​ ​way​ ​you​ ​cut​ ​data​ ​to​ ​explore​ ​it.
+Now,​ ​let’s​ ​take​ ​a​ ​look​ ​at​ ​the​ ​vaccinations​ ​data.​ ​What​ ​are​ ​some​ ​ways​ ​that​ ​you​ ​can​ ​see​ ​we​ ​might​ ​be​ ​able
+to​ ​group​ ​these​ ​data?
+We​ ​could​ ​group​ ​them​ ​by​ ​county.​ ​By​ ​school​ ​type​ ​(public,​ ​private,​ ​charter).​ ​By​ ​whether​ ​or​ ​not​ ​the​ ​school
+has​ ​a​ ​nurse.​ ​You​ ​can​ ​see​ ​how​ ​this​ ​could​ ​get​ ​interesting.
+For​ ​this​ ​exercise,​ ​we’re​ ​going​ ​to​ ​focus​ ​on​ ​the​ ​last​ ​field​ ​in​ ​the​ ​data,​ ​the​ ​one​ ​called​ ​PCT_PBE.​ ​This​ ​field
+contains​ ​the​ ​percentage​ ​of​ ​students​ ​in​ ​each​ ​school​ ​who​ ​have​ ​filed​ ​“personal​ ​belief​ ​exemptions”​ ​for​ ​any
+of​ ​the​ ​state-mandated​ ​vaccines.
+The​ ​CDC​ ​says​ ​that​ ​the​ ​vaccination​ ​rate​ ​should​ ​be​ ​between​ ​95%​ ​and​ ​100%​ ​to​ ​fully​ ​protect​ ​a​ ​community
+and​ ​curtail​ ​the​ ​spread​ ​of​ ​disease​ ​(You​ ​can​ ​learn​ ​more​ ​about​ ​herd​ ​immunity​ ​with​ ​this​ c​ ool​ ​dataviz​​ ​from
+The​ ​Guardian.
+Let’s​ ​start​ ​by​ ​seeing​ ​how​ ​many​ ​kindergartens​ ​in​ ​Arizona​ ​have​ ​more​ ​than​ ​5%​ ​exemption​ ​rate.​ ​(This​ ​is​ ​a
+refresher​ ​from​ ​the​ ​first​ ​course.)
+SELECT​ ​COUNT(*)
+FROM​ ​`immunizations`
+WHERE​ ​`PCT_PBE`​ ​>​ ​0.05
+We​ ​get​ ​375.​ ​That’s​ ​more​ ​than​ ​one-quarter​ ​of​ ​the​ ​kindergartens​ ​in​ ​the​ ​state.​ ​Not​ ​great.
+But​ ​what​ ​if​ ​you​ ​want​ ​to​ ​know​ ​how​ ​many​ ​schools​ ​in​ ​each​ ​county​ ​have​ ​high​ ​exemption​ ​rates?​ ​That’s
+where​ ​GROUP​ ​BY​ ​comes​ ​in.
+SQL​ ​only​ ​has​ ​seven​ ​basic​ ​words,​ ​and​ ​they​ ​always​ ​come​ ​in​ ​this​ ​order:
+SELECT
+FROM
+JOIN
+
+WHERE
+GROUP​ ​BY
+HAVING
+ORDER​ ​BY
+You’ve​ ​already​ ​learned​ ​SELECT,​ ​FROM,​ ​WHERE,​ ​and​ ​ORDER​ ​BY.​ ​So​ ​you’re​ ​more​ ​than​ ​halfway
+there!​ ​Now​ ​we’ll​ ​learn​ ​GROUP​ ​BY.
+GROUP​ ​BY​ ​is​ ​almost​ ​always​ ​used​ ​in​ ​combination​ ​with​ ​an​ ​aggregate​ ​function​ ​like​ ​COUNT,​ ​SUM​ ​or
+AVG​ ​after​ ​the​ ​SELECT​ ​statement.​ ​In​ ​this​ ​case,​ ​we​ ​want​ ​to​ ​tell​ ​SQLite​ ​to​ ​GROUP​ ​all​ ​the​ ​kindergartens
+together​ ​by​ ​county,​ ​and​ ​then​ ​COUNT​ ​the​ ​number​ ​of​ ​schools​ ​in​ ​each​ ​county​ ​with​ ​more​ ​than​ ​5%​ ​of​ ​the
+kindergarteners​ ​claiming​ ​exemptions​ ​from​ ​vaccinations.
+SELECT​ ​`COUNTY`,​ ​COUNT(*)
+FROM​ ​`immunizations`
+WHERE​ ​`PCT_PBE`​ ​>​ ​0.05
+GROUP​ ​BY​ ​`COUNTY`
+We​ ​see​ ​that​ ​Maricopa​ ​County​ ​has​ ​the​ ​largest​ ​number​ ​of​ ​schools​ ​with​ ​high​ ​exemption​ ​rate.​ ​But​ ​we​ ​also
+know​ ​that​ ​Maricopa​ ​County​ ​is​ ​the​ ​state’s​ ​most​ ​populous,​ ​so​ ​that​ ​doesn’t​ ​tell​ ​us​ ​much​ ​without​ ​knowing
+how​ ​many​ ​schools​ ​there​ ​are​ ​in​ ​each​ ​county.
+What​ ​if​ ​instead​ ​we​ ​take​ ​the​ ​average​ ​exemption​ ​rate​ ​for​ ​kindergarteners​ ​by​ ​county?​ ​We’ll​ ​keep​ ​the
+count​ ​of​ ​schools​ ​for​ ​reference​ ​and​ ​order​ ​by​ ​a​ ​new​ ​temporary​ ​column​ ​we’re​ ​creating,​ ​AVG_EXEMPT,​ ​to
+quickly​ ​see​ ​which​ ​county​ ​has​ ​the​ ​highest​ ​average.
+SELECT​ ​`COUNTY`,​ ​COUNT(*),​ ​AVG(`PCT_PBE`)*100​ ​AS​ ​`AVG_EXEMPT`
+FROM​ ​`immunizations`
+GROUP​ ​BY​ ​`COUNTY`
+ORDER​ ​BY​ ​`AVG_EXEMPT`​ ​DESC
+(Note:​ ​I​ ​multiplied​ ​by​ ​100​ ​here​ ​for​ ​those​ ​of​ ​you,​ ​like​ ​me,​ ​who​ ​find​ ​it​ ​easier​ ​to​ ​wrestle​ ​with​ ​percentages
+when​ ​they​ ​are​ ​expressed​ ​as​ ​whole​ ​numbers​ ​rather​ ​than​ ​decimals).
+We​ ​can​ ​see​ ​that​ ​5​ ​of​ ​the​ ​state’s​ ​15​ ​counties​ ​have​ ​average​ ​exemption​ ​rates​ ​above​ ​the​ ​5%​ ​threshold.
+And​ ​Yavapai​ ​County,​ ​a​ ​pretty​ ​rural​ ​county​ ​in​ ​the​ ​center​ ​of​ ​the​ ​state,​ ​just​ ​north​ ​of​ ​Phoenix,​ ​has​ ​an
+average​ ​personal​ ​belief​ ​exemption​ ​rate​ ​of​ ​12.7​ ​percent​ ​in​ ​its​ ​47​ ​kindergartens.
+(Now,​ ​just​ ​a​ ​quick​ ​methodology​ ​note​ ​here:​ ​If​ ​you​ ​were​ ​actually​ ​using​ ​this​ ​data​ ​in​ ​a​ ​story,​ ​you​ ​would
+have​ ​to​ ​note​ ​that​ ​it​ ​excludes​ ​any​ ​kindergarten​ ​with​ ​20​ ​or​ ​fewer​ ​total​ ​students​ ​(to​ ​protect​ ​student
+privacy)).
+But​ ​what​ ​if​ ​we​ ​want​ ​to​ ​cut​ ​the​ ​data​ ​a​ ​different​ ​way?​ ​Let’s​ ​say,​ ​we​ ​want​ ​to​ ​see​ ​if​ ​there​ ​is​ ​a​ ​difference​ ​in
+the​ ​vaccination​ ​rates​ ​based​ ​on​ ​the​ ​type​ ​of​ ​school:​ ​Private,​ ​Public,​ ​or​ ​Charter.
+
+SELECT​ ​`SCHOOL_TYPE`,​ ​AVG(`PCT_PBE`)*100​ ​AS​ ​`AVG_EXEMPT`
+FROM​ ​`immunizations`
+GROUP​ ​BY​ ​`SCHOOL_TYPE`
+On​ ​average,​ ​charter​ ​schools​ ​and​ ​private​ ​schools​ ​have​ ​many​ ​more​ ​kindergarteners​ ​who​ ​are​ ​claiming​ ​a
+personal​ ​belief​ ​exemption​ ​from​ ​vaccines.​ ​And​ ​charter​ ​schools​ ​have​ ​an​ ​average​ ​exemption​ ​rate​ ​of​ ​8.3%,
+well​ ​above​ ​the​ ​threshold.
+Now,​ ​one​ ​more​ ​example.​ ​Let’s​ ​see​ ​if​ ​having​ ​a​ ​school​ ​nurse​ ​is​ ​correlated​ ​with​ ​fewer​ ​students​ ​who​ ​are
+claiming​ ​exemptions​ ​from​ ​vaccines.
+SELECT​ ​`SCHOOL_NURSE`,​ ​COUNT(*),​ ​AVG(`PCT_PBE`)*100​ ​AS​ ​`AVG_EXEMPT`
+FROM​ ​`immunizations`
+GROUP​ ​BY​ ​`SCHOOL_NURSE`
+It​ ​looks​ ​like​ ​it​ ​does!​ ​Now,​ ​maybe​ ​you​ ​can​ ​write​ ​a​ ​story​ ​looking​ ​at​ ​funding​ ​for​ ​school​ ​nurses.
+Creating​ ​a​ ​new​ ​column
+Now,​ ​let’s​ ​say​ ​we​ ​want​ ​to​ ​know​ ​the​ ​total​ ​number​ ​of​ ​students​ ​in​ ​each​ ​school--and​ ​in​ ​each​ ​county--who
+have​ ​claimed​ ​an​ ​exemption​ ​from​ ​vaccination.​ ​But​ ​right​ ​now​ ​all​ ​of​ ​our​ ​numbers​ ​are​ ​stored​ ​as
+percentages.
+We​ ​can​ ​create​ ​a​ ​new​ ​column,​ ​using​ ​the​ ​PCT_PBE​ ​and​ ​ENROLLED​ ​columns​ ​to​ ​calculate​ ​the​ ​number​ ​of
+students.
+We​ ​have​ ​to​ ​do​ ​this​ ​in​ ​two​ ​separate​ ​queries.​ ​First:
+ALTER​ ​TABLE​ ​`immunizations`
+ADD​ ​COLUMN​ ​`NUM_PBE`
+That​ ​creates​ ​a​ ​new​ ​column​ ​in​ ​our​ ​table​ ​called​ ​“NUM_PBE”.​ ​Now,​ ​we’ll​ ​use​ ​math​ ​to​ ​update​ ​that​ ​field:
+UPDATE​ ​`immunizations`
+SET​ ​`NUM_PBE`​ ​=​ ​ROUND(`PCT_PBE`*`ENROLLED`)
+We’re​ ​telling​ ​SQL​ ​to​ ​update​ ​our​ ​table​ ​by​ ​setting​ ​the​ ​`NUM_PBE`​ ​column​ ​that​ ​we​ ​just​ ​created​ ​to​ ​the
+values​ ​of​ ​the​ ​PCT_PBE​ ​column​ ​and​ ​the​ ​ENROLLED​ ​column,​ ​then​ ​rounding​ ​off​ ​the​ ​decimals​ ​so​ ​we​ ​get
+whole​ ​numbers.
+Summing
+Now,​ ​we​ ​can​ ​use​ ​our​ ​new​ ​column​ ​to​ ​find​ ​out​ ​how​ ​many​ ​students​ ​in​ ​each​ ​county​ ​have​ ​filed​ ​exemptions
+(again,​ ​with​ ​the​ ​caveat​ ​that​ ​we’re​ ​missing​ ​the​ ​schools​ ​with​ ​20​ ​students​ ​or​ ​fewer).
+
+SELECT​ ​`COUNTY`,​ ​SUM(`NUM_PBE`)​ ​as​ ​`NUM_STUDENTS`,​ ​COUNT(*)​ ​AS​ ​`NUM_SCHOOLS`
+FROM​ ​`immunizations`
+GROUP​ ​BY​ ​`COUNTY`
+
+CLASS​ ​3
+Relational​ ​data:​ ​Joining​ ​tables
+In​ ​the​ ​first​ ​two​ ​classes,​ ​you​ ​learned​ ​how​ ​to​ ​use​ ​SQL​ ​to​ ​search​ ​a​ ​table​ ​for​ ​data,​ ​to​ ​sort​ ​it​ ​and​ ​then​ ​to
+group,​ ​average​ ​and​ ​sum​ ​it.​ ​In​ ​this​ ​final​ ​class​ ​we’ll​ ​combine​ ​(at​ ​least)​ ​two​ ​tables.
+Reporters​ ​have​ ​been​ ​using​ ​this​ ​technique​ ​for​ ​years​ ​to​ ​find​ ​hidden​ ​connections​ ​and​ ​write​ ​great​ ​stories.
+Think​ ​about​ ​school​ ​bus​ ​drivers​ ​with​ ​DUI’s​ ​or​ ​wealthy​ ​black​ ​neighborhoods​ ​where​ ​no​ ​one​ ​can​ ​get​ ​a
+bank​ ​loan.
+We’ll​ ​start​ ​by​ ​importing​ ​a​ ​new​ ​table,​ ​AZ_Counties.csv.​ ​Import​ ​the​ ​first​ ​five​ ​fields​ ​as​ ​VARCHAR​ ​and​ ​the
+last​ ​two​ ​as​ ​INTEGER.​ ​Once​ ​it’s​ ​imported,​ ​browse​ ​the​ ​table.​ ​As​ ​you​ ​can​ ​see,​ ​it’s​ ​a​ ​simple​ ​list​ ​of​ ​the​ ​15
+Arizona​ ​counties​ ​with​ ​their​ ​populations.
+In​ ​Class​ ​1​ ​you​ ​worked​ ​with​ ​a​ ​table​ ​called​ ​“native_foreign”.​ ​That​ ​table​ ​had​ ​a​ ​code​ ​for​ ​each​ ​county​ ​and​ ​a
+description​ ​that​ ​listed​ ​the​ ​county​ ​name.​ ​But​ ​it​ ​was​ ​difficult​ ​to​ ​see​ ​at​ ​a​ ​glance​ ​what​ ​county​ ​was
+represented​ ​in​ ​each​ ​row.
+We’re​ ​going​ ​to​ ​merge​ ​AZ_Counties​ ​and​ ​“native_foreign”.​ ​The​ ​SQL​ ​term​ ​for​ ​this​ ​is​ ​“join”.​ ​We’ll​ ​do​ ​that​ ​by
+linking​ ​them​ ​on​ ​a​ ​field​ ​they​ ​share,​ ​ID_Co.​ ​And​ ​we’ll​ ​build​ ​the​ ​query​ ​in​ ​pieces:
+SELECT
+FROM​ ​az_counties​ ​a,​ ​“native_foreign”​ ​b
+WHERE​ ​a.ID_Co​ ​=​ ​b.ID_Co
+In​ ​Class​ ​1,​ ​we​ ​mentioned​ ​using​ ​shortcuts​ ​to​ ​avoid​ ​long​ ​names.​ ​Here​ ​we​ ​take​ ​that​ ​to​ ​an​ ​extreme,​ ​using
+a​ ​letter​ ​as​ ​an​ ​abbreviation​ ​for​ ​a​ ​table.​ ​Notice​ ​how​ ​we​ ​do​ ​that:​ ​We​ ​declare​ ​that​ ​az_counties​ ​is​ ​“a”​ ​and
+native_foreign​ ​is​ ​“b”​ ​and​ ​on​ ​the​ ​WHERE​ ​line​ ​we​ ​precede​ ​the​ ​field​ ​that​ ​links​ ​the​ ​two​ ​tables​ ​with​ ​the​ ​letter
+designating​ ​the​ ​parent​ ​table.​ ​Every​ ​SQL​ ​database​ ​program​ ​let’s​ ​you​ ​do​ ​this.
+Now​ ​let’s​ ​fill​ ​in​ ​the​ ​SELECT​ ​line,​ ​and​ ​if​ ​there’s​ ​any​ ​doubt​ ​about​ ​which​ ​table​ ​is​ ​the​ ​parent​ ​we’ll​ ​use​ ​“a”​ ​or
+“b”​ ​to​ ​resolve​ ​it.​ ​We’ll​ ​add​ ​a​ ​GROUP​ ​BY​ ​statement;​ ​without​ ​it,​ ​we​ ​would​ ​get​ ​just​ ​a​ ​single​ ​row​ ​as​ ​our
+result.
+
+SELECT​ ​a.County,​ ​sum(Total)​ ​as​ ​TotalPop,​ ​sum(Naturalized)​ ​as​ ​Naturalized,​ ​sum(Noncitizen)​ ​as
+Noncitizen,​ ​((sum(naturalized​ ​+​ ​noncitizen)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)​ ​as​ ​ImmigrantPer
+
+FROM​ ​az_counties​ ​a,​ ​“native_foreign”​ ​b
+WHERE​ ​a.ID_Co​ ​=​ ​b.ID_Co
+GROUP​ ​BY​ ​a.County
+
+Most​ ​of​ ​this​ ​should​ ​be​ ​pretty​ ​easy​ ​to​ ​understand​ ​by​ ​now.​ ​But​ ​what’s​ ​going​ ​on​ ​with​ ​the
+ImmigrantPer​ ​line:
+((sum(naturalized​ ​+​ ​noncitizen)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)
+The​ ​explanation​ ​is​ ​that​ ​we​ ​imported​ ​all​ ​the​ ​numbers​ ​as​ ​INTEGER.​ ​And​ ​if​ ​you​ ​divide​ ​one
+integer​ ​by​ ​another,​ ​the​ ​result​ ​is​ ​--​ ​you​ ​guessed​ ​it​ ​--​ ​another​ ​integer.​ ​In​ ​this​ ​case,​ ​where​ ​the
+result​ ​is​ ​somewhere​ ​between​ ​0​ ​and​ ​1,​ ​the​ ​answer​ ​will​ ​be​ ​either​ ​0​ ​or​ ​1​ ​depending​ ​on​ ​whether
+the​ ​answer​ ​is​ ​above​ ​or​ ​below​ ​0.50001.​ ​So​ ​to​ ​get​ ​an​ ​answer​ ​that​ ​makes​ ​sense,​ ​we​ ​multiply​ ​the
+total​ ​(an​ ​integer)​ ​by​ ​1.00​ ​(a​ ​float).​ ​Any​ ​number​ ​multiplied​ ​by​ ​1​ ​or​ ​1.0​ ​or​ ​1.00000​ ​always​ ​equals
+itself;​ ​we’re​ ​merely​ ​changing​ ​its​ ​type​ ​from​ ​integer​ ​to​ ​float.​ ​And​ ​we’re​ ​getting​ ​an​ ​answer​ ​that
+makes​ ​sense.Multiplying​ ​that​ ​result​ ​by​ ​100,​ ​of​ ​course,​ ​changes​ ​it​ ​from​ ​a​ ​decimal​ ​to​ ​a​ ​percent,
+something​ ​we​ ​already​ ​did​ ​in​ ​Class​ ​2.
+Now​ ​let’s​ ​try​ ​something​ ​a​ ​little​ ​more​ ​ambitious.​ ​Import​ ​ACS_15_5YR_B15013x.csv.​ ​By​ ​now​ ​I
+think​ ​you​ ​know​ ​the​ ​drill:​ ​The​ ​first​ ​four​ ​fields​ ​(ID,​ ​ID2,​ ​ID_Co​ ​and​ ​Geography)​ ​all​ ​are​ ​VARCHAR,
+and​ ​the​ ​remaining​ ​fields​ ​all​ ​are​ ​INTEGER.​ ​Name​ ​the​ ​table​ ​AZ_Education.​ ​This​ ​table​ ​describes
+education​ ​levels​ ​for​ ​residents​ ​in​ ​every​ ​census​ ​tract​ ​in​ ​Arizona.
+We’ll​ ​join​ ​this​ ​table​ ​to​ ​AZ_Counties​ ​with​ ​this​ ​query:
+SELECT​ ​a.Geography,​ ​b.County,​ ​total,​ ​nohighschool,​ ​hsdropout,​ ​hsgraduate,​ ​college,
+bachelordegree,​ ​graddegree
+FROM​ ​az_education​ ​a,​ ​az_counties​ ​b
+where​ ​a.ID_Co​ ​=​ ​b.ID_Co
+Next​ ​let’s​ ​summarize​ ​by​ ​county.​ ​To​ ​do​ ​that​ ​we’ll​ ​drop​ ​the​ ​Geography​ ​column,​ ​add​ ​sum()
+statements​ ​and​ ​a​ ​GROUP​ ​BY​ ​statement.
+SELECT​ ​b.County,​ ​sum(total)​ ​as​ ​Total,​ ​sum(nohighschool)​ ​as​ ​NoHS,​ ​sum(hsdropout)​ ​as
+Dropouts,​ ​sum(hsgraduate)​ ​as​ ​HSGrads,
+sum(college)​ ​as​ ​SomeCollege,​ ​sum(bachelordegree)​ ​as​ ​Bachelors,​ ​sum(graddegree)​ ​as
+Postgrad
+FROM​ ​az_education​ ​a,​ ​az_counties​ ​b
+WHERE​ ​a.ID_Co​ ​=​ ​b.ID_Co
+GROUP​ ​BY​ ​b.County
+
+We​ ​now​ ​have​ ​a​ ​whole​ ​bunch​ ​of​ ​numbers​ ​-​ ​7​ ​columns​ ​times​ ​15​ ​counties.​ ​At​ ​a​ ​certain​ ​point​ ​it
+really​ ​becomes​ ​too​ ​much​ ​to​ ​understand.​ ​So​ ​let’s​ ​simplify​ ​with​ ​a​ ​mashup:​ ​We’ll​ ​put​ ​the​ ​NoHS
+and​ ​Dropouts​ ​together​ ​in​ ​a​ ​column​ ​called​ ​LowEd​ ​and​ ​the​ ​Bachelors​ ​and​ ​Postgrad​ ​in​ ​another
+column​ ​called​ ​HighEd.​ ​Then​ ​we’ll​ ​calculate​ ​percentages​ ​of​ ​each.​ ​Finally​ ​we’ll​ ​divide​ ​the
+HighEd​ ​percentage​ ​by​ ​the​ ​LowEd​ ​percentage​ ​to​ ​give​ ​us​ ​a​ ​ratio​ ​of​ ​the​ ​well-educated​ ​to​ ​the
+poorly​ ​educated​ ​in​ ​each​ ​county.
+We’ll​ ​build​ ​this​ ​in​ ​pieces:
+First​ ​everything​ ​except​ ​the​ ​LowEd,​ ​HighEd​ ​and​ ​EdRatio:
+SELECT​ ​b.County,​ ​sum(total)​ ​as​ ​Total,​ ​sum(nohighschool)​ ​as​ ​NoHS,​ ​sum(hsdropout)​ ​as
+Dropouts,
+sum(hsgraduate)​ ​as​ ​HSGrads,
+sum(college)​ ​as​ ​SomeCollege,​ ​sum(bachelordegree)​ ​as​ ​Bachelors,​ ​sum(graddegree)​ ​as
+Postgrad,
+
+FROM​ ​az_education​ ​a,​ ​az_counties​ ​b
+WHERE​ ​a.ID_Co​ ​=​ ​b.ID_Co
+GROUP​ ​BY​ ​b.County
+We​ ​left​ ​blank​ ​lines​ ​for​ ​LowEd​ ​and​ ​HighEd.​ ​Now​ ​we’ll​ ​write​ ​those​ ​lines:
+((sum(nohighschool​ ​+​ ​hsdropout)​ ​/​ ​sum(total*​ ​1.00))​ ​*​ ​100)​ ​as​ ​LowEd,
+((sum(bachelordegree​ ​+​ ​graddegree)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)​ ​as​ ​HighEd,
+Notice​ ​that​ ​we’re​ ​recycling​ ​that​ ​(total​ ​*​ ​1.00)​ ​trick​ ​to​ ​produce​ ​FLOAT​ ​results​ ​instead​ ​of​ ​an
+INTEGER.
+And​ ​now​ ​for​ ​the​ ​EdRatio.​ ​We​ ​simply​ ​divide​ ​HighEd​ ​by​ ​LowEd​ ​and​ ​enclose​ ​the​ ​expression​ ​in
+parentheses:
+(((sum(bachelordegree​ ​+​ ​graddegree)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)​ ​/​ ​((sum(nohighschool​ ​+
+hsdropout)​ ​/​ ​sum(total*​ ​1.00))​ ​*​ ​100))​ ​as​ ​EdRatio
+So​ ​here​ ​is​ ​our​ ​final​ ​statement:
+
+SELECT​ ​b.County,​ ​sum(total)​ ​as​ ​Total,​ ​sum(nohighschool)​ ​as​ ​NoHS,​ ​sum(hsdropout)​ ​as
+Dropouts,
+((sum(nohighschool​ ​+​ ​hsdropout)​ ​/​ ​sum(total*​ ​1.00))​ ​*​ ​100)​ ​as​ ​LowEd,
+sum(hsgraduate)​ ​as​ ​HSGrads,
+sum(college)​ ​as​ ​SomeCollege,​ ​sum(bachelordegree)​ ​as​ ​Bachelors,​ ​sum(graddegree)​ ​as
+Postgrad,
+((sum(bachelordegree​ ​+​ ​graddegree)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)​ ​as​ ​HighEd,
+(((sum(bachelordegree​ ​+​ ​graddegree)​ ​/​ ​sum(total​ ​*​ ​1.00))​ ​*​ ​100)​ ​/​ ​((sum(nohighschool​ ​+
+hsdropout)​ ​/​ ​sum(total*​ ​1.00))​ ​*​ ​100))​ ​as​ ​EdRatio
+FROM​ ​az_education​ ​a,​ ​az_counties​ ​b
+WHERE​ ​a.ID_Co​ ​=​ ​b.ID_Co
+GROUP​ ​BY​ ​b.County
+We​ ​can​ ​see​ ​at​ ​once​ ​that​ ​in​ ​four​ ​counties​ ​–​ ​Coconino,​ ​Yavapai,​ ​Pima​ ​and​ ​Maricopa​ ​–​ ​college
+grads​ ​outnumber​ ​high​ ​school​ ​dropouts​ ​by​ ​2​ ​or​ ​3​ ​to​ ​1.​ ​At​ ​the​ ​other​ ​end​ ​of​ ​the​ ​scale,​ ​in​ ​Yuma,
+Apache​ ​and​ ​La​ ​Paz​ ​counties,​ ​high​ ​school​ ​dropouts​ ​outnumber​ ​college​ ​grads​ ​by​ ​at​ ​least​ ​2​ ​to​ ​1.
+
+

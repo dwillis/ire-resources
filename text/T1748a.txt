@@ -1,0 +1,235 @@
+Census Analysis For Free
+By Matthew Waite
+waite@sptimes.com
+St. Petersburg Times
+Savannah IRE Regional Conference
+Oct. 20-21
+
+Introduction
+Most newspapers (mine included) have spent thousands of dollars on database and
+mapping software to do sophisticated analysis of all kinds of data, all of which came in
+handy during the 2000 Census. For a lot of others, the $1,200 for mapping software and
+$600 for database software scared the calculator out of a number of newsroom bean
+counters, and a lot of requests were denied.
+Well, turns out, all that cash really isn’t needed to do basic Census and mapping analysis.
+This tutorial will show you how to do basic Census mapping – with a trick and a turn
+here and there – without spending a dime.
+
+What you’ll need
+n
+n
+n
+n
+
+A web browser and internet connection
+OpenOffice.org 1.0.1, free from www.openoffice.org
+ArcExplorer 4, free from www.esri.com
+An unzip program, any number of which are free online
+
+This was all done using Windows based computers, but that doesn’t mean you have to
+have a Windows machine. OpenOffice.org 1.0.1 is really designed for Linux and has
+been ported over to Windows. They’re working on a Mac OS X port now. ArcExplorer
+will work on any operating system that will run Java. I’ve never used the Linux or OS X
+versions, but the means to do all of this will be nearly the same for all of them.
+OpenOffice.org and ArcExplorer are free. There is no real catch.
+And the means to do this with Excel are identical to the OpenOffice instructions below.
+This isn’t a complete tutorial, just a step-by-step guide on how to use this software to
+create a map. You’d be wise to learn more about the spreadsheet software, and you’d be
+wiser still to learn about the Census data and what it is you’re looking at. There are a ton
+of sites on the web that can get you up to speed on the Census (Steve Doig’s site at
+Arizona State University, http://cronkite.pp.asu.edu/census/ is a must read). And NICAR
+sponsors a Census related e-mail listserv that has dozens of reporters who can answer
+your questions.
+This tutorial assumes you’ve already installed OpenOffice.org 1.0.1 and ArcExplorer 4.
+
+Step 1: Getting some data for free
+First thing you need are maps. Fortunately, there are freely available maps that work with
+ArcExplorer 4.
+
+http://www.esri.com/data/download/census2000_tigerline/index.html
+ESRI’s site is much easier to navigate than the Census. Click "Download Data," then
+click your state on the map that comes up. Then, find your county (or select a layer if you
+want to do statewide maps). At a minimum, you’ll want: (1) the level of geography
+you’re working with (tracts, for instance); (2) the roads file to give you some idea of
+where you are; and, (3) if you are near any kind of water – river, ocean, lake, etc. – you’ll
+want the water boundary file. Census extends tract boundaries into rivers and out to
+territorial limits in the ocean. Without the water file, your maps look goofy.
+For our example, we’re using Washington County, Neb. To save time, just download the
+2000 tract map file. When you get them downloaded, unzip the files – there should be
+three files for each layer – into a folder you’ll be able to find again.
+Next, we need some Census data – the Census maps don’t have any in them. The Census
+Bureau – after several failed attempts – has come up with a pretty great web-based means
+of getting Census data without having to know Structured Query Language and Census
+speak.
+
+http://factfinder.census.gov/
+Just about anything you could ever want is on American Factfinder. You can get quick
+access to major tables (population, race, etc.) and detailed data down to the Census Tract
+level for the most minute data collected in the long form (households without adequate
+plumbing, for instance). Take some time and get to know how to navigate the site: it can
+be a lifesaver on deadline.
+For this example, we’re using my
+home of Washington County, Neb.
+Scenic, beautiful Washington
+County is a mix of bedrooms for
+nearby Omaha and farms. The
+county seat, and only real town, is
+Blair, my hometown. The place to
+pick up news in town is the Blair
+Maple, a greasy spoon diner on
+Main Street where you can get your
+first cup of coffee at 5 a.m. with the
+farmers. They love to complain
+
+about three things: Nebraska football, the weather and all these people who work in
+Omaha and live in Washington County.
+The Census asks people where they work, and have made that part of Summary File 3,
+the long-form data. If you click on “2000 Summary File 3” under the “Data Sets”
+heading, we’ll get started finding out how many people do leave Washington County to
+go to work.
+Step one gives you a list of options.
+The one you’ll use the most is
+"Detailed Tables." Click that. Now
+you have to select a geographic level
+– in this case, "tracts." Then, pick a
+state – Nebraska in this case. Now, a
+county: "Washington." Now
+Factfinder will populate the small
+window with all the tracts in your
+county. In this case, there are only
+five, but click "All Census Tracts"
+anyway then, click the "Add" button. All of the Census tract numbers should move to the
+bottom window. Click the "Next" button. A new window will appear giving you all the
+data you could ever want. Scroll down to "P26. Place of Work for Workers 16+ --State
+and County Level." That will tell you how many workers leave the county. Click the
+"Add" button, and when "P26" is in the window below, click "show table."
+Now we have some data.
+
+Step 2: Getting the free data into the free spreadsheet
+This is where we learn an
+excruciatingly hard concept called
+copy and paste – with a little twist.
+All you have to do is click and hold
+your mouse, drag it over your table
+until all the contents of the table are
+highlighted and then release.
+Go up to “Edit” then “Copy.”
+Open up OpenOffice.org 1.0.1. By
+default OpenOffice will open to a blank sheet with your cursor in Cell A1. This is all
+good. Go up to “Edit” then down to “Paste Special.” This is the twist.
+When you click “Paste Special,” a window will pop up that says “Source: Unknown
+Source” and it will give you three options. You want “HTML format,” which is what you
+
+copied from the Census Bureau website. Click on “OK” and you should be the data that
+once was on the Census website.
+Now begins some housecleaning that you’ll see the importance of later.
+First up, we need to switch our columns around. The Census bureau site, unfortunately,
+lists the topics on the left hand side going down and the tract numbers are across the top.
+For mapping purposes, we need exactly the opposite. Thankfully, “paste special” will
+help us again.
+Click and hold the mouse in Cell
+A1 and drag it down and right until
+all of your cells with data in them
+are highlighted. Go to "Edit" then,
+"Copy." Then, without doing a
+thing, go to "Edit" then, "Paste
+Special."
+A new window will pop up,
+different than the one before –
+OpenOffice recognized where the
+data was coming from. This time,
+click in the check box by
+“Transpose” (under the options area). Then click “OK.”
+Voila. Reversed data.
+Now, more housecleaning. We are going to convert this spreadsheet into a database file
+format that only handles field names with 8 characters. So, the "Worked In State of
+Residence" header has to go. In A1, type "tract," and then change the next four cells (B1,
+C1, D1, E1) to eight character headers.
+One more housecleaning note: In the "tract" column, all we need is the number, not all
+the stuff the Census Bureau gives you. So change "Census Tract 501.01, Washington
+County Nebraska" to just "501.01." You’ll see why in a second.
+Okay, one last housecleaning step. For the most part, the Census provides counts. They
+don’t do percents. We have to do them ourselves. Thankfully, this is no problem.
+In G1, type "PctOut," or whatever you want to symbolize the percentage of people who
+work outside the county. All spreadsheet formulas begin with an equals sign, so type this
+formula in cell G2:
+=(E2/B2)*100
+
+Hit "Enter." What the formula means is the number in cell E2, the number of people who
+work outside the county, will be divided by B2, the total number of workers. All of that is
+multiplied by 100, to give you the percentage value.
+Now, at the bottom right corner of the cell, you’ll see a little black box, and when you
+move your cursor over it, your cursor changes. Well, move your cursor over that black
+box so that your cursor changes, click and hold, and then drag down until you reach the
+bottom of your data. If you let go, you’ll see that all those cells were filled in. The
+spreadsheet is smart enough to know to fill in the right formula for you (if you don’t trust
+it, click on any of the cells and up above you’ll see the formula behind the number).
+Okay, highlight that row, copy it and go to "paste special." This time, you’ll have to
+uncheck everything but "Strings and Numbers." Hit "OK." What that did was remove the
+formulas, leaving only numbers. You’ll see why in a second.
+
+Step 3: Free data, free spreadsheet, now free map
+In OpenOffice.org Calc, go up to "File," then "Open." Change the "Files of Type" box to
+"dBase." This is a type of database file that the mapping software uses. Navigate to where
+you put your map files and there you’ll find the databases behind your map. The database
+you want ends in "trt00" for Tracts 2000 (the whole thing – tgr31177trt00 – means Tiger,
+31 is the numerical code for Nebraska and 177 is the numerical code for Washington
+County). Click that database file and open it. A window will pop up with a lot of
+unintelligible muck. Just hit "OK." Don’t worry – it’s going to open over your
+spreadsheet.
+In that database table, you’re going to notice that Ah HA! It too has a tract field. And,
+don’t you know, it’s in the same order as our spreadsheet.
+So, using your handy dandy copy skills, go up to window and go down to our spreadsheet
+(unless you saved it, it’s called "untitled"). Click, hold and drag over the cells and go up
+to "Edit" then, "Copy." Click on "window" and go back to your database. Click on the
+first open cell at the end of the row and then go to "Edit" then, "Paste." Boom. You
+should have data that lines up.
+Okay, now we have to save this file, but in "dBase" format. If you go to "File" then
+"Save" you’re going to have something completely counterintuitive happen. It’s going to
+ask you if you want to save it as an OpenOffice.org spreadsheet file. SAY NO. You want
+a "dBase" file or the mapping software won’t work.
+With the file saved, you can quit out of OpenOffice. It’ll throw some hooey about data
+loss. Just hit yes, you want to quit.
+
+Step 4: Looking at your free map
+Open up ArcExplorer.
+
+ArcExplorer comes with a fine manual on how to use it that I encourage you to read. This
+will just get you through a real basic example.
+On the tool bar at the top you’ll see a row of buttons. One of those has a little red plus
+sign on it and something that looks like three layers of paper. That button is how you add
+layers to your map. Click it. When the Catalog window opens, navigate to where you put
+those Census maps we downloaded earlier. Click on the one that ends in “trt00.” Now
+this is a little confusing. You can see that the Catalog window has it’s own set of buttons,
+and they look a lot like the ones on your main screen. To add a layer, you need to click
+the “Add Layer” button in the Catalog window that looks like the “Add Layer” button
+you pushed to get to the catalog widow. Behind the window, you should see that file
+added to the window on the left. Close the catalog window.
+Click the check box next to the tgr3177trt00 number and you should then see your map.
+Pretty, isn’t it?
+We’re not done yet. Double click the colored square on the left. This will bring up a new
+window. When the window pops up, a whole lot of stuff we did before is going to come
+into focus.
+In the “draw features using” box, change that to “Graduated Symbols.” Below that box,
+you’ll see a box that says “None.” If you click that, you’ll suddenly see all the fields in
+the database we created. Aha. Scroll down to your percentage field that you calculated
+and click on it. Below, the values should fill in automatically. The larger the number, the
+darker the color.
+Click “Apply” and the colors on your
+map will change. Then hit “OK.”
+I can tell you from looking at the
+map that the lightest areas are Blair,
+the lone town in the county. Omaha
+is to the south. To the west is
+farmland.
+And, we can go back to Factfinder
+and get the number of people in the
+county leaving every day, the
+number who left in 1990, and we can tell the farmers down at the Blair Maple if it is
+indeed getting worse like they claim.
+To get clean maps for your graphic artists, you’re going to have to buy the real software.
+However, you can get them something to start with by going to "Edit" then, "Copy Map
+Image to File." You have only one option, so save it as a "JPEG" file. Any graphics
+software can read that file, and it’s better than nothing.
+
+

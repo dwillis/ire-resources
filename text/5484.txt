@@ -1,0 +1,170 @@
+Accessing Amazon's IRS Form 990 public data
+Michele Tranquilli
+Philadelphia Inquirer
+@mtranquilli
+tranqum@phillynews.com
+
+Toolkit
+Scripts and files to help you get started using the IRS's electronically
+filed non-profit returns in XML format
+https://github.com/tranquilli/irs990_xml_tools
+The toolkit contains pre-written scripts to process the XML returns for
+the years 2011 – 2016 and extract data into three separate tables:
+-­‐ Basic data from the header and main return and a record of which
+schedules were filed. (table irs990__returns)
+-­‐ Trustees and directors (table irs990_td)
+-­‐ Highest paid employees (table irs990_hp)
+
+What about the 2017 return?
+2017 returns haven’t started coming in. Once they do, you’ll need to
+check two tags in the header: return type and tax year. If the tag
+names are different from previous years you’ll need to update the
+script read_xml_structure.php on lines 83-93.
+<Return xmlns="http://www.irs.gov/efile" xmlns:xsi="http://www.w3.or
+g/2001/XMLSchemainstance" xsi:schemaLocation="http://www.irs.gov/efile" returnVersion
+="2012v2.3">
+<ReturnHeader binaryAttachmentCount="0">
+<Timestamp>2014-05-12T22:02:21-05:00</Timestamp>
+<TaxPeriodEndDate>2013-06-30</TaxPeriodEndDate>
+<PreparerFirm>...</PreparerFirm>
+<ReturnType>990EZ</ReturnType>
+
+<TaxPeriodBeginDate>2012-0701</TaxPeriodBeginDate>
+<Filer>...</Filer>
+<Officer>...</Officer>
+<Preparer>...</Preparer>
+<TaxYear>2012</TaxYear>
+<BuildTS>2015-11-30 17:44:51Z</BuildTS>
+</ReturnHeader>
+
+Some cautions
+One of the biggest challenges in working with the IRS 990 XML data
+is dealing with tag names that may change every few years or by
+form type.
+For example, in the 2014-2016 returns Trustees and Directors are
+found in the main return of all form types but each type uses different
+tag names:
+
+990	  -­‐	  Form990PartVIISectionAGrp
+990PF	  -­‐	  OfficerDirTrstKeyEmplInfoGrp-­‐>OfficerDirTrstKeyEmplGrp	  
+	  
+990EZ	  -­‐	  OfficerDirectorTrusteeEmplGrp
+
+And this is how they appear in the 2011-2012 returns:
+990	  -­‐	  Form990PartVIISectionA
+990PF	  -­‐	  OfcrDirTrusteesKeyEmployeeInfo-­‐
+>OfcrDirTrusteesOrKeyEmployee
+	  
+	  
+990EZ	  -­‐	  OfficerDirectorTrusteeKeyEmpl
+
+You will find scripts in the toolkit to help simplify this process and
+make it easier to identify other data you want to capture. It also helps
+to download and read over copies of the print returns.
+https://www.irs.gov/forms-pubs/about-form-990
+https://www.irs.gov/forms-pubs/about-form-990ez
+https://www.irs.gov/forms-pubs/about-form-990pf
+
+If you add new tables to the database, make sure you set fields for
+dollar amounts to bigint.
+
+IRS990 XML
+https://aws.amazon.com/public-datasets/irs-990/
+The XML returns are listed in large master indexes by the year filed.
+The indexes are available in in .json or .csv formats. These are large
+files. I recommend using the command line to download. DON’T try
+opening the .json files in your browser!
+The json contains the complete URL for each XML return. If you’re
+working with the csv you’ll need to build the URL yourself using the
+OBJECT_ID column
+https://s3.amazonaws.com/irs-form-990/OBJECT_ID_public.xml
+
+Schedules for Form 990
+https://www.irs.gov/forms-pubs/about-form-990-schedules
+The links to the schedules are broken (as of March 6, 2018). You
+can still get them by correcting the URLs from
+
+https://prod.edit.irs.gov/forms-pubs/{…} to https://www.irs.gov/formspubs/{…}
+Not every 990 type uses every schedule. Here’s the breakdown:
+Schedule
+
+990
+
+990EZ
+
+990PF
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+R
+
+As you can see, forms 990EZ and 990PF have fewer schedules than
+990. They may still contain some of the same data but it will be in
+other places. For example, highest paid employees are listed in
+Schedule J for 990 but are in the main returns for 990EZ and 990PF.
+
+Other Nonprofit data sources
+IRS
+Exempt Organizations Business Master File Extract (EO BMF)
+https://www.irs.gov/charities-non-profits/exempt-organizationsbusiness-master-file-extract-eo-bmf
+Field definitions: https://www.irs.gov/pub/irs-soi/eo_info.pdf
+Download by state NOT region
+Fields: EIN NAME
+ICO STREET CITY STATE
+ZIP
+GROUP
+SUBSECTION AFFILIATION
+CLASSIFICATION
+RULING DEDUCTIBILITY
+FOUNDATION ACTIVITY ORGANIZATION STATUS
+TAX_PERIOD ASSET_CD
+INCOME_CD
+FILING_REQ_CD
+PF_FILING_REQ_CD ACCT_PD
+ASSET_AMT
+INCOME_AMT REVENUE_AMT NTEE_CD
+SORT_NAME
+This file contains the org's NTEE code which is useful for finding
+charities by subject category.
+
+International
+https://www.irs.gov/pub/irs-soi/eo_xx.csv
+Charities with overseas US military addresses are in this .csv file.
+APO/FPO/DPO: APO is used for Air/Army Post Office; FPO is used
+for Fleet Post Office; DPO is used for Diplomatic Post Office.
+
+National Center for Charitable Statistics
+The NCCS maintains the National Taxonomy of Exempt Entities
+which classifies nonprofits.
+http://nccs.urban.org/classification/national-taxonomy-exempt-entities
+The full list of codes can be found here and correspond to the field
+NTEE_CD in the Exempt Organizations Business Master File Extract:
+http://nccs.urban.org/sites/all/nccsarchive/kbfiles/324/NTEE%20Two%20Page_2005.DOC
+
+Other tools
+Tips On Using New IRS 990 Data
+Be sure to check out the tip sheets from Andrea Fuller’s and Todd
+Wallack’s presentation.
+https://www.ire.org/resourcecenter/tipsheets/5328/download/?fileid=5591
+https://www.ire.org/resourcecenter/tipsheets/5326/download/?fileid=5590
+
+Charity Navigator
+https://github.com/CharityNavigator
+http://990.charitynavigator.org/code-walkthrough
+Open Data for Nonprofit Research
+https://lecy.github.io/Open-Data-for-Nonprofit-Research/
+
+

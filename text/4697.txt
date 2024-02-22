@@ -1,0 +1,242 @@
+Lightning­fast data analysis with Tableau
+Sarah Ryley
+sarahryley@gmail.com
+@MissRyley
+About the data:
+We have three datasets: A spreadsheet on information that was entered from nuisance
+abatement cases, a spreadsheet on census tract demographics, and a spreadsheet on
+precinct demographics. Nuisance abatement cases are civil actions that the NYPD files
+against businesses and residences it claims are being used for illegal activity. They can
+use these actions to shut down the location for up to a year, but generally the tenant
+agrees to settle either by giving up their lease or excluding certain people. The data has
+information on the case, the target of the case and some of the settlement terms.
+Loading data:
+­ On the lefthand side of the screen, under “Connect,” select the file type. In this case,
+we are using an Excel file
+­ Select “cases_nicar”
+­ Now you see a dashboard that gives you some options on how you want to move
+forward with your data. First you select the type of connection in the top center — For
+our purposes, since this is a static data source that we’ll ultimately want to save as a
+packaged workbook, choose “Extract.”
+­ On the lefthand side, you can select the sheet you want to upload from the Excel
+workbook. Our Excel file only has one sheet, so it’s already been selected for us. If you
+have multiple sheets, you’d just drag the sheet you want into the white rectangle in the
+center.
+­ Now you’ll notice symbols over each of your columns for the data type. The # means
+the data being read as a number. But in the case of Precincts, we actually want to
+convert this to a string, because for our purposes it’s actually a category (or in Tableau,
+a “dimension”) and also because it’s one of the fields we could to use to join with
+another dataset. It’s not something we’d use for calculations (same with zip codes,
+phone numbers, social security numbers) so in data land this is not a number. So just
+
+click on the # and a drop­down menu will appear allowing you to change it to a string.
+The globe sign means it’s a geographic indicator, Abc means string. For the “Year”
+column, although this is a date, in Tableau you can’t convert just a year to a date. We
+have more specific dates in other parts of the spreadsheet.
+­ Now convert Arrestdate to a date, and Cityid to a string (again because this is
+something we would categorize by — the census tract — and because we’ll be using
+this to join with another dataset).
+­ Now click “Go to worksheet” in the lower left of the screen, and it’s going to prompt you
+to save the extract. I always save them in a separate folder inside my project folder so
+they don’t get lost but also don’t crowd up my folder.
+Sheets:
+­ On the lefthand side, you’ll now see that your fields have been divided into dimension
+and measures. Dimensions are qualitative or categorical fields, such as the precinct or
+date. These would also be the fields that you would join with other datasets. Measure
+are quantitative fields that you would use for calculations.
+­ Along the top center, you will see a place to drag fields to be used as columns or rows,
+a place to drag fields to be used as filters, and a floating window where you can choose
+how you want to view your results. These are the main things we’re going to focus on
+for this short session.
+­ In the center, you will see what looks like a blank chart. You can also drag and drop
+your fields into this section to structure your chart.
+Simple queries:
+­ First you want to check your total number of records to make sure you’ve correctly
+imported your data. Down in the Measures window, you will see a field called “Number
+of Records” — this is a field that Tableau always has the simply counts the number of
+records. Drag it into the center of the chart. It shows you have 1,161 records. You’ll also
+see this displayed at the very bottom of the screen. If you run a query and a certain
+number of records are excluded, you’ll see this at the bottom of the screen as well. It’s
+important to note this in order to check your work for accuracy.
+
+­ Now we want to see how many actions were filed against residences versus
+businesses. Drag the dimension “Partytype” into the columns section. We now see
+there were 645 actions filed against businesses and 516 filed against residences.
+­ Now we want to see what types of alleged offenses prompted these actions. Drag
+“Offense Type” into the rows section. To sort, you can simply click on business or
+residence and you’ll see a sort icon.
+­ If you want to then total these, click on “Analysis” in the menu bar, then “Show Row
+Grand Totals,” then “Show Column Grand Totals”
+­ If you want to view these as a percent of total, click on “Analysis” in the menu bar, and
+select “Percentage of —> Column”
+­ If you want to go back, you can just click the backward arrow in the top lefthand corner
+of the dashboard. To redo, just hit the forward arrow.
+­ Say you want to simplify your results by grouping the less common offense types into
+an “Other” category. You can just hold the shift key, then click on “Other” “Counterfeit
+Goods” “Unlicensed Security Guard” and “Unkown” THEN right­click, select “Group.” To
+change the name of the category, just right click on the row and select “Edit Alias” and
+change the name to “Other.” You’ll now notice that you have a new dimension with your
+group. That means you can continually re­use it on new formulas in new sheets without
+having to re­create the formula. You can rename it by right­clicking on the dimension
+and selecting “Rename.” I’ll call this “Offense Type (<20=Other)” so I remember what it
+means two weeks from now.
+­ We want to see how many actions were filed each year. Drag “PDevictdate” into rows
+— this is the date the action was filed. (We only have data for half of 2014). You can
+chose the structure of the chart by dragging the field before or after “Offense Type.” In
+this case we want it to come second. You could change it to any type of date part that
+you want. In this case, I want to look at the day of the week the action was filed. Bars
+complain the NYPD files them on Thursdays and Fridays to extend the number of days
+the businesses are closed down before their first court date, which must come within
+three business days. So right­click on the date pill, then go down to “more,” then choose
+“Weekday.”
+­ Now under analysis, choose Percentage Of ­> Column in Pane, and it will calculate the
+percent of actions that were filed on each day of the week.
+
+Calculation using date:
+­ Now we’ll add a new sheet and run a calculation on two dates. On the bottom left, next
+to where it says “Sheet 1” click on the icon that looks like a graph. That will create a new
+sheet. You can name your sheets the same way you would in Excel, by right clicking on
+the tab and selecting “Rename Sheet.”
+­ For this calculation we want to see how many weeks on average the NYPD took to file
+the nuisance abatement action after the last offense (which is “Arrestdate”). This is
+interesting because they begin every action with an ex parte temporary closing order
+before the defendant has had the opportunity to come into court, in part by arguing that
+it’s urgent the place be closed immediately.
+­ In Measures, right­click and select “create calculated field.” We’ll call this
+“Arrest­Evict”.
+­ Click the arrow on the right and it will give you a selection of different formula types.
+Sometimes I browse through these to get ideas for queries. Double­click “DATEDIFF”
+which will calculate the difference between two dates. In the window it gives you a cheat
+sheet on how to write the formula:
+DATEDIFF('week',[Arrestdate],[Pdevictdate],'Sunday')
+­ Type in ‘week’, then drag the “Arrestdate” pill, then add a comma, then drag the
+“Pdevictdate” pill, then add another comma, and type ‘Sunday’). You can also just type
+these out manually, putting brackets [] around your field. Just make sure it’s typed
+exactly the way it appears!
+­ Now click okay and drag that pill into the center of the chart. It’s automatically going to
+SUM all the weeks between every action, but you actually want an average. So in the
+“Marks” window, right click on the pill, select “Measure (SUM)” and change it to
+average. You see that it took the NYPD 23 weeks to file these actions after the last
+arrest.
+­ If you want to view this by party type, just drag “Partytype” into columns, and you can
+see that the NYPD actually filed these actions a little faster against businesses than
+residences.
+Blending tables:
+
+­ Now we’re going to blend this dataset with another one on census data.
+­ Select “data” in your menu bar, then “New data source,” then “Excel,” then choose
+“demographics_nicar.” Load it as an “extract” and then create a new sheet.
+­ You’ll notice in the lefthand pane you now have two datasets under the data section.
+­ Now we’re going to create a relationship between the two datasets, joining on the
+cityid.
+­ Go to Data in your menu bar, and click “Edit relationships.”
+­ Click “custom” and then “city id” in both windows.
+Calculation with blended tables:
+­ Now we want to see the distribution of actions in census tracts based on the percent of
+the population that identifies as minorities, compared to the overall distribution of these
+census tracts in the city.
+­ Select your demographic data from the data section in the menu pane (it’s called
+cityid_race_poverty_nabe because these are all the things I joined together for this
+table)
+­ Right­click on “Pct Non White” (I’ve already calculated this in the underlying data) in
+the measures window, and select “Create” and then “Bins.” We’ll create bins in
+increments of .20.
+­ Now your bins have been added to the Dimensions window. Drag that pill into the rows
+field.
+­ Now we’re going to go back to the case data. In the lefthand bar, at the top, select the
+cases_nicar data. Make sure the link next to the “Cityid” field is not broken. If it is, just
+click on it. Now drag “Number of Records” into the data sheet window and it will show
+you the distribution of the cases by the demographic makeup of the census tracts.
+­ To compare it to the distribution of the census tracts citywide, select the demographic
+data, and drag “Number of Records” into the data sheet window. Now you can view by
+
+percentage of column by selecting “Analysis” from the menu bar, then “Percentage of ­>
+Column”
+Calculation with numbers:
+­ First we’ll just look at demographics by neighborhood. Create a new sheet. Using the
+demographics data, drag “Neighborhood Name” into rows and “Total Races Tallied” into
+the data sheet window. This will just add up the population in each neighborhood (the
+city census tract data also attaches neighborhood names to the census tract). You can
+then drag “Black” and “Hispanic” into the data window.
+­ Now we’ll calculate the percent of the population in each neighborhood that is black
+and Hispanic. Create a calculated field by right­clicking in the measures window, and
+call it Pct Black and Hispanic. This is the calculation: ([Black]+[Hispanic])/[Total races
+tallied:]
+­ Drag that pill into the data window as well. Format it to a percentage by right­clicking
+the pill in the Measures Values, then clicking format, then changing to a percentage.
+Now it’s simply adding up the percentage of every census tract, so you’ll want to
+right­click the field again and change the measure to an average.
+Correlation:
+­ Now we want to see if there’s a relationship between the percent black and Hispanic
+and the number of nuisance abatement actions in the neighborhood. Create a new
+sheet.
+­ We have two datasets — the census data and the nuisance abatement data. Not
+every census tract has a nuisance abatement case, but we’ll still want to factor those
+tracts into our results because it’s important for us to know if certain tracts had no
+actions and the characteristics of those tracts. What if there were a lot of tracts that had
+a high concentration of minorities that had no actions whatsoever? That means that
+there’s something else at work besides just demographics of an area that factors into
+the NYPD’s targets. So you’ll want to start this formula with the demographics data,
+since we want all of those tracts, not just the ones that match with the nuisance
+abatement data. This is the equivalent of a left join.
+­ Select your cityid_race_poverty_name dataset, and drag the “Neighborhood Names”
+field into rows. You see at the bottom left of the screen that there are 196
+
+neighborhoods. Remember that number — this is how you’ll check to make sure your
+query is behaving properly.
+­ Now select your cases dataset, and drag # Number of Records into the chart. You’ll
+see that it just says 1161 ­ that means the link is broken. So click the little broken link
+icon next to the “Cityid” field
+­ We still have 196 rows, but you’ll notice that there’s no numbers in the rows where
+there were no actions in those neighborhoods. In order to do this accurately, we’ll need
+a zero value where there are no records, so we need to do an “IFNULL” formula. This
+will put a zero where there are null values. Create a calculated field from the
+demographics dataset that tells Tableau to count the UniqueIDs from the cases dataset,
+and if there are none, put a 0 in there:
+IFNULL((COUNT([cases_nicar.csv (cases_nicar)].[Uniqueid])),0)
+­ Drag that formula into the data window. Now drag the Pct Non White field into the data
+window, then right click on the field in the Measures Values window and change it to an
+average. And right click on the number of records column and click exclude because we
+don’t want that one for our scatter plot.
+­ Now under “Show Me” select “Scatter Plot”
+­ You’ll actually want to swap the view so your Number of Records (dependent variable)
+is on the “Y axis” and your demographics is on the “X axis.” There’s an icon for that in
+the middle of the top ribbon.
+­ You’ll see in the bottom that you only have 194 neighborhoods plotted. That’s just
+because there are no demographics for two neighborhoods because there’s nobody
+living there. We’re cool.
+­ If you right­click inside the window, you can select “Show trend lines” and then
+“Describe trend model.” Know your limits. If you’re not an expert in stats, I would consult
+a few before actually putting anything into print. But the main things you want to look at
+to see if you have anything to go on are the p­value and r­value. Although there’s some
+debate about the significance of the p­value, the stats for dummies measure is that the
+relationship may be statistically significant with a p­value of (<0.05). Then you look at
+the r­value, which tells you how closely the results are fitted to your regression line, or
+how much your independent variable explains the variation in your dependent variable.
+
+In this case, it’s saying 19% of the variation is explained by the percent of the population
+that is black and Hispanic. That’s actually not very high so there are a lot of other
+factors at work here that explain the variation, such as crime, population density,
+poverty, etc. You would also want to create a calculation for rate. And consult an expert
+in stats before moving forward.
+­ But to give you an idea of some filters that you could do, you could choose to only look
+at census tracts that have a certain poverty level, for example. Drag “Poverty Level” into
+filters and then choose “Minimum” then click “Next” then punch in 10 at the minimum —
+this will only look for neighborhoods that have at least 10% of the population below the
+poverty line. Now you have 55 neighborhoods that fit that description. You can
+right­click on the pill in the filter and select “Show Filter” so you can adjust it.
+Export:
+You can export an image or a crosstab of your work. Just go to Worksheet in the menu
+bar, then either select “Copy” if you want to just copy and paste right into an email or
+Excel sheet, or “Export” if you want to export into a new file.
+Saving:
+I always save in the .twbx (packaged workbook) format so all of my extracts are already
+packaged into a workbook and I don’t have to re­find them when I open a new file.
+
+Some more formulas if we have time:
+IFNULL from census: IIF([Partytype]='Residence',1,0,0)
+IFNULL from demographics: IFNULL(SUM([cases_nicar.csv (cases_nicar)].[If
+Residence]),0)
+Rate from demographics: [Calculation1]/SUM(([Total Housing Units]/1000))
+
+

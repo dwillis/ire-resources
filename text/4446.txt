@@ -1,0 +1,118 @@
+Lightening Fast Data Analysis With Tableau II
+Sarah Ryley
+Data Projects Editor
+New York Daily News
+sarahryley@gmail.com
+@MissRyley
+SUMMONS DATA
+• Import SAMS
+• Import Precinct demographics
+Make sure all your data types are correct:
+• In SAMS, precinct and county should be strings and dimensions because they are
+attributes, not numbers we would use for calculations. Also, you can’t join with a
+number. Drag them both into the dimensions panel, right-click and select “change
+data type” and change to string
+• In Precinct Demographics, Precinct should be a string
+• Always double-check to make sure your data imported properly — count your number
+of records, drag some of your dimensions into the rows shelf, etc.
+• Notes about the data — there are seven precincts that send summonses to
+community court, which is a separate dataset. For the purpose of this exercise
+we’re ignoring this fact.
+Creating relationships between data sets:
+• Go to “data” in the menu bar, and select “edit relationships”
+• Join the “precinct” field in SAMS and Precinct Demographics
+• Test your joins — Precinct and Precinct Name now gives you the name of the police
+precinct
+• If you drag “precinct name” from the precinct demographics table into the filters panel
+and uncheck “null” it will only give you the precincts that join.
+• In the SAMS data window, drag “number of records” from measures into the table and
+you will get a count of the number of summonses written out in each precinct.
+Calculated fields:
+• Say we want to look at a rate per 100 residents, to see if the rate is higher in black
+and Hispanic precincts. We need to write a few formulas:
+• Count the number of records per precinct. Go to the SAMS data, right-click in
+measures, and create a calculated field called “count pct”:
+⁃
+COUNT([Precinct])
+• Go to Precinct demographics, right-click in measures, and create a calculated field
+called “per 100 residents”:
+⁃
+[SAMS 2001].[count pct]/(sum([Population])/100)
+• Note that we needed to “sum” the population because you can’t mix aggregate and
+
+non-aggregate arguments.
+• Check your work! From SAMS, Drag “precinct” into rows, number of records and
+count precinct into columns — it’s the same number. Now from precinct
+demographics, drag population and per 100 residents into columns. The rate is
+correct.
+• Add a filter for the year and the arresting agency (NYPD) to get a more accurate/
+meaningful rate.
+• Say we want to calculate a percentage point spread to, say, refute the police
+commissioner’s claim that blacks and Hispanics are getting more tickets only
+because cops are concentrating their efforts in the areas with the highest crime.
+First we need to calculate the percent of summonses that go to blacks and
+hispanics in the SAMS data:
+⁃
+((COUNT([Bh Nbh]))/(COUNT([Race Eth])))*100
+• Note: I created a new column in my underlying data that returned “BH” if the race/
+ethnicity was black or Hispanic and nothing otherwise because I knew I would
+need to use this a lot.
+• I multiplied this formula by 100 because my “percentages” in the precinct
+demographic table are actually not percentages. These tend to work better in
+Tableau for some reason.
+• Tableau won’t count “nulls” in the total.
+• Now you need a formula to subtract the percent black and Hispanic of the precinct
+from this figure. Create this calculated field:
+⁃
+[Percent BH]-SUM([Sheet1 (Precinct Demographics)].[%PopBlkHisp])
+• You can explore this by charge, year, etc.
+• You can then create a calculation for the percent not black or Hispanic:
+⁃
+100-((count([Bh Nbh]))/(count([Race Eth]))*100)
+• And then calculate a percentage point spread to quickly identify the charges with the
+greatest disparities:
+⁃
+[Percent BH]-[Percent NBH]
+• The average number of days until a disposition:
+⁃
+DATEDIFF('day',[Issuedate],[Dispodate])
+• Drag “county” into rows and the calculation into the table, then right click on the
+calculation pill in the marks panel and format it to an average, so you have the
+average days until disposition for a case by county.
+• An IIF statement that classifies arresting agency as “NYPD” or “Other”:
+⁃
+IIF([Arresting Agency]='NYPD','NYPD','Other')
+• A rank of the number of records, so you can easily filter to only look at your top
+charges:
+
+⁃
+
+RANK(COUNT([Charge Description]))
+
+Quick linear regression:
+• From the SAMS data source, drag “number of records” into the area of the y-axis —
+this is the dependent variable
+• From the precinct demographics data, drag “%PopBlkHisp” into the area of the x-axis
+— this is the independent variable
+• If you get an error message — follow instructions and click that broken link icon next
+to “Precinct” in the dimensions pane
+• Now drag precinct into the table — it’s plotting the precincts based on the number of
+summonses issued and the percent population that is black and hispanic. You
+can see that the more heavily black and Hispanic precincts are getting hit with
+more summonses.
+• You can drag “precinct name” into the tooltip box in the marks panel so you can see
+the actual precinct name when you hover over the point for each precinct.
+• If you want to look at only a specific charge, from the SAMS data, drag “New
+Description” into the filters pane and select a group of charges, such as
+“disorderly conduct.”
+• Also drag “Arresting Agency” into the filters shelf and select only those summonses
+issued by the NYPD.
+• In order to see the trend line, go to analysis and select “trend lines” and “see trend
+line”
+• More on how to read these later, but if you right click the trend line and select
+“describe trend model,” you’ll see the p-value and the r-squared value.
+• Replace “number of records” on the rows shelf with “per 100 residents.” That big
+outlier is Central Park, which apparently has 25 residents. Right-click it and
+choose “exclude.”
+
+

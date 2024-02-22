@@ -1,0 +1,187 @@
+Making friends with map projections
+
+Why bother with map projections?
+
+Flat maps are useful, but only if they're both legible and accurate
+
+The fundamental problem
+
+The earth is a spheroid (not a sphere, BTW), and most maps are flat.
+
+No solution
+
+It's impossible to represent a 3D object in 2D with total accuracy.
+
+More data, more problems
+
+The Internet is flooded with maps in many different projections.
+
+To hack responsibly, you need to know a little
+
+When mixing two data sets, you need to keep projections in line.
+Patricia Murietta's example shows how apples become oranges.
+
+Which U.S. map looks the best?
+
+SRID 4326
+
+Which U.S. map looks the best?
+
+SRID 3395
+
+Which U.S. map looks the best?
+
+SRID 32614
+
+Which U.S. map looks the best?
+
+SRID 102003
+
+Which Alaska map looks the best?
+
+SRID 4326
+
+Which Alaska map looks the best?
+
+SRID 3395
+
+Which Alaska map looks the best?
+
+SRID 102003
+
+Which Alaska map looks the best?
+
+SRID 3338
+
+You've may have already heard of:
+● Mercator
+● UTM
+● State plane coordinates
+
+Mercator
+Old (1569), invented to show navigation in a single direction as
+a straight line
+Good qualities
+● Very familiar to people
+● Lowest distortion near
+equator
+
+Less-admirable qualities
+● Huge distortion at
+high latitudes
+● Not good for measuring
+distances
+
+UTM (Universal Trans-Mercator)
+Developed by U.S. Army Corps of Engineers in 1940s to make
+measuring distances easy
+Good qualities
+● Measures small distances
+very accurately in meters
+● Good at representing
+small to medium-sized areas
+Less-admirable qualities
+● Visually distorts farther
+away from center of zone
+
+State plane coordinates
+Via Wikipedia: 110 zones in the continental U.S., with 10 more
+in Alaska, 5 in Hawaii, often used by state and local
+governments
+Good qualities
+● Ignores the curvature of the earth, which simplifies
+calculations
+● Highly accurate over small distances
+Less-admirable qualities
+● Rapidly decreasing accuracy farther out
+● Follows county lines, but not as regular, so you have to
+know your state
+
+Projections you haven't heard of but need
+USA Contiguous Albers Equal Area
+(Good for continental USA maps)
+
+Alaska Albers (Good for an Alaska map)
+
+Spherical Mercator (The google maps projection)
+
+NAD (North American Datum)
+Several variations, used by census and USGS
+WGS - If all else fails, try SRID 4326 on mystery
+data
+
+How do I tell which projection I have?
+Any time you get new spatial data, you'll need to know what
+projection the data uses
+How to tell:
+● Ask the person you got it from
+● Find out what that agency generally uses
+● Hopefully, the projection will be specified inside the data
+● Projections are best referenced by SRID number if available
+○ SRID = Spatial Reference System Identifier
+○ Like taxonomy for projections
+
+Mizzou's leaky underground tanks
+The proj4 from qgis:
++proj=utm +zone=15 +ellps=GRS80
++towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+The .prj file:
+PROJCS["NAD_1983_UTM_Zone_15N",
+GEOGCS["GCS_North_American_1983",
+DATUM["D_North_American_1983",
+SPHEROID["GRS_1980",6378137.0,298.257222101]
+],
+PRIMEM["Greenwich",0.0],
+UNIT["Degree",0.0174532925199433]],
+PROJECTION["Transverse_Mercator"],
+PARAMETER["False_Easting",500000.0],
+PARAMETER["False_Northing",0.0],
+PARAMETER["Central_Meridian",-93.0],
+PARAMETER["Scale_Factor",0.9996],
+PARAMETER["Latitude_Of_Origin",0.0],
+UNIT["Meter",1.0]
+]
+
+Source
+
+Tanks
+
+WHAT NOW?!?
+
+Counties
+
+Which projections to use for your maps
+How big an area? Who is your audience?
+City map
+● State plane, Your friendly local UTM zone (link)
+
+State map
+● Mercator (with exceptions), UTM, State plane
+
+U.S. map
+● U.S. Albers, UTM Zone 14N?, Mercator
+● Don't forget insets for Hawaii, Alaska
+
+World map
+● XXXX, Mercator (not generally first choice)
+
+3D mapping
+● Easy answer: 4326 (WGS 84) overlays nicely
+
+Tools for projecting spatial data
+Quantum GIS
+uDig
+ArcGIS
+PostGIS
+indiemapper.com
+
+Managing projections at your org
+● Make a cheat sheet for the agencies you care about
+● Pick a master projection for each situation
+● Keep a master version of every SHP set you regularly use
+● Get agreement among graphics, GIS and web pundits on
+what everyone expects to be delivered and how maps will
+be displayed (may be different)
+
+

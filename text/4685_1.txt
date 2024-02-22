@@ -1,0 +1,120 @@
+Joining with SQL
+Let’s say I start a new job at The Wall Street Journal. I’ll probably get an employee ID, for instance,
+123555.
+Now, the Wall Street Journal is going to put different information about me in different places. For
+example, human resources might have a table with employee IDs and birthdays called employees:
+Name
+Andrea Fuller
+Coulter Jones
+
+Birthday
+5/5/1987
+3/3/1945
+
+EmployeeID
+123555
+132866
+
+But payroll will probably have a totally separate table with our salaries called salaries. Maybe that
+table doesn’t even include our names in it.
+EmployeeID
+123555
+132866
+
+AnnualSalary
+$5,000,000
+$75
+
+In an alternate dream world, I legally have access to both tables, and I want to figure out who earns
+how much.
+What we’ll need to do is JOIN the two tables -- linked by the EmployeeID field -- to create a master
+table that contains the following information:
+
+Name
+Andrea Fuller
+Coulter Jones
+
+Birthday
+5/5/1987
+3/3/1945
+
+EmployeeID
+123555
+132866
+
+AnnualSalary
+$5,000,0000
+$75
+
+Since the Journal has more than two employees, it would be silly to go through and manually look up
+every person’s ID in each table. This is where SQL comes in handy. This is how I’d write that query.
+SELECT *
+FROM employees
+JOIN salaries
+ON employees.EmployeeID = salaries.EmployeeID
+You’re likely already familiar with the SELECT and FROM syntax. You’ll type JOIN in front of the
+second table you want to join. You’ll write ON to express what fields you want to join. You write the
+name of the table with a period after it to express what table a given variable is from.
+
+Other things to know:
+• You can give your table a shortened name. For example:
+SELECT *
+FROM employees as a
+JOIN salaries as b
+ON a.EmployeeID = b.EmployeeID
+•
+
+JOIN only matches up records that exist in BOTH tables. What happens if Coulter in the first
+table but not the salary table? He won’t show up in our join results. To see everything from
+your first table even if it doesn’t have a matching record you can write:
+SELECT *
+FROM employees as a
+LEFT JOIN salaries as b
+ON a.EmployeeID = b.EmployeeID
+
+•
+
+You can also join on more than one condition. What if we didn’t have an EmployeeID and
+just had fields called FirstName and LastName in each table? Then we would write:
+SELECT *
+FROM employees as a
+LEFT JOIN salaries as b
+ON a.FirstName = b.FirstName and a.LastName = b.LastName
+
+•
+
+There are multiple ways to do this query. For example, WHERE syntax will also work
+instead of ON:
+SELECT *
+FROM employees as a
+LEFT JOIN salaries as b
+WHERE a.FirstName = b.FirstName and a.LastName = b.LastName
+
+•
+
+•
+
+What if you want to put your stuff into a new table? You can use this with the INTO syntax.
+But warning – all your field names have to be unique. When you type SELECT * you will
+get the duplicate EmployeeID field in each table.
+SQL Server
+
+SQLite
+
+SELECT a.*, b.AnnualSalary
+INTO MyJoinedTable
+FROM employees as a
+JOIN salaries as b
+ON a.EmployeeID = b.EmployeeID
+
+CREATE TABLE MyJoinedTable AS
+SELECT a.*, b.AnnualSalary
+FROM employees as a
+JOIN salaries as b
+ON a.EmployeeID = b.EmployeeID
+
+Warning: sometimes joins don’t always produce one to one results. If for some reason an
+employee had TWO salary records in our salary database, they would show up twice in our
+result set. It’s important to be weary of this!
+
+

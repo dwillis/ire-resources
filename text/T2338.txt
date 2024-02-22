@@ -1,0 +1,301 @@
+Snake Charming
+A Journalist Introduction to
+
+Python Programming
+Ron Nixon, Minneapolis Star Tribune
+Hollywood C.A.R. Conference March 17-20
+
+What is Python
+• Free scripting language, downloadable from
+www.python.org
+• Runs on Unix, Windows and Macintosh, and
+works with most Web servers
+
+Uses:
+• Text processing and data cleaning
+• Web scraping
+• Building simple and advanced programs and
+much more.
+
+Best things about python
+•
+Python is easy to use. The syntax is simple and most
+programs can be written in just a few lines. Although it is an
+object-oriented scripting language, most programs can be
+written without OOP.
+
+IDLE:
+•
+Although Python programs can run from the command
+prompt like other languages, Python features IDLE
+(Intergrated Development Language Editors) an interactive
+GUI where programs can be written, run and tested.
+
+Features:
+•
+List and Dictionaries. List are keyed on strings, rather
+than numbers. Dictionaries are list where values are
+referenced by keys instead of numbers.
+• String methods, modules and % operator. While much can
+be done with regular expressions, the string method and
+string modules often prove faster in processing and cleaning
+text.
+•
+Regular expressions. One of Python most powerful
+features, regular expressions are like find-and-replace on
+steroids. Unlike Perl, which has built in RE’s, Python RE’s
+must be accessed through the re module.
+
+STRING MODULE EXAMPLES:
+• To change the case of a string
+>>Str = ‘all the presidents men’
+>>String.capwords(str)
+>>’All The President Men’
+• Stripping out extra spaces
+>>Str = ‘I have what it takes’
+>>string.replace(\s\s,\s,Str)
+>> ‘I have what it takes’
+
+STRING METHOD EXAMPLE:
+
+• Search and Replace
+>> str = ‘ Mary had a little lamb’
+>> str.replace(‘ate’,’little’,)
+
+‘Mary ate a little lamb’
+
+Python’s % Operator:
+Python’s % operator lets you produce formatted outputs. %
+takes two arguments: a format sting and a tuple or dictionary
+with replacement values
+
+% Example
+string = ‘I have %s %s headache” %(one, huge)
+>>I have one huge headache’
+
+Limitations
+•
+
+It’s easy for large programs to get unwieldy
+
+•
+
+Not quite as fast a languages like Perl or C
+
+•
+Object-Oriented Programming can be a little tough to wrap
+your brain around at first
+
+Your First Program
+>>print "Hello World!”
+>> ‘Hello World’
+
+Syntax:
+
+• Python is case-sensitive
+• Indention is important
+• Comments are marked with #
+
+Strings and Numbers:
+String hold a singe value. Strings can be enclosed in single or
+double quotes. Numbers are assigned the same as strings,
+except they are not enclosed in quotes. If they are enclosed in
+quotes, they become strings.
+String = ‘I’m the king of the world’
+Num = 42
+
+Lists:
+List hold a list of values.
+mylist = ("Star Tribune", "Pioneer Press", "Minnesota Public
+Radio")
+
+List Example:
+When you are referring to a single element of the list,use square
+brackets and the strings number in the list to access to
+individual elements. The first element in the list is 0.
+print mylist[2]
+>> ‘Pioneer Press’
+
+Dictionaries:
+
+Dictionaries are arrays that are keyed on strings,
+rather than numbers. Dictionaries use curly
+brackets.
+Identity = { "Clark Kent" : "Superman",
+"Bruce Wayne" : "Batman",
+"Peter Parker" : "Spiderman"
+“Matt Murdock” : “Daredevil” }
+
+So, the following code:
+print Identity{"Clark Kent"}
+
+prints
+>>Superman
+
+Files:
+You read and write data from files, and from the screen or
+keyboard in Python by specifying which file handle your want to
+read from, or write to.
+
+The open() function opens files in Python.
+file = open( "c:/address.txt" )
+The file can be read in as an entire string, one line at a time or as a list of
+lines
+Examples:
+The read in the entire file as one string use the read method:
+
+File = open(‘c:/address.txt’).read().
+To read in the file one line at a time use the readline method:
+F = open(‘c:/address.txt’).readline()
+To read the file in as a list use the readlines method:
+F = open(‘c:/address.txt’).readlines()
+
+Files and Filehandles
+We can also use the open command to write to a text file. The
+syntax is slightly different – you use a “w” after the file name to
+tell python to open the file for writing.
+Test = open (‘c:/address1.txt’, ’w’ )
+Test.write(‘This is the first line\n’, ‘This is the second line\n”)
+Test.close()
+
+Print test
+
+Looping:
+While
+•
+While is the Python version of the do ... while loop. It
+executes while the condition specified is true
+
+I=0
+while I < 5:
+print I, I*I
+I = I +1
+
+00
+11
+24
+39
+4 16
+
+For Loop:
+The for loop is Python’s version of the foreach loop in other
+languages.
+color = [ "Red", "White", "Blue"]
+for line in color:
+print Hello “color"
+Red
+White
+Blue
+
+If
+A=1
+
+if A == 1:
+print "A really is One”
+
+If-then-elsif-else
+
+if a == 1
+print "A equals One”
+elsif a == 2
+print "That Doesn’t match"
+
+else
+print "Try again"
+
+Regular Expressions
+“Some people, when confronted with a problem, think ‘I
+know, I'll use regular expressions.’ Now they have two
+problems.”
+Regular expressions can be used to find patterns in strings. As
+the quote above suggest though re’s, although powerful, can
+create problems of their own. For a good bit of string
+processing, the sting method and string module can be used.
+
+Regular Expressions:
+•
+Regular expressions use the
+re.match(pattern,string), re.search(pattern,string),
+re.findall(pattern,string) to find matching information in text.
+
+Matching:
+>>> import re
+>>> bt = 'bat|bet|bit'
+>>> m = re.match(bt,'bat')
+
+>>> if m !=None: m.group()
+
+'bat'
+Match only works at the beginning of a string. The group() returns the
+matched string. This is similar to Perl’s $0
+
+SEARCH:
+Import re
+>>> string = 'dead|killed|wacked'
+>>> quote = 'You are a dead man'
+>>> m = re.search(string, quote)
+>>> if m !=None: m.group()
+
+'dead'
+
+Search goes through the string to return a match
+
+FINDALL():
+** See pattern example below
+findall returns all non-overlapping occurrences of
+a string
+
+Search and Replace
+• Search-and-replace regular expressions use
+the re.sub(pattern,newpattern) notation for
+matching strings.
+• Use word boundaries \b to match exact words
+
+Search and Replace
+Import re
+>>s = open("street.txt" ).read()
+>>> re.sub(r'\bST\b','STREET',string)
+
+• Adding an I or re.ignorecase after the s does
+case-insensitive searching and replacing
+re.sub(r’\bST\b’,’\bSTREET\b’,s,re.I)
+
+Patterns:
+Use re patterns to find information(i.e. phone numbers) in a
+string of text
+
+Import re
+F = open(‘phone.txt’)
+Patt = re.complie(r’\d{3}-/\d{3}-/\d{4}’)
+
+Re.findfall(patt,f)
+m.group()
+
+Splitting
+Using the re module’s split() to split items based on a delimiter.
+The split function defaults to whitespace if no delimiter is given
+>>> import re
+>>> string = 'Ron;Aron;Derek;John;Matt'
+>>> re.split(';',string)
+['Ron', 'Aron', 'Derek', 'John', 'Matt']
+
+>>>
+
+Resources:
+www.python.org
+Python’s main website. The site has everything you every
+wanted to know about Python
+
+http://www.vex.net/parnassus/
+A collection of Python scripts
+
+http://python.oreilly.com/
+O’Reilly Publications Python website
+
+http://aspn.activestate.com/ASPN/Python/Cookb
+ook/
+A large collection of Python code free to use. Search here
+before you try building your own code, you might find the
+answer to your problem
+
+

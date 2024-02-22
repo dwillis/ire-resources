@@ -1,0 +1,266 @@
+Crowdsourcing using Mechanical Turk
+Quality Management and Scalability
+
+Panos Ipeirotis – New York University
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Example: Build an “Adult Web Site” Classifier
+ Need a large number of hand-labeled sites
+ Get people to look at sites and classify them as:
+G (general audience) PG (parental guidance) R (restricted) X (porn)
+
+Cost/Speed Statistics
+ Undergrad intern: 200 websites/hr, cost: $15/hr
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Example: Build an “Adult Web Site” Classifier
+ Need a large number of hand-labeled sites
+ Get people to look at sites and classify them as:
+G (general audience) PG (parental guidance) R (restricted) X (porn)
+
+Cost/Speed Statistics
+ Undergrad intern: 200 websites/hr, cost: $15/hr
+ MTurk: 2500 websites/hr, cost: $12/hr
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Bad news: Spammers!
+
+Worker ATAMRO447HWJQ
+labeled X (porn) sites as G (general audience)
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Improve Data Quality through Repeated Labeling
+ Get multiple, redundant labels using multiple workers
+ Pick the correct label based on majority vote
+
+11 workers
+93% correct
+
+1 worker
+70% correct
+
+ Probability of correctness increases with number of workers
+ Probability of correctness increases with quality of workers
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Using redundant votes, we can infer worker quality
+ Look at our spammer friend ATAMRO447HWJQ
+together with other 9 workers
+
+ We can compute error rates for each worker
+Error rates for ATAMRO447HWJQ
+
+
+
+P[X → X]=0.847%
+P[G → X]=0.053%
+
+Our “friend” ATAMRO447HWJQ
+P[X → G]=99.153%
+mainly marked sites as G.
+Obviously a spammer…
+P[G → G]=99.947%
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Rejecting spammers and Benefits
+Random answers error rate = 50%
+Average error rate for ATAMRO447HWJQ: 49.6%
+
+
+
+P[X → X]=0.847%
+P[G → X]=0.053%
+
+P[X → G]=99.153%
+P[G → G]=99.947%
+
+Action: REJECT and BLOCK
+
+Results:
+ Over time you block all spammers
+ Spammers learn to avoid your HITS
+ You can decrease redundancy, as quality of workers is higher
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Correcting biases
+ Classifying sites as G, PG, R, X
+ Sometimes workers are careful but biased
+Error Rates for CEO of company detecting offensive content (and parent)
+P[G → G]=20.0%
+P[P → G]=0.0%
+P[R → G]=0.0%
+P[X → G]=0.0%
+
+
+
+
+P[G → P]=80.0%
+P[P → P]=0.0%
+P[R → P]=0.0%
+P[X → P]=0.0%
+
+P[G → R]=0.0%
+P[P → R]=100.0%
+P[R → R]=100.0%
+P[X → R]=0.0%
+
+Classifies G → P and P → R
+Average error rate : too high
+
+Is she a spammer?
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+P[G → X]=0.0%
+P[P → X]=0.0%
+P[R → X]=0.0%
+P[X → X]=100.0%
+
+Correcting biases
+Error Rates for Worker: ATLJIK76YH1TF
+P[G → G]=20.0%
+P[P → G]=0.0%
+P[R → G]=0.0%
+P[X → G]=0.0%
+
+P[G → P]=80.0%
+P[P → P]=0.0%
+P[R → P]=0.0%
+P[X → P]=0.0%
+
+P[G → R]=0.0%
+P[P → R]=100.0%
+P[R → R]=100.0%
+P[X → R]=0.0%
+
+P[G → X]=0.0%
+P[P → X]=0.0%
+P[R → X]=0.0%
+P[X → X]=100.0%
+
+
+
+We simply need to “reverse the errors” (technical details omitted)
+and separate error from bias
+
+
+
+True error-rate ~ 9%
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Too much theory?
+Demo and Open source implementation available at:
+
+http://qmturk.appspot.com
+ Input:
+– Labels from Mechanical Turk
+– Some “gold” data (optional)
+– Cost of incorrect labelings (e.g., XÆG costlier than GÆX)
+ Output:
+– Corrected labels
+– Worker error rates
+– Ranking of workers according to their quality
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+How to handle free-form answers?
+ Q: “My task does not have discrete answers….”
+ A: Break into two HITs:
+– “Create” HIT
+Creation HIT
+– “Vote” HIT
+(e.g. transcribe caption)
+
+Voting HIT:
+Correct or not?
+
+ Vote HIT controls quality of Creation HIT
+ Redundancy controls quality of Voting HIT
+ Catch: If “creation” very good, in voting workers just vote “yes”
+– Solution: Add some random noise (e.g. misspell)
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Example: Collect URLs
+
+But my free-form is
+not just right or wrong…
+
+Describe this
+
+ “Create” HIT
+ “Improve” HIT
+ “Compare” HIT
+Creation HIT
+(e.g. describe the image)
+
+Improve HIT
+
+Compare HIT (voting)
+
+(e.g. improve description)
+
+Which is better?
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+TurkIt toolkit: http://groups.csail.mit.edu/uid/turkit/
+
+version 1:
+
+A parial view of a pocket calculator together with
+some coins and a pen.
+version 2:
+A view of personal items a calculator, and some gold and
+copper coins, and a round tip pen, these are all pocket
+and wallet sized item used for business, writting, calculating
+prices or solving math problems and purchasing items.
+version 3:
+A close-up photograph of the following items: A CASIO multifunction calculator. A ball point pen, uncapped. Various coins,
+apparently European, both copper and gold. Seems to be a
+theme illustration for a brochure or document cover treating
+finance, probably personal finance.
+version 4:
+…Various British coins; two of £1 value, three of 20p value and
+one of 1p value. …
+
+version 8:
+
+“A close-up photograph of the following items: A
+CASIO multi-function, solar powered scientific
+calculator. A blue ball point pen with a blue rubber
+grip and the tip extended. Six British coins; two of £1
+value, three of 20p value and one of 1p value. Seems
+to be a theme illustration for a brochure or document
+cover treating finance - probably personal finance."
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Future: Break big task to simple ones and build workflow
+ Running experiment: Crowdsource big tasks (e.g., tourist guide)
+My Boss is a Robot (mybossisarobot.com)
+Nikki Kittur (Carnegie Mellon) + Jim Giles (New Scientist)
+– Identify sights worth checking out (one tip per worker)
+• Vote and rank
+– Brief tips for each monument (one tip per worker)
+• Vote and rank
+– Aggregate tips in meaningful summary
+• Iterate to improve…
+
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+Thank you!
+Questions?
+
+“A Computer Scientist in a Business School”
+http://behind-the-enemy-lines.blogspot.com/
+Email: panos@nyu.edu
+©2011 - Duplication prohibited without permission from Investigative Reporters and Editors, Inc.
+
+

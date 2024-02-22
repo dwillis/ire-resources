@@ -1,0 +1,583 @@
+The seduction, power and danger
+of using data to investigate the
+criminal justice system
+
+§ Michael Braga
+§ Investigations Editor
+§ Sarasota Herald Tribune
+§ 941-361-4877/941-586-2451
+§ Michael.Braga@heraldtribune.com
+§ @MichaelBraga2
+
+Exploring racial bias
+As some of you may know, our newspaper is working on
+its third installment of a series about bias in Florida’s
+criminal justice system.
+That series derives from our exploration of two
+databases:
+The Offender Based Transaction System, or OBTS,
+which contains more than 80 million records.
+And a much smaller database – containing about 1.4
+million records -- complied by the Department of
+Corrections
+
+Love Affair
+Both databases have their attributes, but the one we really
+fell in love with is OBTS.
+That’s because it’s so big and rich with information - and it’s
+so difficult to work with.
+If you printed it out
+it would take up
+one lane of
+highway stretching
+262 miles -- About
+the distance from
+Chicago to Detroit.
+
+Bubba Justice
+It was Paige St. John, a 2011 Pulitzer
+Prize winner, who came across the
+OBTS database.
+She intended to use it to write a series of
+stories dubbed “Bubba Justice.”
+Her thesis was that Florida’s rural counties would be far
+more biased in their sentencing than big cities like Orlando,
+Miami and Jacksonville.
+But Paige left the Herald-Tribune for the LA times before she
+got a chance to test her thesis.
+
+Computer Assisted Cavemen
+Our team inherited Paige’s data,
+but we had problems accessing
+it.
+Paige stored her disks in a hot
+Florida garage and some of
+them warped.
+We couldn’t open them.
+Our IT staff couldn’t open them.
+So we turned to the Tampa Bay
+Times for help.
+Bill Higgins, their data guru at
+the time, downloaded the data
+for us and made it searchable
+using PostreSQL.
+
+Boiling it down
+Boiling it down
+Our next great challenge was to get rid of duplicates –
+and OBTS has a ton of them.
+The database tracks criminal defendants from arrest,
+through sentencing and appeal.
+Every time something significant happens in a case – a
+defense attorney is hired, a new judge is appointed, a
+verdict is reached – a new line of data is created.
+It took us more than six months to figure out how to boil
+down the dupes.
+
+Apples to apples
+OBTS showed us that bias is
+rampant in Florida’s criminal
+justice system.
+But critics said there was a
+fundamental flaw in our
+analysis – the inability to
+compare apples to apples
+Though OBTS clearly shows that blacks are arrested and convicted
+more often than whites - and spend far longer in lockup - there is no
+way to make sure that black and white defendants are being treated
+equally – no way perfect way to ensure that disparities aren’t caused by
+blacks having longer rap sheets or by having committed more serious
+crimes.
+
+Clean comparisons
+That’s where our second database from
+the Department of Corrections proved
+invaluable.
+
+Felony Level
+
+Points
+
+1
+
+0-3.9
+
+2
+
+4-15.9
+
+Though much smaller than OBTS, DOC
+contains an crucial field with points
+scored by defendants at sentencing.
+
+3
+
+16-21.9
+
+4
+
+22-27.9
+
+5
+
+28-35.9
+
+The points are key a system set up by
+Florida’s legislature in the 1990s to
+ensure criminals from Pensacola to Key
+West are sentenced fairly – regardless
+of their sex, race or financial
+wherewithal.
+
+6
+
+36-55.9
+
+7
+
+56-73.9
+
+8
+
+74-91.9
+
+9
+
+92 -
+
+The system provides a formula
+whereby prosecutors and judges can
+determine sentence length based on
+the total pointed scored.
+
+FORMULA
+(Points – 28) x .75 = Months in Lockup
+56-28 = 28 x .75 = 21 months
+
+Bias Reigns in Florida
+With DOC, we were able to compare defendants who
+scored the same number of points and to show that bias
+exists in almost every part of the state
+
+Alachua
+
+SOURCE: DOC
+
+Manatee
+
+115%
+
+129%
+
+Palm Beach
+
+115%
+
+Martin
+
+72%
+
+Sarasota
+
+68%
+
+Duval
+
+108%
+
+120%
+
+Brevard
+
+154%
+
+Florida
+
+180%
+160%
+140%
+120%
+100%
+80%
+60%
+40%
+20%
+0%
+
+Judging the judges
+Three of the four main stories in our ‘Bias on the
+bench’ series were supported by DOC data.
+But – still in love with OBTS – we used that
+database for our fourth story – and that’s where we
+ran into most trouble.
+That story compared 450 sitting and recently
+retired judges according their disparities in
+sentencing for six specific crimes and three broad
+categories of felonies.
+It also compared judges based on their political
+persuasions.
+
+Black Republicans
+It showed how black Republican judges were both the most
+lenient and the most biased – sending black defendants to
+an average 70 percent more time in lockup than white
+defendants for 3rd degree felonies
+450
+400
+350
+300
+250
+200
+150
+100
+50
+0
+Black Average
+White Average
+
+Republican
+
+Democrat
+
+Black
+Republican
+
+All Judges
+
+422
+333
+
+405
+370
+
+222
+131
+
+374
+323
+
+Judges were not happy with our conclusions.
+Determined to undermine our credibility, they wrote
+a letters to the Goldsmith Prize, after we had
+been named a finalist.
+They also sent similar letters to the Selden Ring,
+Pulitzer and other awards arguing we should not
+win.
+
+All out war
+The chief judge in our home circuit even
+recruited a computer science professor
+from nearby New College of Florida to
+challenge our methodology and
+conclusions.
+He then used a study authored by that
+professor to block legislation spawned by
+our series that would have mandated the
+use of data to ensure equity in
+sentencing.
+We fought back, writing a story proving
+the professor’s analysis was fatally
+flawed.
+But it was too late for legislative impact in
+2017.
+
+Blame the prosecutors
+We had prepared to pivot to a series about government
+corruption, but our fight with the judges ate up the first
+few months of the year.
+Not sure whether we could deliver a project on a fresh
+topic by year’s end, we opted to spend a second year on
+bias – looking at disparities in sentencing in Florida’s war
+on drugs and the role of prosecutors.
+
+Back to OBTS
+In their rebuttal to ‘Bias on the bench’, judges argued
+that they weren’t responsible disparities in sentencing.
+They pointed out that over 95 percent of cases are
+settled through plea bargains – a process controlled by
+prosecutors.
+So if anyone was to blame, it was the prosecutors and
+the plea negotiation process.
+We wanted to see if they were right.
+But we couldn’t use DOC this time around because it
+doesn’t contain enough information about prosecutors.
+So we turned back to OBTS.
+
+Regional Differences
+The database showed us that certain counties have wide disparities when it
+comes to sentencing blacks defendants busted for felony drug crimes.
+Other counties are far more fair.
+.
+1600
+1400
+1200
+1000
+800
+
+Black
+
+600
+
+White
+
+400
+200
+0
+County 1
+
+County 2
+
+County 3
+
+County 4
+
+After some initial reporting, we hypothesized
+that power in the criminal justice system is not
+uniform.
+In one county, for example, the sheriff holds sway.
+He dictates who is arrested. The overwhelming majority
+are black and disparities are wide.
+In another county, judges are more influential.
+They are not afraid to get involved in plea deals – and
+disparities are narrower.
+In a third county, the public defender
+likes to litigate. Assured of a liberal jury pool, she threatens to
+take cases to trial to force prosecutors to negotiate better plea
+deals.
+In another county just a few miles to the north - the public
+defender has close ties to prosecutors and rarely litigates – so
+sentencing disparities are wide.
+
+§.
+
+Wrong approach
+The story looked promising,
+But a data savvy reporter from the Jacksonville Times Union
+who was working with us at the time - found a flaw:
+We were basing our conclusions on charge-level data not
+defendant-level data.
+And it matters.
+Defendants are often charged with more than one crime possession of a weapon, possession of cocaine, possession
+of drug paraphernalia, trespassing, etc.
+Those crimes may get them a year in jail. But using chargelevel data, that year-long sentence can be doubled, tripled or
+quadrupled or more.
+
+Rush to the finish
+Because of this problem, we postponed writing about prosecutors and
+rushed to finish a series about bias in Florida’s war on drugs.
+We temporarily abandoned OBTS and turned back to our ever reliable
+Department of Corrections data.
+The data show immense disparities in sentencing for blacks and whites
+convicted of buying or selling drugs within 1,000 feet or a church or school or
+other drug free zone.
+2000
+1800
+1600
+1400
+1200
+1000
+800
+600
+400
+200
+0
+Black Average
+White Average
+
+Jacksonville's 4th
+
+Pensacola's 1st
+
+Fort Lauderdale's
+17th
+
+1782
+644
+
+1073
+251
+
+1426
+278
+
+Questioning the data
+Three weeks after we
+published, we received an
+email from the Broward
+County state attorney’s
+office saying our
+conclusions must be
+wrong.
+There’s no way Broward
+sentences blacks busted
+in drug-free zones to five
+times as long as whites.
+Unfortunately, they were
+correct.
+
+Avoidable Mistakes
+The Broward data, compiled by court clerks and sent
+on to the Department of Corrections was riddled with
+errors.
+Clerks entered the wrong sentence in 1 out of every 4
+cases in the 730-case sample.
+In one instance, a 65-year sentence was entered as
+650 years.
+We should have seen that error.
+But we were so confident in the DOC data from using it
+for the first series - and we were so rushed to complete
+our second series by the end of the calendar year that we failed to check.
+So we had to write a correction.
+
+Saving grace
+§ The saving grace was that problems in Broward were unique to
+that circuit. (Error rates in other circuits we tested were under
+five percent.)
+Also, after opening all 730
+cases and correcting the
+sentences, Broward
+County’s racial disparities in
+sentencing were still pretty
+ridiculous.
+Blacks busted in drug free
+zones were sentenced to
+three times more lockup.
+
+800
+700
+600
+500
+400
+300
+200
+100
+0
+Black
+Average
+White
+Average
+
+Fort Lauderdale's 17th
+683
+233
+
+The cleaned data
+revealed that whites
+were repeatedly shown
+lenience. In fact, in all
+our research we never
+came across a better
+examples of bias.
+In turn, Broward’s
+deputy state attorney
+confessed that his office
+completely ignores the
+point system, which was
+set up to ensure equity
+in sentencing.
+So we wrote a story
+that corrected our
+mistake and pointed out
+the bias in Broward
+County state attorney’s
+office in the process.
+
+Conclusions:
+Data is seductive.
+The bigger and more complicated it is – the more you want to use it.
+Data is also dangerous.
+There are so many things that can go wrong and so many variables you can’t control.
+Sure OBTS showed us that blacks are treated more harshly than whites – but maybe
+that’s because they have more priors and commit more serious crimes.
+Using charge level or defendant level data makes a difference,
+and there is no assurance that data provided by court clerks and government
+agencies is error free.
+As my Middle Ages history professor once told me – “Data is notoriously unreliable
+because it was often collected by the village idiot.”
+Most important and most obvious lesson from all this: DON’T RUSH.
+MAKE SURE YOU HAVE ENOUGH TIME TO OPEN THE DATA AND EXAMINE
+WHAT MIGHT BE CAUSING THE DISPARITIES.
+AVOID PUBLISHING IN DECEMBER.
+
+on
+That said, I don’t think the problems associated
+s:
+with data should paralyze any of us from using it.
+Even with our blunders, our pioneering use of
+OBTS and DOC is changing the criminal justice
+system in Florida.
+Judges and prosecutors genuinely fear how data
+will depict them, which is impacting their decision
+making.
+And many see how data can be used to make
+the system more equitable.
+A bill that is about to pass the state legislature
+calling for improvements in the collection of data
+and its use to ensure equity in sentencing.
+
+States that use OBTS
+At least 31 states or US territories are using or
+planning to use OBTS systems.
+Alabama
+Alaska
+Colorado
+Connecticut
+Hawaii
+Idaho
+Kansas
+Kentucky
+Massachusetts Michigan
+Nebraska
+New Jersey
+Ohio
+Oklahoma
+Pennsylvania Rhode Island
+Utah
+Vermont
+Wisconsin
+Wyoming
+
+Arizona
+California
+Delaware
+Georgia
+Illinois
+Iowa
+Maine
+Maryland
+Minnesota
+Missouri
+New Mexico
+New York
+Oregon
+South Carolina
+Virginia
+
+Getting your hands on it
+To get your hands it, you might have to ask for it for
+research purposes. That’s what we had to do.
+This is what we wrote:
+This data is intended solely for research purposes.
+Individual defendant names and case identifiers can be
+converted to unique identifiers (such as hash keys) that
+cannot be used to link to real persons, as along as it is
+replaced with an alpha-numeric code that uniquely
+identifies each individual in the database and each
+case number within the database.
+
+Possible stories
+Racial discrimination in sentencing is the low hanging fruit
+when it comes to investigating the criminal justice system
+OBTS and DOC data can be used for lots of other stories.
+Take VOP, for example - Defendants who violate probation can
+end up with crazy jail time.
+Or maybe you want to compare outcomes for private attorneys
+and public defendants
+Or you want to see which judges are the most lenient when it
+comes to DUI and which are the harshest when it comes to
+drug crimes.
+And what about sex crimes? No reporter wants to touch them
+because the perpetrators are so unsympathetic. But the data is
+there and the land is untilled.
+
+

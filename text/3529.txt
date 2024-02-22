@@ -1,0 +1,172 @@
+IRE Hands‐On:
+Real Estate Data with Tableau Public
+In this demo we’ll create a workbook describing the real estate trends of a city or neighborhood. While we use a
+neighborhood in Washington, D.C. (Shaw), the techniques and dashboard could be applied anywhere with real
+estate data.
+
+Get the data
+1. There are several places to get real estate sales data. To get the best result, you want one record for
+every home sale (address) and latitude and longitude for each address.
+a. Redfin allows download of search data by 500 records at a time. You must be logged in to
+download.
+b. Your local MLS may allow you to download sale records.
+c. Many local governments allow you to search home sale records. Some allow download.
+2. Make sure your data is in the right format:
+a. Workbook has one sheet with data
+b. Header row is row 1
+c. No blank rows or columns
+3. Connect to the data.
+a. Open Tableau Public and Click “Open Data.”
+b. Choose Excel & find your file
+c. Select “Single table” and find the first sheet
+d. You know you’ve done it right when all your
+fields show up in the Data Window on the
+left hand side of Tableau.
+
+Map all the home sales.
+•
+
+•
+
+In the Data Window, ctrl‐click on Latitude, Longitude and Address and click “Show Me.” This will result in
+every address being shown as a separate map. To get them all together, drag Address from Rows shelf to
+the Level of Detail shelf.
+You will see a world map, because some points are on “Null Island,” or lat,long of 0,0. Right‐click on that
+point and choose “Exclude.” Your maps should now look like this:
+
+•
+•
+
+Now drag and drop fields to get color and size on the view. First, drag “LAST SALE PRICE” from the data
+window to size. This will size each home sale by the sale price of that home.
+Next, drop “BEDS” onto color. This will make your view look like this:
+
+•
+
+Now let’s do some formatting. Click the arrow in the top right of the color legend field and select “Edit
+Colors.” We’ll choose an orange‐blue diverging color scale to add contrast. Don’t use green‐red unless you
+are attaching good‐bad judgments to the values, which in this case we aren’t.
+
+•
+
+Now go to the drop‐down on the color shelf (see image below.) There are some overlapping marks, so let’s
+add a border and some transparency to the marks.
+
+•
+•
+
+Finally, drag BATHS, Sale Date, and HOME TYPE to the Level of Detail shelf. We’ll use those later.
+Right‐click on the sheet name (“Sheet 1”) and rename it “Sales by Location.”
+
+Create price trend view
+•
+•
+•
+
+Create a new sheet.
+Drag LAST SALE DATE to Columns and LAST SALE PRICE to Rows.
+Click the “+” on the Date pill to expand to quarters, then click again to expand to months. Then drag
+Quarters off the view and into a blank (grey) place. Your view should look like this:
+
+•
+
+Unfortunately, this shows the sum of all sale prices, which is not meaningful. We can click the drop down on
+the LAST SALES PRICE pill to change to average sales price:
+
+•
+
+•
+
+•
+•
+
+But we’re still missing something. A better measure of the market is price per square foot, because the
+simple average can be distorted by the sale of very large or very small homes. Price per square foot isn’t in
+our data, so let’s create a calculation.
+In the data window, right‐click on LAST SALE PRICE and choose “Create Calculated Field.” Name it Price per
+Sq. Foot and make the calculation: sum([LAST SALE PRICE])/sum([SQFT]). The sum() function makes sure
+you don’t miscalculate averages on grouping. Your calculation should look like this (look for the green check
+to know it is ok.):
+
+When you click OK, this new field will show up in your data window. Drag it out to the view and drop it on
+top of AVG (LAST SALE PRICE) to replace it in the view.
+Finally, let’s make sure we don’t have any null values distorting the data. Drag SQ FT form the data window
+to the Filter shelf. Choose to filter on All Values, then Special Æ Non‐null values.
+
+•
+
+Your view will look like this:
+
+•
+
+Finally, rename your sheet “Price per Sq. Foot.”
+
+Create the dashboard
+•
+
+Create a new dashboard by right‐clicking next to your last sheet and selecting “New Dashboard.”
+
+•
+
+Size it to your page size: click :”Edit” in the size section in the lower‐left of the dashboard. This will help you
+avoid scrollbars and make sure the viz looks good in your page.
+
+•
+•
+•
+
+Add the price and location views by dragging them onto the dashboard, or just double‐clicking them
+Arrange and lay out the views by dragging them. Your dashboard should look like this:
+
+•
+
+Change and edit titles by right‐clicking on the title and choosing “Edit.”
+
+•
+•
+
+•
+
+•
+•
+
+Add any explanatory text by selecting “Text” from objects and dragging onto the screen. Here, we’ll add our
+source information as text.
+Add a Quick Filter on BEDS
+o Click on the top right corner of the location view Æ Quick Filters Æ City
+o This will apply only to the lower view, so align it there on the dashboard
+o Bonus: In the data window on either sheet, right‐click on BEDS and select Field Properties Æ
+Number format. Then select Number, 0 decimals, so you get only whole numbers.
+We also want to add a filter on HOME TYPE.
+o To do that, you need to go to the map sheet and drag HOME TYPE from the data window to the
+Level of Detail.
+o Then go back to the dashboard, and you can add the Quick Filter from the Sales by Location view.
+o Make this filter global by clicking the drop‐down in the upper right and selecting “Make Global.”
+On the lower left of your screen, Double‐click on Title in Objects and title the dashboard.
+Edit your tooltips for each view.
+o Select the sheet
+o On the main menu, select “Edit Æ Tooltips.”
+
+•
+
+o Format as desired
+Right click on legend and filter titles to change and format them. Right‐click on headers to remove them.
+
+Test the interaction
+1. Click around and see how it works
+2. Fix the size legend so that home sales keep their sizes as you change from one to another
+
+Your dashboard should look like this:
+
+Then take it to your graphics dept…. discuss the colors, layout and information presentation with them.
+
+Save to the web & publish
+1. Save to the web
+a. Main menu: File Æ Tableau Public Æ Save to web
+b. Follow the prompts
+c. Do not select “show sheets as tabs.”
+2. Publish
+a. Click “Share” in the lower left
+b. Copy the embed code and paste into your web page
+
+

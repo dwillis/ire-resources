@@ -1,0 +1,213 @@
+1 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Data Mining
+Machine Learning
+The Message Machine
+
+4/18/2013 12:38 PM
+
+2 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+4/18/2013 12:38 PM
+
+3 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+2 Technologies
+1. Document Clustering
+2. Decision Trees
+
+4/18/2013 12:38 PM
+
+4 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Decision Trees are Good
+because they look like this:
+dollar_amount >= 101.66 0.4
+state >= 33 0.125
+dollar_amount >= 227.817 0.5
+42252 => {42252=>1.0}
+42251 => {42251=>1.0}
+42252 => {42252=>10.0}
+42251 => {42251=>25.0, 42256=>3.0}
+
+and they are non linear.
+
+4/18/2013 12:38 PM
+
+5 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Decision Tree Basic Algorithm
+build_tree(data)
+@best = Infinity
+@left = []
+@right = []
+for each @attr in data:
+for every @value of @attr
+left = values in @attr < @value
+right = values in @attr >= @value
+if entropy(left, right) < @best:
+@left = left, @right = right
+build_tree(@left)
+build_tree(@right)
+
+4/18/2013 12:38 PM
+
+6 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Entropy?
+
+4/18/2013 12:38 PM
+
+7 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+You don't have to build your own, there
+is Weka
+
+4/18/2013 12:38 PM
+
+8 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Document Clustering and Similarity
+
+4/18/2013 12:38 PM
+
+9 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+The Simple Way: Min Hash
+
+4/18/2013 12:38 PM
+
+10 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Invented at Altavista
+
+Simple Idea
+1. Turn every word in a
+document into a number via a
+hash function, and take the
+lowest number.
+2. If 2 documents have the same
+
+4/18/2013 12:38 PM
+
+11 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+number, they are similar.
+
+4/18/2013 12:38 PM
+
+12 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Example:
+"The cat ran" =>
+-1912293768743167748
+"The cat ran away" =>
+-1912293768743167748
+"The dog sat" =>
+-2092219696032009264
+
+4/18/2013 12:38 PM
+
+13 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Demo
+
+4/18/2013 12:38 PM
+
+14 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+The Best Part?
+It can work on any file not just text
+based documents
+
+4/18/2013 12:38 PM
+
+15 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+The second best part?
+One line of code:
+"The cat ran away".split(/\W+/).map(&:hash).min
+
+4/18/2013 12:38 PM
+
+16 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+The Hard More Accurate Way
+
+4/18/2013 12:38 PM
+
+17 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+TF-IDF
+
+4/18/2013 12:38 PM
+
+18 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Pairwise comparisons with cosine
+similarity
+
+4/18/2013 12:38 PM
+
+19 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Simple algorithm, you can get fancier
+cluster(docs)
+clusters = [Cluster.new(docs.shift)]
+for doc in docs:
+for cluster in clusters:
+if cosinesim(cluster, doc) > threshold
+cluster.add(doc)
+if(doc.cluster.nil?)
+clusters.add(Cluster.new(doc))
+return clusters
+
+4/18/2013 12:38 PM
+
+20 of 20
+
+http://s3.amazonaws.com/thejefflarson/machine-learning/index.html
+
+Thanks
+
+4/18/2013 12:38 PM
+
+

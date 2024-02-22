@@ -1,0 +1,406 @@
+Airline maintenance and safety
+Driving CAR on the transportation beat. NICAR 2004 National Conference - Cincinnati
+
+Soon after a heavily loaded U.S. Airways Express Flight 5481 crashed in Charlotte shortly after
+takeoff, airline maintenance appeared as a likely cause.
+A mechanic at a small West Virginia repair station had recently adjusted the plane’s elevator
+control cables, a job he had never done on a Beech 1900D. His instructor was also his inspector. He and
+other mechanics worked nights; the manager usually worked days. And the FAA officer in charge of
+monitoring the site had visited only once since mechanics began working there.
+The Charlotte Observer set out to find how the Jan. 8, 2003, crash that killed all 21 aboard fit with
+industry trends. A four part series Dec. 7-10 reported that airlines are spending less to maintain their planes.
+Mechanics are checking them less often. Federal oversight is stretched thin. And maintenance is
+increasingly a factor in fatal crashes.
+The Observer found that since 1994, maintenance problems have contributed to 42% of fatal
+airline accidents in the U.S., up from 16% the previous decade. Faulty maintenance contributed to three of
+the past five fatal airline crashes in the U.S., and likely played a role in a fourth, now under investigation.
+Airlines have invested millions to fix other serious problems such as pilot error, and overall,
+crashes are declining.. But faulty maintenance, an equally preventable problem, has never received the
+attention it deserves, experts told the newspaper. Sources of data for the series included:
+NTSB accidents. This relational database, available for download or online query from NTSB,
+includes facts about crashes, the planes involved, events and contributing factors. It was the primary source
+for statements about accident trends. We started with a list of U.S. fatal air carrier accidents since 1994 in
+which the aircraft was substantially damaged or destroyed. An intranet application allowed reporters to
+browse the list, filter it with a SQL Where statement, follow a link to investigative reports, as well as add
+and edit crash entries..
+The air accident data is referred to as ADMSPUB,. Data and documentation can be downloaded at
+http://www.ntsb.gov/avdata/. The documentation is key to understanding and using the relationships among
+accidents, aircraft, people, events and contributing factors. Staff in the NTSB Public Inquiries branch
+answered almost all data questions.
+PTRS inspections. The FAA’s Program Tracking and Reporting Subsystem manages information
+about FAA inspections of contract repair stations and nonmajor airlines, and a portion of inspections of the
+nation’s major carriers. It was sought in a FOIA request. We focused on closed, completed airworthiness
+and avionics inspections from 2000 to mid 2003. An inspection was considered to have an unfavorable
+result if the inspector reported that it led to an enforcement investigation or required follow-up action.
+Valuable information about PTRS can be gleaned from watchdog reports from agencies like the
+General Accounting Office reports. For example, in 1998 the GAO reported that PTRS records understate
+the incidence of problems and violations. Key questions about PTRS were answered by interviewing
+inspectors and others in the FAA who use the system and its data.
+EIS. The Enforcement Information System data is the FAA’s record of its actions against people
+and organizations in aviation. It’s in the NICAR data library
+TranStats. This online service by the Bureau of Transportation Statistics provides data on airline
+spending, including maintenance spending, departures and passengers..It’s at http://www.transtats.bts.gov/
+Service Difficulty Reports. These aviation problem reports have been criticized because of
+inconsistent reporting and because problems can be as minor as a bad light bulb. We focused on reports
+rated highest for the threat posed to safety. Online query is available.
+Several other databases were used in background,. including FAA Accidents and Incidents
+Database and lists of contract repair stations. These, AIDS queries, SDR queries and other resources are
+available from the Aviation Data Systems (AFS-620) web page at http://afs600.faa.gov/AFS620.htm.
+Ted Mellnik, Charlotte Observer
+tmellnik@charlotteobserver.com (704) 358-5028
+Series website: http://www.charlotte.com/mld/charlotte/news/special_packages/planes/
+Archive of series pages: http://161.188.204.190/charlotte/air/
+
+DATA MODEL:
+
+dt_events
+ev_id (AK1)
+col_name (AK1)
+code (AK1)
+lchg_date
+lchg_userid
+
+ADMSPUB
+events
+
+aircraft
+
+Flight_Crew
+
+ev_id (AK2,AK1)
+ev_date (AK1)
+ev_time (AK1)
+ev_city (AK1)
+ev_state (IE2,AK1)
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+crew_no (AK1)
+
+ev_type
+ev_dow
+ev_tmzn
+ev_country
+ev_site_zipcode
+ev_year (IE3)
+ev_month (IE1)
+mid_air
+on_ground_collision
+latitude
+longitude
+biohazard_area
+apt_name
+airport_type
+airport_involvement
+ev_nr_apt_id
+ev_nr_apt_loc
+apt_dist
+apt_dir
+apt_elev
+rwy_brake_cond
+wx_brief_comp
+wx_src_iic
+wx_obs_time
+wx_obs_dir
+wx_obs_fac_id
+wx_obs_elev
+wx_obs_dist
+wx_obs_tmzn
+light_cond
+sky_cond_nonceil
+sky_nonceil_ht
+sky_ceil_ht
+sky_cond_ceil
+vis_rvr
+vis_rvv
+vis_sm
+wx_temp
+wx_dew_pt
+wind_dir_deg
+wind_dir_ind
+wind_vel_kts
+wind_vel_ind
+gust_ind
+gust_kts
+altimeter
+wx_dens_alt
+wx_int_precip
+metar
+ev_highest_injury
+inj_f_grnd
+inj_m_grnd
+inj_n_grnd
+inj_s_grnd
+inj_tot_f
+inj_tot_m
+inj_tot_n
+inj_tot_s
+inj_tot_t
+invest_agy
+faa_region (IE4)
+fsdo (IE5)
+iicf_fname
+iicf_init
+iicf_lname
+notf
+ntsb_docket
+ntsb_notf_from
+ntsb_notf_date
+ntsb_notf_tm
+iicn_fname
+iicn_init
+iicn_lname
+report_status
+fiche_number
+approval_date
+status_flag
+delete_flag
+latest_src
+lchg_date
+lchg_userid
+wx_cond_basic
+faa_dist_office
+
+seq_of_events
+
+Occurrences
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+Occurrence_No (AK1)
+seq_event_no (AK1)
+group_code (AK1)
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+Occurrence_No (AK1)
+
+Subj_Code
+Cause_Factor
+Modifier_Code
+Person_Code
+lchg_date
+lchg_userid
+
+Occurrence_Code
+Phase_of_Flight
+Altitude
+lchg_date
+lchg_userid
+
+regis_no (IE8)
+ntsb_no
+acft_missing
+ntsb_19a_date
+ntsb_4_date
+faa_form_date
+far_part (IE6)
+flt_plan_filed
+flight_plan_activated
+damage (IE4)
+acft_fire
+acft_expl
+tc_sheet
+cert_region
+dt_cur_cert
+faa_cert_region
+oper_cert_fsdo
+aic_acft_id (IE3)
+acft_make
+acft_model (IE1)
+acft_series
+acft_serial_no
+year_mfg
+cert_max_gr_wt
+acft_category
+acft_class
+acft_reg_cls (IE2)
+homebuilt
+total_seats
+num_eng
+fixed_retractable
+type_last_insp
+date_last_insp
+afm_hrs_last_insp
+afm_hrs
+afm_cycles
+elt_install
+elt_oper
+elt_aided_loc_ev
+flight_number
+owner_acft
+owner_street
+owner_city
+owner_state
+owner_country
+owner_zip
+operated_by
+oper_individual_name
+oper_name (IE7)
+oper_same
+oper_dba
+oper_addr_same
+oper_street
+oper_city
+oper_state
+oper_country
+oper_zip
+oper_code
+certs_held
+oprtng_cert
+oper_cert
+oper_cert_num
+oper_sched
+oper_dom_int
+oper_pax_cargo
+type_fly
+second_pilot
+dprt_pt_same_ev
+dprt_apt_id
+dprt_city
+dprt_state
+dprt_country
+dprt_time
+dprt_timezn
+dest_same_local
+dest_apt_id
+dest_city
+dest_state
+dest_country
+inj_idx
+injfcrew_fatal
+injfcrew_inj
+injfcrew_onbd
+injccrew_fatal
+injccrew_inj
+injccrew_onbd
+injpax_fatal
+injpax_inj
+injpax_onbd
+injgcrew_fatal
+injgcrew_inj
+injpub_fatal
+injpub_inj
+phase_flt_spec
+report_to_icao
+pov_desc
+evacuation
+evac_injuries
+faa_comments
+c5
+delete_flag
+ntsb_dtchg
+lchg_date (IE5)
+lchg_userid
+afm_hrs_since
+rwy_num
+rwy_len
+rwy_width
+site_seeing
+air_medical
+med_type_flight
+
+crew_category
+med_certf
+med_crtf_vldty
+date_lst_med
+crew_rat_endorse
+crew_inj_level
+seatbelts_used
+shldr_harn_used
+crew_tox_perf
+seat_occ_pic
+pc_profession
+safety_clinic_l3y
+wings_program_l3y
+recurrent_train_l1y
+bfr
+bfr_date
+lchg_date
+lchg_userid
+
+flight_time
+
+dt_Flight_Crew
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+crew_no (AK1)
+flight_type (AK1)
+flight_craft (AK1)
+
+ev_id (AK1)
+Aircraft_Key (AK1)
+crew_no (AK1)
+col_name (AK1)
+code (AK1)
+
+flight_hours
+lchg_date
+lchg_userid
+
+lchg_date
+lchg_userid
+
+cabin_crew
+ev_id (AK1)
+Aircraft_Key (AK1)
+cc_crew_no (AK1)
+cc_lname
+cc_init
+cc_fname
+cc_seatbelts_used
+cc_seat_occ
+lchg_date
+lchg_userid
+cc_seated
+cc_inj_level
+injury
+ev_id (AK1)
+Aircraft_Key (AK1)
+inj_person_category (AK1)
+injury_level (AK1)
+inj_person_count
+lchg_date
+lchg_userid
+narratives
+ev_id (AK1)
+Aircraft_Key (AK1)
+
+dt_aircraft
+ev_id (AK1)
+Aircraft_Key (AK1)
+col_name (AK1)
+code (AK1)
+lchg_date
+lchg_userid
+
+engines
+ev_id (AK1)
+Aircraft_Key (AK1)
+eng_no (AK1)
+eng_type
+eng_group
+eng_mfgr
+eng_make
+eng_model
+eng_tc_sheet
+eng_cert_faa_reg
+power_units
+hp_or_lbs
+lchg_userid
+lchg_date
+carb_fuel_injection
+propeller_type
+
+narr_accp
+narr_accf
+narr_cause
+narr_inc
+lchg_date
+lchg_userid
+
+

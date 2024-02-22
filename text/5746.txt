@@ -1,0 +1,117 @@
+Getting data into Excel
+Lauryn Schroeder
+lauryn.schroeder@sduniontribune.com
+619-293-1372
+
+These class notes are available at ​http://bit.ly/IRE18-Excel
+Working with data is just like interviewing a live source – but better. A data source cannot lie (at least
+in the same way) and it has no opinion. The answers you get will be based on facts.
+Unfortunately, datasets don’t always come in an interview-ready format. There are three common file
+types that usually require a manual import into Excel.
+
+HTML DATA:
+Sometimes a list or dataset is published online without a download option, and copying and pasting
+directly from the website can be a data-cleaning nightmare. Thankfully, Excel allows you to extract
+those HTML tables with a few clicks.
+Go to ​http://bit.ly/ire-html-example​.
+You should see the main data page for the Florida Department of Education. (Most Florida Ed data
+are available for download, but for this exercise, pretend downloading is not an option.)
+Leave all of the fields blank and click the “Submit” button to get a list of all schools.
+
+You should see a full page of school data. If that doesn’t work, try this link: ​http://bit.ly/FL-schools
+Copy the URL in the address bar and open Excel. Click on the “Data” tab at the top. On the left side,
+click “Get External Data” and select the “From Web” option. (Icons and their locations may vary,
+depending on your version of Excel.)
+
+A “New Web Query” window will pop up. Paste the URL of Florida schools in the address bar and hit
+Enter. It should bring up the same information we saw in our browser with one difference: yellow and
+orange arrows like this
+throughout the page. Click on the arrow nearest to the data you want to
+import and select “import.”
+
+Next, it will ask you where you want the data. This usually defaults to the cell you last selected but if
+the field is empty, type in =$A$1 and click OK.
+
+Voala! Your data should be clean and ready to analyze.
+HTML Pro Tips:
+1. When using the “From Web” tool, your data and the website share a live connection. This
+means your data will change if the website’s information changes. Sometimes that’s a useful
+feature. Other times it will mess with your analysis. To remove the connection, highlight the
+entire worksheet, and click “Connections” under the data tab. Select any connections listed in
+the top window and click “Remove.”
+2. The “From Web” function can only bring in one page at a time. If your HTML table is split up on
+several pages, you will need to manually enter the URL of each page to get all your data into
+Excel. ​Import.io​ can automate these queries for you and the first 500 pages are free.
+
+PDF DATA:
+The worst. A headache. Cometdocs and Tabula to the rescue.
+Open the “neiss-pens-pencils” .pdf file in the class folder. Some .pdf files are created as a flat image,
+so before we try to extract any information, we need to make sure our computer recognizes the text in
+our table.
+To check, try and highlight any of the words on the table. If it highlights, celebrate. Your .pdf file has
+gone through “optical character recognition” software. If it doesn’t, Adobe and other online tools can
+do this for you.
+
+Sometimes the stars align and you can copy and paste directly into excel from a .pdf file. In our case,
+copying and pasting would create this:
+
+No thank you.
+We’re going to use CometDocs first. Anyone can register for a free account and IRE members get a
+free upgrade to premium. (Email ​cometdocs@ire.org​ to get access.)
+Login and click the green “Upload” button on the upper left side.
+
+Browse for “neiss-pens-pencils.” Click on the “Convert tab” and click and drag the pdf file into the
+empty box below the tab. Next, select the type of conversion you want. In this case, we want to use
+“To Excel (xlsx).” Click the green Convert button and download your new Excel file!
+
+Tabula is another scraping option. It’s free and allows you to choose what will be extracted from a
+pdf, as opposed to CometDocs, which takes everything.
+Open Tabula. A browser window should appear with the Tabula home page. Browse for your file and
+click Import.
+Now you can click and drag over the sections you want to extract manually. For tables that span
+across several pages, use the “Repeat this Selection” option at the lower right hand corner of any box
+you create.
+
+Tabula Pro Tip:
+1. Sometimes highlighting everything gives you a messy output. Manually selecting each column
+and extracting them one at a time CAN be a way around this. Both options (cleaning or
+selecting columns one at a time) are time consuming but the ladder is less painful.
+
+TEXT DATA:
+Text files will be “delimited” or “fixed-width.” In a delimited file, each line represents a single row in the
+data, and all of its associated fields are separated by a delimiter, such as a comma, tab or space.
+Our first instinct is to double click on those delimited or fixed-width files to open them in Excel but that
+can cause a lot more problems later, or gives you something like this:
+
+Here’s how we fix it. Open up Excel. Select the “Data” tab and choose to import external data “From
+Text.” Browse for the file “OPD_Crimes.csv” and click import. The text import wizard should show up.
+Since this is a .csv, it’s more than likely going to be delimited by a comma. (Sometimes the separator
+can change, depending on the Excel version.) Either way, make sure delimited is selected first and hit
+next.
+Now we need to select the type of delimiter. Excel allows you to see how the different delimiters
+impact your data. For example, select semicolon.
+
+You should see that it shows us a sample of the top rows and that a semicolon delimiter successfully
+separates the columns. Hit next.
+Now it will allow us to select the format of our columns. Select the “Case Date Time” column and
+make sure the format is date instead of general. Then hit finish.
+Similar to importing from the web, it will ask you where you want the data. This usually defaults to the
+cell you last selected but if the field is empty, type in =$A$1 and click OK.
+Delimited files are very similar. Open another Excel workbook and click import data from text again.
+Browse for the file “debtfix.txt” and click import. Now, instead of selecting delimited, choose fixed
+width on the first page. This will allow you to manually select where you know the columns should
+break.
+Double clicking on a column will remove it if you accidentally place a break in the wrong spot. Click
+next.
+Choose the proper formatting for the cells, ensuring that any numerical columns with a leading zero
+are in a text format, not “General,” so the leading zero is safe.
+
+Formulas:
+Merging cells together (with a space to separate)
+=I9&" "&I10&" "&I11
+Average(C2:C52)
+Sum(
+Min(
+Max(
+
+

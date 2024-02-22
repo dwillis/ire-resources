@@ -1,0 +1,485 @@
+Gun Data
+bfreskos@thetrace.org
+
+Many PDs some or all of the following data:
+●
+●
+●
+●
+●
+●
+●
+●
+
+Case Number
+Property ID or another unique identifier
+Make
+Model
+Serial Number
+Caliber
+Firearm Type (Pistol, Rifle, Shotgun, etc.)
+Firearm Category or Description (Semi-auto, Full-auto, Revolver, Pump
+Action)
+● Offense(s) involving each firearm
+● Ammunition Capacity
+● Status (Evidence, Recovered, Stolen, Safekeeping, etc.)
+
+Finding Data
+● Read departmental policies and procedures manuals
+● Request information related to departmental recordkeeping systems
+● Talk to people who oversee those systems
+● You goal is to figure out what sort of information they collect and what their
+systems are called:
+○
+
+Philadelphia Police Department Directive 5.27 states, “All firearms reported stolen, missing, lost
+firearms (sic), and/or firearms recovered by the Philadelphia Police Department regardless of the
+reason for confiscation, will be entered into the [Firearm Analysis System] Program.”
+
+○
+
+Therefore, I am requesting an extract of the data maintained in the Firearm Analysis System
+Program ….
+
+See this Example Request Template for a general data request
+
+Formulas we’re going to be using can be copied from this website:
+
+https://freskosb5.wixsite.com/excelformula
+
+Data can be downloaded using this link
+
+Using data to determine type and description:
+● Types of firearms: pistol, shotgun, rifle, etc.
+● Description of firearms: semi-automatic, automatic, pump action, etc.
+
+● Many departments use a two-letter code to denote type and description in
+accordance with the NCIC code manual
+○
+
+PI = Pistol, Semi-Automatic
+
+○
+
+SP = Shotgun, Pump Action
+
+○
+
+See NCIC Gun Data Codes
+
+Using data to determine Type and Description:
+● Open Baltimore_Master
+
+● Insert two new columns to the right of Column AD, “Gun_Type”
+○
+
+To insert a new column to the right of Column AD, right-click on Column AE and then click
+Insert
+
+○
+
+Right-click on Column AE again and click Insert to create the second new column
+
+○
+
+Label the new Column AE (I labeled it Type_T) and the new Column AF (I labeled it Desc_T)
+
+● Separate two-letter code to isolate Type and Description
+○
+
+To isolate the Type code, copy and paste this function into Cell AE2:
+■
+
+○
+
+=Left(AD2,1)
+
+To isolate Category, copy and paste this function into Cell AF2
+
+■
+
+=Right(AD2,1)
+
+Using data to determine Type and Description:
+● You should end up with a sheet that looks like this:
+
+● Fill the column with the formula:
+○
+
+Select both cells AE2 and AF2
+
+○
+
+Hold your cursor over the bottom right corner of the green box so that your cursor turns into a
+black plus sign +
+
+○
+
+Double-click
+
+Using data to determine Type and Description:
+● Create two new columns to the right of Column AF, “Desc_T”
+○
+
+To insert a new column to the right of Column AF, select Column AG, right-click and choose
+Insert
+
+○
+
+Repeat those steps to insert second column
+
+○
+
+You should now have two blank columns: Column AG and Column AH
+
+● Label Column AG and Column AH
+○
+
+I labeled them “Type_Def_T” and “Desc_Def_T”
+
+● Take note of the two other tabs, Type Table and Desc Table. You’re going to
+use these to convert the one-letter codes into their meaning
+
+Using data to determine Type and Description:
+● Convert one-letter codes using Index and
+Match functions with Type and Description
+Tables
+○
+
+For Type, insert function =INDEX('Type
+Table'!$B$2:$B$8,MATCH(AE2,'Type
+Table'!$A$2:$A$8,0)) into cell AG2 and hit ENTER
+■
+
+If you were to enter this formula manually,
+you would type =INDEX( and then select
+the RESULTS RANGE, aka Reference
+Array, from the Type Table sheet, as shown
+in the photo on the right.
+
+Using data to determine Type and Description:
+■
+
+You would enter the rest of the function
+up to AE2:
+
+●
+
+=INDEX('Type
+Table'!B2:B8,Match(AE2,
+
+■
+
+Here, you will need to select the Code
+Range, aka Lookup Array, as shown in
+the photo on the right
+
+■
+
+You would then finish the formula so
+that you have =INDEX('Type
+Table'!B2:B8,MATCH(AE2,'Type
+Table'!A2:A8,0))
+
+Using data to determine Type and Description:
+■
+
+You would then put $ signs in front of the rows and columns that you want to remain when you
+fill down. The final product should look like this:
+●
+
+=INDEX('Type Table'!$B$2:$B$8,MATCH(AE2,'Type Table'!$A$2:$A$8,0))
+
+Using data to determine Type and Description:
+
+●
+
+To convert the Description code, insert the function =INDEX('Desc Table'!$B$2:$B$20,MATCH(AF2,'Desc
+Table'!$A$2:$A$20,0)) into cell AH2 and hit Enter
+
+●
+
+Fill down the formulas in cells AG2 and AH2
+
+○
+○
+
+Select cells AG2 and AH2
+Hold your cursor over the bottom right corner of the green box until you get the black plus sign and
+double-click
+
+Using data to determine Type and Description:
+● Insert Pivot Table to analyze
+○
+
+Select All
+
+○
+
+Insert > Insert Pivot Table > New Worksheet
+
+○
+
+Drag YEAR_T into Columns
+
+○
+
+Drag Type_Def_T into Rows
+
+○
+
+Drag Type_Def_T into Values
+
+● Add Description for more granular info
+○
+
+Drag Desc_Def_T into Rows
+
+Magazine Capacity
+●
+
+Studies show shootings involving
+magazines capable of holding high
+numbers of rounds typically result in
+more fatalities and injuries
+
+●
+
+Some local law enforcement agencies
+collect data on the capacity of
+firearms recovered in connections to
+crimes. File a public records request!
+
+●
+
+Remember to exclude firearms that
+do not rely on magazines and ask
+about whether capacity includes the
+round in the chamber
+
+Analyzing Magazine Capacity in Pistols
+● Open Baltimore_PI
+
+● The BPD and other departments count the
+number of rounds, or cartridges, that can fit in
+the magazine as well as the chamber in
+determining capacity.
+○
+
+To account for the round that fits in the chamber,
+subtract capacity by 1:
+■
+
+Create new column to the right of Column AK2,
+“Capacity”
+
+■
+
+Label this new column, Column AL, “Mag_Cap”
+
+■
+
+Insert function =AK2-1 into cell AL2, as shown in
+the image on the right, and hit ENTER
+
+■
+
+Fill the formula down
+
+● Determine whether magazine is high- or low-capacity
+○
+
+Maryland and other states typically define high-capacity magazines as those capable of holding more
+than 10 rounds. For more on state laws, see Giffords
+
+○
+
+To denote whether the gun contains a High-Capacity Magazine:
+■
+
+Create new column to the right of Column AL, “Mag_Cap”
+
+■
+
+Label this new column, Column AM, “High-Cap?”
+
+■
+
+Insert function =IF(AL2>10,"Yes","No") into cell AM2, as shown in the below image, and hit
+ENTER
+
+■
+
+Fill function down
+
+● Analyze using Pivot Table
+○
+○
+○
+○
+
+Select All
+Insert > Pivot Table > Ok
+Drag YEAR_T into Rows box
+Drag High_Cap? into Columns and Values boxes
+
+Magazine Capacity Resources:
+● For an overview of state laws around magazine capacity, see Giffords
+●
+
+For more on guns and cartridges, see this write-up
+
+● Mother Jones has done some great reporting on the use of high-capacity
+magazines in mass shootings
+● For an example of the kind of reporting you can do in your own community, see
+this Washington Post analysis about the drop in high-capacity magazine
+recoveries during the federal gun ban. See also this reporting from The Trace
+● See this academic paper on the use of high-capacity magazines in crime guns
+
+Ammunition Caliber
+● Caliber is a measurement of a bullet’s diameter, either in metric increments or
+fractions of an inch.
+
+● Higher caliber bullets, particularly .40 and .45, wreak greater havoc on human
+bodies
+
+Using data to analyze Ammunition Caliber
+● Open Baltimore_Pistols_I_R
+● Create new column to the right of Column AE, “Caliber”
+● Label this new column, Column AF, “Cal_T”
+● Isolate the numbers in the CALIBER column by pasting the function
+=SUMPRODUCT(MID(0&AE2, LARGE(INDEX(ISNUMBER(--MID(AE2, ROW(INDIRECT("1:"&LEN(AE2))), 1)) *
+ROW(INDIRECT("1:"&LEN(AE2))), 0), ROW(INDIRECT("1:"&LEN(AE2))))+1, 1) *
+10^ROW(INDIRECT("1:"&LEN(AE2)))/10) into cell AF2 and hit ENTER
+
+Using data to analyze Ammunition Caliber
+● To flag the .40s and .45s:
+○
+○
+○
+○
+
+Create a new column to right of Column AF, “Cal_T”
+Label this new column, Column AG, “40s_45s_T
+Insert the function =IF(OR(AF2=40,AF2=45),"YES","NO") into cell AG2 and hit Enter
+Fill the formula down
+
+● Use Pivot Table to analyze
+○
+○
+○
+○
+
+Select All
+Insert > Pivot Table > OK
+Drag YEAR_T to Rows box
+Drag 40s_45s_T to Values box
+
+Ammunition Caliber Sources
+● The ATF publishes annual reports on the calibers of guns traced in each state
+each year.
+○
+
+Manufacturing info available through Firearms Manufacturers and Export Report
+
+○
+
+Crime gun info available through Firearms Trace Data
+
+● If you really want to get into the physics that makes some bullets deadlier
+than others, see The Trace’s reporting here, here and here.
+
+Stolen Guns
+● It is estimated that some
+380,000 guns are stolen every
+year
+● Theft is a significant source of
+firearms on the U.S. black
+market
+● How can we identify violent
+crimes involving stolen guns
+and show the impact that gun
+theft has on public safety?
+
+● Open Atlanta_Rec
+● Clean serial numbers in both Stolen and Recovered sheets
+○
+
+Create new column and copy and paste the serial numbers into it. You’ll notice I’ve done this
+already in Column J
+
+○
+
+Eliminate extra spaces and hyphens using the following formula:
+■
+
+○
+
+=TRIM(SUBSTITUTE(I2,”-”,””)
+
+Eliminate anything that is not a serial number, including “None,” “NA,” “Unknown,” “Unk,”
+“Scratched Off,” etc.
+
+● Create new column for Results in both Stolen and Recovered sheets
+● Create new column for Match? and insert the following formulas:
+○
+
+In Recovered sheet, insert
+=INDEX(Stolen!$K$2:$K$10054,MATCH(J2,Stolen!$J$2:$J$10054,0)) in cell L2
+
+○
+
+In Stolen sheet, insert
+=INDEX(Recovered!$K$2:$K$13416,MATCH(J2,Recovered!$J$2:$J$13416,0)) in cell L2
+
+● Use Filter to isolate matches
+○
+
+Select All
+
+○
+
+Sort & Filter > Match? > Match
+
+● Use Filter to remove matches involving Blank cells
+○
+
+Select All
+
+○
+
+Sort & Filter > Serial Clean > uncheck Blanks
+
+● You can also use Filter to isolate stolen guns involved in certain crimes
+
+Stolen Guns
+● You can isolate homicides and other offenses involving stolen weapons and
+use the case number to request the police report:
+
+Stolen Guns
+● Googling the victim’s name can lead you to more information, and to court
+records:
+
+Stolen Guns
+● In court records is where you
+might find the trace report.
+You can also try requesting
+this from the police
+department, but it’s sort of a
+legal gray area as to whether
+they should share:
+
+Stolen Guns
+● You can also request the police report for the theft of the gun using the case
+number in the spreadsheet:
+
+Stolen Guns
+● Use the information you gathered to map out the life of the gun
+
+Stolen Guns
+
+Stolen Guns
+
+bfreskos@thetrace.org
+
+

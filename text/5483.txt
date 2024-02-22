@@ -1,0 +1,62 @@
+Intro to Machine Learning Tipsheet
+Saturday, March 10th • NICAR 2018
+Forest Gregg​, DataMade (​@forestgregg​) | ​Jean Cochrane​, DataMade (​@jean_cochrane​)
+
+Probabilistic parsers
+What’s a probabilistic parser? ​Given a string, probabilistic parsers can extract labelled
+components. If you give it an address, a probabilistic parser can return the address
+number, street name, street type, etc.
+When should I use a probabilistic parser?​ Probabilistic parsers can be a great alternative
+to regular expressions when the list of rules is hard to define explicitly.
+Some probabilistic parsing libraries:
+●
+●
+●
+
+usaddress​: Parse address components in the united states
+probablepeople​: Parse names of people and companies
+parserator​: Train your own custom parser!
+
+What other types of information can I parse?​ Any type of string that has common
+patterns, but that deviates from those patterns in ways that are difficult to anticipate. Some
+examples might include product descriptions, agents, or titles of media like songs and
+movies.
+
+Named entity recognition
+What’s named entity recognition? ​Named entity recognition describes a class of
+techniques that allow you to extract relevant entities like people, places, and things from
+unstructured text.
+Repository​: h
+​ ttps://github.com/fgregg/nicar_ner/
+Named entity recognition libraries​:
+●
+
+Natural Language Toolkit (NLTK)
+
+●
+
+spaCy
+
+NER in action: ​Local News Engine​ combs through data feeds to look for newsworthy
+people
+
+Fuzzy matching
+What’s this? ​Sometimes your data contains matches that aren’t exact: for example, you might
+have a list of names and addresses that contain duplicates, but the dupes have typos or use
+different address formats, so it’s difficult to identify them programmatically. Fuzzy matching is a
+principled way of identifying these duplicates.
+When should I use it? ​Fuzzy matching is useful when you want to identify rows in a database
+or spreadsheet that refer to the same “thing” in the world (or “entity”), but the resemblance isn’t
+exact. This can be helpful when you have a messy dataset with lots of unusual duplicates, or if
+you have multiple datasets from different sources that are recording the same entities but don’t
+share the same unique identifiers.
+Fuzzy matching libraries:
+●
+●
+●
+
+dedupe​: ​Python library
+csvdedupe​: ​Command-line bindings for the Python library
+Dedupe.io​:​ Web service with a graphical interface built on top of the Python library
+
+

@@ -1,0 +1,223 @@
+	  
+
+A	  Selection	  of	  Internet	  Forensic	  Tools	  
+
+The	  Internet,	  for	  good	  and	  ill,	  has	  become	  a	  place	  where	  third-­‐party	  “proxies”	  can	  
+register	  an	  Internet	  domain	  in	  their	  names,	  leaving	  the	  true	  parties	  behind	  a	  domain	  
+well	  hidden.	  This	  is	  good	  for	  political	  dissidents	  taking	  on	  repressive	  regimes.	  It	  is	  
+bad	  when	  used	  by	  frauds	  and	  con	  artists.	  
+	  
+Even	  when	  the	  true	  owners’	  identity	  cannot	  be	  determined,	  a	  combination	  of	  
+source-­‐and-­‐shoe	  leather	  reporting	  can	  be	  combined	  with	  Internet	  forensics	  to	  help	  
+draw	  connections.	  
+	  
+If	  you’re	  investigating	  an	  alleged	  ring	  of	  fraudulent	  Web	  sites,	  what	  traits	  do	  they	  
+have	  in	  common?	  Look	  in	  their	  source	  code	  for	  similarities.	  Look	  for	  telltale,	  
+consisten	  patterns	  in	  their	  robots.txt	  files.	  Look	  for	  commonalities	  in	  Java	  and	  
+Javascript	  applets;	  in	  HTML	  code.	  	  Look	  for	  commonalities	  in	  domain	  name	  
+registrars,	  domain	  name	  servers,	  internet	  service	  providers.	  Trace	  the	  routes	  that	  
+packets	  follow	  on	  the	  way	  from	  your	  computer	  to	  the	  target	  computer.	  
+	  
+It’s	  nearly	  impossible	  to	  assemble	  positive	  proof	  of	  connections.	  It	  is	  possible	  to	  
+develop	  a	  web	  of	  compelling	  circumstantial	  evidence	  to	  reinforce	  traditional	  
+reporting	  methods.	  
+	  
+Some	  tools:	  
+	  
+Domain	  Tools	  –	  http://www.domaintools.com	  
+	  
+Basic	  professional	  membership	  is	  $45/mo.	  Gives	  access	  to	  a	  suite	  of	  research	  tools.	  
+Proprietary	  features	  include	  whois	  histories,	  often	  going	  back	  several	  years,	  
+showing	  who	  was	  on	  the	  whois	  record	  when.	  User	  interface	  allows	  you	  to	  quickly	  
+scroll	  through	  successive	  whois	  records	  for	  a	  domain,	  with	  changes	  from	  record	  to	  
+record	  highlighted.	  Professional	  subscription	  includes	  100	  whois	  history	  lookups	  
+per	  month.	  If	  you	  tell	  them	  you	  are	  working	  on	  a	  story,	  they	  may	  give	  you	  more	  
+lookups.	  	  
+	  
+Enterprise	  membership	  includes	  extraordinary	  features	  like	  the	  proprietary	  
+“reverse	  whois”	  lookup	  tool.	  The	  search	  engine	  allows	  you	  to	  search	  for	  any	  name	  in	  
+the	  company’s	  whois	  database	  –	  and	  to	  pull	  up	  all	  whois	  records,	  current	  and	  
+historical,	  that	  bear	  that	  name.	  Also	  allows	  export	  of	  whois	  search	  results	  to	  .csv	  
+files.	  Enterprise	  searches	  run	  hundreds	  of	  dollars	  apiece,	  but	  Doman	  Tools	  has	  
+shown	  willingness	  to	  work	  with	  press	  on	  active	  stories.	  
+	  
+Press	  contact:	  Ariella	  Robinson,	  arobinson@domaintools.com	  
+	  
+	  
+
+All-­‐Whois.com	  –	  Unlimited	  basic	  whois	  searches.	  Free.	  
+	  
+ViewDNS.info	  –	  Large	  suite	  of	  forensic	  tools.	  Lookups	  are	  free.	  Offers	  API	  access	  for	  
+a	  price.	  My	  contact	  there	  was	  Michael	  Hughes,	  who	  gave	  me	  a	  .csv	  dump	  of	  reverse	  
+DNS	  lookups	  for	  more	  than	  250,000	  domains.	  
+	  
+IPLocation.net	  –	  Enter	  a	  domain’s	  IP	  address	  and	  the	  system	  returns	  the	  estimated	  
+physical	  location	  of	  the	  domain’s	  servers,	  the	  name	  of	  the	  host	  in	  its	  domain	  
+configuration	  file	  pointer	  record,	  the	  organization	  (usually	  ISP)	  listed	  on	  the	  
+domain’s	  whois	  record.	  (If	  you	  don’t	  know	  a	  domain’s	  IP	  address,	  go	  to	  your	  
+command	  line	  and	  ping	  it.	  This	  works	  on	  either	  a	  Unix/Linux	  machine	  or	  a	  Windows	  
+machine:	  
+	  
+Griffins-MacBook-Pro:~ griffinpalmer$ ping axact.com
+PING axact.com (198.143.161.141): 56 data bytes	  
+
+	  
+Sample	  IPLocation.net	  output	  for	  axact.com:	  
+	  
+
+	  
+
+	  
+
+Sample	  output	  for	  an	  alleged	  subsidiary	  site,	  barkleyuniversity.com:	  
+	  
+
+	  
+	  
+	  
+
+	  
+
+Command	  Line	  Hacks	  
+
+	  
+When	  an	  Internet	  domain	  suspected	  of	  controlling	  a	  network	  of	  rogue	  on-­‐line	  
+operations	  has	  its	  traffic	  routed	  through	  the	  same	  hosts	  as	  the	  suspected	  subsidiary	  
+sites,	  it’s	  a	  useful	  piece	  of	  evidence.	  A	  simple	  command	  line	  tool	  called	  traceroute	  in	  
+the	  Unix/Linux	  world;	  tracert	  in	  the	  Microsoft	  world,	  enables	  you	  to	  follow	  the	  path	  
+of	  test	  data	  from	  your	  computer	  to	  the	  target	  computer.	  
+	  
+Data	  sent	  over	  the	  Internet	  is	  broken	  up	  into	  “packets”	  that	  are	  sent	  through	  a	  series	  
+of	  routers,	  along	  the	  most	  efficient	  possible	  path,	  from	  source	  to	  destination.	  Packets	  
+don’t	  always	  make	  it	  from	  source	  to	  destination	  on	  the	  first	  try.	  If	  a	  packet	  fails	  at	  
+any	  point,	  the	  router	  at	  the	  point	  of	  failure	  retries	  a	  specified	  number	  of	  times.	  If	  all	  
+
+tries	  result	  in	  failure,	  that	  router	  sends	  a	  notice	  back	  to	  the	  originating	  host,	  which	  
+can	  then	  resend	  the	  packet.	  
+	  
+Traceroute/tracert	  games	  the	  Internet	  Protocol	  just	  a	  bit,	  to	  turn	  it	  into	  a	  tracing	  
+tool.	  On	  the	  first	  hop	  from	  point	  of	  origin,	  the	  test	  packet	  header	  is	  set	  to	  be	  at	  the	  
+last	  try	  before	  failure.	  The	  receiving	  router	  sends	  a	  note	  back	  to	  the	  original	  source	  
+(that’s	  you,	  running	  the	  traceroute	  test),	  identifying	  itself	  as	  the	  point	  of	  failure.	  
+Your	  traceroute	  program	  then	  re-­‐sends	  the	  packet,	  this	  time	  with	  the	  header	  set	  to	  
+fail	  after	  the	  second	  hop.	  And	  so	  the	  process	  continues,	  with	  each	  succeeding	  packet	  
+designed	  to	  fail	  one	  more	  hop	  along	  the	  route.	  	  Finally,	  a	  packet	  reaches	  the	  target	  
+server	  at	  the	  point	  of	  failure,	  and	  you	  have	  a	  list	  of	  every	  hop	  your	  packets	  have	  
+made.	  
+	  
+Below	  are	  traceroute	  outputs	  for	  axact.com,	  as	  well	  as	  for	  barkleyuniversity.com.	  
+Note	  in	  the	  IPLocation.net	  output	  for	  axact.com,	  above,	  that	  its	  host	  name	  is	  
+mail.axact.com.	  The	  host	  name	  for	  barkleyuniversity.com	  is	  asa5540-­‐
+1.hostinglance.com.	  The	  hostname	  is	  the	  final	  publicly	  identifiable	  hop	  a	  packet	  
+makes	  on	  its	  way	  to	  its	  destination.	  
+	  
+The	  final	  hop	  for	  axact.com	  is	  mail.axact.com.	  The	  next-­‐to-­‐last	  hop,	  though,	  is	  
+asa5540-­‐1.hostinglance.com,	  which	  is	  the	  hostname	  for	  barkleyuniversity.com.	  	  
+	  
+Traceroute	  for	  axact.com	  
+	  
+Griffins-MacBook-Pro:~ griffinpalmer$ sudo tcptraceroute axact.com
+Password:
+Selected device en1, address 192.168.1.97, port 52330 for outgoing packets
+Tracing the path to axact.com (198.143.161.141) on TCP port 80 (http), 30 hops max
+1 192.168.1.1 13.229 ms 0.948 ms 193.592 ms
+2 192.168.223.254 7.390 ms 1.231 ms 1.227 ms
+3 69.38.253.105 156.995 ms 193.166 ms 10.468 ms
+4 69.38.128.41 35.561 ms 13.469 ms 2.381 ms
+5 6-1-24.ear3.newyork1.level3.net (4.28.130.57) 2.259 ms 4.082 ms 10.094 ms
+6 * * *
+7 ae-47-47.ebr2.newyork2.level3.net (4.69.201.34) 48.850 ms 48.087 ms 27.528 ms
+8 ae-2-2.ebr1.chicago1.level3.net (4.69.132.65) 73.741 ms 54.926 ms 25.965 ms
+9 * * ae-6-6.ebr3.chicago2.level3.net (4.69.140.190) 104.175 ms
+10 * * ae-1-3515.ear2.chicago2.level3.net (4.69.134.46) 1650.813 ms
+11 4.15.84.6 27.665 ms * 31.112 ms
+12 agg1.c13.r13.s101.chi03.singlehop.net (67.212.190.234) 145.170 ms 101.270 ms 61.548 ms
+13 aswg1.c11.r13.s101.chi03.singlehop.net (99.198.126.222) 27.695 ms 34.965 ms 126.812 ms
+14 asa5540-1.hostinglance.com (184.154.13.22) 26.204 ms * 51.168 ms
+15 mail.axact.com (198.143.161.141) [open] 29.342 ms 23.762 ms 39.910 m
+
+	  
+Traceroute	  for	  barkleyuniversity.com:	  
+	  
+
+Griffins-MacBook-Pro:~ griffinpalmer$ sudo tcptraceroute barkleyuniversity.com
+Selected device en1, address 192.168.1.97, port 52337 for outgoing packets
+Tracing the path to barkleyuniversity.com (173.236.36.69) on TCP port 80 (http), 30 hops max
+1 192.168.1.1 50.001 ms 1.781 ms 26.151 ms
+2 192.168.223.254 3.645 ms 32.079 ms 1.457 ms
+3 69.38.253.105 1.933 ms 10.583 ms 1.953 ms
+4 69.38.128.41 2.187 ms 2.014 ms 2.629 ms
+5 6-1-24.ear3.newyork1.level3.net (4.28.130.57) 5.317 ms 15.786 ms 3.240 ms
+6 * * *
+7 ae-47-47.ebr2.newyork2.level3.net (4.69.201.34) 25.917 ms 57.226 ms 25.121 ms
+8 ae-2-2.ebr1.chicago1.level3.net (4.69.132.65) 48.793 ms 28.491 ms 23.277 ms
+9 * * *
+10 * * *
+11 4.15.84.6 32.742 ms 35.884 ms 40.304 ms
+12 agg1.c13.r13.s101.chi03.singlehop.net (67.212.190.234) 67.434 ms 46.878 ms 83.178 ms
+13 aswg1.c11.r13.s101.chi03.singlehop.net (99.198.126.222) 26.500 ms * 46.125 ms
+14 asa5540-1.hostinglance.com (184.154.13.22) 178.378 ms 569.184 ms 26.226 ms
+15 asa5540-1.hostinglance.com (173.236.36.69) [open] 75.396 ms 23.936 ms 50.000 ms
+
+In	  two	  traceroute	  tests	  run	  just	  moments	  apart,	  test	  packets	  sent	  to	  axact.com	  follow	  
+the	  exact	  same	  path	  as	  test	  packets	  sent	  to	  the	  alleged	  subsidiary,	  
+barkleyuniversity.com.	  	  
+	  
+On	  the	  Mac	  side,	  it’s	  a	  good	  idea	  to	  install	  TCPTraceroute,	  which	  uses	  TCP	  
+(transmission	  control	  protocol)	  packets,	  as	  opposed	  to	  UDP	  (uniform	  datagram	  
+protocol)	  packets	  employed	  in	  the	  off-­‐the-­‐shelf	  traceroute	  utility.	  A	  UDP	  traceroute	  
+test	  reports	  its	  last	  hop	  as	  SingleHop.com,	  which	  is	  listed	  as	  the	  ISP	  for	  both	  
+axact.com	  and	  barkleyuniversity.com.	  The	  TCP	  traceroute	  test	  goes	  on	  to	  show	  that	  
+packets	  bound	  for	  both	  axact.com	  and	  barkleyuniversity.com	  go	  through	  the	  
+Hosting	  Lance	  server.	  
+	  
+If	  you’ve	  got	  HomeBrew	  installed	  on	  your	  MacBook,	  adding	  TCP	  Traceroute	  is	  
+simple:
+	  
+brew	  install	  tcptraceroute	  
+	  
+Then,	  to	  run	  traces:	  
+	  
+sudo	  tcptraceroute	  axact.com	  
+	  
+On	  a	  PC,	  TCP	  traceroute	  is	  standard.	  Go	  to	  your	  command	  prompt	  and	  type:	  
+	  
+tracert	  axact.com	  
+	  
+Note	  that	  the	  command	  on	  the	  Mac	  and	  other	  Unix/Linux	  systems	  is	  traceroute,	  
+while	  on	  a	  PC	  system,	  it’s	  tracert.	  
+	  
+How	  to	  identify	  a	  domain’s	  mail	  server	  software:	  
+	  
+telnet	  axact.com	  25	  
+	  
+Port	  25	  is	  the	  standard	  e-­‐mail	  port.	  If	  the	  target	  domain	  is	  running	  an	  e-­‐mail	  server,	  
+its	  telnet	  host	  will,	  unless	  it	  is	  refusing	  connections,	  respond	  with	  the	  name	  and	  
+version	  of	  e-­‐mail	  server	  software	  the	  domain	  is	  running.	  	  
+	  
+Here’s	  the	  output	  for	  axact.com:	  
+	  
+Griffins-MacBook-Pro:~ griffinpalmer$ telnet axact.com 25
+Trying 198.143.161.141...
+Connected to axact.com.
+Escape character is '^]'.
+220 mail.axact.com ESMTP MailEnable Service, Version: 8.50-- ready at 06/10/15 13:52:31	  
+
+	  	  
+And	  for	  barkleyuniversity.com:	  
+	  
+
+Griffins-MacBook-Pro:~ griffinpalmer$ telnet barkleyuniversity.com 25
+Trying 173.236.36.69...
+Connected to barkleyuniversity.com.
+Escape character is '^]'.
+220 mail.example.com ESMTP MailEnable Service, Version: 8.50-- ready at 06/10/15 14:53:32
+
+	  
+	  
+Recommended	  reading:	  “Routing	  in	  the	  Internet,”	  2nd	  ed.,	  Christian	  Huitima	  
+This	  is	  a	  recommendation	  from	  Jack	  Krick	  at	  Temple	  University.	  Jack	  describes	  it	  as	  
+“eminently	  readable.”	  He	  says	  it’s	  out	  of	  print,	  but	  widely	  available	  via	  Amazon.com.	  
+	  
+
+

@@ -1,0 +1,119 @@
+Kate Martin, Skagit Valley Herald
+katie.martin.13@gmail.com, @KateReports or @Kate_SVH
+Link to this tutorial: http://bit.ly/184K3hN
+So you want to make a map. Great! Here’s how we get started
+1) Get a file called a shapefile. For fun, let’s pull the Skagit County precinct shapefile off of the
+county website:
+http://www.skagitcounty.net/Common/Asp/Default.asp?d=GIS&c=General&p=Digital/voting.htm
+
+2) Log on to http://www.shpescape.com. You have to give this website permission to access
+your Google account. Once you do, you can upload the zipfile:
+
+3) Now we wait. Once you click upload, you will have to go do something else. In my experience
+it takes the program a few minutes to an hour to upload your work.
+
+Now comes the fun part!
+
+You now have a file that looks like this when you click on it:
+
+You should be using the new view of Google FT or drive. Click the “map of geometry” tab at the
+top.
+
+What now?
+4) Download more data! For fun, let’s see which precincts voted in favor (or against) same­sex
+marriage in Skagit County.
+Here is the county auditor’s updated vote tallies for the Nov. 6 election:
+http://vote.wa.gov/results/current/skagit/
+See where it says “precinct results”? Click there. At the very bottom of that page (after it lists the
+precincts), it should say “Download CSV.” CSV stands for “comma separated values” and is a
+
+format we can use in Fusion Tables.
+
+We are now going to merge the map file with the CSV file of precinct results. From there we will
+color code the map to show the percent of voters who approved the measure. But first, we have
+to do a little math.
+MATHS
+(TL;DR version below)
+The spreadsheet has three columns: The precinct name, and columns for the number of voters
+who approved and rejected the measure. First, delete the first three rows. Second, create a new
+row on top and label the columns. Call Column A “Precinct” for the precinct names, then Column
+B “Approved” and Column C “Rejected.” Name Column D “Total.” Next, add column B and C of
+Row 2 and put the result in Column D. The formula for that in Excel is “=B2+C2”. You should
+see a number now in Column D, Row 2 (also called cell D2).
+Now, copy down the formula. Here’s a trick.
+
+Click on cell D2. In the lower right corner, there’s a little box. Hover your cursor over that box until
+you see a solid plus sign +. Double click the box when the plus sign is active, and it will copy
+down the formula all the way down the columns.
+Next, click on the D for the column, which will highlight the entire column. Right click and select
+“Copy.” Next, with the column still highlighted, select “Paste special” and then pick “values” from
+the paste menu.
+
+Next, let’s create a column for percentages. Call Column E “Percent in favor” (this matters later
+due to the way Fusion Tables displays information).
+The formula for calculating the percent of voters in favor is “# of voters in favor” divided by “total
+voters.” Type “=B2/D2” in E2. Then, copy the formula down using the trick mentioned above.
+After that, copy the entire column and paste special + values.
+Fusion tables does not display percentages well in maps. We need to convert this to a whole
+number. In F2, use the formula =E2*100 to bring the percent back to a real number. Copy the
+formula down, then copy the column and paste special + values. Now we have a number
+followed by a bunch of decimals.
+Highlight the column and right click and select “format cells,” then from the menu select number,
+and display only 1 decimal point.
+
+TL;DR version
+If you are already good at Excel you don’t need to do all of these steps. Instead of making all of
+those columns, you can just use this formula: =(B2/(B2+C2))*100 and after that you can format
+the number to show only one decimal place. You might remember such formulas from Algebra.
+If you are not familiar with the Order of Operations I suggest you become familiar with it and be
+very careful about using math in your spreadsheets.
+Save your file, upload it to Google Docs. Next you have to create a new Fusion Table. Click
+“Create” then on the drop­down menu select “More” and then click “Fusion Table.”
+
+Since you have already imported your election results into Google Spreadsheets, select that
+option. Fill out the description if you want, then click next.
+We now have two fusion tables: The results of Ref. 74 and a second table with the precinct
+maps.
+Let’s merge!
+On the Ref. 74 table, click file and select “merge” and pick the precincts map we uploaded
+earlier. If you are going to merge spreadsheets, make sure you have at least one column in each
+spreadsheet that is the same. This is how we are going to link the two together.
+In this example, the columns that match are in the “precinct” field.
+● Make sure the precinct names match exactly. In this example, Sedro­Woolley will not
+match with Sedro Woolley. Bay View will not match with Bayview.
+● Oftentimes there could be a leading or trailing space in a field. Be sure those are all
+deleted. To remove leading and trailing spaces, type “=TRIM(Cell#)” in an adjacent cell,
+where Cell# is the cell you want to trim the leading/trailing spaces from. You can copy
+this formula down to clean the rest of your data.
+
+●
+●
+●
+
+Click on a tab at the top called “map of geometry”
+Click on “tools” then “map styles.”
+Under “polygons” click “fill color” and select the number of buckets you want. You should
+probably pick at least four, with an even number of buckets so the division is at 50
+percent. Depending on colors, you should have something that looks like this:
+
+Edit the Info window:
+●
+●
+
+Click “Tools” then “Change info window layout”
+Select the items in the check boxes of what you want to display. If you want, you can
+rename items between the <b> tags.
+
+Here is what that looks like:
+
+You can also include a map legend. Click “tools” then “map styles” and at the bottom, select
+“automatic legend.” Pick where you want the legend to show up and whether to display the
+source.
+
+Finally, you want to share your product and embed in your website. Zoom to the extent you want
+your viewer to see the map, then click on “Tools” then “Publish.” You also need to change
+visibility to public.
+
+A link to the final viz here.
+
+

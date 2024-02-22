@@ -1,0 +1,680 @@
+Malik Singleton - SELECT needle FROM haystack;
+malik.silvrback.com /interview-your-data-with-sqlite
+
+bit.ly/ire15sql1
+Agenda
+1. Intro
+2. Explain Firefox's database management extension, SQLite Manager.
+3. Demo how to use the SELECT statement and the FROM command to find and view specific data.
+4. Demo how to filter data using the WHERE criteria command.
+5. Demo how to sort data using the ORDER BY command.
+6. Open floor for questions.
+Hand off to Part 2 for GROUP BY, plus COUNT and SUM
+.
+
+SQL lets you "ask" questions of your data. Run queries to do "background research" in your
+dataset so that you'll have evidence-based questions for your interviews. --Me, and everyone
+else at IRE
+
+.
+Structured Query Language lets you turn regular questions into queries, i.e. questions that a database can
+understand using English-like words and phrases.
+If you pick up a SQL book, you'll quickly learn about the "CRUD" concept, which stands for Create, Retrieve,
+
+1/15
+
+Update, Delete. However, as journalists, for the most part you'll only need the R ... Can anyone guess why?
+(anyone? anyone?)
+
+A few dam stories
+Hundreds of Texas dams at risk of failure
+Lax enforcement of aging, unsafe dams puts Ohioans at risk
+Where are evacuation plans for Ohio’s earthen dams?
+Dam Shame: Hoover’s workforce nears retirement, gov’t scrambles to fill jobs
+Hydroelectricity is getting less reliable due to global warming
+
+What is a query?
+We run real life queries all the time. Even before you learn SQL, I'm sure you can interpret this:
+SELECT soups, salads
+FROM menu
+WHERE soups = noodle AND salads = caesar
+We see query results all the time too. Here are typical screenshots from SportsCenter:
+
+2/15
+
+3/15
+
+Weather or not we realize it, we think about the world and use logic in our questions that is very similar to these
+structured queries, so hopefully this will feel somewhat natural.
+
+COMPUTER?!?
+
+4/15
+
+Trekkies, remember when Captain Picard would ask questions of the Enterprise's computer? He was basically
+running queries, yet in a super cool, voice activated way, from the Federation's version of Siri. Database
+Management Systems, including SQLite Manager, also let you run queries, though in a not-quite-as-cool manually
+typed way. But hey, it still works... any Trekkies?
+
+SQL queries in plain speak pseudo code (fill in the blanks)
+SELECT means, "Hey database program, give me stuff in ____ fields."
+FROM means, "Hey database program, use ____ table."
+WHERE means, "Hey database program, only give me stuff that meets ____ criteria."
+ORDER BY means, "Hey database program, sort the stuff by the ____ field, then list it upward or downward."
+GROUP BY means, "Hey database program, put certain stuff in this pile and other stuff in that pile."
+Complex queries mean, "Hey database program, do a lot of crazy things at once, please."
+
+5/15
+
+Turn questions into queries
+Imagine you're doing a story about dam safety and you get your hands on a dataset from the U.S. Army Corps of
+Engineers' Nat'l Inventory of Dams (probably because you went to IRE's Dams page). Of course your mind goes to
+work on various questions that you'll want answered, from the serious to the curious...
+1. If the dams break, who could be hurt, i.e. which dams are near homes, schools, etc.?
+2. Among these high hazard dams, which ones have NOT been inspected in years?
+3. Which dams are old (possibly neglected) and which ones are new (possibly untested)?
+4. Who owns each dam? Who would be alerted if a particular dam began to fail?
+5. What additional leads or angles could you derive from this data? (anyone? anyone?)
+For example: Which of these dams doesn't have an EAP?
+Jot down your additional questions because you should know enough SQL commands by the end of session 3 to
+write sophisticated queries on your own.
+
+SELECT
+This is the workhorse command, pretty much every query you write will begin with SELECT because it means
+SHOW ME stuff according to given parameters.
+Use SELECT to initiate a query, followed by field names to retrieve data from particular columns (or by an asterisk *
+to retrieve data in all the columns).
+Use FROM to indicate which table to retrieve data from.
+
+Ready? Here we go...
+Open your Firefox web browser
+In the top menu, go to Tools » SQLite Manager
+
+If a prompt asks you to reconnect dams.sqlite, click OK.
+
+6/15
+
+Or connect the dams database from its location on your drive
+Click on the dams table
+Go to the Execute SQL tab
+Type the query below and click the Run SQL button
+SELECT *
+FROM dams;
+Now the task is to examine all the info that this dataset
+contains. But since you're not a robot, begin figuring out
+what's what by first referring to the dataset's definitions list. Such lists are usually provided. They might also be
+called a records layout or something similar that indicates an official rundown of what each of the abbreviated fields
+(columns) mean:
+Field
+
+Type
+
+Description
+
+NIDID
+
+text
+
+Nat'l Inventory of Dams ID; for saddle dams or dikes, the NIDID is the same as the
+main dam.
+
+Dam_Name
+
+text
+
+Dam name
+
+Insp_date
+
+date
+
+Inspection date (converted)
+
+Submit_date
+
+date
+
+submit_date converted by NICAR
+
+River
+
+text
+
+Name of the river or stream on which the dam was built; if on a tributary, use "TR" and
+name of main river or stream; if offstream, use OS or OFFSTREAM.
+
+City_02
+
+text
+
+The nearest city, taken from the 2002 data
+
+County
+
+text
+
+The county in which the dam is located
+
+State
+
+text
+
+The state in which the dam is located
+
+Cong_Dist
+
+text
+
+The Congressional District in which the dam is located
+
+Cong_Rep
+
+text
+
+The Congressional Representative of that District
+
+Party
+
+text
+
+Political party of the Congressional Rep.
+
+Owner_Type
+
+text
+
+Type of owner. F = Federal, S = State, L = Local, U = Public Utility, P = Private, X =
+Not Listed
+
+7/15
+
+Field
+
+Type
+
+Description
+
+Owner_Name
+
+text
+
+Name of the dam owner (if multiple, separated by semicolons)
+
+Year_Comp
+
+number Year in which the original main structure was completed
+
+Year_Mod
+
+text
+
+Year when major modifications or rehabilitation were completed, includes codes for
+different types of work (see code sheet)
+
+Private_Dam
+
+text
+
+Y/N - is the dam privately owned
+
+NPDP_Hazard
+
+text
+
+Potential hazard to the downstream area resulting from dam failure or misoperation.
+Taken from Stanford's "National Performance of Dams Program".
+
+Permit_Auth
+
+text
+
+Y/N - does the state regulatory organization have the authority to review and approve
+plans to construct, modify or abandon dams
+
+Insp_Auth
+
+text
+
+Y/N - does the state regulatory organization have the authority to require or perform
+the inspection
+
+Enfrc_Auth
+
+text
+
+Y/N - does the state regulatory organization have the authority to issue notices to
+require dam owners to perform necessary maintenance or remedial work, revise
+operating procedures or take other actions.
+
+Juris_Dam
+
+text
+
+Y/N - does the dam meet the state regulatory organization's definition of a
+jurisdictional dam (see code sheet for definitions)
+
+NID_Height
+
+number Accepted as general height of the dam (maximum of dam height, structural height and
+hydraulic height)
+
+NID_Storage
+
+number Accepted as general storage of the dam
+
+Dam_Length
+
+number In feet, the length along the top of the dam
+
+Max_Discharge number Number of cubic feet per second that the spillway is capable of discharging
+Drain_Area
+
+number In square miles, the area that drains to a particular point (in this case, the dam) on a
+river or stream
+
+Dam_Designer
+
+text
+
+Name of principal firm(s) or agency who designed the dam (if multiple, separated by
+semicolon)
+
+EAP
+
+text
+
+Does the dam have an Emergency Action Plan, a plan to reduce the potential for
+property damage and loss of life in case of dam failure or large flood.
+
+Insp_Freq
+
+number In years, the scheduled frequency interval for periodic inspections.
+
+St_Reg_Dam
+
+text
+
+Y/N - does the state regulate the dam
+
+St_Reg_Agncy
+
+text
+
+The initials of the regulating state agency
+
+Volume
+
+number
+
+Fed_Fund
+
+text
+
+Code for the federal agency involved in the funding of the dam (if multiple, separated
+by semicolon)
+
+Fed_Design
+
+text
+
+Code for the federal agency involved in the design of the dam (if multiple, separated
+by semicolon)
+
+8/15
+
+Field
+
+Type
+
+Description
+
+Fed_Con
+
+text
+
+Code for the federal agency involved in the construction of the dam (if multiple,
+separated by semicolon)
+
+Fed_Reg
+
+text
+
+Code for the federal agency involved in the regulation of the dam (if multiple,
+separated by semicolon)
+
+Fed_Insp
+
+text
+
+Code for the federal agency involved in the inspection of the dam (if multiple,
+separated by semicolon)
+
+Srce_Agncy
+
+text
+
+Primary federal or state agency responsible for data
+
+Oth_StrucID
+
+text
+
+ID for saddle dam or dike associated with larger dam project
+
+Num_Struc
+
+number Number of separate structures associated with this dam project
+
+Longitude
+
+text
+
+Longitude at dam centerline, in decimal degrees
+
+Latitude
+
+text
+
+Latitude at dam centerline, in decimal degrees
+
+Jot down a few fields of which you'll want to see the contents, for instance, state and dam_name.
+SELECT state, dam_name
+FROM dams;
+
+TIP: Refine your SQL queries
+Use AS to display an alternate name or nickname for an abbreviated field in the query results.
+Use LIMIT to control the number of results displayed.
+SELECT state, dam_name AS "Dam"
+FROM dams
+LIMIT 10;
+Try a quick query in which you nickname the Enfrc_Auth field as Enforcement Authority and the Fed_Con fields as
+Federal Contractor.
+
+FUN FACT: the SELECT command can do math
+Try this:
+SELECT 5 + 5
+
+WHERE
+Now that we know how to grab and view a bunch of data, let's narrow our results by indicating what certain kind of
+data we want to see.
+
+9/15
+
+Use WHERE to specify a condition you want met. Use a math operator to draw a comparison.
+Operator
+
+Comparison measure
+
+=
+
+Equal
+
+<>
+
+Not Equal
+
+>
+
+Greater Than [After or Later Than]
+
+<
+
+Less Than [Before or Earlier Than]
+
+>=
+
+Greater Than Or Equal
+
+<=
+
+Less Than Or Equal
+
+BETWEEN
+
+Values within a range
+
+Q1. Which NPDP dams have the highest hazard potential?
+
+HINT: Hazard means homes, people, population areas, etc. If you recall...
+Field
+
+Type
+
+NPDP_Hazard
+
+text
+
+Description
+Potential hazard to the downstream area resulting from dam failure or misoperation.
+Taken from Stanford's "National Performance of Dams Program".
+
+So, the NPDP_hazard field measures high hazard dams -- dams near people's homes, therefore, our query's
+condition must meet high hazard dams.
+SELECT state, dam_name, NPDP_hazard
+FROM dams
+WHERE NPDP_hazard = "HIGH";
+You could be more exact and change this query to show the city instead of the state. Recall...
+Field
+
+Type
+
+City_02 text
+
+Description
+The nearest city, taken from the 2002 data
+
+TIP: Know your SQL version
+There are different flavors of SQL with slightly different ingredients. For instance;
+- SQLite's WHERE command uses a percentage sign % instead of the asterisk symbol * used in MS Access.
+- In SQLite, you query dates as YYYY-MM-DD string values wrapped in quotes instead of using the number sign # in
+MS Access.
+Q2. For your story, you want to go visit the most forgotten, neglected dam. Can you determine ahead of
+time which high hazard dams haven't been inspected in more than seven years?
+
+TIP: Find this AND/OR that
+10/15
+
+You can use AND to specify a second condition. You can use OR to differentiate conditions.
+SELECT state, dam_name, NPDP_hazard, insp_date
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01";
+Use LIKE to filter with widcards
+ABC% finds a string that starts with 'ABC'.
+%XYZ finds a string that ends with 'XYZ'.
+%LMNOP% finds a string that contains 'LMNOP' within it.
+Imagine you know that the dam you're interested in has the word "Memorial" in its name but you can't recall the rest
+of the name. You could use a wildcard to query the dataset for that word to see what results you get:
+SELECT state, dam_name, NPDP_hazard, insp_date
+FROM dams
+WHERE dam_name LIKE "%memorial%";
+This query result is a great example of finding a tiny needle in this big ol' haystack because on one hand, only one
+of these results, Craig Memorial, is a high hazard dam, while on the other hand, only one of them even has an
+inspection date, Mills Memorial. So depending on your story angle, you've narrowed your findings down to one dam
+out of 2,482.
+
+ORDER BY
+Use ORDER BY to filter results downward or upward (i.e. descending or ascending).
+Q3. Which dams are potentially dangerous, forgotten, and also over 40 years old?
+SELECT state, dam_name, NPDP_hazard, insp_date, year_comp
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01" AND year_comp < 1975
+ORDER BY insp_date;
+Q4. Who owns each of these dams?
+SELECT state, dam_name, NPDP_hazard, insp_date, year_comp, owner_name
+FROM dams
+WHERE NPDP_hazard ="HIGH" AND insp_date < "2009-01-01" AND year_comp < 1975
+ORDER BY insp_date;
+
+TIP: Down vs. Up
+Direction can be relative, like what's downtown from you might be uptown from me, so to minimize confusion, SQL
+
+11/15
+
+describes direction with these specific examples:
+Use DESC (descending) to display results Z to A, last to first, most to least, highest to lowest: 9,8,7,6,5,4,3,2,1,0.
+Use ASC (ascending) to display results A to Z, first to last, least to most, lowest to highest: 0,1,2,3,4,5,6,7,8,9.
+ASC is the default sorting order and is optional to include
+Q5. Which of these dams does NOT have an EAP?
+Field
+
+Type
+
+Description
+
+EAP
+
+text
+
+Does the dam have an Emergency Action Plan, a plan to reduce the potential for property damage
+and loss of life in case of dam failure or large flood.
+
+SELECT dam_name, NPDP_hazard, insp_date, year_comp, owner_name, EAP
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01" AND year_comp < 1975 AND EAP
+<> "Y"
+ORDER BY insp_date DESC;
+
+Your turn...
+Try to sort by River and County to find dams along the same stretch of river.
+Find which dams have no emergency action plan.
+Include numeric fields in your query.
+Remember, the basic syntax follows this format:
+SELECT fieldnameA, fieldnameB...
+FROM tablenameX
+WHERE fieldnameA = datapoint1 AND/OR fieldnameB = datapoint2...
+ORDER BY fieldnameA/fieldnameB ASC/DESC;
+These are the data set's numeric fields:
+Field
+
+Type
+
+Description
+
+Year_Comp
+
+number Year in which the original main structure was completed
+
+NID_Height
+
+number Accepted as general height of the dam (maximum of dam height, structural height and
+hydraulic height)
+
+NID_Storage
+
+number Accepted as general storage of the dam
+
+Dam_Length
+
+number In feet, the length along the top of the dam
+
+Max_Discharge number Number of cubic feet per second that the spillway is capable of discharging
+Drain_Area
+
+number In square miles, the area that drains to a particular point (in this case, the dam) on a
+river or stream
+
+12/15
+
+Field
+
+Type
+
+Description
+
+Insp_Freq
+
+number In years, the scheduled frequency interval for periodic inspections.
+
+Num_Struc
+
+number Number of separate structures associated with this dam project
+
+Answer Key
+A1. There are 227 such dams.
+A2. There are 41 such dams.
+A3. There are 31 such dams.
+A4. There are 31 such dams.
+A5. There are 2 such dams.
+Your turn answers:
+SELECT dam_name, NPDP_hazard, insp_date, year_comp, owner_name, EAP, river
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01" AND year_comp < 1975
+ORDER BY river;
+This brings up a good point: compare "Roanoke" to "Roanoke River"
+Dams with no action plan
+SELECT dam_name, NPDP_hazard, insp_date, year_comp, owner_name, EAP
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01" AND year_comp < 1975 AND EAP
+<> "Y"
+ORDER BY insp_date DESC;
+Example query on two numeric fields
+SELECT dam_name, NPDP_hazard, insp_date, NID_height, volume, EAP
+FROM dams
+WHERE NPDP_hazard = "HIGH" AND insp_date < "2009-01-01" AND volume IS NOT NULL
+ORDER BY insp_date DESC;
+.
+
+Quizzy question...
+Are fruit market assortments more like ORDER BY or GROUP BY?
+
+13/15
+
+How about the world's tallest buildings?
+
+.
+
+Great Resources
+Tech on the Net
+Online tutorial to help you become proficient in SQLite and its programming language.
+http://www.techonthenet.com/sqlite/
+CodeAcademy
+These interactive lessons help you manage master complex SQL commands to manipulate and query data stored in
+relational databases.
+https://www.codecademy.com/learn/learn-sql
+Khan Academy
+This course covers how to use SQL to store, query, and manipulate data.
+https://www.khanacademy.org/computing/computer-programming/sql
+DataMonkey
+The folks behind WebMonkey tutorials bring you an interactive course for learning SQL and Excel for data analysis
+
+14/15
+
+that is focused on queries, formulas and stats analysis.
+http://datamonkey.pro
+W3Schools
+This SQL Tutorial addresses how to access and manipulate data in various database systems.
+http://www.w3schools.com/sql/default.asp
+Learn SQL the Hard Way
+This online book teaches you the 80% of SQL you probably need to use it effectively, and will mix in concepts in data
+modeling at the same time.
+http://sql.learncodethehardway.org/book/introduction.html
+Lynda.com
+SQL Essential Training offers a solid working knowledge of the language and shows how to retrieve and manage
+data efficiently.
+http://www.lynda.com/SQL-tutorials/SQL-Essential-Training/139988-2.html
+IRE/NICAR
+Your membership grants you access to databases as well as video tutorials on mapping, visualization and data
+tools.
+http://ire.org/nicar/
+
+Alternate tools
+Datum Free (Mac)
+Desktop database viewer available for free in the Mac App Store. View data, modify schema, import and export
+data.
+https://itunes.apple.com/us/app/datum-free/id901631046
+DB Browser for SQLite (Mac)
+Visual, spreadsheet-like, open source tool that lets you create, design, search and edit database files that are
+compatible with SQLite.
+http://sqlitebrowser.org
+__Command Line
+
+Next steps
+Use this SQLite Manager tool to work on your own dataset. Follow the steps below to import your data and convert it
+from .csv or .xls file types into the .sqlite format:
+Check out Part 2 of this intro to SQL here:
+https://malik.silvrback.com/sqlite-lesson-2
+SQL lesson by Malik Singleton, with info adapted from IRE's 2014 MS Access worksheet
+
+15/15
+
+

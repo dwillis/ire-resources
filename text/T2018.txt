@@ -1,0 +1,183 @@
+Downloading and analyzing campaign finance data
+Wendell Cochran
+March 2004
+This tipsheet looks at four major sites that provide Federal Election Commission
+data for downloading: The Federal Election Commission, Politicalmoneyline.com and the
+American University Campaign Finance Site. Obviously, it cannot cover all the details and
+you would be well-advised to spend time looking at each site before deciding which one
+best fills your needs.
+
+Who: The Federal Election Commission
+Where: http://www.fec.gov and other sites mentioned below.
+What: This site is the root of all campaign finance information at the federal level.
+Whether you are using politicalmoneyline or the American University site or data from
+IRE or the Center for Responsive Politics, it all began with filings with the FEC. The
+commission has added some search capabilities, but the files it creates are not
+downloadable. However, there are two major areas that contain file that can be
+downloaded directly from the FEC.
+First, and most important, is the FTP site: ftp.fec.gov/FEC. Files on the FTP site also
+can be accessed from the main FEC site by navigating to
+http://www.fec.gov/finance/newftp1.htm. Warning: This page is horribly organized. To
+get to the list of 2003-04 files, you need to click on the 2001-2002 label or you can scroll
+down past file descriptions to a table that shows the names of the files for each cycle.
+There are two types of file -- details, which contain records of each contribution from
+individuals and committees (separate files), and summaries. The key detail files are
+can04.zip, which lists candidates, com04.zip, which lists committee information,
+ind04.zip, which is the detail of all individual contributions and pas04.zip, which is detail
+of PAC contributions to candidates. Be careful with the summary data. There are a
+couple of file types and the FEC basically denies that any of them are valid for making
+candidate comparisons because of report timing, especially for PACs. The FEC’s position
+is explained at http://www.fec.gov/finance/ftpsum.htm.
+Unfortunately, it is the only summary data at our disposal, so use it, but with caution
+and disclaimers. Another unfortunate thing is that the FEC seems to have suspended
+making a summary file for political action committees (PACS).
+There is good news and bad news about the raw files on the FTP site. Good news: The
+files there are in fixed-width, ASCII text format and they are stable over all election
+cycles. Thus, when you create an import routine for a particular type of file, it will be
+Downloading and analyzing FEC data
+NICAR ‘04
+Wendell Cochran, American University
+Page 1 of 5
+
+good for any year. Bad news: The data needs some massaging. The contribution
+amounts are in COBOL, which means that for negative numbers you have to write a
+routine that converts characters to digits and convert the result to a true number field.
+And the dates are in a text format, which means you need to write a routine to convert
+them to date type if you care about contribution timing (and you should). Actually, the
+only major difference between the files available at FEC and the other sites is that
+Politicalmoneyline and American make those conversions, as does IRE.
+The second major category Beginning with the 2000 presidential cycle, and now in the
+2004 presidential and House races, the FEC is making electronically filed data
+available. You can see the entry form for this data at http://herndon2.sdrdc.com/dcdev/.
+Or you can go to the FEC’s FTP site: ftp.fec.gov/FEC/electronic to get zipped files from a
+particular day.
+The sad truth is, having this information available really hasn’t improved access to data.
+If you want an example of how the government can screw up a good thing, you need
+look no further than one of these files. First once they are unzipped, they come with file
+names like 10930.fec, so it is impossible to discern who filed the report. Second, there is
+no reliable structure for the files because a campaign or committee submits a variety of
+information in each report: loans, debts, contributions, expenditures. Or the file might
+not have any of that in it, it might simply be a letter to the FEC. Or the file might be an
+amendment to an earlier file, with no indication, really of what was amended. The files
+are in a comma-delimited format, but some of the campaigns put commas in the middle
+of fields. Some use quotes to delimit text fields, some don’t. Some (President Bush, for
+example) have now separated contributor names into first, last, etc., but put them at
+the end of the file; most candidates have a single contributor name early in the file, but
+it’s usually (not always) delimited by carets. The result of all this is that you cannot
+simply automate the file gathering and massaging routines. For example, you might
+well be forced to tweak your import routines from time to time. The bottom line is that
+this is non-disclosure, disclosure. The sad thing is, this is the only place to get street
+addresses for contributors and the only place to get expenditure information. So, they
+can be important sources of data for good stories (Several news agencies reported on
+the fancy hotels Al Sharpton uses, for example). But if you decide to venture into these
+files, don’t say you weren’t warned. Oh, one more thing, Senate candidates don’t file
+electronically and the FEC seems incapable of making them.
+When: Files on the FTP site usually are updated weekly, typically early Monday
+morning. But because of data entry and other issues, they don’t necessarily include all
+the information filed in the previous week. By the end of the cycle, these are large files,
+so the FEC has begun offering ways to merely delete amended records, append new
+records and update records with smaller files. However, most people who work with the
+files start over each time, downloading the most recent complete files. Major updates
+occur close to specified filing deadlines. For electronic files, the FEC provides daily
+uploads, as mentioned above on the FTP site; you also can use the form referenced
+above to locate and download filings from an individual candidate or committee
+immediately after they are filed (presidential files, for example, are due on the 20th day
+of the month, so February data will be filed March 20, etc.).
+Downloading and analyzing FEC data
+NICAR ‘04
+Wendell Cochran, American University
+Page 2 of 5
+
+Who: The Campaign Finance Information Center is operated by IRE, using grants from
+a variety of foundations. Jeff Porter is the manager.
+Where: http://www.campaignfinance.org
+What: CFIC offers weekly downloads of the individual, PAC, candidate and committee
+files from the FEC’s FTP site. The files are converted to dbf format and are all collapsed
+into one zip file, so downloads can be fairly time consuming (even zipped, they can run
+into scores of megabytes by the end of the cycle). The downloadable data is available
+only via subscription, which is available from IRE for $100 to $225 per two-year cycle;
+prices are based on market size/circulation size. CFIC also will sell CDs of the files for
+$50-$125; again the fee depends on market size.
+The site also contains links to other key sources for campaign finance information and
+data. Any reporter new to the field should check out some of these resources before
+plunging deeply into the numbers: http://www.campaignfinance.org/background.html
+Additionally, CFIC has links to state campaign finance information.
+When: New files are available for subscribers each week, usually on Tuesday.
+
+Downloading and analyzing FEC data
+NICAR ‘04
+Wendell Cochran, American University
+Page 3 of 5
+
+Who: PoliticalMoneyLine is operated by Kent Cooper and Tony Raymond and is the
+follow-on company to Raymond’s fecinfo site, which began in 1996. Cooper and
+Raymond, both former FEC officials, have been around FEC data longer than almost
+anyone else. Cooper started dealing with campaign finance issues before the FEC even
+existed by working for a Washington foundation. Cooper and Raymond also are quite
+reporter-friendly and many news organizations are among their subscriber clientele.
+Where: http://politicalmoneyline.com
+What: PoliticalMoneyLine offers exhaustive information, both from campaign data and
+lobbying disclosure reports, with some of the data going back to the 1980 election cycle.
+The site offers extensive search capability. Search results can be downloaded but
+downloads are not free. Here’s what Cooper said in early March 2004: “On the candidate
+files, it's $25 for House, $50 for Senate and $100 for Presidential. Whenever you
+download it’s for all that is in the full cycle file at that time in the cycle. The download
+also includes the itemized expenditure data as well, which is not in the FEC disclosure
+database download. The file also has all the smaller less than $200 donations that are
+filed electronically by the candidate, but not included in the FEC disclosure download
+file. However, we do not make available the street address field in the download.”
+Additionally, Cooper said: “We will shortly be making our Donor Geography section
+available for download. One will be able to download a whole file for a state, or
+download any of the individual sections, House, Senate, Presidential, PAC, Party, 527.
+There will be three tiers of states (big, medium, small) with prices accordingly $500,
+$250, $100. Some are huge files but for a state reporter they could be a quick way to
+start a statewide database.”
+When: Data from the FEC Disclosure Database (the FTP site) is available almost
+immediately after the FEC posts it on the web. Data from electronically filed reports is
+available immediately after it is received at the FEC. Reporters may also subscribe to EAlert ($99 a year) that sends you an e-mail each afternoon that lists new electronic
+filings received that day.
+
+Downloading and analyzing FEC data
+NICAR ‘04
+Wendell Cochran, American University
+Page 4 of 5
+
+Who: Wendell Cochran, who teaches journalism at American University, created and
+maintains the site.
+Where: http://www1.soc.american.edu/campfin/index.cfm
+What: This site offers free downloadable data files from election cycles since 1996. At
+the moment there are no registration requirements. For now, these files all are based on
+the data available from the Federal Election Commission’s FTP site, although it is
+expected that some electronic data for presidential candidates will be added to the site
+this spring.
+File types available include:
+□
+□
+□
+□
+□
+
+Candidate summary files
+Files with data from individual contributors from a particular state to all
+candidates (House, Senate, Presidential)
+Files with contributions to all candidates in House or Senate races in a
+particular state (both individual and PAC)
+Files with contributions to candidates in individual House races (by district),
+both individual and PAC
+Files with contributors to PACs from individuals in a particular state
+
+Except for summary information, all files are in Dbase format and all are zipped with
+Winzip. File descriptions, showing original FEC file structures, along with the revised file
+structures, are available at http://www1.soc.american.edu/campfin/files.cfm.
+Though not downloadable directly, the site also offers queries that will return lists of
+PAC contributions to individuals or all contributions from a particular PAC. Users also
+may create lists of such things as the top recipients of PAC money.
+When: New files usually are available each Monday afternoon or Tuesday morning
+during election years and updated monthly during non-election years.
+
+Downloading and analyzing FEC data
+NICAR ‘04
+Wendell Cochran, American University
+Page 5 of 5
+
+

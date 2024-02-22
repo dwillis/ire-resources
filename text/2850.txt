@@ -1,0 +1,106 @@
+IF STATEMENTS
+=IF is a typical worksheet function. To use it, you type =IF followed by a set of parentheses. Inside the parentheses go three “arguments.” Let’s call them Cond,
+IFtrue and IFfalse, as follows:
+=IF(Cond,IFtrue,IFfalse)
+ Cond is the condition you’re testing
+ IFtrue is what should go in the cell if Cond is true
+ IFfalse is what should go in the cell if Cond is false
+Examples:
+
+=IF(A21="Yes","Yes","No")
+=IF(A22>=10,"Yes","No")
+=IF(A22=”NA”,"NA",B2+C2+D2)
+=IF(A21>0,D25/C25,"Missing Data")
+
+SPLITTING STRINGS IN MS ACCESS
+First Name
+Original Entry in [Names]: "John Doe"
+Returned by Expression: John
+Expression: Expr: Left([Names],InStr(1,[Names]," ")-1)
+First Name
+Orignial Entry in [Names]: "Doe, John"
+Returned by Expression: John
+Expression: Expr: Right(Trim([Names]),Len(Trim([Names]))-InStr(1, [Names]," "))
+First Name
+Original Entry in [Names]: "John P. Doe"
+Returned by Expression: John
+Expression: Expr: Left([Names],InStr(1,[Names]," ")-1)
+Last Name
+Original Entry in [Names]: = "John Doe"
+Returned by Expression: Doe
+Expression:Expr: Right(Trim([Names]),Len(Trim([Names]))-InStr(1, [Names]," "))
+Last Name
+
+Original Entry in [Names]: "Doe, John"
+Returned by Expression: Doe
+Expression: Expr: Left([Names],InStr(1,[Names],",")-1)
+Last Name
+Original Entry in [Names]: "John P. Doe"
+Returned by Expression: Doe
+Expression: Expr: Right(Trim([Names]),Len(Trim([Names]))-InStr(InStr(1, [Names]," ")+1,[Names]," "))
+Last Name
+Original Entry in [Names]: "John Doe" or "John P. Doe"
+Returned by Expression: Doe
+Expression: Expr: IIf(InStr(InStr([Names]," ")+1,[Names]," ") <>0, Right([names],Len([names])-InStr(InStr([Names]," ")+1, [Names],"
+")),Right([Names],Len([Names])-InStr([Names]," ")))
+Middle Initial
+Original Entry in [Names]: "John P. Doe"
+Returned by Expression: P.
+Expression Expr: Trim(Mid([Names],InStr(1,[Names]," ")+1,InStr(InStr(1, [Names], " ")+1,[Names]," ")-InStr(1,[Names]," ")))
+Middle Initial
+Original Entry in [Names]: "Doe, John P."
+Returned by Expression: P.
+Expression: Expr: Right(Trim([Names]),Len(Trim([Names]))-InStr(InStr(1, [Names]," ")+1,[Names]," "))
+Zip Code
+Original Entry in [ZipCode]: "98052-6399"
+Returned by Expression: 98052
+Expression: Expr: Left([ZipCode],5)
+Area Code
+Original Entry in [Phone]: (425) 635-7050
+Returned by Expression: 425
+Expression: Expr: Mid([Phone], 2, 3)
+Phone Number
+
+Original Entry in [Phone]: (425) 635-7050
+Returned by Expression: 635-7050
+Expression: Expr: Right(Trim([Phone]),8)
+See also: http://support.microsoft.com/default.aspx?scid=kb;en-us;168799
+
+SPLITTING STRINGS IN MS EXCEL
+First and Last Name
+Suppose you've got a range of data consisting of people's first and last names. There are several formulas that will break the names apart into first and last names
+separately. Suppose cell A2 contains the name "John A Smith".
+To return the last name, use
+=RIGHT(A2,LEN(A2)-FIND("*",SUBSTITUTE(A2," ","*",LEN(A2)-LEN(SUBSTITUTE(A2," ","")))))
+To return the first name, including the middle name (if present), use
+=LEFT(A2,FIND("*",SUBSTITUTE(A2," ","*",LEN(A2)-LEN(SUBSTITUTE(A2," ",""))))-1)
+To return the first name, without the middle name (if present), use
+=LEFT(B2,FIND(" ",B2,1))
+We can extend these ideas to the following. Suppose A1 contains the string "First Second Third Last".
+Return the First Word in a String
+=LEFT(A1,FIND(" ",A1,1))
+This will return the word "First".
+Return the Last Word in a String
+=RIGHT(A1,LEN(A1)-MAX(ROW(INDIRECT("1:"&LEN(A1))) *(MID(A1,ROW(INDIRECT("1:"&LEN(A1))),1)=" ")))
+
+This formula in as array formula.
+
+Return All but the First Word in a String
+
+=RIGHT(A1,LEN(A1)-FIND(" ",A1,1))
+This will return the words "Second Third Last"
+Returning Any Word Or Words In A String
+=MID(A10,SMALL(IF(MID(" "&A10,ROW(INDIRECT("1:"&LEN(A10)+1)),1)=" ",ROW(INDIRECT("1:"&LEN(A10)+1))),
+B10),SUM(SMALL(IF(MID(" "&A10&" ",ROW(INDIRECT("1:"&LEN(A10)+2)),1)=" ",ROW(INDIRECT("1:"&LEN(A10)+2))),
+B10+{0,1})*{-1,1})-1)
+Where A10 is the cell containing the text, and B10 is the number of the word you want to get.
+This formula can be extended to get any set of words in the string. To get the words from M for N words (e.g., the 5th word for 3, or the 5th, 6th, and 7th words),
+use the following array formula:
+=MID(A10,SMALL(IF(MID(" "&A10,ROW(INDIRECT("1:"&LEN(A10)+1)),1)=" ",ROW(INDIRECT("1:"&LEN(A10)+1))),B10),SUM(SMALL(IF(MID(" "&A10&"
+",ROW(INDIRECT("1:"&LEN(A10)+2)),1)=" ",ROW(INDIRECT("1:"&LEN(A10)+2))),B10+C10*{0,1})*{-1,1})-1)
+Where A10 is the cell containing the text, B10 is the number of the word to get, and C10 is the number of words, starting at B10, to get.
+Note that in the above array formulas, the {0,1} and {-1,1} are enclosed in array braces (curly brackets {} ) not parentheses.
+The following formula will count the number of "B"s, both upper and lower case, in the string in B1.
+=LEN(B1)-LEN(SUBSTITUTE(SUBSTITUTE(B1,"B",""),"b",""))
+
+

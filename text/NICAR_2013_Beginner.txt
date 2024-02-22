@@ -1,0 +1,299 @@
+NICAR Beginner Hands-On:
+US AID Data with Tableau Public
+About this data: This file from Data.gov contains information on foreign aid, loans and grants from the
+US government from 1946-2010 on a per-year basis. This data can be used to analyze which programs
+and which countries the US chooses to fund and how that changes over time.
+
+Before we start…
+Let’s just build something cool. In 2010 the US spent more than $50 billion in foreign assistance, both
+economic and military. What do you think the US spent its money on? What comes in at #2 and #3?
+Do you think the US spends more now than it did in the past on foreign assistance—if you account for
+inflation?
+Let’s find out these answers, in 5 mouse clicks.
+1.
+2.
+3.
+4.
+5.
+6.
+
+Drag the file ‘Economic Assistance.twbx’ onto the Tableau Public icon.
+Double-click ‘Historical Amount’ on the left. (US has spent $900 billion since 1949)
+Drag ‘Year’ to Columns. (See how amount has risen).
+Drag ‘Program Name’ to Color.
+Change the Mark type to Area
+Drag ‘Adjusted Amount’ on top of ‘Historical Amount’ on Rows.
+
+5 steps after opening our workbook, we’ve built a very cool visual of government data and found some
+answers.
+Let’s now learn how to build more views like this, and how to do oh so much more.
+
+Preparing your data:
+1.
+2.
+3.
+4.
+
+Get your data on one sheet in your excel file.
+Make sure your headers are in the first row.
+Get rid of any blank rows or columns.
+Make sure your data is in a normalized format.
+
+Correct: “Normalized” format:
+
+Incorrect: Cross-tab format
+
+The data above is formatted as a cross-tab where each year is its own column. When this data is
+normalized there will be only one column for country, program name, fiscal year, amount, etc.
+What should go into a column? Everything in a column should represent part of that column’s
+whole. Countries the US has given aid to can roll up to a whole. Historical Amount and Adjusted
+Amount are two completely different metrics—you’d want to compare them, but they have no
+joined relationship to some bigger whole. They belong in different columns.
+Example:
+Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec = Year
+Sales + Profit = ???
+In the future, if you find yourself dealing with crosstab data, you can add the Tableau Excel
+Plugin to reshape your data into normalized form.
+
+Connect to data
+1. Data -> Connect to Data
+
+2. Select the type of data that you want to connect to (in this case an Excel file). Tableau
+Public connects to Microsoft Excel, Access and text files.
+
+3. Open your Excel workbook.
+4. Select the Sheet that has your correctly formatted data in it.
+
+5. You’ll get a layout like this, where every column from your Excel sheet appears as a
+Dimension or Measure in Tableau.
+
+What are dimensions and measures? What’s the difference?
+Dimensions: Categories – locations, regions, colors, etc.
+Measures: Values – sales, population, inventory, etc.
+Dimensions and measures can be re-adjusted by dragging them from one group to the other.
+
+Beginning to ask questions / create a map
+1. Some of the best ways to work with Tableau is to ask questions of your data. For example, what
+countries has the US provided aid to?
+Thankfully, we have this data. It’s the ‘Country Name’ field. Notice the blue globe next to it.
+Tableau automatically recognizes fields as having distinct properties. If Tableau recognizes a
+field as geographic, it will be indicated by a globe icon next to the field name as shown below.
+
+2. When Tableau recognizes your data as geographic, it will automatically generate Latitude and
+Longitude fields as measures (auto generated fields are in Italics)
+
+3. Since Tableau has recognized your data as geographic, simply double click on the “Country
+Name” dimension to see all the countries that the U.S. has provided Economic assistance to
+over the years.
+
+4. You’ll see a ’15 nulls’ in the lower-right of the map. These are values Tableau doesn’t
+immediately recognize. Let’s open these up by clicking on the notice and selecting ‘Edit
+Locations.’ Tableau doesn’t recognize them because they’re unspecified regions. Let’s ‘Filter
+Data’ to exclude these because they don’t have any defined region.
+5. You’ll notice a blue dot appearing in the geographic center of each country. Unsurprisingly, since
+this is over a 60 year period, the US has given some amount of money to nearly every country.
+You can change to a filled map view by clicking on the drop-down in the Marks card, and
+selecting ‘Filled Maps’.
+
+6. We can make this map more meaningful by adding in the amount of aid given to each country.
+Drag the “Historical Amount” measure onto the color shelf. To drag a measure onto any of the
+mark shelf, click and hold that measure and then move it to the desired shelf. (Egypt, Iraq,
+Afghanistan, Israel are all top recipients. We can use map controls to zoom in.)
+
+7. You can edit the color by clicking on the arrow in the upper-right corner of the color legend.
+Also, you can make the map gray or dark by selecting from the drop-down on the right with Map
+Options.
+
+8. Not surprisingly, the US has invested a lot into the Middle East in the past decade. What if this
+has changed over the time? Well we can choose to see certain years. Drag ‘Year’ to the ‘Filters’
+shelf. Select ‘2010’. Surprised by the changes?
+
+9. Let’s instead page through the different years. Move ‘Year’ from ‘Filters’ to the ‘Pages’ shelf.
+Flip through the different years. You can really see how aid changes over time.
+
+10. We can change the view again by changing the Mark type from the Filled Map to Circle.
+
+11. We can then change the size of the circles so they correspond with the amount of aid given by
+dragging ‘Amount’ from the ‘Color’ shelf to the ‘Size’ shelf.
+12. Use the size slider to increase the size of the circles.
+
+13. Or change the size range by opening the size legend (just like the color legend).
+
+14. Add some formatting flair by clicking on the ‘Color’ mark and adjusting the transparency and
+adding a border.
+
+15. Let’s go back to a filled map. Take ‘Historical Amount’ off size (because a filled map can’t have
+relative sizes) and change the mark type back to ‘Filled Map’.
+16. Get ready to create your next view by renaming “sheet1” as “map” by double clicking on its tab
+in the bottom left of your screen.
+
+Building dashboards
+1. First, add a new dashboard. Go to ‘Dashboard’ in the navigation menu and select ‘New
+Dashboard.’
+2. Let’s add this worksheet to our dashboard. First, edit the size of the dashboard to match your
+blog or website.
+
+3. You’ll see all the sheets you created on the left-hand side. Simply drag them out and drop them.
+All legends and filters will be brought out too.
+4. Add a title. Double-click title or drag it out. You can edit the text by
+right-clicking.
+5. Right-click and choose ‘Format.’ Tableau has a wide variety of
+formatting options. You can also right-click and format content. For
+example, let’s change the shading of the dashboard.
+
+We could stop here, but we only have a single sheet and there’s so much
+more within our data. Let’s add more views to make the visualization
+richer. Create a new worksheet.
+
+Audience flow, answering more questions / create a bar chart
+1. What else would people want to know? Maybe which programs
+the US has funded the most. Let’s try building that view with
+‘Show Me.’ Open Show Me. These are not the only visualizations
+you can build in Tableau, but they are a great starting point
+where Tableau can recommend viz types based on your data.
+
+2. CTRL + click ‘Program Name’ and ‘Historical Amount’. Notice
+that some chart types become highlighted. These are the ones
+Tableau can build with your data. The blue box indicates what’s
+recommended. Let’s go with the bar chart.
+
+3. Sort the programs from largest to smallest by clicking the sort button on the ribbon.
+
+4. Click on ‘Program Name’, and select ‘Show Quick Filter’. This way we can exclude Military
+Assistance, or even allow the audience to select which specific programs they want to include or
+exclude. You can change the filter type by clicking on the drop-down carat in the upper right
+corner of the filter.
+
+5. Drag out ‘Year’ to Rows. Notice now that Tableau breaks apart the bars for every year.
+Meaningful, but hard to use. Let’s make it a filter instead.
+
+6. Drag ‘Year’ from Rows to Filter. Choose ‘All’. Now, edit the filter and change it to a Slide filter.
+Now let’s add this sheet to our dashboard.
+
+Building interactivity / more on building dashboards
+1. Let’s return to our dashboard and add our created view.
+
+2. All your filters are added too. Let’s change the filter type on ‘Program Name’ to a Wildcard
+filter. This is a search box that will automatically return anything that matches your search.
+3. You can re-arrange items on the dashboard by clicking and dragging.
+4. Notice that the ‘Program Name’ filter only affects the bar chart. Let’s make it affect the map
+too. Click on the drop-down and choose Make Global. Try paging through the map now.
+
+5. Let’s change filter to a drop-down and go back to ‘All’. There’s more interactivity we can add
+too. Let’s say we want to use the map as a filter. Click on the map, select the drop-down carat,
+and click ‘Use as Filter.’ You can fine tune these actions further in the Dashboard > Actions
+menu.
+
+6. It’s also probably best to change the title of sheet here to call our users to act. Let’s change the
+text on the map to ‘Click a country for details.’
+
+A Quick Detour / Dates
+1. Let’s take a quick detour to go through some more functionality on dates. Our data set just had
+information down to the year. What if we had a data set down to the day? Let’s connect to
+“BirdStrikes.xlsx”.
+
+2. Notice the Calendar icon next to ‘FlightDate’. This means that Tableau knows this is a full date,
+and has special features just like geographic data.
+3. Drag ‘FlightDate’ to Columns, and ‘Number of Records’ to Rows.
+Notice the upward trend: What’s causing it?
+4. Click the ‘+’ sign next to ‘Year(FlightDate)’. Notice it breaks it into quarters. Clicking the ‘+’ next
+to quarters will also break it into months. You can remove the details you don’t want. You can
+even rearrange them.
+
+5. You can also select the drop-down menu on the field. The options above the line in the middle
+are discrete values. They will break things just by Year, just by Quarter, or just by Month. The
+options below the line are continuous, and will plot both Year and Quarter, Year and Month, etc.
+
+Discrete
+
+Continuous
+
+6. Select the ‘Day’ option towards the bottom (May 8, 2011 is listed to the right). Notice the
+seasonality. What do you think causes that?
+7. What other questions might you have? This is a great data set to play with; it also has lots of
+geographic and other data fields.
+
+Create a Line Chart / answering more questions
+1. Now that we’ve worked a bit with dates, let’s go back to our dashboard. A reader will probably
+be glad to filter things over time. But it would be more powerful to be able to show trends over
+time visually alongside the visuals we already have. But hey, we created a chart that does that,
+right in the very beginning and in just a few minutes too! Let’s see if we can recreate it.
+
+2. It looks like Tableau is recognizing the ‘Year’ field as a text string (because it’s reoccurring
+numbers). In order to change this, right click on Year, highlight “Change Data Type” and select
+“Number”
+
+3. The ‘Year’ field now has a hashtag icon in front of it. Sometimes ‘Year’ may show up in
+‘Measures’ if its many different numbers, in that case just drag it to dimensions.
+4. Drag ‘Year’ onto Columns shelf and
+‘Historical Amount’ onto Rows
+shelf to create our line chart.
+
+5. We can change the year to the continuous
+version so that we don’t have to show each
+individual year as its own bucket.
+
+6. Let’s add some interactivity by adding a filter. Click the ‘Year’, ‘Show Quick Filter’.
+7. Currently, everything is summed. It’s nice for the overall trend, but maybe we want to take a
+look at individual programs. Let’s drag ‘Program Name’ to Color. This breaks apart every
+program name and assigns it a color. Essentially, putting any dimension onto the ‘Marks’ shelf
+disaggregates everything by that dimension.
+
+8. If we want the same area chart we had before, let’s change Mark type to Area.
+9. If you’d like, you can have Tableau do a running total of all the dollars used for aid. Click on the
+green pill ‘Historical Amount’ in Rows. Select ‘Quick Table Calculation’ and then ‘Running Total’.
+
+These are called Table Calculations in Tableau, because they must be calculated along each cell
+and are dependent on what came before them. There are a lot of other simple options in the
+Quick Table Calculation menu, but also a lot of other advanced ones which we won’t cover
+today.
+
+Putting it all together / finalizing a dashboard and publishing
+1. Drag our last sheet to the dashboard.
+2. Let’s think about how people will want to use this. Most important info on top. Probably want
+to filter by the map (we already did) and then maybe filter by ‘Program Name’. We’ve done that
+already, but it looks kind of funny to have a bar chart with only a single bar. Let’s remove that
+filter, and make the bar chart a filter. Click the drop down on the bar chart and choose ‘Use as
+Filter.’
+3. However, we do want to filter time across all sheets. Make that filter global. We should also
+remove the ‘Year’ function on the Pages shelf since we now have a new way to interact by time.
+So let’s open up the map and remove the ‘Year’ on pages.
+4. Maybe we do want people to select a
+country since some are pretty small.
+Let’s add a drop-down filter for the
+map too.
+
+5. We can then change the look of the filter by clicking on the
+carrot in the upper right hand corner of the filter. There are
+several options to choose from but in this case we’ll choose
+Compact List.
+
+6. Let’s go ahead and publish!
+
+Other Resources
+1. Tableau Public training every Friday 9:30a PST / 12:30p EST
+2. 1st Friday of every month a topical training focusing on different topics such as calculated fields,
+parameters, dashboard actions, data theory, storytelling, etc.
+3. Tableau Public Knowledge Base, articles and walkthroughs on common topics and features
+4. YouTube. We’ve begun putting resources onto YouTube, such as how to format your data, when
+to use certain chart types, etc.
+5. Viz of the Day! See what other people are doing and get inspired.
+6. Tableau Public team! Follow us on twitter, or email us directly. We’re here to help you all
+succeed.
+Daniel Hom:
+
+dhom@tableausoftware.com
+
+Mike Klaczynski:
+
+mklaczynski@tableausoftware.com
+
+Ben Jones:
+
+bjones@tableausoftware.com
+
+Ellie Fields:
+
+efields@tableausoftware.com
+
+

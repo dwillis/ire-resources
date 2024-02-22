@@ -1,0 +1,155 @@
+How to Find Reporting Leads and Publishable Facts in The
+Text Data You Already Have
+
+Jeremy Merrill, ProPublica
+Jeff Ernsthausen, Atlanta Journal-Constitution
+Youyou Zhou, Quartz
+
+Intro
+What kinds of insights can you get?
+What sorts of text do you have (or can get)?
+
+How we've done our projects using big piles of text, step by step
+
+Example Insights (What You Can Get)
+●
+
+●
+
+●
+
+Identify patterns across documents
+○ Find which documents are most similar to the documents you
+already know are interesting, so you don't have to read every one
+Find outliers
+○ Find what's distinctive about one set of documents compared to
+others.
+Extract meaning
+○ Topic/ sentiment
+
+Input: 141 hours of television news reporting mass shootings (project link)
+Output:
+
+Input: A database of more than 100,000 disciplinary documents of doctor misconduct (project link)
+Output:
+
+Input: Press releases of govt. Representatives (project link)
+Output:
+
+Pipeline (The "How")
+1.
+2.
+3.
+4.
+5.
+
+Getting text data
+Dividing text up into chunks the computer can understand
+Analyzing it with techniques both fancy and simple
+Bulletproofing and checking the computer's conclusions
+Presentation
+
+1. Getting text data… harder than it sounds
+Depending on your deadline, from time-sensitive breaking news to investigation/ features:
+●
+
+●
+●
+●
+●
+
+Readily available text data
+○ Federal News Service, government speeches, SOTU, Inauguration speeches
+○ Academics and libraries -- especially for something to compare to
+Data through API
+○ New York Times, Twitter, Goodreads and more
+Scraping
+Transcribing speech to text
+FOIA
+
+Interlude: How much data?
+
+2. Dividing text up into chunks the computer
+can understand
+●
+
+●
+
+●
+●
+
+Cleaning → [plain text]
+○ OCR
+○ Filtering out weird stuff like documents in other languages
+○ lowercasing, dealing with punctuation, stripping out HTML, bylines, datelines, etc.
+Tokenization → [words in columns]
+○ "this is not comprehensible to the computer." ---> ["this", "is", "not”,
+"comprehensible", "to", "the", "computer"]
+Stemming/ lemmatization & part-of-speech tagging → [unique words in columns]
+Remove stopwords and meaningless words → [useful unique words in columns]
+
+3. Analysis techniques both simple and
+complex
+●
+●
+●
+●
+●
+
+Counting and TFIDF
+Keyword searches
+Clustering
+Sentiment analysis
+Vectorization/word2vec
+
+Interlude: TFIDF output
+Sen. Sheldon Whitehouse's most distinctive words
+1: whitehouse
+2: previous_article
+3: rhode_islanders
+4: icahn
+5: fossil_fuel_industry
+6: dark_money
+7: raga
+8: ri
+9: climate_change
+10: providence
+
+4. Bulletproofing and checking your work
+●
+●
+●
+●
+
+What are the most distinctive words in ProPublica's archive compared to The New York
+Times's?
+Doctors model
+Checking by hand
+For word frequency
+○ Is the difference in counts/ changes significant, or is it due to the number of
+documents examined?
+○ If time permits, it’s worth checking more documents for context and baseline
+
+5. Presenting and visualizing some common approaches
+Word frequency, counting, TFIDF
+→ Yes: Bar charts, line charts (time series), heatmaps Mass shooter, sexual behavior studies
+→ Maybe: Bubbles Convention speech
+→ No: word cloud, unless street names by value example
+
+Presenting and visualizing some common approaches
+Sentiment analysis
+A lot more explanation
+
+Presenting and visualizing some common approaches
+PCA, Latent semantic analysis
+way more explanation, you need visuals
+to facilitate storytelling in 2D, 3D, 4D… nxD space
+Reddit algebra Jane Austen’s word choices
+
+To conclude
+Text data story and visualization examples: bit.ly/nlp-car18-examples
+This presentation: bit.ly/nlp-car18
+
+Questions?
+
+

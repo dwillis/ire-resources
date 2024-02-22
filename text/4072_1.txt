@@ -1,0 +1,137 @@
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+Login
+
+johnkeefe.net
+data news + journalism + diy hackery
+« Back to blog
+
+Water Begone
+Thousands of people live in the Hudson River.
+That's what you'd think, at least, by looking at U.S. Census tract maps for New York City, because census
+tracts extend to the state line.
+
+But a population map drawn like this isn't attractive, and isn't accurate, either. It suggests inhabited areas at
+the coast are far larger than actually they are.
+So what's a journo-mapper to do?
+
+http://johnkeefe.net/water-begone
+
+Page 1 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+Fortunately, the Census Bureau also publishes shapefiles of all of the water in the U.S. So one solution is to
+tell you trusty computer to subtract the water areas from the tracts -- and the difference will be the parts on
+land.
+Doing this turns out to be far easier than I expected. (Thanks to Michael Corey and Nathan Woodrow who
+responded to my help tweet.) Here's what I did:
+1. Opened my census tract shapefile with QGIS (a free, open-source mapping program I'm getting to know).
+
+2. Found the water shapefile for Manhattan (New York County) and opened it as a new layer in QGIS.
+
+http://johnkeefe.net/water-begone
+
+Page 2 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+3. From the QGIS menu, selected Vector -> Geoprocessing Tools -> Symetrical Difference and followed the
+prompts, choosing the tract shapefile as the "Input vector layer" and the water shapefile as the "Difference
+layer."
+
+http://johnkeefe.net/water-begone
+
+Page 3 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+4. Compressed the resulting shapefile set into one .zip file and uploaded it to Google Fusion tables using
+shpescape. Once in Fusion Tables, I can play with it, view the map and merge it with population data.
+
+http://johnkeefe.net/water-begone
+
+Page 4 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+Sweet!
+A few extra notes and tips for those trying this at home:
+- I've found water shapefiles only for individual counties, which makes for a small pain to do an entire state.
+For New York City, which is five counties, I loaded the five water shapefiles into QGIS, made sure they were
+all visible, and used Layer -> Save Selection as Vector File... to save them all as one shapefile. I then used the
+resulting shapefile in the Symetrical Difference process.
+- Be sure the water map represents the same census year as the tract map (and, of course, your data). Very
+likely you'll be using shapefiles for the previous decennial census. For our New Littles map we had 2009
+data, so we used the appropriate tract and water shapes -- which were from the 2000 census.
+- I get an error about missing coordinate information when I do step 3, but it hasn't caused me any problems I
+know of. Also, on my Mac version of QGIS, the Symetirical Difference window and the file-saving dialog
+box conflict -- but I just moved them to their own side of the screen.
+- Census tracts are made up of census "blocks," which are smaller and generally DO follow coastlines. So if
+you're mapping blocks, you can eliminate the watery ones by excluding any block with an "area land" of
+zero.
+- The difference trick doesn't change the meta-data associated with each tract, which generally is a good
+thing.
+If you have any questions or suggestions, don't hesitate to post them in a comment below!
+Upvote 0
+Tweet
+
+5
+
+Like
+
+0
+
+Like this post? Subscribe to updates by email »
+0 responses
+Your Name
+Email
+Add Website URL »
+Your Comment
+Notify me by email when new comments are added
+Comment
+
+http://johnkeefe.net/water-begone
+
+Page 5 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+Twitter: @jkeefe
+Projects
+Presentations
+
+John Keefe
+Adventures in journalism-doing, mapmaking, code mangling and hardware hacking. Much of what I do is for
+WNYC, New York Public Radio, where I'm on the Data News Team. Comments here are mine alone.
+Email john (at) johnkeefe.net. Encrypt it with my pgp public key.
+
+http://johnkeefe.net/water-begone
+
+Page 6 of 7
+
+Water Begone - johnkeefe.net
+
+4/3/14, 1:06 PM
+
+Posted almost 3 years ago
+June 23, 2011 at 9:36 PM
+3,112 views
+
+http://johnkeefe.net/water-begone
+
+Page 7 of 7
+
+

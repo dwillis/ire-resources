@@ -1,0 +1,252 @@
+IPUMS and microdata
+Diving deep with Census
+
+Robert Gebeloff | @gebeloffnyt | NICAR 2018
+
+IPUMS and microdata
+What’s “The Census?”
+
+IPUMS and microdata
+What’s “The Census?”
+“The Census” is not any one thing. The Census Bureau conducts dozens of surveys.
+Usually, when people refer to “The Census”, they mean the Decennial Census, which is
+conducted every ten years on the “0” as prescribed by the U.S. Constitution.
+
+IPUMS and microdata
+What’s “The Census?”
+"Representatives and direct Taxes shall be apportioned among the several States which may be
+included within this Union, according to their respective Numbers . . . The actual Enumeration shall be
+made within three Years after the first Meeting of the Congress of the United States, and within every
+subsequent Term of ten Years, in such Manner as they shall by Law direct." -- Article I, Section 2
+
+IPUMS and microdata
+What’s “The Census?”
+The modern Census Bureau conducts dozens of ongoing surveys, measuring everything from
+commute times to retail sales. Data is published in the form of data tables that users can download
+and analyze using software such as Excel, Tableau, QGIS, etc.
+
+IPUMS and microdata
+What’s “The Census?”
+For demographics on an annual basis, there are two commonly used surveys:
+
+The Current Population Survey
+The American Community Survey
+
+IPUMS and microdata
+What’s “The Census?”
+The Current Population Survey is a monthly survey of about 60,000 households conducted jointly with
+the Bureau of Labor Statistics with the primary purpose of measuring the labor force and employment.
+However, there are various sets of supplemental questions asked during different months, including
+the Annual Social and Economic Supplement each March which asks a broad array of questions
+about household members including their race, age, health insurance status, marital status, education
+level, income etc.
+
+IPUMS and microdata
+
+IPUMS and microdata
+What’s “The Census?”
+The American Community Survey is a rolling survey of about 3.5 million households that asks and
+even more detailed set of questions about households. The large sample size makes it possible for
+the ACS to produce estimates at very small levels of geography.
+
+IPUMS and microdata
+What’s “The Census?”
+The American Community Survey is a rolling survey of about 3.5 million households that asks and
+even more detailed set of questions about households. The large sample size makes it possible for
+the ACS to produce estimates at very small levels of geography.
+The last time I looked, there were 35,000 total variables spread across 1,500 subject tables covering
+more than 13,000 geographies.
+
+IPUMS and microdata
+
+IPUMS and microdata
+What’s “The Census?”
+The American Community Survey is a rolling survey of about 3.5 million households that asks and
+even more detailed set of questions about households. The large sample size makes it possible for
+the ACS to produce estimates at very small levels of geography.
+The last time I looked, there were 35,000 total variables spread across 1,500 subject tables covering
+more than 13,000 geographies.
+For example…
+
+IPUMS and microdata
+What’s “The Census?”
+But even with all of this information, what if there is a breakdown you don’t see?
+What if you want to calculate the poverty rate for other cohorts?
+What if you wanted marital status by age and race and college degree?
+This is where microdata can help...
+
+IPUMS and microdata
+What’s Microdata?
+To quote myself:
+
+“Microdata empowers you to customize the ACS, creating your own tables out of any variables
+in the data set. That’s because microdata is a person-level sample of the actual Census returns—
+each row is an individual observation, populated by column after column of responses for that
+person to Census questions.”
+
+IPUMS and microdata
+What’s Microdata?
+To quote myself:
+
+“With these new powers comes additional journalistic responsibilities, beyond the additional
+skills required Simply put, the microdata comes without a governor. Just because you can
+technically cross any and all variables doesn’t mean such a query makes analytical sense.”
+
+IPUMS and microdata
+What’s Microdata?
+-- Each row in a microdata set represents the responses to the ACS questionnaire for a
+single person
+-- The first set of columns is information about that person’s household and repeats for
+all people in the household (this is called “rectangularized” data)
+-- The rest is information unique to that person.
+-- All information is anonymized and the Census Bureau will use sophisticated
+estimation techniques to fill in missing information
+
+IPUMS and microdata
+
+IPUMS and microdata
+What’s Microdata?
+-- There are about 3.2 million person records per year
+-- Each record is weighted so estimates made with microdata closely track published
+tables. You can benchmark your preliminary queries this way.
+-- ACS microdata is published as multi-year samples as well as single year;
+-- Bigger sample size from the multi-year reduces margin of error but makes estimates
+slightly less current
+
+IPUMS and microdata
+What’s IPUMS?
+-- IPUMS is a third-party demographic research organization based at the University of
+Minnesota that provides a fabulous set of microdata tools that make it easier to work
+with data online or as a download.
+-- IPUMS provides a number of value-added variable that make it much easier to
+generate time series estimates. This is often difficult with the published tables.
+-- IPUMS is free and open -- the organization just requests attribution when using their
+data.
+
+IPUMS and microdata
+
+IPUMS and microdata
+What’s IPUMS?
+One time I was working with a reporter on a feature story about old fashioned barber
+shops in New Jersey. One thing you might observe about these places -- they are often
+headed by an immigrant. In New Jersey, a lot of old-fashioned barber shops are Italian.
+But can this be measured? With published Census tables, the occupation data is often
+too general. And isn’t crossed with place-of-birth. And doesn’t go back over time.
+
+IPUMS and microdata
+What’s IPUMS?
+Let me show you how IPUMS solves this problem….
+1) Sign up for a free account at ipums.org
+2) Click on “Analyze Data Online”
+3) Select the United States 1850-2016 sample
+
+IPUMS and microdata
+What’s IPUMS?
+Let me show you how IPUMS solves this problem….
+IPUMS uses the SDA query interface, which allows you to design crosstab queries,
+collapse variables into custom groupings, and split results across additional variables.
+The available variables are listed on the left. The query interface is on the right.
+It will be easier to understand with a demo.
+
+IPUMS and microdata
+What’s IPUMS?
+With all querying languages, it’s helpful to express what we want to learn as a question,
+and then design a query that will answer that question.
+In this case, our question is: What percentage of barbers were foreign born over time?
+To answer this question, I’m envisioning a table where each row is a place of birth for a
+barber, and each column is a year….
+
+IPUMS and microdata
+What’s IPUMS?
+I will use the IPUMS variable guide to figure out which variables will get me what I need.
+First, a variable that will tell me the barber’s place of birth…
+Under Person, there is Race, Ethnicity and Nativity… and in that category, there is a
+variable called BPL. When I click on it, I get a full explanation.
+Looks good, so I’m going to add it to the row of my query.
+
+IPUMS and microdata
+What’s IPUMS?
+Next, I need to put the year as the column.
+I bet it’s probably called year, and i can confirm hat with the quick-list of variables on
+the left side of the screen.
+Yes -- that goes into the column box on my query interface.
+
+IPUMS and microdata
+What’s IPUMS?
+Now, I need the most important component of the query -- something that filters this
+down to only barbers. This is where IPUMS can be really handy.
+Census occupation codes have changed dramatically over the years. But IPUMS
+maintains a “harmonized” set of codes that span the decades -- each time the codes
+change, they make a bridge to previous code sets.
+Under Person/Work there are three to choose from: OCC1950, OCC1990, OCC2010
+
+IPUMS and microdata
+What’s IPUMS?
+Looking in OCC1950, we see that code 740 is “Barbers, beauticians, and manicurists” -bingo, that goes into our filter as OCC1950(740).
+Our last step is to declare the years we’re interested in. Let’s start in 1950 and include
+all of the decennial census samples, and then include the 2010 and 2016 ACS.
+year(1950,1960,1970,1980,1990,2000,2010, 2016)
+For now, let’s turn off percentages and color codes and run the thing...
+
+IPUMS and microdata
+What’s IPUMS?
+Wow, that was interesting, but what a mess. The first issue is that it gave us every state
+and country of birth instead of U.S.-born vs. foreign born.
+So let’s collapse that bpl variable by using a little SDA syntax. If we go back to the BPL
+code sheet, it looks like anything below 150 is U.S.-born, anything 150 or above is
+foreign born. So the syntax for that is:
+bpl(r:0-149;150-*) -- we can put this right in the row box. Let’s also this time ask for a
+column percentage...
+
+IPUMS and microdata
+What’s IPUMS?
+Now we’re getting somewhere. The foreign born percentage had been falling but it’s
+picking up again. Let’s see what would happen if we break this down by region.
+In our quick variable list on the left, under geographic, there is in fact a variable called
+region. Let’s add it to the “Control” box and rerun the query.
+The results yield a number of surprises….
+
+IPUMS and microdata
+What’s IPUMS?
+Remember, we’re dealing with a sample survey. This means these are estimates and
+subject to a margin of error. Thankfully, IPUMS makes those calculations simple. Just
+re-run the same query and ask for the 90 pct confidence interval….
+Often in a graphic, you might consider presenting a trend with three lines - the top,
+bottom and estimate.
+
+IPUMS and microdata
+What’s IPUMS?
+But do not become trapped by these error margins. They do not mean what you’re
+seeing is not a trend -- they mean that you need to treat your results as estimates and
+supplement your findings with additional reporting.
+If the differences from year to year bounced up and down a lot, or were small, you’d be
+more concerned.
+
+IPUMS and microdata
+What’s IPUMS?
+Let’s try one more. Let’s say we really wanted to zero in on Uncle Franco and look at
+just men born in Italy.
+Let’s collapse or row into three categories, US-born, Foreign-born but not Italy, and
+Italy-born: bpl(r:1-149;150-433,435-*;434)
+Let’s remove our control and add sex(1) to the filter to look at only males….
+
+IPUMS and microdata
+What’s IPUMS?
+At the time Franco came to the U.S., about 10 percent of all male barbers were born in
+Italy -- but by 2000, that number was down to around 1-2 percent where it remains
+today.
+
+IPUMS and microdata
+In closing…
+-- You can also make “extracts” and download the data and write queries using your
+own software -- the extracts support a number of formats.
+-- You can also use IPUMS to query CPS ASEC data. This is usually preferable if you need
+year by year time series and don’t mind the smaller sample size because you’re only
+doing national estimates.
+
+IPUMS and microdata
+Questions? Comments?
+
+You can reach me at rgebeloff@nytimes.com or @gebeloffnyt
+
+

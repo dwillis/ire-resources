@@ -1,0 +1,145 @@
+MySQL
+What is it?
+-
+
+An open source (free!) database management system
+that can handle HUGE datasets
+and is an easy-to-use, flexible language
+to analyze data and/or allow access and queries to online databases.
+
+DOWNLOAD: http://dev.mysql.com/downloads/
+(For this session, we’ll be using the Navicat GUI. Navicat runs about $150 to $200, so it’s not free but it’s not completely out of reach
+either, and I’ve found it very reliable over the years. Some aspects of using MySQL will vary with different interfaces.)
+
+Side notes: We’re not going to go over much regarding setup and installation, because
+that will vary depending on your machine and the interface, but a good resource is here:
+http://downloads.mysql.com/docs/mysql-tutorial-excerpt-5.1-en.pdf It’s also helpful if
+you’re trying to do this from the command line.
+Other resources: MySQL’s web site is a very helpful site for information about the
+program, queries, troubleshooting, etc. http://dev.mysql.com/ and StackOverlow also
+has a lot of good MySQL questions and answers: http://stackoverflow.com/
+
+Exercise: Import a data set and do some basic analysis
+CREATE
+First you need to create your database and table and import your data.
+
+MySQL can handle a variety of different imports. Using Navicat>Table>ImportWizard, you can easily import a variety of
+different file types, including text, Excel, dbf, etc. and create the table during the import. The import is pretty selfexplanatory, but make sure you pay attention to the correct field type, especially when it comes to numbers acting as
+numbers (i.e. currency, population counts, etc) where you might use a field type of INT or DOUBLE, and numbers acting
+
+as text (phone numbers, Zip Codes, etc) where you’d use a field type of VARCHAR or CHAR. And dates. If there’s one
+annoying thing about MySQL, it’s that it wants dates to be formatted as YYYY-MM-DD.
+If you’re doing this with the command line, and you have a tab-delimited text
+file, your syntax would be something like this to create the database:
+mysql> CREATE DATABASE Colleges;
+mysql> USE colleges;
+
+And then create the table, in which you name the fields and categorize them
+(i.e. VARCHAR, INT, etc.):
+mysql> CREATE TABLE SportSpend (college VARCHAR(250), year
+YEAR, revenues INT, expenses INT, studentfees INT);
+
+And then this to import the data:
+mysql> LOAD DATA LOCAL INFILE '/yourpath/SportSpend.txt'
+INTO TABLE SportSpend;
+LINES TERMINATED BY '\r\n';
+
+(If you’re using a Windows editor that uses \r\n as a line terminator, OS X use
+LINES TERMINATED BY '\r')
+SIMPLE QUERIES
+The general building blocks of a query are:
+SELECT * (meaning select all) or SELECT college, `year`, revenues (specifying particular fields)
+FROM SportSpend (the name of your table)
+WHERE year = 2012 (your parameters)
+ORDER BY revenues DESC / ASC (a sort order in which you want to display it)
+NOTE: (In this case, YEAR is a MySQL operator and a field name. It’s the format
+of the field and the name of the field. So when we refer to the field `year` in
+queries, to be on the safe side, enclose it with backticks ` . Note that you could
+also format your year field as VARCHAR if you don’t need to run any calculations
+off of it)
+ORDER BY
+SELECT studentfees
+FROM SportSpend
+ORDER BY studentfees DESC (DESC is largest to smallest/Z-A / ASC is smallest to largest A-Z. Schools sorted by
+those that get the most money from student fees to those who get the least)
+COUNT
+SELECT type, `year`, COUNT(*) (Gives us a total of public/private schools by year)
+FROM SportSpend
+
+GROUP BY type, `year`
+SELECT college, COUNT(*) (Gives us a total of rows for each college)
+FROM SportSpend
+GROUP BY college
+
+WHERE – Setting parameters
+SELECT *
+FROM SportSpend
+WHERE revenues > 100000000 (You can use = < >, etc to specify INT / numeric values )
+ORDER BY revenues DESC
+SELECT *
+FROM SportSpend
+WHERE college = ‘COLORADO’ (Note the ‘ ‘ around the name in the text field)
+SELECT *
+FROM SportSpend
+WHERE college = ‘COLORADO’ or college = ‘TEXAS’ (NOT: WHERE college = ‘COLORADO’ or ‘TEXAS’)
+- String comparisons are case-insensitive**
+SETTING PARAMETERS USING MORE THAN ONE FIELD
+SELECT *
+FROM SportSpend
+WHERE revenues > 100000000 and studentfees > 0 (You want all schools where revenues are greater than $10
+million and where they charge student fees)
+SELECT *
+FROM SportSpend
+WHERE Type = ‘Private’ and `Year` = 2013 (You want all private schools for the 2013 academic year)
+ORDER BY revenues DESC
+WILDCARD SEARCHES
+SELECT *
+FROM SportSpend
+WHERE college LIKE ‘%COLORADO%’ (Wildcard search for any row where the word COLORADO is anywhere in
+the text. Note the ‘% and %’ before and after the text)
+SELECT *
+FROM SportSpend
+WHERE college LIKE ‘W%’ (for words beginning with W)
+WHERE college LIKE ‘%S’ (for words ending with S)
+
+NULL VALUES
+SELECT *
+FROM SportSpend
+WHERE studentfees IS NULL (IS NULL is not the same as zero, especially in numeric fields. The opposite is IS NOT
+NULL)
+- In this case, it helps to know something about your data. Private schools do not disclose student fee revenue,
+hence the NULL values for that field instead of 0
+COMBINING AND/OR
+SELECT *
+FROM SportSpend
+WHERE (Type = ‘Private’ and `Year` = 2012) or (Type = ‘Public’ and `Year` = 2011)
+ORDER BY TYPE DESC
+- You can mix AND and OR, but know that OR has precedence. If you mix them, make sure you use parentheses
+to indicate how the order should be executed.
+
+CREATE, CALCULATE AND POPULATE A NEW FIELD
+Create a new field NetRev that has the net revenue for each school and each academic year
+ALTER TABLE SportSpend
+ADD NetRev INT AFTER expenses (You’ve added a new numeric field- hence INT - called NetRev at the end of
+your fields)
+UPDATE SportSpend
+SET NetRev = (revenues – expenses) (You’ve populated your new field based on a calculation of other fields)
+*
+Although you’ll see double quotes “ in MySQL at times, and yes, you can get away
+with them in situations, try to stick to single quotes ‘ . And there’s a difference
+between using quotes in a string search and using backticks ` in field names. You can use
+backticks or not, but they are helpful if you have field names that might get confused
+with functional words, such as `year`. See more here:
+http://stackoverflow.com/questions/261455/using-backticks-around-field-names
+
+** MySQL is generally NOT case sensitive by default. However, if you need to force a case
+sensitive search, you can use the following. Example: You need to search for Apple
+instead of apple:
+SELECT * FROM `table` WHERE BINARY `column` = 'Apple'
+Of course, there are some areas where you need to be cognizant of case. Read this for
+more info: http://dev.mysql.com/doc/refman/5.7/en/identifier-case-sensitivity.html
+
+NICAR 2016 – Denver – Beginning MySQL
+Paula Lavigne – ESPN - Paula.lavigne@espn.com - @pinepaula
+
+

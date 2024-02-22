@@ -1,0 +1,100 @@
+Download Tabula: http://tabula.jazzido.com
+Who I am (Jeremy B. Merrill):
+● Interactive News Developer, NYT
+● Tabula core developer
+● I used to work at ProPublica, where I worked on the Dollars for Docs project, which is
+probably the largest PDF extraction project in news. It now uses Tabula’s Ruby library,
+tabula­extractor.
+This talk is an overview of the landscape of getting data from PDFs into something actually
+usable.
+PDF scraping is actually the last resort
+● better to get real data
+○ CSV, database dump, even Excel
+● Ask first!
+3 things: Reasons, types of PDFs and tools
+Reasons why people send PDFs:
+1. Technology ­­ can’t export as something real
+○ terrible proprietary database software
+○ maybe the “table” is a Word Doc
+○ bummer, you’re gonna have to deal with PDFs
+2. Literally don’t know any better, or don’t know how.
+○ So ask! And maybe show them how.
+○ Drag and drop “attachments”, if they have to publish PDFs, drag the Excel or
+CSV file out.
+○ YouTube video “How to attach raw data to a PDF”.
+3. presentation ­­ e.g. pretty reports with small, single­page data (but maybe repeated
+month or weekly)
+○ ask, if you’re not on deadline! The agency has the data and they probably want
+you to have it to.
+○ e.g. reports and budgets
+○ Economic Development Reports
+i.
+employment by industry
+ii.
+office vacancies
+4. Malice (trying to keep information out of the hands of the public)
+○ You’re out of luck, unless you have 3 years and a bunch of lawyers ­­ and then
+only if it's public agency
+○ Dollars for Docs is an example of htis. ­­ terrible PDFs that change format in the
+middle, text that overruns the cell border lines
+If you have to scrape the PDFs, you first have to figure out two “types”: PDF type and data type.
+
+These two variables will decide what types of tools to use.
+Distinctions in PDF types:
+● Scanned ­­ probably more common in FOIAs than published reports
+campaign finance.
+● Embedded text
+And data types:
+● Tables
+● Free text
+Tools:
+● Command line (Mac, Linux, maybe Windows)
+○ Very fine grained control, but you have to get comfortable with the command line
+○ And comfortable reading abstruse documentation
+● GUIs:
+○ GUIs less powerful and often not that well designed. (Including tabula)
+Loads of tools that work well for one use case, the trick is knowing the right one.
+text analysis
+● possible for scanned and embedded
+● searching emails (Sarah Palin)
+● pdftotext
+○ command line tool
+○ Search better than in Acrobat or Mac Preview
+○ Better copy paste
+● DocumentCloud
+○ it'll do pdftotext for you, but it's not as easy to get all the text data in one
+file.
+● Regexes (go to Amanda Hickman's session, Saturday at 2 p.m.)
+○ Looking for email addresses or data in prose
+○ Regexes (Regular Expressions) are like super powerful wildcard
+matching in search­and­replace.
+Tables:
+● just beginning to be possible with scanned PDFs, and Edward Duncan (of
+DocHive) knows more about that
+● Universe is:
+○ expensive tools like Monarch, Cogniview
+○ Tabula, which is:
+■ Free,
+■ open source.
+■ by journalists (ProPublica, NYT, Manuel/La Nacion, Knight Open
+News) for journalists
+● Use lines and rivers to create text
+● Works pretty well, but not perfectly.
+
+●
+●
+●
+
+Automatable via command line and Ruby library
+Tabula is scriptable, if you like Ruby or command lines.
+Working on building in templates to the GUI version.
+
+Recommendations:
+● nag, plead, threaten, ask nicely for better data
+● figure out if it's embedded text or scanned ­­ single most important factor in deciding
+what tool to use
+● try a bunch of tools ­­ often one tool works very well for one use case, and the trick is
+finding that one tool.
+Good luck, and happy scraping!
+
+

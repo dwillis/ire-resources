@@ -1,0 +1,970 @@
+Intro to Rails
+#NICAR16
+Al Shaw
+@A_L
+
+http://j.mp/nicar16-rails
+> rails new nicar16
+
+Do you need a
+web framework?
+1. You have too much data to bake
+2. You need user input
+3. You need dynamic processing that
+can't be done in the browser
+
+Do you need Rails?
+1. Your app is bigger than a couple of pages
+2. You have a big or complicated database
+3. You need users and sessions
+4. Or, you just want a place to organize your work
+
+Sinatra
+get '/' do
+"hello world"
+end
+
+Rails
+Controller
+ORM
+Views
+Assets
+Authentication
+Migrations
+Email
+JS
+...
+
+Flickr: Ozzy Delaney
+
+OK fine let's install it
+> gem install rails
+Fetching: activesupport-4.2.6.gem (100%)
+Successfully installed activesupport-4.2.6
+Fetching: actionview-4.2.6.gem (100%)
+Successfully installed actionview-4.2.6
+Fetching: actionpack-4.2.6.gem (100%)
+Successfully installed actionpack-4.2.6
+Fetching: activejob-4.2.6.gem (100%)
+whu
+Successfully installed activejob-4.2.6
+u? I
+Fetching: actionmailer-4.2.6.gem (100%)
+said
+Successfully installed actionmailer-4.2.6
+I wa
+nte
+Fetching: activemodel-4.2.6.gem (100%)
+d ra
+Successfully installed activemodel-4.2.6
+i ls
+Fetching: activerecord-4.2.6.gem (100%)
+Successfully installed activerecord-4.2.6
+Fetching: railties-4.2.6.gem (100%)
+Successfully installed railties-4.2.6
+Fetching: rails-4.2.6.gem (100%)
+Successfully installed rails-4.2.6
+9 gems installed
+
+> rails new nicar16
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+
+README.rdoc
+Rakefile
+config.ru
+.gitignore
+Gemfile
+app
+app/assets/javascripts/application.js
+app/assets/stylesheets/application.css
+app/controllers/application_controller.rb
+app/helpers/application_helper.rb
+app/views/layouts/application.html.erb
+app/assets/images/.keep
+app/mailers/.keep
+app/models/.keep
+app/controllers/concerns/.keep
+app/models/concerns/.keep
+bin
+bin/bundle
+bin/rails
+bin/rake
+bin/setup
+config
+config/routes.rb
+config/application.rb
+config/environment.rb
+config/secrets.yml
+config/environments
+config/environments/development.rb
+config/environments/production.rb
+config/environments/test.rb
+config/initializers
+config/initializers/assets.rb
+config/initializers/backtrace_silencers.rb
+config/initializers/cookies_serializer.rb
+config/initializers/filter_parameter_logging.rb
+
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+create
+run
+
+config/initializers/filter_parameter_logging.rb
+config/initializers/inflections.rb
+config/initializers/mime_types.rb
+config/initializers/session_store.rb
+config/initializers/wrap_parameters.rb
+config/locales
+config/locales/en.yml
+config/boot.rb
+config/database.yml
+db
+db/seeds.rb
+lib
+lib/tasks
+lib/tasks/.keep
+lib/assets
+lib/assets/.keep
+log
+log/.keep
+public
+public/404.html
+public/422.html
+public/500.html
+public/favicon.ico
+public/robots.txt
+test/fixtures
+test/fixtures/.keep
+test/controllers
+test/controllers/.keep
+test/mailers
+test/mailers/.keep
+test/models
+test/models/.keep
+test/helpers
+test/helpers/.keep
+test/integration
+test/integration/.keep
+test/test_helper.rb
+tmp/cache
+tmp/cache/assets
+vendor/assets/javascripts
+vendor/assets/javascripts/.keep
+vendor/assets/stylesheets
+vendor/assets/stylesheets/.keep
+bundle install
+
+What is all this stuff?
+Gemfile
+Gemfile.lock
+README.rdoc
+Rakefile
+app
+bin
+config
+config.ru
+db
+lib
+log
+public
+test
+tmp
+vendor
+
+90% of your time
+assets
+controllers
+helpers
+mailers
+models
+views
+
+Sublime Text
+
+MVC
+assets
+controllers
+helpers
+mailers
+models
+views
+
+Model
+
+Controller
+
+View
+
+Router
+
+the
+internet
+
+Stay on the path!
+“convention over configuration”
+
+Flickr: wetwebwork
+
+http://guides.rubyonrails.org/
+
+MVC
+
+Model
+
+School
+http://yourapp.com/schools/1
+
+Controller
+SchoolsController
+
+Router
+resources :schools
+
+View
+views/schools/show.html.erb
+
+the
+internet
+
+1. Migrations
+> cd nicar16
+> rails generate migration AddSchoolsTable
+invoke
+create
+
+active_record
+db/migrate/20160308170855_add_schools_table.rb
+
+1. Migrations
+db/migrate/20160308170855_add_schools_table.rb
+class AddSchoolsTable < ActiveRecord::Migration
+def change
+end
+end
+
+1. Migrations
+db/migrate/20160308170855_add_schools_table.rb
+class AddSchoolsTable < ActiveRecord::Migration
+def change
+create_table :schools do |t|
+t.string :name
+t.string :kind
+t.integer :students
+t.integer :teachers
+end
+end
+end
+
+1. Migrations
+> rake db:migrate
+== 20160308170855 AddSchoolsTable: migrating ==================================
+-- create_table(:schools)
+-> 0.0009s
+== 20160308170855 AddSchoolsTable: migrated (0.0009s) =========================
+
+OK, where is this database?
+config/database.yml
+default: &default
+adapter: sqlite3
+pool: 5
+timeout: 5000
+
+You can use Postgres or
+MySQL too!
+
+development:
+<<: *default
+database: db/development.sqlite3
+
+Or, mix
+production:
+n matc
+h
+d
+betwee
+e
+v
+e
+<<: *default
+lopmen
+n
+t
+and pro
+database: db/production.sqlite3
+duction
+
+2. Add a model
+app/models/school.rb
+class School < ActiveRecord::Base
+end
+
+3. Add some data
+> rails console
+Loading development environment (Rails 4.2.6)
+irb(main):001:0>
+
+3. Add some data
+irb(main):002:0> s = School.new
+=> #<School id: nil, name: nil, kind: nil,
+students: nil, teachers: nil>
+
+Flickr: John Kannenberg
+
+3. Add some data
+irb(main):003:0> s.name = "Acme High School"
+=> "Acme High School"
+irb(main):004:0> s.kind = "high"
+=> "high"
+irb(main):005:0> s.students = 500
+=> 500
+irb(main):007:0> s.teachers = 80
+=> 80
+
+3. Add some data
+irb(main):008:0> s.save
+(0.2ms) begin transaction
+SQL (1.5ms) INSERT INTO "schools" ("name", "kind",
+"students", "teachers") VALUES (?, ?, ?, ?) [["name", "Acme
+High School"], ["kind", "high"], ["students", 500],
+["teachers", 80]]
+(1.6ms) commit transaction
+=> true
+
+Another way
+irb(main):009:0> School.create({:name => "Magic High School",
+:kind => "high", :students => 100, :teachers => 10})
+(1.1ms) begin transaction
+SQL (0.3ms) INSERT INTO "schools" ("name", "kind",
+"students", "teachers") VALUES (?, ?, ?, ?) [["name", "Magic
+High School"], ["kind", "high"], ["students", 100],
+["teachers", 10]]
+(1.4ms) commit transaction
+=> #<School id: 2, name: "Magic High School", kind: "high",
+students: 100, teachers: 10>
+
+ActiveRecord magic
+irb(main):010:0> schools = School.all
+School Load (0.1ms) SELECT "schools".* FROM "schools"
+=> #<ActiveRecord::Relation [#<School id: 1, name: "Acme High School", kind: "high",
+students: 500, teachers: 80>, #<School id: 2, name: "Magic High School", kind: "high",
+students: 100, teachers: 10>]>
+
+irb(main):011:0> schools = School.where(:kind => "high")
+School Load (0.1ms) SELECT "schools".* FROM "schools" WHERE "schools"."kind" = ?
+[["kind", "high"]]
+=> #<ActiveRecord::Relation [#<School id: 1, name: "Acme High School", kind: "high",
+students: 500, teachers: 80>, #<School id: 2, name: "Magic High School", kind: "high",
+students: 100, teachers: 10>]>
+
+irb(main):013:0> schools = School.where("students > ?", 100)
+School Load (0.1ms) SELECT "schools".* FROM "schools" WHERE (students > 100)
+=> #<ActiveRecord::Relation [#<School id: 1, name: "Acme High School", kind: "high",
+students: 500, teachers: 80>]>
+
+ActiveRecord magic
+> School.find(1)
+> School.first
+> School.last
+> School.find_by(:name => "Acme High School")
+> School.where.not(:kind => "high")
+> School.select("name").where(:kind => "high")
+
+http://guides.rubyonrails.org/active_record_querying.html
+
+Let's get it on a web page
+app/controllers/schools_controller.rb
+app/views/schools/index.html.erb
+app/views/schools/show.html.erb
+
+4. Controllers
+app/controllers/schools_controller.rb
+class SchoolsController < ApplicationController
+end
+
+4. Controllers
+app/controllers/schools_controller.rb
+class SchoolsController < ApplicationController
+def index
+end
+def show
+end
+end
+
+4. Controllers
+app/controllers/schools_controller.rb
+class SchoolsController < ApplicationController
+def index
+@schools = School.all
+end
+def show
+@school = School.find(params[:id])
+end
+end
+
+sta
+the y on
+pa
+th
+
+5. Views
+app/views/schools/index.html.erb
+<ul>
+<% @schools.each do |s| %>
+<li><%= link_to s do %><%= s.name %><% end %></li>
+<% end %>
+<ul>
+
+sta
+the y on
+pa
+th
+
+5. Views
+app/views/schools/show.html.erb
+<h1><%= @school.name %></h1>
+<p>Students: <%= @school.students %></p>
+<p>Teachers: <%= @school.teachers %></p>
+
+sta
+the y on
+pa
+th
+
+5. Routes: wire it together
+config/routes.rb
+Rails.application.routes.draw do
+resources :schools
+end
+
+sta
+the y on
+pa
+th
+
+Did it work?
+> rails server
+=> Booting WEBrick
+=> Rails 4.2.6 application starting in development on http://
+localhost:3000
+=> Run `rails server -h` for more startup options
+=> Ctrl-C to shutdown server
+[2016-03-08 13:47:25] INFO WEBrick 1.3.1
+[2016-03-08 13:47:25] INFO ruby 2.2.2 (2015-04-13) [x86_64darwin14]
+[2016-03-08 13:47:25] INFO WEBrick::HTTPServer#start:
+pid=3172 port=3000
+
+sta
+the y on
+pa
+th
+
+Did it work?
+> rails server
+=> Booting WEBrick
+=> Rails 4.2.6 application starting in development on http://
+localhost:3000
+=> Run `rails server -h` for more startup options
+=> Ctrl-C to shutdown server
+[2016-03-08 13:47:25] INFO WEBrick 1.3.1
+[2016-03-08 13:47:25] INFO ruby 2.2.2 (2015-04-13) [x86_64darwin14]
+[2016-03-08 13:47:25] INFO WEBrick::HTTPServer#start:
+pid=3172 port=3000
+
+sta
+the y on
+pa
+th
+
+Did it work?
+http://localhost:3000/schools
+
+sta
+the y on
+pa
+th
+
+Did it work?
+http://localhost:3000/schools/1
+
+sta
+the y on
+pa
+th
+
+Route the homepage to
+schools#index
+config/routes.rb
+Rails.application.routes.draw do
+root :to => "schools#index"
+resources :schools
+end
+
+sta
+the y on
+pa
+th
+
+Now you know Rails!
+
+Flickr: Wally Gobetz
+
+sta
+the y on
+pa
+th
+
+What if I want to load an
+entire dataset at once?
+rake
+
+sta
+the y on
+pa
+th
+
+Rake for data loading
+http://j.mp/nicar-rails-csv
+
+db/initial/schools.csv
+
+sta
+the y on
+pa
+th
+
+Rake for data loading
+lib/tasks/load.rake
+desc "load the data"
+task :csv => :environment do
+# load code here
+end
+
+sta
+the y on
+pa
+th
+
+Rake for data loading
+> rake -T csv
+rake csv
+
+Remem
+b
+
+# load the data
+
+er our
+
+migrati
+on
+
+?
+
+> rake -T migrate
+rake db:migrate
+rake db:migrate:status
+
+# Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
+# Display status of migrations
+
+sta
+the y on
+pa
+th
+
+Rake for data loading
+lib/tasks/load.rake
+desc "load the data"
+task :csv => :environment do
+require 'csv'
+csv = "#{Rails.root.to_s}/db/initial/schools.csv"
+CSV.foreach(csv, :headers => true) do |row|
+s = School.new
+row.each do |key,val|
+s[key] = val
+end
+p s
+s.save
+end
+end
+s
+
+tay
+the on
+pa
+th
+
+Rake for data loading
+lib/tasks/load.rake
+> rake csv
+#<School id: nil, name: "Kozey", kind: "elementary", students: 500, teachers: 120>
+#<School id: nil, name: "Stoltenberg", kind: "high", students: 2500, teachers: 500>
+#<School id: nil, name: "Sipes", kind: "middle", students: 1000, teachers: 200>
+#<School id: nil, name: "Gottlieb", kind: "elementary", students: 500, teachers: 120>
+#<School id: nil, name: "Boehm", kind: "elementary", students: 500, teachers: 120>
+
+sta
+the y on
+pa
+th
+
+Rake for data loading
+lib/tasks/load.rake
+> rake csv
+#<School id: nil, name: "Kozey", kind: "elementary", students: 500, teachers: 120>
+#<School id: nil, name: "Stoltenberg", kind: "high", students: 2500, teachers: 500>
+#<School id: nil, name: "Sipes", kind: "middle", students: 1000, teachers: 200>
+#<School id: nil, name: "Gottlieb", kind: "elementary", students: 500, teachers: 120>
+#<School id: nil, name: "Boehm", kind: "elementary", students: 500, teachers: 120>
+
+sta
+the y on
+pa
+th
+
+Getting a little fancier
+What if we want pages for school kind?
+
+sta
+the y on
+pa
+th
+
+app/controllers/schools_controller.rb
+class SchoolsController < ApplicationController
+def index
+@schools = School.all
+end
+def show
+@school = School.find(params[:id])
+end
+def kind
+@schools = School.where(:kind => params[:kind])
+end
+end
+
+u
+
+h
+o
+h
+
+app/views/schools/kind.html.erb
+<ul>
+<% @schools.each do |s| %>
+<li><%= link_to s do %><%= s.name %><% end %></li>
+<% end %>
+<ul>
+
+Look fa
+
+miliar?
+
+h
+o
+uh
+
+Route it up
+config/routes.rb
+Rails.application.routes.draw do
+match "/schools/kind/:kind", => "schools#kind", :via => "get"
+root :to => "schools#index"
+resources :schools
+end
+
+sta
+the y on
+pa
+th oh
+uh
+
+Route it up
+config/routes.rb
+Rails.application.routes.draw do
+match "/schools/kind/:kind", => "schools#kind", :via => "get"
+root :to => "schools#index"
+resources :schools
+end
+
+sta
+the y on
+pa
+th
+
+DRY it up with partials
+views/schools/_school_list.html.erb
+<ul>
+<% @schools.each do |s| %>
+<li><%= link_to s do %><%= s.name %><% end %></li>
+<% end %>
+<ul>
+
+ew
+wh
+
+sta
+the y on
+pa
+th
+
+DRY it up with partials
+views/schools/index.html.erb
+views/schools/kind.html.erb
+<%= render :partial => "school_list" %>
+
+sta
+the y on
+pa
+th
+
+Link /kind/ pages to the homepage
+views/schools/index.html.erb
+<p>See all <%= link_to kind_path("elementary") do %>Elementary<% end %>,
+<%= link_to kind_path("middle") do %>Middle<% end %> and
+<%= link_to kind_path("high") do %>High<% end %> schools.</p>
+
+<%= render :partial => "school_list" %>
+
+sta
+the y on
+pa
+th
+
+Agh!
+
+sta
+the y on
+pa
+th
+
+Sometimes you have to
+add the magic yourself
+config/routes.rb
+Rails.application.routes.draw do
+match "/schools/kind/:kind", => "schools#kind",
+:via => "get", :as => "kind"
+root :to => "schools#index"
+resources :schools
+end
+
+sta
+the y on
+pa
+th
+Flickr: nestor ferraro
+
+Sometimes you have to
+add the magic yourself
+config/routes.rb
+Rails.application.routes.draw do
+match "/schools/kind/:kind", => "schools#kind",
+:via => "get", :as => "kind"
+root :to => "schools#index"
+resources :schools
+end
+
+sta
+the y on
+pa
+th
+
+Joins!
+Schools have districts, right?
+
+sta
+the y on
+pa
+th
+
+Joins!
+Schools have districts, right?
+
+> rails generate migration AddDistrictsTable
+invoke
+create
+
+active_record
+db/migrate/20160309183752_add_districts_table.rb
+
+db/migrate/20160309183752_add_districts_table.rb
+class AddDistrictsTable < ActiveRecord::Migration
+def change
+create_table :districts do |t|
+t.string :name
+end
+add_column :schools, :district_id, :integer
+end
+end
+
+app/models/district.rb
+class District < ActiveRecord::Base
+end
+
+app/models/district.rb
+class District < ActiveRecord::Base
+has_many :schools
+end
+
+app/models/school.rb
+class District < ActiveRecord::Base
+belongs_to :district
+end
+
+RailsGuides
+
+Create a district
+irb(main):002:0> d = District.create({:name
+=> "Denver Schools"})
+(0.2ms) begin transaction
+SQL (0.4ms) INSERT INTO
+"districts" ("name") VALUES (?) [["name",
+"Denver Schools"]]
+(0.7ms) commit transaction
+=> #<District id: 1, name: "Denver Schools">
+
+Flickr: John Kannenberg
+
+Add a school to our new district
+irb(main):002:0> s = School.find(1)
+irb(main):003:0> s.district = d
+irb(main):004:0> s.save
+irb(main):005:0> s
+=> #<School id: 1, name: "Acme High School",
+kind: "high", students: 500, teachers: 80,
+district_id: 1>
+
+Under the hood:
+SQL (0.4ms) UPDATE "schools" SET
+"district_id" = ? WHERE "schools"."id"
+= ? [["district_id", 1], ["id", 1]]
+
+Flickr: John Kannenberg
+
+Get all the schools in a district
+irb(main):001:0> District.first.schools
+=>
+#<ActiveRecord::Associations::CollectionProxy
+[#<School id: 1, name: "Acme High School",
+kind: "high", students: 500, teachers: 80,
+district_id: 1>]>
+
+Under the hood:
+District Load (0.7ms) SELECT "districts".* FROM "districts"
+ORDER BY "districts"."id" ASC LIMIT 1
+School Load (0.6ms) SELECT "schools".* FROM "schools" WHERE
+"schools"."district_id" = ? [["district_id", 1]]
+
+Watch out, joins can get expensive!
+
+You can figure out how to add controllers
+and views for districts, right?
+
+app/controllers/districts_controller.rb
+app/views/districts/index.html.erb
+app/views/districts/show.html.erb
+config/routes.rb
+
+app/controllers/districts_controller.rb
+class DistrictsController < ApplicationController
+def show
+@district = District.find(params[:id])
+@schools = @district.schools
+end
+end
+
+We basically just made this
+
+projects.propublica.org/schools
+
+We basically just made this
+
+projects.propublica.org/schools
+
+Next steps...
+guides.rubyonrails.org
+
+Next steps...
+Pluralsight screencasts (formerly PeepCode)
+
+Thank you!
+
+@A_L
+al.shaw@propublica.org
+
+

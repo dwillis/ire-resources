@@ -1,0 +1,157 @@
+Updating Tables and String Functions
+(using SQL in Microsoft Access)
+MaryJo Sylwester, Database Editor
+The Center for Public Integrity
+msylwester@publicintegrity.org
+NICAR Conference – Philadelphia, March 2002
+
+This tipsheet outlines the basic techniques for making changes to your data table using the Update
+Query and String Functions. Using these tools, you can split names, convert text fields to date
+fields, and standardize data, among other things.
+
+String Functions:
+LEFT: This tells the computer to start at the first byte on the left side of the field. Then we have
+the option to tell it how many bytes to take.
+Syntax: LEFT(fieldname, number of bytes)
+MID: This starts someplace in the middle of the field, which we will designate, and goes either to
+the end of the field (if we don’t specify) or to a certain point that we can set.
+Syntax: MID(fieldname, byte number to start at, number of bytes to take)
+INSTR: This works as a sort of search tool to tell the computer to either start or stop taking a
+“string” at a certain character (or space). This is how we can tell the program to split a name field
+at the comma, for example. For this type of work, it is used in conjunction with the MID function
+(more on that syntax later). It can also be used to determine at what position a certain character is
+located. The character you what to find should be enclosed in quotes.
+Syntax: INSTR(fieldname, “character we want to find”)
+--- this will return a numerical value showing what byte the comma is located at for each record
+There is also a RIGHT function, which starts at the first byte on the right side of the field and
+then you can tell it how many bytes to take. (it isn’t as useful as the others, however)
+
+Converting from Character to Date:
+This assumes that your “date” field is in the following format: MMDDYYYY – example:
+05062000 as May 6, 2000. You can re-arrange the string functions to accommodate other formats
+(such as YYYYMMDD or two-digit years), and we’ll talk about that later.
+What we’re going to do: Strip out the digits in the order that we want them to appear, then piece
+them together (along with the (/) slashes), and then drop them into our new date field.
+To strip the month: LEFT(chardate,2)
+To strip the day: MID(chardate,3,2)
+To strip the year: MID(chardate,5,4)
+Put them all together and put it into an Update Query:
+
+UPDATE bigdonors SET date = LEFT(chardate,2) + “/” + MID(chardate,3,2) + “/”
++ MID(chardate,5,4)
+
+1
+
+If your date information is in a different order:
+Government datasets from a mainframe system often dump the information as all text, with the
+date fields in YYYYMMDD format. Using strings, you can pull it apart and put it back in the
+right order very easily. Just change around the last Update Query.
+UPDATE tablename SET newdatefield = MID(olddatefield,5,2) + “/” + MID(olddatefield,7,2) +
+“/” + LEFT(olddatefield,4)
+
+Splitting Names:
+In order to tell the computer to split the field at the comma, we need to use the INSTR function,
+in conjunction with MID and LEFT. The INSTR function will be one of the “arguments” within
+the MID and LEFT functions.
+Getting the last name:
+In the case of the last name, we will use the LEFT function to start on the far left of the field, then
+use the INSTR function as the argument indicating where to stop. The name of the original fields
+needs to be used twice – once to tell the LEFT function which field to operate on and once to tell
+the INSTR function which field to use. The –1 number at the end of the SQL tells the computer
+that when it gets to the comma, to back up one space. If you don’t use this it will include the
+comma in your results.
+
+UPDATE bigdonors SET last = LEFT(contname, INSTR(contname, “,”)-1)
+Getting the rest of the name:
+Here we’ll use the MID function and the INSTR function will be the argument indicating where
+to start. We won’t use a second argument, which is how we tell the computer to simply take the
+remainder of the field. This time we’ll use +2 to make sure we don’t take the comma or the space
+just following it. This will work very well as long as your data is consistent – with each
+contributor name split with a comma.
+
+UPDATE bigdonors SET rest = MID(contname, INSTR(contname, “,”)+2)
+
+The TRIM function:
+The TRIM function will remove any leading or trailing spaces around whatever string you use it
+on. This is helpful because leading spaces on a particular record will make the computer think
+that one is different, even if the remainder of the content is the same as others. To add it, put the
+word trim at the beginning of the phrase, with parentheses around the entire phrase.
+
+UPDATE bigdonors SET rest = TRIM(MID(contname, INSTR(contname, “,”)+2))
+
+2
+
+Advanced String Functions:
+Getting only the first name:
+Using the IIF function allows you to set two options depending on what type of information the
+computer finds within a particular record. So the IIF function here will look to see if there is a
+middle initial (in reality, it looks for a second space). If it finds a middle initial, our formula will
+tell it to start at the comma and stop when it hits the second space. If it doesn’t find a middle
+initial, it will work just like the “rest” query we did above.
+Here’s how the IIF function works (note that it has two letter I’s):
+IIF(expression, truepart, falsepart)
+The “expression” is where we will tell the computer what we want to evaluate. The “truepart” is
+the action it will take if it finds the expression is true. The “falsepart” is the action it will take if it
+finds the expression is false (this is an optional element).
+
+Building the Expression:
+Step 1) The first part of the expression looks to see what position or byte the second space is
+located at. If you run this in a select query, it will return the position number where the second
+space is located. It won’t find a second space – or will return 0 – if there is not a middle initial.
+Here we’ll assume our original name field is called “fullname”
+
+INSTR(INSTR(fullname, “,”)+2, fullname, “ “)
+Examples:
+BOGGS, ROY F – will return the number 11
+POWERS, LARRY – will return the number 0
+Step 2) The second part of the expression returns the position number of the comma.
+INSTR(fullname, “,”)
+Step 3) Put these first two pieces together. This will subtract the position number of the comma
+from the position number of the second space. In other words, it’s the number of characters that
+you want to remove from the middle of the full string.
+
+INSTR(INSTR(fullname, “,”)+2, fullname, “ “))-INSTR(fullname, “,”))
+Step 4) When we add the IIF function to this, we will evaluate whether the above subtraction
+results in a number greater than Zero. If it is greater, that means there is a middle initial. Note: we
+haven’t determined our “truepart” and “falsepart” yet, so this isn’t finished.
+
+IIF((INSTR(INSTR(fullname, “,”)+2, fullname, “ “))-(INSTR(fullname, “,”))>0, truepart,
+falsepart)
+
+3
+
+Step 5) Now it’s time for action. Here we’ll create the “truepart” – or what action we want taken
+if our IIF expression is found to be true, and the “falsepart.” This is the most complicated part (or
+at least looks that way) because there is a lot of syntax. We’ll create it in pieces….
+A) The first part of the True Statement uses MID and INSTR to tell the computer to start
+at the comma:
+
+MID(fullname, INSTR(fullname, “,”)+1
+B) The second part is the piece we created in Step 3, telling the computer to stop at the
+second space. (remember Step 3 determined the position number where that second space
+is located).
+
+(INSTR(INSTR(fullname, “,”)+2, fullname, “ “))-(INSTR(fullname, “,”)))
+C) Putting the above two pieces together, along with a TRIM function, creates the
+“truepart”. This is simply a MID function (just like we did above), only it’s second
+argument is a little more complicated than usual.
+
+(TRIM(MID(fullname, INSTR(fullname, “,”)+1,
+(INSTR(INSTR(fullname, “,”) +2, fullname, “ “)) - (INSTR(fullname,
+“,”)))))
+D) The False Statement is straightforward. It is simply a MID function and INSTR
+function telling the computer to start at the comma and take everything that remains
+(keep in mind this is only for those without a middle initial).
+
+(trim(mid(fullname,instr(fullname, ",")+1))))
+E) So now if we put it all together (and add a couple commas), we’re ready to run the
+Update Query.
+
+UPDATE tablename SET firstname = iif((instr(instr(fullname, ",")+2,
+fullname, " ")) - (instr(fullname, ","))>0, (trim(mid(fullname, instr(fullname,
+",")+1, (instr(instr(fullname, ",")+2, fullname, " ")) - (instr(fullname,
+","))))), (trim(mid(fullname,instr(fullname, ",")+1))))
+
+4
+
+

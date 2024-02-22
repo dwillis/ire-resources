@@ -1,0 +1,257 @@
+Election APIs
+Sam Cohen
+Lindsay Young @not young
+
+Derek Willis
+@derekwillis
+Matt Della Volpe @mattdellavolpe
+
+What is the FEC?
+- Disclose campaign finance information
+- Enforce the law, such as the limits and prohibitions on
+contributions
+- Oversee the public funding of Presidential elections.
+
+What is an API?
+
+What is an API?
+APIs are an easy way for computers, programs and developers
+to talk to each other.
+You ask a question of an API using a url and you get a very
+structured response that is easy for a computer to understand.
+
+API URL components
+The web addressgets your question routed to the right server
+The endpointis the category of thing you are interested in
+The parametersask the question about the thing you are interested in
+
+Web address
+The base URL directs your question to a web address
+
+https://api.open.fec.gov/v1/candidates?state=MD&api_key=NICAR16
+
+Version number
+Versions make it easier for users to transitions when an API changes
+https://api.open.fec.gov/v1/candidates?state=MD&api_key=NICAR16
+
+Endpoint
+The endpoint describes the category you are looking at.
+Look at an API’s documentation to see what kind of methods are available.
+https://api.open.fec.gov/v1/candidates?state=MD&api_key=NICAR16
+
+Parameters
+The parameters come after a “?” and ask the question
+This query is looking for candidates that run for office in Maryland
+This call also has an API key.
+https://api.open.fec.gov/v1/candidates?state=MD&api_key=NICAR16
+
+The Response
+
+How does the FEC
+API work ?
+
+THE FEC API
+
+https://api.open.fec.gov/developers/
+NICAR16
+
+How does the FEC API work?
+Committees are the main actors
+Lookup candidates to find their committees
+
+What can the FEC API tell you?
+How much money is there in the presidential election?
+What presidential candidate raised the most money?
+Where did that money come from?
+
+THE FEC API
+
+https://api.open.fec.gov/developers/
+NICAR16
+
+Pro FEC API tips
+For machine readable docs
+https://api.open.fec.gov/swagger/
+Ask questions and give feedback on github
+https://github.com/18f/openfec/issues
+
+Place your screenshot here
+
+beta.fec.gov
+Aims to make campaign finance
+information more accessible
+(and understandable) to all
+users
+
+CREDITS
+
+Special thanks to all the people who made and
+released these awesome resources for free:
+◉ Presentation template by SlidesCarnival
+◉ Photographs by Unsplash
+
+AP Elections API
+
+AP’s Election API
+
+What is it
+How does data get into it
+Why did we make it
+How do you get data out of it
+ELEX
+
+What is ELAPI
+Restful HTTP/S API to access elections results as they are
+released by AP during an election
+Query and Filter data to what you are interested in
+Primary use case: ingestion into your own system
+
+What is ELAPI
+
+How does data get into ELAPI
+Four types of Data flow into the API from AP’s Election Systems
+1.
+2.
+3.
+4.
+
+Initialization data (Before the polls close)
+Results data (After the polls close)
+Race calls data (As calls are made)
+Reports data (Data other than votes)
+a. Cumulative Delegate Report “Delsum”
+b. State by State Delegate Report “Delstate”
+c. Corrections, notifications, etc
+
+What is ELAPI
+
+Why did AP make ELAPI
+
+Replace and improve decades old FTP ingestion
+Easier to program against
+Much more efficient
+More flexible
+
+How to use ELAPI
+Query: What data do I want
+Granularity of view: What level (zoom) do I want
+Output format: json or xml, full or brief candidate info
+Query Explorer:
+http://api.ap.org/v2/elections/xplor?apiKey=nicar2016
+
+How to use ELAPI
+Query the API by
+Election Date
+States
+National vs Local
+Race is in more than one state or not
+Races
+General, Primary, Caucus
+Parties
+Offices
+Presidential, Governor, Senate, House, Mayor, School Board, Sheriff, etc
+Winner
+Everything
+Called
+Uncalled
+Runoff
+
+How to use ELAPI
+Granularity of view
+Level
+State
+FIPS code (County)
+District
+Reporting Unit
+
+How to use ELAPI
+Output format
+JSON or XML
+Full or brief Candidate Info
+
+How to use ELAPI
+JSON with brief candidate info
+
+How to use ELAPI
+XML with brief candidate info
+
+How to use ELAPI
+XML with full candidate info
+
+How to use ELAPI
+Efficiency
+Subset of data
+ETAG
+Next Link
+
+How to use ELAPI
+ELEX
+https://github.com/newsdev/elex
+elex-admin
+elex-loader
+ap-deja-vu
+
+ProPublica’s Campaign Finance API
+●
+●
+●
+●
+
+Overlap with FEC API
+Timeliness
+Electronic filing data
+Calculated fields
+
+https://propublica.github.io/campaign-finance-api-docs/
+
+Compared to FEC API
+● Both use bulk (FTP) data for committee, candidate info.
+● Both have itemized transactions, but differ on sources.
+● ProPublica updated with bulk data daily & every 15 minutes
+for filings.
+
+Timeliness Factor
+● New electronic filings every 15 minutes
+● Process updates summary info based on electronic filings
+● Quick access to itemized transactions, but data isn’t
+enhanced like FTP data is.
+
+Electronic Filing Data in API
+● Details about filings, including summary JSON
+● 48-hour reports of late contributions
+● 24-hour reports of independent expenditures
+
+Electronic Filing Data NOT in API
+● Itemized contributions (Schedule A)
+● Itemized expenditures (Schedule B)
+● Debt and loan transactions (coming soon)
+
+Calculated Fields & Subsets
+●
+●
+●
+●
+
+Contribution groupings for presidential candidates
+Net primary cash on hand for presidential candidates
+Recent filings that are amendments
+“Clean” list of super PACs
+
+Get an API Key
+Email us at apihelp@propublica.org
+
+THANKS!
+Any questions?
+Sam Cohen
+Derek Willis @derekwillis
+Lindsay Young @not young Matt Della Volpe @mattdellavolpe
+
+Election APIs
+Sam Cohen
+Lindsay Young @not young
+
+Derek Willis
+@derekwillis
+Matt Della Volpe @mattdellavolpe
+
+

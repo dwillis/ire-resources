@@ -1,0 +1,64 @@
+Using XSL with XML
+To turn an XML document into something a Web browser can display, you need to use
+an XSL – extensible stylesheet language – document to transform your XML into HTML.
+An XSLT document is written in XML itself. It’s similar to ASP in that you mix HTML
+markup with programming commands. Unlike ASP, the programming commands are all
+valid XML. Unfortunately, XML doesn’t lend itself that well towards representing
+program flow, so you can end up with some very awkward syntax at times.
+In an XSL file, you define templates that match parts of the source XML document – in
+this case, the superdelegates.xml file – and control how each of those parts is
+transformed.
+The browsers that can natively display XML and XSL are IE 5+ (tho, 6 is better – 5 is not
+100% compatable) and Netscape 6+ (tho, once again, Netscape 7 is better).
+The advantage of this is that you can have one stylesheet for your entire site that is
+downloaded once that contains the markup, and as users from page to page, they don’t
+have to waste bandwidth downloading the HTML that stays the same from page to page.
+For example, a newspaper site could put up all its articles as XML files, which all link to
+the same stylesheet. That way, each time a user pulls up a story, they only download the
+data – the headline, the byline, the story – that has changed.
+While great in theory, it doesn’t work quite as well in practice, because:
+•
+•
+•
+
+Not everyone has recent versions of the browser.
+Now not only do you have to write cross-platform HTML that renders well in all
+clients, you also have to write cross-platform XSL.
+Many things in the framework of the page do change from page to page – the
+navigation, the ads, and so on, so you end up having to re-download most of the
+page again.
+
+The other option is to have your web server do the transform before the page is sent to the
+browser. This can be done via Microsoft’s MSXML parser in an ASP page, or via Perl
+modules in a cgi script, among other ways.
+Launch into examples of how things work:
+Example: superdelegates.xml file.
+Show how templates are defined for the various parts of the file; how they are
+defined recursively; and how the value-of operator works. Also, explain Xpath
+syntax (which hopefully Dan has covered briefly :) and how it is similar to the
+syntax used for directories and files.
+
+Example: superdelegates_atlernate.xml file.
+Show how XSL has like other programming languages has looping structures.
+Example: superdelegates_sort.xml file.
+Show the lousy sorting ability you get with XSL.
+Example: superdelegates_edwards.xml file.
+Show the if clause to display only states for Edwards.
+Example: superdelegates_hidden.xml file.
+Show how – with a little Javascript – you can show and hide sections of the
+document.
+On the Web
+XSLT Tutorial
+http://www.w3schools.com/xsl/default.asp
+XPath Tutorial
+http://www.w3schools.com/xpath/default.asp
+Software
+Xselerator divides the window into three panes – in the first, you can edit your XML; in
+the second, you can edit your XSL; and the third shows you a preview of what the output
+looks like. Much preferable to trying to debug cryptic error messages in Internet Explorer
+when your XML is invalid. Costs around $100.
+http://www.marrowsoft.com/
+Treebeard is a similar – but clunkier – program. It is, however, free.
+http://treebeard.sourceforge.net/
+
+

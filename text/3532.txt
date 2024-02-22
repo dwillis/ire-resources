@@ -1,0 +1,137 @@
+NICAR Hands-On:
+Census Data with Tableau Public
+Get your data together
+1. Gather your data. You’ll need:
+a. 2010 and 2000 census data for place (with population > 2000)
+b. Annexation data by place, from a state agency
+c. Lat/ long of the census district
+2. Make sure your data is in the right format
+a. Your workbook should have two sheets: one with the data, the second with lat/long
+b. Header row is row 1
+c. No blank rows or columns
+3. Connect to the census data.
+a. Open Tableau Public and Click “Open Data.”
+b. Choose Excel & find your file
+c. Select “Single table” and find your sheet with the census data and lat-long
+d. You know you’ve done it right when all your fields show up in the Data Window on the left hand
+side of Tableau.
+e. Make sure your latitude and longitude fields are correctly geocoded. (They must be numbers to
+do this.) To make sure your latitude field is geocoded:
+i. Right click on field in the data window  Change data type to Number
+ii. Right click on the field again  Geographic role = Latitude
+iii. Repeat for Longitude
+
+Create map view for Major metro area.
+o
+o
+o
+
+o
+o
+
+o
+
+In the Data Window, ctrl-click on latitude, longitude and city and click “Show Me”
+Drag the 2010 census population from the Data Window to the Size Shelf
+Create a calculated field on % change from last census to this
+ Right-click on 2010 Census  Create Calculated Field
+ Enter this formula. The formula language is similar to SQL or Excel.
+
+When you are done, the %Change field should show up in the Data Window.
+Decide whether you will show absolute change or % change on color. Here we show % change. Drag “%
+Change” from the Data Window to the Color Shelf:
+Format the colors. On the color legend, click Edit Colors and select Advanced button.
+ Choose orange-blue diverging color scheme
+ Center at the 0
+ Set min to near your min value and max to (in this case 100%) after inspecting your data so that
+there is a good color range in the middle of your data.
+ On the Color Shelf, add a grey border and 80% transparency. This will help your marks show up
+better when they overlap.
+Drag “% Change from the Data Window to the Label shelf. Open the label drop-down and select “Selected.”
+This means the label will show up only when the mark is selected.
+
+o
+o
+
+Rename this sheet “Metro.”
+Click the Zoom icon on the toolbar and select the area in your major metro. Your sheet should look like this:
+
+Create detail view
+o
+
+Create a new sheet.
+
+o
+
+o
+o
+o
+o
+
+Add
+ Measure Names to Columns
+ City to Rows
+ Measures Values to the Text Shelf
+You should have a text chart. Remove from the Measure Value shelf any values you don’t want
+and reorder them as you wish.
+All your percentages will show up as 0. Click each in the Data Window  Field Properties
+Format Text and choose Percentage.
+Rename this sheet “Detail.”
+It should look like this:
+
+Create the dashboard
+1. Create a new dashboard
+2. Size it to your page size: click :”Edit” in the size section in the lower-left of the dashboard. This will help
+you avoid scrollbars and make sure the viz looks good in your page.
+
+3.
+4.
+5.
+6.
+7.
+
+Add the map and detail views by dragging them onto the dashboard, or just double-clicking them
+Arrange and lay out the views by dragging them
+Change and edit titles by right-clicking on the title and choosing “Edit”
+Add any explanatory text by selecting “Text” from objects and dragging onto the screen
+Add a Quick Filter on City
+a. Click on the top right corner of any view __> Quick Filters  City
+b. Make it a compact list
+c. Make it global
+8. Add a highlight action: highlight on the toolbar, select City
+9. Edit your tooltips for each view.
+a. Select the sheet
+b. On the main menu, select “Edit  Tooltips.”
+
+c. Repeat for the other sheet
+
+Test the interaction
+1. Click around and see how it works
+2. Fix the size legend so that cities keep their sizes as you change from one to another
+
+Your dashboard should look like this:
+
+Then take it to your graphics dept…. discuss the colors, layout and information presentation with them.
+
+Save to the web & publish
+1. Save to the web
+a. Main menu: File  Tableau Public  Save to web
+b. Follow the prompts
+c. Do not select “show sheets as tabs.”
+2. Publish
+a. Click “Share” in the lower left
+b. Copy the embed code and paste into your web page
+
+Ambitious step
+On your map view:
+1. Drag “Measure names” to filter
+a. Show Quick filter—make it a compact list
+b. Customize the filter—don’t allow “all”
+2. Drag “Measure values” to label and to size shelves
+
+Now your users can select which measure is shown on the map. On the dashboard,
+- Remove your size legend
+- Make sure the measure names quick filter is showing.
+Your dashboard will look like this:
+
+
