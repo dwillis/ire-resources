@@ -15,11 +15,12 @@ def check_json_file(file_path, source):
 
         authors = data.get('authors', '')
         conference = data.get('conference', '')
+        title = data.get('title', '')
         year = data.get('year', '')
         keywords = data.get('keywords', [])
 
         if not authors:
-            return (source, os.path.basename(file_path), "No 'authors' listed", conference, year, len(keywords), "")
+            return (source, os.path.basename(file_path), "No 'authors' listed", conference, title, year, len(keywords), "")
 
         if conference == 'Not Listed':
             conference_msg = "Not Listed"
@@ -34,9 +35,9 @@ def check_json_file(file_path, source):
         if 'keywords' in data and len(data['keywords']) != 5:
             keywords_msg = "Doesn't have 5 keywords"
         else:
-            keywords_msg = ""
+            keywords_msg = keywords
 
-        return (source, os.path.basename(file_path), "Valid", conference_msg, year_msg, keywords_msg, authors)
+        return (source, os.path.basename(file_path), "Valid", conference_msg, title, year_msg, keywords_msg, authors)
 
 def check_json_files_in_directories(base_directory):
     results = []
@@ -55,7 +56,7 @@ def check_json_files_in_directories(base_directory):
 def write_to_csv(file_path, results):
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Source', 'File Name', 'Status', 'Conference', 'Year', 'Keywords', 'Authors'])
+        writer.writerow(['Source', 'File Name', 'Status', 'Conference', 'Title', 'Year', 'Keywords', 'Authors'])
         writer.writerows(results)
 
 # Specify the base directory containing the JSON directories
