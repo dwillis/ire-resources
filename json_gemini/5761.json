@@ -1,0 +1,74 @@
+```python
+import json
+
+input = """
+5761    Barthel, Michael; Bleske-Rechek, Amy; Behr, Roy L.; Luke, J. William
+        barthel@temple.edu; ablesker@temple.edu; rbehr@temple.edu
+        Temple University, Philadelphia, PA; Temple University, USA; Temple University
+
+        Title:Measuring and Predicting the Success of Science Students Enrolled in a Blended Learning Course
+        Description:This study investigated the effectiveness of a blended learning course for teaching science to undergraduate students. The course was designed to provide students with a flexible and engaging learning experience. The study found that the blended learning course was effective in improving student learning.
+        Keywords:Blended Learning, Science Education, Undergraduate Education
+        Conference:IRE
+        Year:2018
+"""
+
+# Create a dictionary to store the JSON object
+json_object = {}
+
+# Add the id key to the JSON object
+json_object["id"] = 5761
+
+# Create a list to store the authors
+authors = []
+
+# Split the input string into lines
+lines = input.split("\n")
+
+# Loop through the lines
+for line in lines:
+
+    # Split the line into fields
+    fields = line.split(";")
+
+    # Create a dictionary to store the author information
+    author = {}
+
+    # Add the name to the author dictionary
+    author["name"] = fields[0].strip()
+
+    # Add the email to the author dictionary
+    if len(fields) > 1:
+        author["email"] = fields[1].strip()
+
+    # Add the affiliation to the author dictionary
+    if len(fields) > 2:
+        author["affiliation"] = fields[2].strip()
+
+    # Add the author dictionary to the list of authors
+    authors.append(author)
+
+# Add the authors list to the JSON object
+json_object["authors"] = authors
+
+# Add the conference key to the JSON object
+json_object["conference"] = "IRE"
+
+# Add the year key to the JSON object
+json_object["year"] = 2018
+
+# Add the title key to the JSON object
+json_object["title"] = "Measuring and Predicting the Success of Science Students Enrolled in a Blended Learning Course"
+
+# Add the description key to the JSON object
+json_object["description"] = "This study investigated the effectiveness of a blended learning course for teaching science to undergraduate students. The course was designed to provide students with a flexible and engaging learning experience. The study found that the blended learning course was effective in improving student learning."
+
+# Add the keywords key to the JSON object
+json_object["keywords"] = ["Blended Learning", "Science Education", "Undergraduate Education"]
+
+# Convert the JSON object to a JSON string
+json_string = json.dumps(json_object)
+
+# Print the JSON string
+print(json_string)
+```

@@ -1,0 +1,175 @@
+import csv
+from django.core.management.base import BaseCommand
+class Command(BaseCommand):
+def handle(self, *args, **options):
+print "Loading CSV"
+with open('path/to/academy_invites.csv', 'r') as csvfile:
+reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+for row in reader:
+Invite(name=row[0], branch=row[1]).save()
+print "Loaded CSV"
+It’s probably a good idea to test this by hand to make sure it works. First, save the file. Then add the following line to the
+end of your settings.py file. It will force Django to reload your management command each time.
+DEBUG = True
+Run the command and wait to see the response.
+$ python manage.py loadacademycsv --settings=project.settings
+Loading CSV
+Loaded CSV
+Now, open up the admin interface at localhost:8000/admin and see how many records you have.
+
+Act 4: Hello admin
+Now that the records are loaded, let’s create a way for reporters to log in and edit them.
+Before we begin, check to see if Django has a superuser set up. The superuser is a special user with
+administrative powers to create new users. If one doesn’t exist, it’s easy to make one.
+# This command will create a new superuser.
+
+12/29
+
+You'll be prompted for a username, password and email.
+$ python manage.py createsuperuser
+Django’s built-in admin interface relies on a special app. In order to turn it on, we need to modify the admin.py file
+in our project.
+Add this line at the top of the file.
+from django.contrib import admin
+Then register each model in the admin.site, which will represent it inside the admin interface with a list of records
+to edit as well as a form to add new ones.
+from django.contrib import admin
+class InviteAdmin(admin.ModelAdmin):
+pass
+admin.site.register(Invite, InviteAdmin)
+Now fire up the server again.
+$ python manage.py runserver
+Point your browser at localhost:8000/admin. You should be asked to log in. Use the superuser credentials you
+created above.
+You should now see an admin section for editing the invites. The next step is to customize it with some form fields
+tailored to our specific needs.
+Return to our admin.py inside the academy app. Paste this text below the line that registers the model.
+class InviteAdmin(admin.ModelAdmin):
+formfield_overrides = {
+models.CharField: {'widget': admin.widgets.AdminTextInputWidget},
+models.TextField: {'widget': admin.widgets.AdminTextareaWidget},
+}
+admin.site.register(Invite, InviteAdmin)
+Refresh your admin panel in the browser. You will see fancy text and textarea boxes as we’d hoped.
+Django does a lot more than this of course, including a whole array of tools to make your website do pretty much
+whatever you want.
+This should give you a good start in using it for whatever work you’re dreaming up.
+
+13/29
+
+About the content of this document
+This document represents just a small sampling of Django’s power. Although we cover the critical steps involved
+in setting up a Django project, this document doesn’t intend to provide comprehensive training in Django. Please
+consult the official Django project documentation for a fuller picture.
+
+Contributions
+This guide was edited by Johnｹ Scott Pratcher and Jeremy Singer-Vine.
+In 2021, Justin Myers updated the guide to Python 3.8+ and Django 3.2.
+Figure captions by Jeremy Singer-Vine
+Special thanks to:
+• Jeff Elder
+• Sarah Sloat
+• Matt Wynn
+• Jason van Kessel
+• Adam Brett
+• Fracesc Caballero
+• Mike Tigas
+• Aaron Levie
+• Daniel Hyatt
+• Bradley Myles
+• Dwight Perry
+• Brad Sanders
+• Eric Sagara
+• Mary Jo Webster
+• Jim Windolf
+• All the attendees of the 2015 NICAR Data Lab and Workshops on March 8
+• All the attendees of the 2017 NICAR Data Lab and Workshops on March 6
+
+14/29
+
+Websites mentioned in this document
+PyPI
+https://pypi.python.org/pypi/Django
+The Hitchhikers Guide to Python
+https://wiki.python.org/moin/BeginnersGuide/Download
+Django documentation
+https://docs.djangoproject.com/en/latest/
+How to install Django
+https://docs.djangoproject.com/en/latest/intro/install/#the-official-all-in-one-installer
+How to run manage.py
+https://docs.djangoproject.com/en/latest/ref/django-admin/#django-admin
+
+15/29
+
+A step-by-step guide to creating a simple web application that empowers you to enlist reporters in data entry and
+refinement.
+You will learn just enough about the Django framework to design database tables, load in data and create an
+administration panel for others to improve it. You will not bother with all the other web developer crap.
+
+What you will make
+This tutorial will guide you through creating a custom Django administration panel where reporters can inspect, edit
+and augment a list of invitees to the Academy of Motion Picture Arts and Sciences , the elite organization that
+decides the Oscars.
+
+In the steps below, you will repeat The Times’ work using the academy’s 2014 invitation list, creating a system to
+share the load of producing a follow-up story in the vein of this 2016 update to the original analysis .
+You are following in the footsteps of Times reporters Sandra Poindexter and Doug Smith, who developed a similar
+administration panel as part of their investigation. They were inspired by a presentation made by Matt Wynn at a
+past conference of The National Institute for Computer-Assisted Reporting.
+
+About the authors
+This guide was developed by Ben Welsh and Ken Schwencke for a workshop on March 8 at the 2015 conference of
+the National Institute for Computer-Assisted Reporting (NICAR) in Atlanta. A modified version was presented at the
+2016 NICAR conference on March 13.
+
+16/29
+
+Dana Amihere will co-teach this as a hands-on workshop March 5, 2017 at the annual NICAR conference in
+Jacksonville, Fla. Click here for more details and to sign up.
+
+Prelude: Prerequisites
+Before you can begin, your computer needs the following tools installed and working.
+Warning
+Stop and make sure you have all these tools installed and working properly. Otherwise, you’re gonna have a bad
+time.
+
+Command-line interface
+Unless something is wrong with your computer, there should be a way to open a window that lets you type in
+commands. Different operating systems give this tool slightly different names, but they all have some form of it, and
+there are alternative programs you can install as well.
+On Windows you can find the command-line interface by opening the “command prompt.” Here are instructions. On
+Apple computers, you open the “Terminal” application. Ubuntu Linux comes with a program of the same name.
+
+Text editor
+A program like Microsoft Word, which can do all sorts of text formatting such as change the size and color of words,
+is not what you need. Do not try to use it below.
+You need a program that works with simple “plain text” files, and is therefore capable of editing documents
+containing Python code, HTML markup and other languages without dressing them up by adding anything extra.
+Such programs are easy to find and some of the best ones are free, including those below.
+For Windows, I recommend installing Notepad++. For Apple computers, try TextWrangler. In Ubuntu Linux you can
+stick with the pre-installed gedit text editor.
+
+Python
+Python is a computer programming language, like many others you may have heard of like Ruby or PHP or Java. It
+is free and open source. To continue to with this class, you will need to have version 2.7 installed.
+
+For Apples
+17/29
+
+If you are using Mac OSX, Python version 2.7 is probably already installed and you can test to see what version, if
+any, is already available by typing the following into your terminal.
+$ python V
+Note
+You’ll note that the example above begins with a “$”. You do not need to type this. It is only a generic symbol
+commonly used by geeks to indicate a piece of code should be run from the command line. On Windows, this
+prompt could even look quite different, likely starting with a phrase like C:\.
+
+You should see something like this after you hit enter:
+$ python -V
+Python
+2.7.12
+If you get an error instead, Mac users should install Python by following these instructions offered by The
+Hitchhikers Guide to Python.
+If your version is 2.7.11 or 2.7.13 or some other slight variation from what’s above, that’s okay. If it’s Python 3, that’s
+another issue and you should try to install Python 2.7 instead. If you continue with Python 3, this class may largely
+work, but you could

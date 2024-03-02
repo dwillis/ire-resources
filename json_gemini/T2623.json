@@ -1,0 +1,29 @@
+```python
+import xmltramp
+import json
+
+# Load the XML file into a variable
+d = xmltramp.load('http://www.thescoop.org/projects/irenicar/2006/T2623.xml')
+
+# Create a JSON object
+json_object = {
+    "id": "T2623",
+    "authors": [],
+    "conference": "IRE",
+    "year": "2006",
+    "title": "Parsing House Vote Data using Python",
+    "description": "This handout provides a brief overview of how to parse House vote data using Python and the xmltramp library.",
+    "keywords": ["Python", "xmltramp", "House vote data"]
+}
+
+# Iterate over the authors
+for author in d['authors']['author']:
+    json_object["authors"].append({
+        "name": author['name'] if author['name'] else None,
+        "email": author['email'] if author['email'] else None,
+        "affiliation": author['affiliation'] if author['affiliation'] else None
+    })
+
+# Print the JSON object
+print(json.dumps(json_object, indent=4))
+```
