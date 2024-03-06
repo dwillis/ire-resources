@@ -4,8 +4,10 @@ This repository contains code and data involving IRE tipsheets, and in particula
 
 * OpenAI
 * Claude
+* Claude 3 Sonnet
 * Mistral 7B
 * llama2
 * Palm (Google)
+* Gemini (Google)
 
 The extraction is done in `ire_parser.py`, which uses the Python llm and ttok libraries. A separate script, `ire_validator.py`, evaluates the results in terms of JSON validity and data structure, producing `results.csv`.
