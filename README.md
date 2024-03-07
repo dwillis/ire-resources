@@ -10,4 +10,4 @@ This repository contains code and data involving IRE tipsheets, and in particula
 * Palm (Google)
 * Gemini (Google)
 
-The extraction is done in `ire_parser.py`, which uses the Python llm and ttok libraries. A separate script, `ire_validator.py`, evaluates the results in terms of JSON validity and data structure, producing `results.csv`.
+The extraction is done in `ire_parser.py`, which uses the Python llm and ttok libraries. A separate script, `ire_validator.py`, evaluates the results in terms of JSON validity and data structure, producing `results.csv` [Google Sheet version](https://docs.google.com/spreadsheets/d/19-Kl8N3RTWGq0lCJpyMbEGkSpoOG758_KTdGCjdfogk/edit?usp=sharing).
