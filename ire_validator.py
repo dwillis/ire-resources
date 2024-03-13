@@ -5,8 +5,20 @@ import re
 
 def check_json_file(file_path, source):
     with open(file_path, 'r') as f:
+
+        file_content = f.read()
+
+        file_content = file_content.replace('```', '')
+
+        start_index = file_content.find('{')
+
+        if start_index == -1:
+            return (source, os.path.basename(file_path), "No JSON object found", "", "", "", "")
+
+        file_content = file_content[start_index:]
+
         try:
-            data = json.load(f)
+            data = json.loads(file_content)
         except json.JSONDecodeError as e:
             return (source, os.path.basename(file_path), "Invalid JSON format", "", "", "", "")
 
@@ -43,6 +55,7 @@ def check_json_files_in_directories(base_directory):
     results = []
     for dir_name in os.listdir(base_directory):
         if dir_name.startswith('json_') and os.path.isdir(os.path.join(base_directory, dir_name)):
+            print(dir_name)
             source = re.sub(r'^json_(.+)$', r'\1', dir_name)
             directory_path = os.path.join(base_directory, dir_name)
             for root, dirs, files in os.walk(directory_path):
