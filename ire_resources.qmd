@@ -1,13 +1,53 @@
 ```{r}
 library(tidyverse)
+library(janitor)
 ```
 
 
 ```{r}
-ire_pdfs <- read_csv("ire_pdfs.csv") |> distinct() |> filter(str_detect(url, ".pdf"))
+
+resources <- read_csv("resources.csv")
+
+# Get the total number of columns in the dataframe
+total_columns <- ncol(resources)
+
+# Specify the number of columns you want to remove
+n <- 16
+
+# Remove the last n columns
+resources <- resources %>%
+  select(-((total_columns - n + 1):total_columns))
+
+resources <- resources %>%
+  mutate(file_name = str_extract(resource_urls, "[^/]+$"),
+         file_name_without_extension = str_remove(file_name, "\\.[^.]+$"))
 ```
 
 ```{r}
-write_csv(ire_pdfs, "pdf_urls.csv")
+results <- read_csv("results.csv") |> clean_names()
+
+results <- results |> 
+  mutate(file_name_without_extension = str_remove(file_name, "\\.[^.]+$"))
+
+valid_results <- results |> filter(status == 'Valid')
+
+openai_results <- valid_results |> filter(source == 'openai') |> inner_join(resources, join_by(file_name_without_extension)) |> rename(file_name_json = file_name.x, file_name_orig = file_name.y)
+
+claude3_results <- valid_results |> filter(source == 'claude3sonnet') |> inner_join(resources, join_by(file_name_without_extension)) |> rename(file_name_json = file_name.x, file_name_orig = file_name.y)
+
+claude_results <- valid_results |> filter(source == 'claude') |> inner_join(resources, join_by(file_name_without_extension)) |> rename(file_name_json = file_name.x, file_name_orig = file_name.y)
+
+palm_results <- valid_results |> filter(source == 'google') |> inner_join(resources, join_by(file_name_without_extension)) |> rename(file_name_json = file_name.x, file_name_orig = file_name.y)
+
+llama2_results <- valid_results |> filter(source == 'llama2') |> inner_join(resources, join_by(file_name_without_extension)) |> rename(file_name_json = file_name.x, file_name_orig = file_name.y)
+
+```
+
+```{r}
+write_csv(openai_results, "openai_results.csv")
+write_csv(claude3_results, "claude3_results.csv")
+write_csv(claude_results, "claude_results.csv")
+write_csv(palm_results, "palm_results.csv")
+write_csv(llama2_results, "llama2_results.csv")
 ```
 
