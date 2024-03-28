@@ -51,3 +51,22 @@ write_csv(palm_results, "palm_results.csv")
 write_csv(llama2_results, "llama2_results.csv")
 ```
 
+
+
+```{r}
+multi_urls <- resources |> filter(str_detect(resource_urls,',')) |> filter(str_detect(categories, "Tipsheet"))
+
+multi_urls_split <- multi_urls |> separate(resource_urls, c('url1', 'url2', 'url3'), sep=', ')
+
+write_csv(multi_urls_split, "multi_urls_split.csv")
+
+```
+
+```{r}
+tipsheets <- resources |> filter(str_detect(categories, "Tipsheet"))
+
+unparsed <- tipsheets |> anti_join(claude3_results)
+
+```
+
+

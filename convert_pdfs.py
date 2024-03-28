@@ -15,7 +15,11 @@ for filename in os.listdir(input_dir):
         input_file_path = os.path.join(input_dir, filename)
         output_file_path = os.path.join(output_dir, os.path.splitext(filename)[0] + '.txt')
 
-        # Call pdftotext shell command
-        subprocess.run(['pdftotext', input_file_path, output_file_path])
+        # Check if the output file already exists
+        if not os.path.exists(output_file_path):
+            # Call pdftotext shell command
+            subprocess.run(['pdftotext', input_file_path, output_file_path])
 
-        print(f"Converted {filename} to text.")
+            print(f"Converted {filename} to text.")
+        else:
+            print(f"Skipped {filename} as text file already exists.")
