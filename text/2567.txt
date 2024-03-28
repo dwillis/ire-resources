@@ -1,0 +1,133 @@
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Page 1 of 6
+
+Simple Web scraping by using macros in Microsoft Excel
+Tommy Kaas, editor, Dicar, Danish International Center for Analytical Reporting
+
+This exercise is about scraping web pages with statistical data on parishes in Denmark.
+The method can be used for other pages like these.
+
+Activate Microsoft Excel
+Open an empty workbook (Excel-document) – give it a name and save it on the computer.
+Be sure you have at least two spreadsheets – name them “Numbers” and “Data”
+
+To rename the sheets: Rigth-click on the tab, choose “rename” and give write new names: “Numbers” and
+“Data”
+Make the workbook ready
+
+Copy the numbers below to column A in the spreadsheet “Numbers”. Place the numbers in row 1 to row 9
+Mark the data and copy data to the windows clipboard and paste it to Excel afterwards.
+7444
+7447
+7448
+7445
+7446
+7451
+7452
+9145
+9080
+It should look like:
+
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Page 2 of 6
+
+Go to the spreadsheet “Data”. Place the cursor in cell A1
+Menu: Data – choose “Import external data” – “new web query”
+Write or paste the following address:
+http://www.sogn.dk/asminderoed/index.php?mod=sognside&func=sogneInfo&p1=7444
+(This is an example of pages with statistics, we will use Excel to scrape off the web).
+Click on the yellow arrow and choose, which table on the page, Excel should import. The ones you click turns
+green. We want only the table with the data:
+
+Click on the disk-symbol for saving the web query on your pc. Give it a name. E.g. “Parish”:
+
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Page 3 of 6
+
+Find the query and open the query in Notepad (right-click and choose Notepad)
+
+This is the inside of the web query we just made:
+
+Delete the number (7444) and replace it with hard brackets []
+
+Save the query again.
+Go back to Excel.
+Delete the text on the spreadsheet “Data”. It’s ok, even if Excel tells you that the query you just made will be
+deleted too.
+Go to the spreadsheet “Numbers”. Click in A1
+
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Go to the spreadsheet “Data”. Clik in A1
+Menu – Data – Import external data – Import data
+In the window “Choose datasource” – find the query you saved and altered minutes ago.
+
+Open it
+Say ok to import the data in the existing workbook:
+
+Because we changed the number to [ ] we not is asked for a parameter:
+
+We should write the address in which cell, Excel should find the number.
+Write the address of cell A1 in the spreadsheet “Numbers”
+In Excel we write it like this:
+=Numbers!$A$1
+
+Page 4 of 6
+
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Page 5 of 6
+
+Press OK
+And we get the data we want in cells A1 to D16.
+That’s fine, but we want data from all the pages in the same sheet.
+One way of doing this is just to repeat doing web queries.
+Lets create a macro, which does that.
+First we’ll delete the data from the “Data” sheet and we’ll place the cursor in A1 again.
+Then we start recording the macro:
+Functions – Macro – Record new macro
+Give the new macro a name (just one word without spaces) – decide which shortcut to use (for instance ctrl +
+b) and just save the macro in this workbook.
+Press the spreadsheet symbol in the little box, which appears.
+
+That means that whatever we record, the references will be relative.
+Now we are recording.
+1. Do like we did before:
+2. Menu – Data – Import external data – Import data
+3. Choose the Parish-query and open it.
+4. Say OK to the first dialogue box
+5. Write the reference to cell A1 in the “Numbers” sheet =Numbers!$A$1 when you are asked for
+reference
+6. Before you press OK – copy the text: =Numbers!$A$1 by pressing ctrl + c
+7. When data arrive in your “Data” sheet – move your cursor down to A20
+8. Go to the other sheet by pressing on the “Numbers” tab
+9. Delete the content in cell A1 by Edit – Delete… - and choose “Move cells upwards” – press OK
+
+Excel macro Web scraping
+
+IRE Tipsheet 2567
+
+Page 6 of 6
+
+10. Go back to the “Data” sheet by pressing the “Data” tab in the bottom of the screen
+11. Stop the recording of the macro by pressing the square
+
+Now we can run the macro by pressing ctrl + b
+When the macro asks for parameters, press ctrl + v for pasting the reference to the cell with the actual
+number.
+You will see, that the data now are placed in the spreadsheet for every 20 rows.
+
+

@@ -1,0 +1,609 @@
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+Personal
+
+Open source
+
+Business
+
+Explore
+
+Pricing
+
+Blog
+
+Support
+
+This repository
+
+tthibo / SQL-Tutorial
+Code
+
+Branch: master
+
+Issues 5
+
+Watch
+
+Pull requests 0
+
+Projects 0
+
+Pulse
+
+Sign in
+
+Search
+
+14
+
+Star
+
+Sign up
+
+99
+
+Fork
+
+53
+
+Graphs
+
+SQL‐Tutorial / tutorial_files / part2.textile
+
+Find file
+
+Troy Thibodeaux Adds CC licensing data to all tutorial files
+
+Copy path
+
+d9f23b1 on Oct 3, 2011
+
+0 contributors
+
+353 lines (205 sloc)
+
+Raw
+
+31 KB
+
+Blame
+
+History
+
+A Gentle Introduction to SQL Using SQLite Part II
+Now that we have some dirty data and a few keywords, we can start to write some more interesting queries. In the process,
+we’ll learn a few of the idiosyncrasies of SQL.
+To get started, click on the SQLite Manager tool in your FireFox toolbar:
+
+It should ask you if you want to open the last used database ﴾test.sql﴿. Click OK.
+If you do not get this option, click on the “Connect Database” icon ﴾
+﴿ and browse to the file you saved last time. ﴾If you
+can’t find the file, you can recreate it by following the final step in Part I of this tutorial.﴿
+
+Nothing can come of nothing: Using IS NULL
+Let’s take a look back at our original CREATE statement for the contributors table:
+CREATE
+
+TABLE "main"."contributors" ("id" INTEGER PRIMARY KEY
+
+AUTOINCREMENT
+
+NOT NULL , "last_name" VARCHAR, "first_name" VARCHAR, "c
+
+Notice that we defined the id column as NOT NULL , which meant that it was a required field. Because that field is serving as
+our unique identifier or PRIMARY KEY for the row, it can’t be empty.
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+1/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+The keyword NULL is a special value in SQL. It’s a placeholder for an empty field. If a field is NULL , it’s really empty. That
+means it’s not 0. It’s not an empty string ﴾""﴿. If you’re of a philosophical mind, you might call NULL the “nothing that is”. If
+you’re of a pragmatic mind, you might just think of it as a placeholder where no value has been entered.
+But being nothing ﴾or a placeholder for on empty value﴿ comes with a cost. NULL can’t be compared with other data types
+such as strings. And we can’t use normal operators to match it, either. So =, <> and friends don’t work with NULL . Don’t
+believe me? Try it out:
+SELECT * FROM contributors WHERE last_name = NULL;
+
+Instead, to query for null values, we use the keywords IS NULL :
+SELECT * FROM contributors WHERE last_name IS NULL;
+
+NULL ’s refusal to respond to normal operators can lead to some unforeseen effects. Take a look at this query, and guess what
+it should return:
+
+SELECT * FROM contributors WHERE state = 'VA' AND last_name <> 'Lewis';
+
+﴾Remember that <> means the same thing that != does: “is not equal.”﴿
+There are three contributors from VA in the table, Robert Albrecht, Donald S. Lewis, and someone from Rocky Mount whose
+name fields are empty. ﴾Yes, the data did come in like this from the FEC.﴿ You can see the list by using “Browse & Search” or
+by running this query: SELECT * FROM contributors WHERE state = 'VA'; .
+So, the clause WHERE state = 'VA' AND last_name <> Lewis looks like it’s asking for all contributors from Virginia whose last
+name is not Lewis. And it looks like it should return both Albrecht and the Rocky Mount contributor. But when we run it ﴾cue
+“Price Is Right” sad horn sound﴿, we only get Albrecht:
+
+“Curiouser and curiouser,” you might say. This makes strict logical sense when we consider that the NULL data type can’t be
+compared with any other data type, but really it does seem a bit of a pain ﴾even to some of the SQL gurus﴿. The solution is to
+use IS NULL . Here’s one way to write the query to get the results we intended:
+SELECT * FROM contributors WHERE state = 'VA' AND (last_name <> 'Lewis' OR last_name IS NULL);
+
+﴾The parentheses are optional here, but they do help express our intentions.﴿
+And now we get the two expected result rows:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+2/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+IS NOT NULL
+The opposite of IS NULL is ﴾drumroll﴿ . . . IS NOT NULL . And it works pretty much as we’d expect:
+SELECT * FROM contributors WHERE state = 'VA' AND last_name IS NOT NULL;
+
+This negative form is pretty handy for filtering null values from the results set.
+
+Knowing your limitations: Using LIMIT
+So far, all of our queries have returned the full result set of rows matching the WHERE clause. But sometimes you only want a
+subset of the results. Let’s use the LIMIT keyword to get the top 20 contributors by contribution.
+First we order the results by amount ﴾in descending order﴿, and then we limit the results to only the first 20 rows:
+SELECT * FROM CONTRIBUTORS ORDER BY amount DESC LIMIT 20;
+
+And if there aren’t enough matching rows to reach the specified limit, the limit is simply ignored:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+3/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+SELECT * FROM contributors WHERE amount > 2100 LIMIT 20;
+
+Casting a wider net with LIKE
+While it’s helpful to be able to write queries that look for equality ﴾ last_name = 'Smith' ﴿ or inequality ﴾ last_name !=
+'Smith' ﴿, sometimes you want to do something a little messier, such as looking for everyone whose last name starts with ‘T’.
+
+Or maybe you want to look for matches to a five‐digit ZIP code, but some of your rows use ZIP+4. For these kinds of
+expressions, you can use the LIKE operator, which will perform a partial match.
+To perform a partial match using LIKE , you can combine normal characters and special wildcard characters to construct a
+pattern. For example, the percent sign ﴾ % ﴿ will match any sequence of zero or more characters. So to match any zip that
+begins with 77566, we can use this statement:
+SELECT zip FROM contributors WHERE zip LIKE '77566%';
+
+Notice that it matches both 775661497 and 77566036. It would also match 77566, because the % will match zero characters,
+too.
+The % is probably the most common special character used in pattern matching with LIKE . Another less commonly used
+pattern matcher is the underscore ﴾“_”﴿, which matches any single character in the string. Say, for example, we wanted to start
+cleaning our data, and we wanted to remove the middle initials from the first_name field and put them into a new
+middle_name column. ﴾This sort of thing can get tricky very quickly, but for now we’ll trip along happily assuming everything
+goes smoothly.﴿ As a first step, we want simply to examine all of the rows that appear to contain middle initials in first_name .
+Here’s a query that will get us at least part of the way there:
+SELECT * FROM contributors WHERE first_name LIKE '% _.';
+
+Reading patterns like this one may prove a little tricky at first, but in time . . . who am I kidding, it’s still pretty tricky, but you
+can figure it out. Let’s break it down:
+The pattern starts with % , which we know means “match any series of zero or more characters,” which is pretty much
+anything.
+Next we have a space ﴾it’s hard to see, but it’s between the % and the _ ﴿. So we’re matching anything plus a space.
+Then we have the magic underscore ﴾ _ ﴿, meaning any single character.
+And finally, we have a period ﴾ . ﴿, which is just a literal period here.
+And here’s the result:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+4/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+So, in English, the pattern says to match “any series of characters followed by a space, a single character, and a period.”
+This pattern will match things like “John Q.” as well as “1234 5.” and “#$%^ !.” and " B." and “J. B.” It won’t, however,
+match the string “J. Quincy” because the period isn’t the last character in the field. Neither will it match "Alfred E. " because
+we’ve left
+a space after the period.
+To also match patterns that contain characters after the period, we would need to add a final % to the pattern:
+SELECT * FROM contributors WHERE first_name LIKE '% _.%';
+
+Now we’re matching the pattern “any series of zero or more characters, followed by a space, followed by a single character,
+followed by a period, followed by any series of zero or more characters.” ﴾So, our little pattern expresses a pretty complex
+thought.﴿
+Of course, we could just match any first_name that contains a period, like this:
+SELECT * FROM contributors WHERE first_name LIKE '%.%';
+
+But then we also get names like “S. Truett,” which may or may not be what we intended.
+Note: Some database systems include other wildcard characters to be used in patterns. For example, in some systems the
+pattern [xyz] will match one of the characters “x,” “y” or “z.” And the pattern [^xyz] will match any character that is not an “x,”
+“y” or “z.” SQLite does not, by default, support this wildcard.
+
+Word games: Using string functions (SUBSTR, UPPER)
+Using LIKE for partial matches can be pretty powerful, but as we’ve seen, patterns aren’t exactly beach reading. Another way
+to do partial matching is to use string functions to manipulate the values. String functions usually take the form of a keyword
+followed by parentheses. The parentheses contain any arguments we want to pass to the function. The general format looks
+like this: KEYWORD(ARG1, ARG2, ARG3) . Usually the first argument is the string we want to manipulate. Here are some
+commonly used string functions:
+SUBSTR()
+The SUBSTR() function takes the string we hand it in the parentheses and returns a part of the string that we define ﴾ergo,
+substring﴿. ﴾Note: some database systems use SUBSTRING() , rather than SUBSTR() .﴿
+To determine which part of the string to return, SUBSTR() accepts additional arguments: first, the starting point of the desired
+substring ﴾counting characters from the left﴿, and then the number of characters to grab from that starting point. The full
+function call takes this form: SUBSTR(STRING, START_POINT, LENGTH) . The third argument is optional. If we leave it off,
+SUBSTR() returns all characters from the given starting point to the end of the string.
+An example is probably more helpful. So, here is the ZIP query from above rewritten to use a substring match:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+5/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+SELECT zip FROM contributors WHERE SUBSTR(zip, 1, 5) = '77566';
+
+We’re asking for all ZIP codes in the table whose first five characters match ‘77566’. This query will return the same result set
+we saw above: 775661497 and 77566036.
+Functions can also be used in the SELECT clause of the query, so we can do something like this:
+SELECT SUBSTR(zip, 1, 5) FROM contributors;
+
+Now we’re getting the five‐digit representation of all ZIPs in the table ﴾and dropping the extra four digits from the ZIP+4s﴿
+
+TRIM()
+The TRIM() function is most frequently used to trim white space from either side of a string. During data entry, strings are
+often accidentally inserted with leading or trailing whitespace. To simulate this case, let’s mess up the data even more:
+UPDATE contributors SET state = ' GA ' WHERE last_name = 'Cathy';
+
+So, now Cathy isn’t appearing in our list of Georgians. Even worse, we’ve created a new state:
+SELECT DISTINCT state FROM contributors;
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+6/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+We can use TRIM() to clean things up:
+UPDATE contributors SET state = TRIM(state);
+
+Notice here that we’re not using a WHERE clause on the UPDATE statement. This means that all rows will be updated, which is
+usually not what you want at all. Consider if we had used SET state = 'GA' in the statement above; we’d now have a table
+full of Georgians and a mess to clean up. Because we’re using a function, rather than a literal string here, we can update
+everything at once, trimming the white space from the front and end of every state value. The function operates on the value
+in the state column for each row in turn.
+And now we’re back to normal:
+SELECT DISTINCT state FROM contributors;
+
+The TRIM() function can also be used to strip characters other than spaces from the front and end of a string, although this
+usage is probably less common. To tell TRIM() which characters to remove, pass a second argument which contains any
+characters to be removed. For example, TRIM(state, '.,') would remove any periods or commas appearing at the
+beginning or end of the state name ﴾i.e. “GA.” would become “GA”﴿.
+UPPER
+Another common problem in dirty data is inconsistencies in capitalization. For example, let’s find all of the contributors from
+Birmingham, Alabama:
+SELECT * FROM contributors WHERE state = 'AL' AND city = 'Birmingham';
+
+Hmm . . . apparently there aren’t any.
+But then when we check on all contributors from Alabama, we get a different story:
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+7/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+SELECT * FROM contributors WHERE state = 'AL';
+
+So, the problem is that Birmingham isn’t properly capitalized. Now, we could do a SELECT using city = 'birmingham' , but
+then we’d miss any rows that properly capitalize the city name. And what about rows that use ALL CAPS?
+An easy way to get around these issues of case‐sensitivity is to use the UPPER() or LOWER() string functions to standardize
+capitalization on the values:
+SELECT * from contributors WHERE UPPER(city) = 'BIRMINGHAM';
+
+The UPPER() function translates each letter in the city value to upper case. As a result, this query will give us the lower‐case
+version, but it will also match “Birmingham” and “BIRMINGHAM” ﴾not to mention “BIRMingham”﴿, as they will all be rendered
+as “BIRMINGHAM” by UPPER() .
+Note: by default LIKE is not case‐sensitive in SQLite, but that is not true of all database management systems. Also, in some
+other database systems, such as MySQL, the basic equality operator ﴾ = ﴿ is case insensitive, but that’s not true in SQLite, and it
+isn’t true in other systems. When in doubt, it’s safer to use LOWER() or UPPER() to ensure case insensitivity. ﴾Also, some
+databases use UCASE() and LCASE() rather than UPPER() and LOWER() .﴿
+
+Pull yourself together: The concatenate operator ( || )
+Sometimes we want to combine values from different columns, either in the WHERE clause or for the results. SQLite uses the
+concatenation operator ﴾ || ﴿ to combine strings. You can combine both literal strings ﴾in quotation marks﴿ and column values
+using this operator.
+Say, for instance, we want a nicely formatted list of cities and states for contributors. To create a single result column that
+contains the city and state separated by a comma, we can use this query:
+SELECT city || ',' || state FROM contributors ORDER BY state, city;
+
+We insert the comma and space as a literal string concatenated with the values from the city and state columns.
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+8/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+Note: Some other database management systems, such as MySQL use the CONCAT() function to perform concatenation: e.g.
+SELECT CONCAT(city, ', ', state) FROM contributors; //WON'T WORK IN SQLITE .
+
+Pick One: Using BETWEEN and IN ( NOT IN )
+Often you’ll want to get a value from within a range. The BETWEEN operator can do exactly that. Let’s see which of our
+contributors has given between 500 and 1000 dollars:
+SELECT * FROM contributors WHERE amount BETWEEN 500 AND 1000;
+
+﴾Note: this query returns the same results as SELECT * FROM contributors WHERE amount >= 500 AND amount <= 1000; — but
+it’s much more readable.﴿
+At other times, you may need to match values from within a set of choices. This is where the IN operator comes in handy.
+Let’s find all contributors from a few southern states:
+SELECT * FROM contributors WHERE state IN ('AL', 'GA', 'FL');
+
+The choices are surrounded by parentheses and separated by commas. And don’t forget the quote marks around literal
+strings. here’s the result:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+9/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+﴾Again, you could have used a compound statement with state = 'AL' OR state = 'GA' OR state = 'FL' to achieve the
+same result, but the IN syntax makes things much clearer, and it’s easier to write.﴿
+You can also use NOT IN to find results where a value is not included in the given set:
+SELECT * FROM contributors WHERE state NOT IN ('CA', 'OR', 'AZ');
+
+But beware that NOT IN won’t work with null fields. So, if one of the rows has a null value for state, it would not be returned
+by the query above.
+
+Aggregate Functions: COUNT, MAX, MIN, SUM, AVG
+Aggregate functions allow us to perform calculations on values across rows. Using them, we can start to do some pretty
+interesting data analysis. To specify a column to use for the aggregate, pass the column name as the argument in
+parentheses: e.g. COUNT(counted_column) . Here’s a quick run through some useful aggregate functions:
+COUNT()
+How many contributors do we have from California?
+SELECT COUNT(id) FROM contributors WHERE state = 'CA';
+
+The COUNT(id) function counts the number of unique ids. We could also have used COUNT(*) , which will count the number of
+rows. The result will be the same.
+COUNT() can also be used with DISTINCT to return the number of distinct instances. For example, how many distinct ZIP
+
+Codes are there in the table?
+SELECT COUNT(DISTINCT zip)
+
+FROM contributors;
+
+﴾Note that the the DISTINCT keyword comes inside the parentheses. It is part of the argument passed to COUNT() .
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+10/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+MIN
+What is the maximum amount that any of our contributors has given?
+SELECT MAX(amount) FROM contributors;
+
+SUM()
+What is the total amount of contributions from Georgia?
+SELECT SUM(amount) FROM contributors WHERE state = 'GA';
+
+AVG()
+What is the average amount contributed?
+SELECT AVG(amount) FROM contributors;
+
+﴾Of course, the usual caveats about using averages apply. I heard a nice example recently: “Which major at UNC produces
+graduates with the highest average salary?” Apparently, it was Geography, Michael Jordan’s major. Even if it isn’t true, it’s a
+nice warning about the way outliers can skew averages.﴿
+
+Subqueries, the Russian dolls of SQL
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+11/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+When doing analysis, we often want to base one query on the results of another query. For example, we used the MAX()
+function to determine the maximum amount contributed. But what if we want to know who actually gave that maximum
+amount? We could try something like this:
+SELECT * FROM contributors WHERE amount = MAX(amount);
+
+But we won’t like the results:
+
+We could also simply run two different queries, one to get the maximum amount, and another to find rows matching that
+amount:
+SELECT MAX(amount) FROM contributors;
+
+﴾Which returns 2400.﴿
+SELECT * FROM contributors WHERE amount = 2400;
+
+While that would work, it’s a little clunky and brittle. ﴾If the database is being updated often, we’d always have to run the
+lookup for MAX() first, in case the maximum amount changed between queries.﴿
+Wouldn’t it be nice to be able to combine those into one statement? Well, we’re in luck: a subquery is up to that task:
+SELECT * FROM contributors WHERE amount = (SELECT MAX(amount) FROM contributors);
+
+The subquery appears in parentheses, and it stands in for the value we want to test against amount . The subquery is executed
+first, and its result is used in the outer query. Because the subquery returns 2400, the query above gives the same result as a
+query for amount = 2400 .
+This statement works because our subquery only returns a single value ﴾the value of MAX(amount) ﴿. It’s also possible to use a
+subquery that returns multiple results, but in that case, we can’t use the = operator.
+If we wanted, for example, to get the total contributions from the top 20 contributors, we would have a list of 20 rows we
+want to match against. That’s where our new friend IN comes to the rescue:
+SELECT SUM(amount) FROM contributors WHERE id IN (SELECT id FROM contributors ORDER BY amount DESC LIMIT 20);
+
+The subquery returns the ids of the first 20 rows ordered by amount. The outer query asks for the sum of all amounts where
+the unique identifier for our contributor is in the results of our subquery. When we put them together, we get the sum of the
+amounts for the top 20 contributors:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+12/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+Note that there are other contributors in the list who have also donated 2100 ﴾the smallest amount in the top 20﴿, so the cut‐
+off point is arbitrary. Depending on the story, we might want to do something more sophisticated with this query, such as
+looking for the sum of all amounts less than 500, or something even more ambitious, such as looking for the sum of all
+amounts within a certain percentile.
+Subqueries can also be used with DELETE , UPDATE and INSERT INTO statements.
+
+GROUP BY
+With some aggregate functions in our tool belt, we’re ready to take advantage of one of SQL’s more powerful features: GROUP
+BY . The GROUP BY statement is used in conjunction with aggregate functions to group the results by a given column. Doing
+so allows us to write queries that return counts, sums, averages, minimums and maximums per group.
+So, what is the total amount of contributions per state:
+SELECT state, SUM(amount) FROM contributors GROUP BY state;
+
+It’s also possible to group by a combination of columns. So, we can get totals by city and state, as well:
+SELECT city, state, SUM(amount) FROM contributors GROUP BY city, state;
+
+And we can use the aggregate function in an ORDER BY statement to sort the results by total amount:
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+13/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+SELECT city, state, SUM(amount) FROM contributors GROUP BY city, state ORDER BY SUM(amount) DESC;
+
+The syntax of this last statement is a little tricky. The columns to group by are separated by commas, but there is no comma
+before ORDER BY or DESC .
+Most relational database management systems require that every non‐aggregate field in the SELECT statement also be
+included in the GROUP BY statement. Because SUM(amount) is an aggregate, we can include it in the SELECT statement, even
+though it isn’t included in the GROUP BY list. But if we want to include city in the SELECT , we generally need to include it in
+the GROUP BY as well.
+SQLite doesn’t enforce this standard SQL restriction, which in some cases makes writing the query much simpler but in most
+cases can lead to unexpected results. Here’s what happens when we leave the city column out of the GROUP BY but include
+it in the SELECT :
+
+That’s not at all what we wanted. We’re getting only one row per state ﴾because we only grouped by state﴿, and we’re getting
+an apparently arbitrary city name for each state. ﴾It’s actually the city name from the row with the highest id, but that’s no
+help.﴿ So, there’s a good reason for the standard SQL restriction against this kind of query. If you’re certain that there is a
+unique relationship between the column for SELECT and the columns in the GROUP BY ﴾for example, if we were grouping by
+zip and wanted to display the state in the results and we were certain that there was only one state per zip﴿, then SQLite’s
+flouting of this restriction can be seen as a feature and not a bug. But as a general practice and to make your queries portable
+to other systems, you should always include all columns for the SELECT in the GROUP BY list. If including that column in the
+GROUP BY isn’t possible, then you’ll probably need to use a subquery to create the desired result.
+
+HAVING
+Now that we understand grouping and aggregates, let’s try filtering the results based on an aggregate. To start, let’s find all
+cities for which the total contributions is greater than $3,000. Here’s a first stab at the query:
+SELECT city, state, SUM(amount) FROM contributors WHERE SUM(amount) >= 3000
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+GROUP BY city, state
+
+ORDER BY SUM(amount) DESC;
+
+14/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+And . . . no.
+
+The error message isn’t exactly friendly, but you can see “misuse of aggregate: SUM﴾﴿” if you look closely enough ﴾it also
+appears in the “Last Error” field of the SQLite manager once you close the alert box﴿. Turns out that aggregate functions can’t
+be used in a WHERE clause. The WHERE clause acts as a filter on each row in turn, but here we want to test an expression
+against a value for a group of rows ﴾ SUM(amount) ﴿. The equivalent of a WHERE clause for aggregates is HAVING . It appears
+after the GROUP BY :
+SELECT city, state, SUM(amount) FROM contributors GROUP BY city, state HAVING SUM(amount) >= 3000 ORDER BY SUM(amount) DESC;
+
+To get a better sense of the difference between WHERE and HAVING , let’s first look at a fairly simple query using WHERE :
+SELECT city, state, amount FROM contributors WHERE amount >= 2300;
+
+This query looks for individual contributors who have given at least $2,300, and it returns their city, state and amount.
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+15/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+Now let’s make this into an aggregate query by adding a GROUP BY and an aggregate function:
+SELECT city, state, SUM(amount) FROM contributors WHERE amount >= 2300 GROUP BY city, state;
+
+We have the same nine cities that we had in the first query ﴾those cities in which someone donated at least $2,300﴿. But now,
+rather than having one row per contributor, we have one row per city. The GROUP BY eliminates the duplicate entries for cities
+in which more than one person contributed at least $2,300. And by using the aggregate function for SUM(amount) , we’re
+adding up all contributions of at least $2,300 for each city.
+Now let’s further filter this list of cities. We want to look only at cities in which these large contributions ﴾$2,300 or greater﴿
+made a big difference. Let’s call $4000 a big difference, for the sake of argument. So, we want only those cities for which the
+total amount of contributions at this size exceeds $4000. ﴾Looking at the results from the last query, we know to expect 3
+rows, but it’s not always so easy to see.﴿ Here goes:
+SELECT city, state, SUM(amount) FROM contributors WHERE amount >= 2300 GROUP BY city, state HAVING SUM(amount) > 4000;
+
+And bam!
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+16/17
+
+9/30/2016
+
+SQL­Tutorial/part2.textile at master · tthibo/SQL­Tutorial · GitHub
+
+Conclusion
+So, now you can construct a vast array of query types using SQL. Using subqueries and aggregates, you should be able to ask
+nearly anything of a single data set that you need.
+Next time, we’ll move on to exploring relationships between data sets, and you’ll be able to amaze your friends and
+colleagues with your raw SQL power.
+See you in Part III
+
+A Gentle Introduction to SQL Using SQLite by Troy Thibodeaux is licensed under a Creative Commons Attribution‐
+NonCommercial‐NoDerivs 3.0 Unported License.
+
+© 2016 GitHub, Inc.
+
+Terms
+
+Privacy
+
+Security
+
+Status
+
+Help
+
+https://github.com/tthibo/SQL­Tutorial/blob/master/tutorial_files/part2.textile
+
+Contact GitHub
+
+API
+
+Training
+
+Shop
+
+Blog
+
+About
+
+17/17
+
+

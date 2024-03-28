@@ -1,0 +1,179 @@
+Major Findings
+
+Started with traditional reporting
+Reporter Danny Robbins' stories about doctors in Georgia
+●
+
+Georgia hires prison doctors with troubled pasts
+
+●
+
+Thousands of Georgia doctors lack malpractice insurance
+
+●
+
+Georgia board licenses doctors other states won’t
+
+Danny notices a pattern in Georgia: most doctors with sexual allegations keeping their licenses
+●
+
+Is Georgia an aberration?
+
+●
+
+How is this supposed to be handled?
+
+●
+
+How big is this problem?
+
+How traditional approaches failed
+Started with the usual approach: we'll ask for data
+
+How traditional approaches failed
+Their response
+
+How traditional approaches failed
+
+●
+
+In the vast majority of states, disciplinary actions weren’t stored in a format
+that would allow us to answer the question
+○
+○
+
+●
+
+Most states didn’t classify the reasons for disciplinary action in a database
+Those that did did not do so in a way that would satisfy our needs
+
+In the vast majority of states, we were going to have to fight tooth and nail to
+reduce costs to a manageable amount
+○
+
+Agencies appear to have been used to selling this information for money to, I imagine,
+pharmaceutical companies and the like
+
+Back to basics: how’d Danny do it?
+●
+
+●
+
+Danny meticulously searched the website of the Georgia Medical Board,
+downloaded every disciplinary document, printed them out, read them, and
+made a spreadsheet
+Like Georgia, most regulatory websites appeared to contain some structured
+data and, most importantly, documents
+
+Could we have computers basically do what Danny did, or at least, greatly
+accelerate it?
+
+Enter scraping
+
+●
+●
+●
+
+Starting with the largest states, we started writing scrapers to search through
+sites and download physician pages and disciplinary records
+We took those records and pumped them into a Django database
+We took those documents and pumped them to S3 and then on to
+DocumentCloud to extract the text from each
+
+Enter copious amounts of human labor
+
+Enter machine learning
+●
+●
+●
+
+Reporters tagged a couple of hundred doctors from our initial states as “Yes”
+or “No” based on their documents
+We calculated how long it would take to review everyone in the country using
+our current approach (too long)
+We tested out a couple of document classification approaches and settled on
+keyword-based logistic regression
+○
+
+●
+
+For the curious: we used out of sample testing to determine performance (AUC .89, precision
+at 50% cut off of .88, recall of .92, accuracy of .84, in the end)
+
+Ultimately, we only had to review about 10% of the 100,000+ documents we
+collected
+
+Enter machine learning
+
+Re-enter copious amounts of human labor
+●
+●
+●
+
+We still had to review and re-review thousands of pages of documents
+We still had to track down other records to resolve uncertainties in documents
+(such as news reports or court documents)
+We still had to report out hundreds of cases to flesh out our stories
+
+But, our structuring paid off in…
+●
+●
+
+We could quickly search the structured data to get stories (for example:
+treatment centers that claim to rehabilitate physicians)
+We could fact-check the anonymized records in the National Practitioner Data
+Bank
+
+Use our data
+To request access:
+●
+●
+
+Contact me at jernsthausen@ajc.com
+Visit http://ajc-data-share.herokuapp.com
+
+National Practitioner Data Bank Supplement
+What it is:
+●
+
+●
+●
+
+The National Practitioner Data Bank is an anonymized database of
+disciplinary actions and malpractice payments related to physicians and some
+other healthcare practitioners
+Semi-strict rules govern reporting by medical boards and hospitals
+The terms of use forbid users from using the data to attempt to identify
+doctors they’ve looked up in the Data Bank
+
+National Practitioner Data Bank Supplement
+How we used it in our reporting
+●
+●
+●
+
+We collected dates and types of disciplinary actions against physicians,
+among other information on them
+Based on this, we could find possible matches in the National Practitioner
+Data Bank, working from our data to theirs
+Knowing that we had found far more cases of sexual misconduct than the
+Data Bank contained, we felt we needed to know why
+
+National Practitioner Data Bank Supplement
+What we found
+●
+
+We found egregious examples of sexual misconduct that weren’t coded as
+such in the public use file
+○
+
+●
+
+Earl Bradley, one of the most notorious cases in the country, was not coded using “sexual
+misconduct” by any medical board that disciplined him
+
+We found examples of doctors that our documents show lost the ability to
+work at or were suspended by certain hospitals, but had no report in the
+NPDB from a hospital
+
+

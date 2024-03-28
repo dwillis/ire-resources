@@ -1,0 +1,197 @@
+PowerPivot	  Hands	  On	  
+By	  Tom	  Torok	  of	  The	  New	  York	  Times	  
+tomtorok@nytimes.com	  
+Synopsis:	  In	  this	  session	  we	  are	  going	  to	  import	  three	  campaign	  finance	  tables	  in	  three	  separate	  
+formats	  into	  PowerPivot,	  which	  is	  a	  free	  Excel	  2010	  add-­‐on	  (Windows	  only).	  We’ll	  then	  join	  the	  
+tables	  (you	  read	  that	  correctly),	  create	  a	  pivot	  table	  and	  chart	  and	  experiment	  with	  slicers.	  The	  
+Center	  for	  Responsive	  Politics	  kindly	  supplied	  the	  data.	  The	  relational	  diagram	  and	  linking	  fields	  
+are	  shown	  below:	  
+	  
+
+	  
+
+2	  
+	  
+
+1.	  	  Open	  Excel	  2010.	  
+2.	  On	  the	  menu	  bar,	  click	  on	  PowerPivot.	  
+
+	  
+3.	  On	  the	  ribbon,	  click	  on	  PowerPivot	  Window.	  From	  this	  point	  on,	  we’ll	  be	  working	  only	  in	  the	  
+PowerPivot	  Window	  and	  NOT	  in	  the	  Excel	  Window.	  
+
+	  
+The	  screen	  captures	  are	  from	  a	  machine	  running	  Windows	  XP	  and	  will	  appear	  slightly	  different	  
+on	  the	  Windows	  7	  machines.	  However,	  I	  have	  it	  from	  good	  authority	  that	  you	  are	  very	  bright	  
+and	  will	  be	  able	  to	  easily	  reconcile	  the	  differences.	  
+	  
+
+	  
+
+3	  
+	  
+
+4.	  To	  import	  the	  contributions	  table	  from	  an	  Access	  2010	  database,	  click	  on	  File,	  Get	  External	  
+Data	  from	  Database,	  Access.	  
+
+	  
+5.	  Browse	  to	  C:\training\Torok_PowerPivot\PowerPivot.accdb	  
+	  
+
+	  
+
+4	  
+	  
+
+6.	  Choose	  the	  first	  item	  in	  the	  Import	  Wizard.	  
+
+	  
+7.	  Select	  dob_contributions	  and	  then	  Finish.	  
+8.	  Twiddle	  your	  thumbs.	  
+	  
+
+	  
+
+5	  
+	  
+
+9.	  In	  time,	  you	  should	  see	  a	  screen	  that	  looks	  like	  this:	  
+
+	  
+	  
+10.	  Press	  Close.	  
+	  
+
+	  
+
+6	  
+	  
+
+11.	  Let’s	  import	  the	  text	  file.	  Click	  File,	  Get	  External	  Data	  From	  File,	  From	  Text	  File	  
+
+	  
+	  
+
+	  
+
+7	  
+	  
+
+11.	  Fill	  in	  the	  header	  before	  browsing	  to	  the	  file.	  Make	  sure	  you	  click	  the	  “Use	  First	  Row	  as	  
+Columns	  Headers”	  option	  box.	  
+
+	  
+	  
+	  
+	  
+	  
+
+	  
+
+8	  
+	  
+
+12.	  You	  should	  see	  a	  window	  like	  this:	  
+
+	  
+	  
+13.	  Click	  Close	  and	  let’s	  import	  the	  spreadsheet.	  Click	  on	  File,	  Get	  External	  Data	  From	  Other	  
+Sources.	  
+
+	  
+14.	  Scroll	  to	  the	  bottom	  of	  the	  next	  Window	  and	  select	  Excel	  file.	  
+15.	  The	  file	  we	  want	  is	  called	  “categories.XLS”	  and	  is	  in	  an	  older	  version	  of	  Excel	  so	  be	  sure	  
+change	  the	  file	  type	  to	  select	  Excel	  97-­‐2003.	  
+16.	  In	  the	  next	  Window,	  be	  sure	  to	  check	  the	  option	  button:	  “Use	  first	  row	  as	  column	  headers.”	  
+	  
+
+	  
+
+9	  
+	  
+
+17.	  Select	  “categories$”
+
+	  
+17.	  You	  should	  import	  441	  rows.	  
+	  
+
+	  
+
+10	  
+	  
+
+18.	  Now	  that	  everything	  is	  imported,	  let’s	  join	  the	  tables.	  Click	  on	  Table,	  Relationships,	  Create	  
+Relationships.	  
+	  
+
+	  
+19.	  Joint	  categories	  to	  dbo_contributions	  as	  shown	  so	  we	  can	  translate	  our	  industry	  and	  sector	  
+codes.	  
+
+	  
+	  
+
+	  
+
+11	  
+	  
+
+19.	  Join	  committees	  and	  dbo_contributions	  as	  shown	  so	  we	  can	  translate	  the	  committee	  ID	  into	  
+text.	  
+
+	  
+20.	  We’re	  now	  ready	  to	  create	  a	  pivot	  table	  and	  pivot	  chart	  showing	  the	  total	  amounts	  
+contributed	  to	  each	  committee	  by	  the	  most	  general	  category	  of	  industry	  sector.	  Click	  on	  the	  
+Pivot	  table	  icon	  in	  the	  ribbon.	  (Be	  sure	  you’re	  in	  the	  pivot	  window	  and	  not	  the	  Excel	  window.)	  
+
+	  
+	  
+
+	  
+
+12	  
+	  
+
+21.	  In	  the	  interface	  on	  the	  right,	  drag	  SectorLong	  from	  the	  categories	  table	  into	  “Column	  
+Labels.”	  Drag	  PacShort	  in	  the	  committees	  table	  down	  to	  “Row	  Labels.”	  Drag	  Amount	  from	  the	  
+dbo_contributions	  table	  down	  to	  “Values.”	  
+
+	  
+22.	  Play	  around	  with	  the	  pull	  down	  next	  to	  Row	  Labels	  to	  limit	  the	  display	  to	  particular	  
+committees.	  
+	  
+	  
+	  
+
+	  
+
+13	  
+	  
+
+23.	  Let’s	  make	  a	  pivot	  chart.	  Click	  on	  the	  pivot	  chart	  to	  call	  up	  the	  appropriate	  interface	  on	  the	  
+right.	  Drag	  CmteID	  in	  the	  dbo_contributions	  table	  to	  Report	  Filter,	  SectorLong	  from	  categoris	  to	  
+Axis	  Fields	  and	  Amount	  from	  contributions	  to	  Values.	  
+
+	  
+24.	  Let’s	  limit	  the	  chart	  to	  show	  only	  the	  Mitt	  Romney	  for	  President	  committee.	  On	  the	  pivot	  
+chart,	  click	  the	  down	  arrow	  next	  to	  CmteID	  and	  search	  for	  C00431171,	  the	  committee	  ID.	  
+
+	  
+
+14	  
+	  
+
+25.	  Now	  let’s	  play	  with	  some	  slicers.	  From	  the	  categories	  table,	  drag	  Sector	  from	  the	  categories	  
+table	  down	  to	  Slicers	  Vertical.	  In	  the	  Sector	  menu	  that	  appears,	  click	  on	  the	  first	  option	  to	  see	  
+how	  much	  folks	  affiliated	  with	  the	  beer,	  wine	  and	  liquor	  industry	  contributed	  to	  someone	  who	  
+believes	  all	  three	  are	  evil.	  
+
+	  
+26.	  You	  now	  know	  enough	  to	  have	  a	  good	  time	  playing	  with	  the	  data.	  Have	  fun.	  
+To	  download	  PowerPivot	  and	  run	  through	  a	  number	  of	  very	  good	  tutorials	  go	  to:	  
+http://www.powerpivot.com.	  That	  will	  redirect	  you	  to	  a	  new	  site	  than	  now	  also	  touts	  power	  
+pivot	  for	  SQL	  Server.	  I	  just	  noticed	  that	  last	  night,	  so	  stay	  tuned	  for	  more	  on	  that	  next	  year.	  
+	  
+
+

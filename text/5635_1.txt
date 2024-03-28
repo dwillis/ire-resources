@@ -1,0 +1,126 @@
+The I​ns and ​O​uts of
+C​ounting ​I​mmigrants
+IRE annual conference
+Orlando, June 14-17, 2018
+Paul Overberg
+poverberg2@gmail.com
+@poverberg
+​ ou probably hadn’t logged many paydays before you figured out that no matter how big your paycheck, what
+Y
+really mattered was the net of your income and expenses. The same applies when you’re trying to get a sense of
+immigration in your area. If you’re just counting new arrivals, you have no idea how many actually live there.
+There are several broad-brush ways to count U.S. immigrants:
+-- The Office of Immigration Statistics releases state- and metro-based annual ​totals​ for immigrants who are
+becoming legal permanent residents, and separately for those becoming citizens. It also issues state-based totals for
+temporary arrivals (mostly tourists and students).
+-- The State Department issues monthly ​totals​ for refugees by state of settlement.
+-- The Migration Policy Institute distills lots of Census data into current ​profiles​ of immigrants by state.
+But immigrants move in and out of an area, both from abroad and elsewhere in the United States. This handout
+outlines a way to track the net result for any area covered by the Census Bureau’s American Community Survey.
+This will let you see how much churn lies beneath the total as it changes, and the role of inflows and outflows.
+​ ote 1:​ In the United States, “immigrant” typically means someone who’s foreign-born arriving to live here.
+N
+“Migrant” typically means anyone moving within the United States. Here, we’re blending the two ideas by counting
+people who are foreign-born as they move into the United States and also as they move around the country, even
+years after their arrival.
+​Note 2:​ ​You can use the technique outlined here to track the local net movement of people tallied by
+many attributes.​ ACS includes a series of similar tables that show both inflows and outflows of people broken
+down by sex, age, marital status, education, race, income, poverty status and homeownership.
+​Note 3:​ This walkthrough uses American FactFinder, since that’s how most people look up Census data. If
+you’re code-savvy, you can adapt it to use the Census Bureau’s API or census-specific libraries in R, Python or
+other languages.
+​Warmup: ​Open ​American FactFinder​. Click on “Advanced search” (and then “Show me all” if that’s what you
+see next). On the ​search page​, type “B07007” into the left-hand search box. Ignore the indexed suggestions that
+American FactFinder offers and click “Go.”
+
+On the results list, you’ll see versions of table B07007 from the American Community Survey, the Census Bureau’s
+annual household survey of 2.5 million households. Click on the link to the most recent 1-year version:
+
+This is what it looks like for the United States for 2016:
+
+This table offers the standard Census/ACS mover categories (with my shorthand in parentheses):
+-- Same house (non-movers).
+-- Moved within the same county (local movers).
+-- Moved outside county but within state (regional movers).
+-- Moved between states (interstate movers).
+-- Moved from abroad (international movers).
+Each category is broken down into native-born people and foreign-born people (immigrants). The latter in turn are
+broken into two groups -- naturalized citizens and non-citizens. A couple quick points about this table:
+-- This is the inflow side of the ledger. It tells you how many people moved into an area in the “previous year.”
+We’ll get to the other side of the ledger -- the outflow -- in a minute.
+-- Notice that a third of “movers from abroad” are ​not​ immigrants, but native-born. These folks may be
+returning after being posted abroad by a business or the federal government. They can be faculty or students
+who’ve been abroad for a semester or for several years, or tourists or retirees returning from an extended stay
+abroad. Depending on your local population, this group may be larger or smaller. It’s important not to count or call
+these people immigrants.
+​ tep 1:​ After that introduction, I’m going to pick a smaller place to make this exercise more useful. I’m going to
+S
+choose Orange County, Florida, the center of the Orlando metropolitan area. Back at AFF’s main search page, clear
+any selections in the box at top left so that it looks like this:
+Using the blue “Geographies” link just below that, pick
+“county” from the list of geographical types, then “Florida”
+and “Orange County” from the dropdowns that result. Finally,
+
+click “Add to selection” and close the geography overlay box.
+​Note:​ You can choose any type of place, but ACS only produces annual data for places with at least 65,000
+people. If you want to look at a smaller town or even a neighborhood, you’ll only find 5-year data available in the
+next step.
+
+Once again, type “b07007” (it’s not case-sensitive) into the left search box:
+
+From the results list, once again I choose the 2016 1-year table:
+
+This is what the result looks like:
+
+You can download this table or capture it with a browser extension that reads table formatting. The goal is to get it
+into your spreadsheet of choice.
+Step 2. ​It’s pretty easy to imagine how the Census Bureau counted the people in that table, who represent the
+inflow. They were living in Orange County when they filled out the ACS form. But to calculate the net flow of
+immigrants for Orange County, we need ACS to track down all of the immigrants who moved in the last year.
+Wherever they moved -- even if it was ​out of​ Orange County -- we need ACS to count them up in categories that
+parallel those of table B07007.
+Table B74007 does just that. Go back to American FactFinder’s Advanced Search and type “B07407” into the left
+search box and again click “Go.” From the results, choose the 2016 1-year table:
+
+Note the table’s title, and how it resembles but also differs from the previous one:
+B07007 GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY CITIZENSHIP STATUS​ FOR CURRENT RESIDENCE IN THE UNITED STATES
+B07407 GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY CITIZENSHIP STATUS ​FOR RESIDENCE 1 YEAR AGO IN THE UNITED
+STATES
+
+This kind of stuff can make your eyes cross when you’re wading through a long list of results in American
+FactFinder, but understanding the subtle difference unlocks the secret. The first table counts up the inflow for
+Orange County, the second, the outflow. In this case, some people who lived in Orange County a year ago have
+moved on -- down the block, to another county in Florida or to another state. Wherever they moved, they filled in
+an address in Orange County when asked, “Where did this person live 1 year ago?” The Census Bureau tallies them
+into categories that parallel those in table B07007. All we have to do now is to subtract categories in B07407 from
+B07007 to get net migration.
+A couple caveats:
+-- ​Moving abroad.​ The inflow table counts “Moved from abroad,” but there’s no parallel “Moved abroad” in
+the outflow table. Why? That would require the Census Bureau to survey the whole world. It simply can’t estimate
+this category in line with the rest of its ACS results. For most places in the United States, this category is pretty
+small, but adjust your words and conclusions to fit local circumstances.
+
+-- ​Geographical focus.​ When you’re focusing on a county, it’s easy to translate the categories in these tables
+into sentences. It gets more complicated if you’re looking at a metro area. The categories are the same, but “Moved
+to/from different county within same state” isn’t as helpful. It might be Osceola County, also part of the Orlando
+metro area, or it might be Escambia County, nearly 500 miles away and even in a different time zone. The same
+applies if you’re looking at metros and places within them when the metro’s center lies close to a state boundary,
+like New York or Cincinnati or Portland, Oregon. There, even interstate moves can be quite local while “moved to
+different county within same state” can be quite long. In general, the number of people who move falls off pretty
+consistently with distance, so judge accordingly.
+​Note: ​If you need to measure the actual flow of people between any two particular counties, check out the
+Census Bureau’s ​County Flows Mapper​. It offers both overview maps and county-to-county statistics. Here’s the
+overview for Orange County’s annual flows for 2011-15:
+
+You can also download county-to-county migration ​files​. These show the annual flows between any two counties:
+the flow in each direction and the net flow. With some grouping, you can calculate flows between groups of
+counties, such as metros or custom regions that you care about. In addition to totals, these files break down each
+county-to-county flow by age, race, education and relationship. However, not every crosstab is produced each year.
+Focusing on immigration, ​data for 2009-13​ breaks down county-to-county flows by:
+-- Ability to speak English.
+-- Years since arrival in the United States.
+-- Place of birth, including details for the largest sources of immigrants such as Mexico, China, India, the
+Philippines, etc.
+If you dig down this far, be sure first read the ​documentation​!
+
+

@@ -1,0 +1,217 @@
+The bit.ly URL for this page is bit.ly/r­notes.
+Hadley Wickham’s slides and data we’re using are available online: bit.ly/nicarnerds
+Notes by Sisi Wei (@sisiwei), but really, you should check out Hadley’s slides above. My notes might help
+you understand them slightly better, but his slides/code have all the plots we’re making in class, as well as
+the commands we’re writing.
+Also, currently we’re using the datasets mpg, and diamonds, which both come prepackaged, so you don’t
+need to download this data from anywhere.
+Open R Studio
+Make sure to install ggplot and some other things: install.packages(c("ggplot2", "plyr", "stringr", "lubridate"))
+Then load ggplot: library(ggplot)
+
+Three important shortcuts in R
+tab in the console
+­ autocomplete function names and arguments, and filenames
+command up in the console
+­ search for what you've done already and autocomplete
+cmd + enter in the editor
+­ moves your command from the editor to the console
+Today we’ll talk about:
+1. Visualization
+2. Cleaning
+3. Transforming data
+
+Visualization
+Writing R
+?anything = show help documentation on that
+Ways to inspect data
+head(data)
+tail(data)
+summary(data)
+str(data)
+­ easier to see what all the variable names are
+data (this is the worst way to look at data, just prints it all out)
+qplot(x­axis, y­axis, data = name_of_dataset, color = variable, shape = variable )
+
+Working with our data specifically, ways to experiment with facet_grid and facet_wrap
+What’s the impact of this?
+> qplot(displ, hwy, data = mpg) + facet_grid(. ~ cyl)
+This groups the data by cyl, separating into as many graphs as cyl. Uses columns.
+> qplot(displ, hwy, data = mpg) + facet_grid(drv ~ .)
+Same as above, but uses rows, and lots at the drv variable.
+> qplot(displ, hwy, data = mpg) + facet_grid(drv ~ cyl)
+Now the various scatterplots are square, because we’re saying that drv and cyl should have equal weight in
+the plotting
+> qplot(displ, hwy, data = mpg) + facet_wrap(~ class)
+facet_wrap only takes one variable, and creates as many graphs as needed
+­ The difference between this and facet_grid is that facet_wrap will not take up the whole height of your
+window, instead it’ll wrap the charts around
+
+Geoms
+geom controls the type of plot
+> qplot(class, hwy, data = mpg, geom = "jitter")
+> qplot(class, hwy, data = mpg, geom = "boxplot")
+You can also show multiple geoms, the latter one you list will be the one on top.
+> qplot(class, hwy, data = mpg, geom = c( "boxplot", “jitter”)s)
+reorder will reorder your plots based on your preferences
+> qplot(reorder(class, hwy), hwy, data = mpg, geom = "boxplot")
+This will show the box­plots, ordered by median
+> qplot(reorder(class, hwy, FUN = median), hwy, data = mpg, geom = c("boxplot", "jitter"))
+
+Histograms
+qplot is smart enough to pick the right geom based on what type of data your give it
+­ two var ­> scattterplot
+­ one continuous var ­> histogram
+> qplot(carat, data = diamonds, binwidth = 1)
+Choosing your buckets for histograms, essentially
+Always experiment with binwidth because the wrong binwidth can really hide data.
+> resolution(dataset$variable)
+This will find the smallest non­zero distance between values, probably what you want to use as your
+binwidth
+
+Zooming in
+> qplot(table, data = diamonds, binwidth = 1) + xlim(50, 70)
+xlim(start, end) will zoom into your data and plot only that range
+
+Using aesthetics vs. faceting
+Hadley’s warning: the aesthetics often look prettier, but don’t use it if it doesn’t say much about your data.
+Two ways to show diamond data:
+> qplot(depth, data = diamonds, binwidth = 0.2, fill = cut) + xlim(55, 70)
+> qplot(depth, data = diamonds, binwidth = 0.2) + xlim(55, 70) + facet_wrap(~ cut)
+The latter clearly shows you the data better and helps you understand it
+When analyzing the diamond data, can you figure out what’s wrong with it? :D
+> qplot(price, data = diamonds, binwidth = 500, geom = "freqpoly", colour = cut)
+freqpoly ­ a plot that draws lines connecting the tops of histograms
+
+Workflows ­ how to work / organize your work with R
+Have separate folders in a working file for your .csv, .r, .pdf/.png files.
+ggplot.save(“anynameyoupick.pdf”) will just save as PDF, you don’t have to specify anything except the file
+extension in the name. .png also works.
+Just Sisi talking: AHHHHHH. Save as PDF from R, then open up in Illustrator and go to town.
+
+Cleaning
+Subsetting
+x <­ c(6, 1, 3, 6, 10, 5)
+This sets some data to the x variable. Assign variables by doing var_name <­ whatever_you’re_assigning
+In these commands, the numbers represent the index numbers. In R, indexes START AT 1. NOT 0.
+x[­(1:4)]
+Drops indexes 1:4. It does not start counting backwards in the array.
+x[x>5]
+Pretty much what you think. Show values over 5 index.
+> diamonds[1:10, c("carat", "cut")]
+
+defining the [rows, columns], you can leave one or the other blank sometimes
+http://www.nytimes.com/interactive/2013/02/11/world/europe/the­catholic­church­shifted­southward­over­the­
+past­century.html
+Try not to save over your original data sets. Use a new variable. Seriously.
+> diamonds[1:6, 1:4]
+Shows you the first 6 rows, and first four columns of your data
+> x_big <­ diamonds$x > 10
+This changes x_big into a table of data showing whether or not the eval above is true or false. Then you can
+summarize the data.
+> lowqual <­ diamonds$clarity %in% c("I1", "SI2", "SI1")
+This saves as true only when clary is any of the values in c()
+
+Missing values
+In R, missing values are NA.
+is.na() will check for missing values for you.
+If you ever do a plot of a ratio, you should also plot the log of that ratio. Here’s why:
+if x == y, then x/y = 1
+if x < y, then x/y will be between 0 and 1, or 1
+if x > y, then x/y will be between 1 and infinity
+So if you’re plotting a ratio, that infinity is going to suck to plot. <­­ bad news bears, so use log!
+Plus, using log allows you to compare ratios on a straight line
+See the slides for a variety of ways you can clean and assign various x and y values to NA, then plotting
+them. But basically, you can remove datasets by changing them to NA to remove outliers and get a cleaner
+plot. When doing this real data however, VERIFY why those data points are outliers. Don’t just remove them
+to make your plot cleaner.
+
+Tidy data
+From Sisi: Hadley Wickham wrote a great paper about this, read it: http://vita.had.co.nz/papers/tidy­data.pdf
+Also for stringr too:
+http://vita.had.co.nz/papers/stringr.html
+
+Loading data, and cleaning it up.
+> raw <­ read.delim("pew.txt", check.names = F, stringsAsFactors = F)
+Loading in your dataset after you’ve done Sesson, then click Set Working Directory to the folder with these
+files.
+Keep stringsAsFactors to F, don’t set it automatically. A great chart in the slides show the pros and cons.
+
+You get much greater flexibility with strings for now.
+library(reshape2)
+tidy <­ melt(raw, id = "religion")
+These two commands “melts” all of our values from the raw dataset, and keeps “religion” as the only column
+that we want to keep. If you have multiple columns you want to keep, you do:
+tidy <­ melt(raw, id = c(“religion”, “something_else”))
+na.rm = true
+> tidy <­ melt(raw, id = c("year", "iso2"), na.rm = TRUE)
+This means you can just remove the NAs from the dataset when plotting/analyzing
+
+Transforming data
+library(plyr) required for:
+subset
+ex: subset(df, color == "blue")
+­ makes it easier to create subsets of data
+summarise
+ex: summarise(df, mean=mean(prop), min = min(prop), max = max(prop))
+­ similar to .map in Ruby, you can apply the same change to every row
+­ or you can find totals too
+mutate
+ex: mutate(df, pct = prop * 100)
+­ similar to summarise, but maintains the existing columns
+­ can create new variables that refer to the ones we’re playing with
+arrange
+ex: arrange(df, desc(prop))
+­ arranges your columns for you
+­ wrapping desc() will make the order desc
+These four functions will solve 90% of your data problems.
+join
+join(x, y, type = "left") or “right” or “inner” or “full”
+Slide 41 of Transforming has a table explaining all four options.
+Group wise operations
+­ when you want to do operations to only part of the data
+ddply
+
+­ This basically is a for loop that automatically creates a new table for you given the constraints. We learned
+how to use the summarise function on every name in our data, to find the total sum of the names across the
+data.
+ex: newsum <­ ddply(combined, "name", summarise, total = sum(total))
+ddply(df, “variablename”, what you want to do to it, other arguments it requires)
+> unique(subset(combined, soundex == "J500")$name)
+sort by unique names in the subset with the sound J500
+> one <­ mutate(one, rank = rank(desc(prop), ties.method = "min"))
+rank() will rank your rows based on a given column
+
+Modeling basics
+Linear regression
+The model is the predictions.
+When using log, log10 is easiest to think about.
+Prediction is always easier if the pattern is simple.
+Using a linear model:
+mod <­ lm(hwy ~ displ, data = mpg, ...)
+mod_grid
+grid <­ mod_grid(diamonds2,lcarat = log10(seq_range(carat, 50)) )
+Residuals
+Root mean squared error!
+helper.r in the folder already has defined this function to help us with the root mean squared error:
+rmse <­ function(mod, data, r=resid2){
+sqrt(mean(r(mod, data) ^ 2))
+}
+So we can just run:
+rmse(mod, diamonds2)
+­ used to compare models, can’t tell us if a model is good or bad
+In the end, there are models that best fit your current data, but they may not necessarily be the models that
+best predict future data. The latter is more of what you want.
+For example, when you have a smaller rsme, your model would be much more variable (a.k.a. squigley) and
+then taper off. Another model with a larger rsme could be more consistent and more easily predict future
+data.
+
+Sisi: After learning the above, I wonder though ­­ when I took an intro to stats course in college, we were told
+only to interpolate (predict values within the model), and not extrapolate, because ultimately the real data
+could taper off for some reason, and you wouldn’t know ­­ Hadley shows this in some of his graphs.
+For more!
+http://www.cookbook­r.com/Graphs/
+Thanks for following along with me everyone!
+­ 30 ­
+
+

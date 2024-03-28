@@ -1,0 +1,166 @@
+Web Scraping with
+Google Docs
+Acton H. Gorton, University of Illinois
+Sean Sposito, American Banker
+Twitter: @seansposito
+
+Background Information
+Some Basics
+● Best if familiarity with HTML/XML
+● A way to look at HTML documents
+● Not afraid to get into a little bit of code
+
+A bit about HTML/XML
+HTML and XML follow the same rules
+for building web friendly documents:
+Some basic HTML markup:
+
+<html>
+<head></head>
+<body></body>
+</html>
+
+Looking at HTML documents
+We need to understand the HTML
+structure.
+Easy to do with Google Chrome or
+Firefox.
+
+The Secret Sauce: XPath
+View Raw HTML
+● Use Chrome's built in inspector
+● Use Firebug for Firefox
+Find an XPath with a Tool
+●
+●
+●
+●
+●
+
+FirePath
+PathENQ
+PyschoXPath
+Scraper
+XPathOnClick
+
+Google Chrome's Inspector
+
+Questions so far?
+We've talked about:
+● HTML/XML
+● Viewing HTML
+● Finding XPath
+Next, I'll explain what we can do.
+
+Demonstration
+1. Choose a website:
+a. City of Champaign, Bid Results
+
+2. Locate XPath
+a. Right (ctrl) click on target
+b. Choose "Inspect Element"
+c. Use "XPath" Extension for Chrome
+d. Retrieve results from Console
+
+3. Use Google Docs to load results
+a. Demonstration Spreadsheet
+
+Let's Walk Through Google Docs
+● Now its called, "Google Drive"
+(whatever)
+
+● Free, cloud based
+● Very similar to Microsoft Excel
+● Uses "Functions" and "Scripts"
+
+Create a Spreadsheet
+1. Go to: drive.google.com
+2. Click "Create" in top/left
+3. Choose "Spreadsheet"
+4. Look at "Help" section
+a. Check out the "Function List"
+
+What Function to Use?
+Remember XML and XPath?
+We're going to use the XPath we
+copied earlier with the
+"ImportXML" function to load the
+results into our spreadsheet.
+
+ImportXML
+=importXml("http://ci.champaign.il.us/departments/police/police-reports-andstatistics/";"//div[contains(concat(' ', @class, ' '), ' entry-content ')]//ul//li//a/@href ")
+Let's break this down into its components:
+
+Component
+
+What it does
+
+=
+
+Tells Google Spreadsheet that a function is coming
+
+importXml
+
+The name of the function
+
+( ) Parenthesis
+
+What we want the function to do
+
+" " Quotation Marks
+
+Contains specific information for the function
+
+URL
+
+Where to find the information: http://archive.ci.champaign...
+
+; Semicolon
+
+Separates the specific information
+
+Xpath
+
+What to look for in the HTML from the given URL
+
+Questions so far?
+We've talked about:
+● Using XPath
+● Creating a Google Spreadsheet
+● Spreadsheet Functions
+Next, we'll see some examples
+
+Examples
+Champaign City Website
+●
+
+https://docs.google.com/spreadsheet/ccc?key=0ArTSE1h9T9A5dERRY24xclk5S2ljWHVHYWVTcVBXYkE#gid=2
+
+Create Notifications
+1. Tools > Notification Rules > Set the Criteria and Save
+2. Create a script to run the ImportXml function every hour
+a. Tools > Script Editor
+b. If first time, choose blank canvas
+c. Give a name
+d. Write a script to run the function - example on next slide
+
+Checking a function script
+This is a very crude script to activate a sheet and a
+specific cell within a spreadsheet:
+function runFunction() {
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+ss.setActiveSheet(ss.getSheets()[1]);
+ss.B3;
+}
+// [1] is the sheet position, in order of 0,1,2,3,...
+// B3 is the cell
+script location
+
+Helpful Links & Resources
+Xpath Tutorial
+http://www.w3schools.com/xpath/xpath_syntax.asp
+
+Google Spreadsheet Functions
+https://support.google.com/drive/bin/static.py?hl=en&topic=25273&page=table.cs
+
+

@@ -1,0 +1,596 @@
+Finding and Analyzing Data on FEC.gov
+Christopher Schnaars, USA TODAY
+cschnaars@usatoday.com, @chrisschnaars
+The Federal Election Commission offers several flavors of campaign finance data. You can view an
+individual report in PDF or HTML format, look at charts and maps summarizing campaign finance data or
+search for specific contributions and expenditures. You also can download datasets ranging from the raw
+text data for an individual report to a summary file containing all individual contributions made during the
+two-year election cycle.
+7KHUH¶VDORWWRGLJHVWDQGDORWRISLWIDOOVWKDWFDQWULS\RXXSDORQJWKHZD\<RXUEHVWbet is to read this
+guide and look over the URLs provided below, then spend some time poking around the FEC website to
+familiarize yourself with all the other cool stuff I left out. If you find something particularly interesting, or if
+you have any comments or suggestions for this guide, please email me: cschnaars@usatoday.com
+If you need help, send me an email or post a message on the NICAR listserv. There are lots of people
+with NICAR ± Derek Willis, Aaron Bycoffe, Jacob Fenton and Scott Klein, among others ± who have
+taught me a lot about campaign finance data. $OWHUQDWLYHO\\RXFDQUHDFK-XGLWK,QJUDPLQWKH)(&¶V
+press office at JIngram@fec.gov or (202) 694-12206KH¶VH[WUHPHO\KHOSIXODQGFDQSXW\RXLQWRXFKZLWh
+WKH)(&¶VGDWDIRONV
+A note about committees:
+Throughout this document, I refer to committees. In this context, a committee is any entity required to file
+campaign finance reports with the FEC, which assigns each commiWWHHD³&-QXPEHU´ WKHOHWWHU&
+followed by an 8-GLJLWQXPEHU $FRPPLWWHHFRXOGEHDFDQGLGDWH¶VSULQFLSDOFDPSDLJQFRPPLWWHHD
+OHJLVODWRU¶VOHDGHUVKLSSROLWLFDODFWLRQFRPPLWWHH 3$& or joint fundraising committee, a PAC for a
+corporation or union, or an independent expenditure only committee (sometimes referred to as a Super
+PAC). Entities not required to file reports with the FEC that detail contributors ± most notably 501(c)(3)
+and 501(c)(4) non-profits ± GRQ¶WDSSO\KHUHDQG\RXZRQ¶WILQGcontributor data for these groups on the
+FEC website other than, perhaps, contributions from those nonprofits to committees that file reports.
+Candidates for political office also receive an ID number from the FEC. These IDs are similar to
+committee IDs but are prefixed with P, H or S (rather than C) depending on whether the person is a
+candidate for president, the House or the Senate. The FEC assigns multiple IDs to candidates who run
+for more than one office.
+1) Third party data
+,I\RXZDQWWRVDYH\RXUVHOIDORWRISDLQ\RXGRQ¶WQHHGWRsee campaign finance reporWVWKHGD\WKH\¶UH
+filedGRQ¶WKDYHLVVXHVFUHGLWLQJDWKLUGSDUW\DQGGRQ¶WQHHG6HQDWHUHSRUWV ZKLFKDUHGLVFXVVHGEHORZ
+DUHILOHGRQSDSHUDQGDUHDYDLODEOHRQO\LQWKH)(&¶VZHHNO\PDVWHUILOHV , there is a lot of very good data
+available from the Sunlight Foundation that you can download and use for free.
+The non-SURILW¶V,QIOXHQFH([SORUHUVLWH http://realtime.influenceexplorer.com/download-index/) boasts
+bulk FEC data files for Schedules A, B and E as well as data on a per PAC or per candidate basis. New
+data often is available within 12 hours of when a report is filed. <RX¶GEHZLVHWRFKHFNRXWWKHLUZHEVLWH
+
+before reading any more of this guide and deposit it in the nearest recycling bin if Sunlight data meet your
+needs.
+Note that just as with any other data, if you use data compiled by the Sunlight Foundation, you should
+make sure your story and any related graphics credit the organization for its work.
+2) Weekly master files
+If all you care about is contributionsDQG\RXGRQ¶WZDQWWRXVHGDWDIURPWKH6XQOLJKW)RXQGDWLRQ, the
+fastest, easiest way to get the data you need is to download the weekly master contribution files compiled
+by the FEC. You can find them at: http://www.fec.gov/finance/disclosure/ftpdet.shtml
+<RX¶OOVHHWKHUH¶VDOLQNIRUnine files per election cycle. Each of these summary files is useful, but the
+three files ,¶P going to focus on now are highlighted below:
+
+Links to data dictionaries are provided in the far-right column.
+
+The indiv file supposedly contains all individual contributions of $200 or more to federal committees.
+However, contributions that appear to be from corporations, PACs or other organizations sometimes are
+included in campaign-finance reports on the line set aside for itemized individual contributions and
+therefore show up in these master files. (You can use the Entity Type field to identify these.) Contribution
+refunds, usually found on Schedule B, also are included.
+Similarly, the pas2 file contains contributions to candidates from committees, and the oth file contains
+contributions from one committee to another.
+<RX¶OOQRWHWKUHHOLQNVXQGHUWKHindiv file for adds, changes and deletes. The FEC provides these files so
+WKDWLI\RXGRQ¶WZDQWWRGRZQORDGWKHZKROHILOHHDFKZHHN\RXFDQMXVWGRZQORDGDQGDSSO\ZKDW¶V
+FKDQJHG+RZHYHU,GRQ¶WNQRZRIDQ\RQHZKRXVHs these files. Despite the size of the indiv ILOHLW¶V
+much quicker and easier to just rebuild the whole table rather than apply updates, inserts and deletions.
+If you want to try using the update files, just keep in mind that if you ever fail to download and apply the
+ZHHNO\XSGDWHV\RX¶OOKDYHWRGRZQORDGWKHHQWLUHPDVWHUILOHDQ\ZD\DVWKH)(&RYHUZULWHVWKHILOHV
+
+each week and does not maintain an archive. Additionally, if you fail to download and apply a weekly
+XSGDWHDQGGRQ¶WUHDOL]HLWyour data will be corrupted, and you might not realize it.
+Besides links to the files, the chart above contains the record count for each file, the date the file was last
+updated ± generally on Sunday afternoons ± and links to data dictionaries, where you can get the data
+type and a brief description of each field.
+The rest of this guide largely focuses on how to download and analyze individual reports. But if you find
+the weekly master files meet your needs, you most likely are better off using them rather than individual
+filings. Before you go, though, lHW¶VWDNHDTXLFNORRNDWWKHSURVDQGFRQVRIHDFK
+3) Using the weekly master files vs. individual reports
+Here are some reasons you might want to use the weekly master files discussed above rather than
+download individual filings:
+1. Senate data: Perhaps the most important reason to use the master files is they include
+contributions to Senate candidates. While this is the 21 st century and virtually every Senate
+candidate surely uses a computer to track contributions and generate these reports, senators still
+allow themselves to file reports on paper, thereby obscuring the identities of their donors and
+making that data a lot more difficult to work with. The FEC, in turn, spends taxpayer dollars to pay
+contractors to input the once-computerized data from these paper reports. This makes the master
+files the only source of electronic contribution data for senators and delays the availability of that
+data. Note that depending on the volume of data that vendors need to input, Senate filings can
+take weeks or even months to show up in the master files. PDF images of Senate reports can be
+viewed on the FEC website, but it usually takes a week after the filing deadline for them to show
+up. (A handful of senators opt to file their reports electronically. You can search for these
+³XQRIILFLDO´UHSRUWVKHUHhttp://docquery.fec.gov/senate/)
+2. Transaction types: The FEC adds a Transaction Type code to each row. This field can be used to
+characterize the type of contribution or disbursement on a much more granular level than just
+using the line number field contained in the original filing. Presently, there are about 75 different
+WUDQVDFWLRQW\SHVWKRXJK\RX¶OOILQGIHZHUWKDQKDOIRIWKHPLQWKHPDVWHUILOHVThe data
+dictionary for each master file lists the specific transaction types included in that file. A complete
+list of transaction type codes can be found at:
+http://www.fec.gov/finance/disclosure/metadata/DataDictionaryTransactionTypeCodes.shtml
+3. Fewer files: You need to download only three files to have all contributions of $200 or more for
+the election cycle.
+4. Refunds included: An important gotcha when you use the original filings is you have to be careful
+to check Schedules A and B for contribution refunds. Refunded contributions are included in the
+master files for you. To find refunds, look for Transaction Type 22Y.
+5. No amended reports: If a report has been amended, only contributions from the most recent
+reports are included in the master files. When you work with individual electronic filings, you
+always have to check to see if a report has been amended.
+6. FEC vetting: In addition to the transaction type codes, the FEC looks for missing or incorrect
+candidate and committee IDs and adds this data to the master files.
+
+Here are some advantages to using individual filings rather than the master files:
+1. Timeliness: <RXFDQGRZQORDGWKHVHILOLQJVDVVRRQDVWKH\¶UHXSORDGHGWRWKH)(&ZHEVLWH
+whereas the master files are generated only once a week (Sunday afternoons).
+2. Address information: 7KHPDVWHUILOHVFRQWDLQDGRQRU¶VFLW\DQGVWDWHEXWRPLWVWUHHWDGGUHVV
+data found in the filings.
+3. Names parsed: The individual filings include separate fields for first, middle and last names as
+well as prefix and suffix and a completely separate field for organization names. In the master
+files, names are concatenated into one field.
+4. More forms and schedules: While most Schedule A data is included in the master files, some are
+omitted. Some Schedule B data, most notably refunds and disbursements to other committees
+(including amounts <$200), are included in the master files, but most is omitted, including
+operating expenditures. Some data from Schedules E (independent expenditures) and F
+(coordinated expenditures) also appear in the master files. All data found in another 12 schedules
+DUHH[FOXGHGWKRXJKRWKHUWKDQRSHUDWLQJH[SHQGLWXUHVDQGORDQV\RXSUREDEO\ZRQ¶WFDUHDERXW
+most of this missing data anyway. Additionally, while this guide focuses on Form 3 and all related
+VFKHGXOHVWKHUHDUHRWKHULQWHUHVWLQJIRUPV\RXZRQ¶WILQGLQWKHPDVWHUILOHVLQFOXGLQJcommittee
+statements of organization (Form 1), 24- and 48-hour contribution and expenditure notices,
+statements of candidacy (Form 2), lobbyist bundlers and the full text of miscellaneous
+correspondence sent to the FEC (Form 99).
+5. More contributions: ,¶OOGLVFXVVWKHWHFKQLFDOLWLHVRIZKHQDFRQWULEXWLRQKDVWREHLWHPL]HGODWHULQ
+this guide, but the important distinction here is that itemized contributions found in electronic
+filings are found in the master files only if they are for $200 or more.
+6. More fields: The master files contain fewer fields than the individual filings. Whereas Schedule A
+offers nearly 50 fields, for example, fewer than two dozen are included in the master files (though
+other than street address and parsed names, all the important ones are there).
+7. Smaller: If you only want specific reports or committees, you can download only what you need.
+The master files include all contributions for the entire election cycle, so the files are very large.
+4) +RZWRILQGDFRPPLWWHH¶VUHSRUWV
+1RZWKDW,¶YHVKRZQ\RXWKHTXLFNDQGGLUW\ZD\WRJHWDWFDPSDLJQFRQWULEXWLRQVOHW¶VGLYHLQWRZRUNLQJ
+with individual filings. Again, if after reading the pros and cons of each type above you think the weekly
+master files will serve your needs, you can skip most of the rest of this guide (though in the next section,
+,¶OOSRLQW\RXWRVRPHDGGLWLRQDOILOHVWKDWFDQJLYH\RXVXPPDU\QXPEHUVIRUHDFKUHSRUWVXFKDVWRWDO
+contributions, cash on hand and total disbursements).
+To find an individual report, go to www.fec.govZKHUH\RX¶OOVHHDPHQXRQWKHOHIWVLGHRI\RXUVFUHHQ
++RYHURYHU EXWGRQ¶WFOLFN &DPSDLJQ)LQDnce Disclosure Portal, then Searchable Systems, then click
+Candidate & Committee Viewer (screenshot below). Or you can skip all that and just click/type/bookmark:
+http://www.fec.gov/finance/disclosure/candcmte_info.shtml
+On the search page that comes up, you can enter an ID or partial name for any candidate or committee. If
+\RXW\SH³REDPD´ ZLWKRXWWKHTXRWHV DQGFOLFNWKH*HW/LVWLQJEXWWRQ\RX¶OOVHHIRXUHQWULHVIRU%DUDFN
+Obama near the top of your search results: Three rows for his three candidate IDs (one each for
+President, House and Senate) and a listing for Obama for America, his principal campaign committee in
+
+the presidential race. Each candidate has exactly one principal campaign committee. This committee,
+rather than the candidate individually, is the fundraising arm that accepts campaign contributions.
+
+Navigating to the Candidate & Committee Viewer
+
+Performing a search using the Candidate & Committee Viewer
+
+If you click the link for P80003338WKHQVHOHFWWKH)LOLQJVWDE\RX¶OOVHHRQO\6WDWHPHQWVRI&DQGLGDF\
+(also known as Form 2). On the far-ULJKWRIHDFKURZ\RX¶OOVHHa link to view that form in PDF or HTML
+format or to download it as text. Ignore the text link for now and click either the PDF or HTML link to see a
+printer-friendly version of the report.
+7KHUH¶VQRWPXFKWRLW EXW\RX¶OOVHH-RH%LGHQOLVWHGDV2EDPD¶VUXQQLQJPDWH<RX also will see the
+FDPSDLJQPDLOLQJDGGUHVVWKHQDPHRI2EDPD¶VSULQFLSDOFDPSDLJQFRPPLWWHH 2EDPDIRU$PHULFD DQG
+a reference to a second authorized committee called Obama Victory Fund. This is a joint fundraising
+committee. It allows donors to write single big checks to one group which in turn disburses that money up
+WROHJDOFRQWULEXWLRQOLPLWVWRDKRVWRIRWKHURUJDQL]DWLRQVVXFKDV2EDPD¶VFDPSDLJQFRPPLWWHHWKH
+Democratic National Committee and state Democratic parties.
+
+Notice that Form 2 contains no financial information and there are no financial reports on this page7KDW¶V
+because you¶UHORRNLQJDWWKHFDQGLGDWHUDWKHUWKDQKLVFDPSDLJQFRPPLWWHH7RVHHILQDQFLDOreports,
+you can either look under Committee Information (near the top-right corner of your screen) and click the
+FRPPLWWHH¶VK\SHUOLQNRUJREDFNWR\RXUVHDUFKUHVXOWVDQGILQGDOLQNWKHUH
+
+The Filings tab for Barack Obama as a candidate for president, with links to his statement of candidacy and campaign committee.
+
+%HIRUHZHORRNDWDILQDQFLDOUHSRUW )RUP KHUH¶V\RXUILUVWFXUYHEDOO7KHUHDUHIRXUGLIIHUHQWYHUVLRQV
+of Form 3. The version filed depends on the type of committee filing the report. Candidate committees for
+the House and Senate use Form 3; presidential campaign committees use Form F3P; PACs, Super PACs
+DQGRWKHUFRPPLWWHHVXVH)RUP);DQGOREE\LVWVXVH)RUP)/,¶OOGLVFXVVWKHVHGLVWLQFWLRQVDOLWWOH
+later. For now, all you need to know is that while they contain similar information (contributions,
+disbursements, loans and so on), there are subtle and some not-so-subtle differences. (Note that
+OREE\LVWVDUHDGLIIHUHQWDQLPDODQGWKHLUUHSRUWVDUHQ¶WFRYHUHGLQWKLVWLSVKHHW
+One nice consistency, though, is the different flavors of Form 3 share the same subforms. Just like a
+WD[IRUP)RUPKDVDEXQFKRIRSWLRQDO³VFKHGXOHV´VXFKDV6FKHGXOH$ FRQWULEXWLRQV 6FKHGXOH
+B (disbursements) and Schedule C (loans). The schedules go all the ZD\XSWR/EXW\RX¶OOUDUHO\XVH
+anything but A and B. I¶OOcome back to this later as well.
+1RZOHW¶VORRNDWDUHSRUW. Click the link for Obama for America, then click the Filings tab. Look for (but
+GRQ¶WFOLFN WKHJuly 2013 quarterly report. Do you notice anything? There actually are THREE reports
+(screenshot below).
+The first report, filed on 7/15/2013, is the original filing. The next row is a request for additional
+LQIRUPDWLRQ 5)$, IURPWKH)(&DQGWKHWKLUGURZLVDQDPHQGHGUHSRUW,W¶VQRW that interesting, but if
+\RXFOLFNWKH3')OLQNIRUWKH5)$,\RX¶OOVHHWKH)(&KDGTXHVWLRQVFRQFHUQLQJVRPHFRQWULEXWLRQ
+UHIXQGVDQGDGHEW7KHFRPPLWWHHWKHQILOHGDQDPHQGHGUHSRUWWRDGGUHVVWKH)(&¶VTXHVWLRQVEXWLW¶V
+likely the new report contains more than that: Look at the page counts for the original report and the
+amended report. The amended report is nearly 70 percent longer.
+
+As of February 2014, Obama for American amended the July 2013 quarterly report once after the FEC requested more information.
+
+Amended reports are filed ALL THE TIME, and this often is done to correct mistakes or add additional
+information without any prompting from the FEC. So if you write a story using numbers pulled from one of
+WKHVHUHSRUWVLW¶VDJRRGLGHDWRFheck the FEC website for amended reports before you publish.
+5) How to read a report summary
+Now click the PDF link for the amended report filed on 12/13/2013. Generally speaking, if you want to
+look only at summary numbers atop a report, the HTML link is better. Whereas the PDF link will load the
+entire report into your browser, the HTML version displays only the topline numbers for the report and
+provides links to specific line numbers within the various Schedules. 1RWHWKDW2EDPD¶VSRVW-general
+election report is more than 300,000 pages! The July 3013 report is small enough that you can grab the
+whole PDF, though.
+
+<RX¶OOILQG6XPPDU\QXPEHUVQHDUWKHWRSEXW&DVK2Q+DQGLVWKHRQO\UHDOO\XVHIXOQXPEHr here. Dig deeper for better stuff.
+
+$WWKHWRSRIWKHUHSRUW\RX¶OOVHHEDVLFLQIRUPDWLRQVXFKDVWKHFRPPLWWHH¶VQDPHDQG,'QXPEHUWKH
+WUHDVXUHU¶VQDPHDQGWKHSHULRGWKHUHSRUWFRYHUV LQWKLVFDVHWKURXJK 5HSRUWV
+generally cover a month, a quarter or six months.
+The next page has a Summary section, but the only number of interest here is line 10: cash on hand at
+WKHFORVHRIWKHUHSRUWLQJSHULRG,I\RX¶UHFRYHULQJFDPSDLJQVRQGHDGOLQHDQGORRNLQJDWDUHFHQWO\ILOHG
+report, FDVKRQKDQGLVDZD\WRWDNHDTXLFNSXOVHRIWKHFRPPLWWHH¶VZDUFKHVWJRLQJLQWRWKHQH[W
+period. Do they have millions of dollars to spend on media buys and voter outreach, or are they broke?
+You might think total receipts and total disbursements are interesting numbers, but they contain a lot of
+extraneous stuff, such as candidate loans (for receipts) and contribution refunds (for disbursements). ,W¶V
+better to bypass these summary numbers and go a little deeper into the report.
+The next gold nugget is Line 17, which is broken down into individual contributions (itemized and
+unitemized), as well as contributions from political party committees (such as the DNC and the RNC),
+other political committees (PACs) and the candidate. Line 18 shows transfers from other authorized
+committees, which typically are joint fundraising committees (which I mentioned above).
+
+Line 17 (or Line 11 for House, Senate and PACs) is where you can get details on individual and PAC contributions.
+
+Notice that there are two columns of numbers. The first column shows amounts for the three-month
+reporting period. The second column shows numbers to-date for the election cycle.
++HUH¶VDQRWKHUSLWIDOOWREHDZDUHRIWhile candidate committees¶ election cycles are two years or more,
+the clock resets for PACs and Super PACs ± including the RNC and DNC ± every January 1. This means
+that if you want to look at how much money a PAC has received and spent during the 2014 election cycle,
+you might want to look at the 3$&¶V\HDU-end report for 2013 as well as its most recent 2014 report.
+
+7KHGLIIHUHQFHEHWZHHQLWHPL]HGDQGXQLWHPL]HGFRQWULEXWLRQVFDQEHFRQIXVLQJ/HW¶VGHP\VWLI\LWQRZ
+Contributions must be itemized when the total amount given (the aggregate) by a particular donor
+(;&(('6/HW¶VXVHDQH[WUHPHH[DPSOHIf John Smith makes four $50 contributions to Obama
+for America, all of that money will be counted as unitemized contributions. But John really wants to give
+all he can, so he digs into his couch cushions, finds $1 in change and mails it to Chicago. That $1 ± and
+only that $1 ± must be itemized while the original $200 can remain unitemized. When you start looking at
+the Schedule A records a little later in the guide\RX¶OOVHHWKDWFRQWULEXWLRQUHcords include two dollar
+figures: the amount of the specific contribution and the aggregate amount given during the election cycle.
+In this example, those numbers would be $1 and $201. (Occasionally, committees voluntarily itemize
+contribution aggregates of less than $200, but this is rare.)
+Looking at the Line 17 numbers as a group can tell you a little DERXWDFDQGLGDWH¶VILQDQFLDOVXSSRUW2QH
+calculation I often do is Line 17a2 (unitemized contributions) divided by Line 22 (total receipts) to show
+KRZPXFKRIDFDQGLGDWH¶Vmoney comes from small contributions, indicating the level of grassroots
+support. Comparing 17a1 with 17a2 can show you to what extent wealthier donors back the candidate.
+Line 17d shows whether the candidate is fueling his or her own campaign. Line 17c shows how much
+money the candidate got from special interests (PACs), though you should dive into the Schedule A data
+and look at the details to be sure.
+Under disbursements (lines 23 to 30), you generally care most about operating expenditures on Line 23,
+EXWOLQHVDQGZLOOWHOO\RXLIWKHFRPPLWWHHLVJLYLQJPRQH\WRRWKHUFRPPLWWHHVDQGKRZPXFKLW¶V
+spending on fundraising. If the committee is in GHEW\RX¶OOZDQWWRSD\DWWHQWLRQWR/LQH
+The FEC also compiles master files summarizing the topline numbers for all electronically filed reports.
+You can find those summary files at http://www.fec.gov/finance/disclosure/ftpsum.shtml. One nice thing
+DERXWWKHVHILOHVLVWKH\DUHXSGDWHG'$,/<VRWKH\¶UHYHU\FXUUHQW
+,I\RXWKLQN\RX¶YHJRWDKDQGOHRQeverything so farOHW¶VPL[WKLQJVXSDOLWWOH
+6) Dealing with multiple versions of the same form
+As I mentioned above, presidential candidates, House and Senate candidates, PACs and lobbyists each
+use a slightly different version of Form 3. For presidential candidates, contributions are on Line 17. House
+and Senate candidates and PACs (forms F3 and F3X) use line 11.
+0DNHVHQVH":HOOWKHUH¶VPRUH)URPWLPHWRWLPHWKH)(&FKDQJHVWKHKHDGHUVIRURQHRUPRUHforms.
+The most recent header version is 8.1: the fourteenth version of headers released to date. When you
+consider all the different header iterations of all the different forms required by the FEC, there presently
+are 664 different sets of headers.
+However, ZKLOHWKLVGHPRQVWUDWHVDODUJHYDULDWLRQLQWKHGDWD¶VIRUPDWRYHUWLPHDQGDSRWHQWLDO
+FRPSOLFDWLRQWREHDZDUHRIJHQHUDOO\LW¶VQRWDELJGHDODQGPDWWHUVRQO\ZKHQ\RX¶UHGRZQORDGLQJGDWD
+,I\RX¶UHMXVWORRNLQJDWWKH3')RU+70/YHUVLRQRIDVLQJOH report, you can clearly see what each
+number means. Additionally, not all forms change with each iteration. The headers for all but three forms
+remained exactly the same when the FEC moved from v8.0 to v8.1 in January 2014.
+
+I know I¶YHEHHQVD\LQJWKLVD lot, but I¶OOFRPHEDFNWRWKLVSRLQWODWHU)RUQRZ,¶P going to give you
+some resources you can use to see the different forms and header versions. %HDUZLWKPH,W¶VLPSRUWDQW
+and the reasons why will be clear very soon.
+First, here are links to blank PDFs for Form 3, each of which includes all related Schedules. You should
+download or at least bookmark these:
+x
+
+Form 3 (House/Senate): http://www.fec.gov/pdf/forms/fecfrm3.pdf
+
+x
+
+Form 3P (President): http://www.fec.gov/pdf/forms/fecfrm3p.pdf
+
+x
+
+Form 3X (PAC): http://www.fec.gov/pdf/forms/fecfrm3x.pdf
+
+x
+
+Form 3L (Lobbyist): http://www.fec.gov/pdf/forms/fecfrm3l.pdf
+
+1RZOHW¶VJHWLQIRUPDWLRQRQWKHYDULRXVKHDGHUVIf you go to
+http://www.fec.gov/finance/disclosure/ftpefile.shtml DQGVFUROOGRZQ\RX¶OOVHHDFKDUWOLVWLQJHDFKYHUVLRQ
+of the headers and the dates during which each version was used.
+
+Various header formats and the dates they were used.
+
+Near the top of the webpage\RX¶OOVHHDOLQNIRU³)LOLQJ)RUPDW'RFXPHQWDWLRQ´Click this link or just go
+to http://www.fec.gov/elecfil/eFilingFormats.zip to download the headers. When you unzip this filH\RX¶OO
+VHHDILOHFDOOHG³H-ILOLQJKHDGHUVDOOYHUVLRQV[OV[´Open this file and go to the second tab (all versions).
+YRX¶OOVHHWKHKHDGHUVIRUeach version of every form. The other tabs are form-VSHFLILFDQGGRQ¶WFRQWDLQ
+any additional information.
+
+A snip of the worksheet listing the headers for all versions of all FEC forms.
+
+2SHQWKH)(&BY[IROGHUWKHQRSHQ³FEC_Format_v8 1[OV[´7KLVILOHJLYHV\RXDVXPPDU\RIDOO
+changes made since v8.0. As it turns out, changes were made only to Form 5, Form 5.7 and Schedule D.
+So all versions of Form 3 and all Schedules except D remained the same.
+7KHYDULRXVWDEVLQWKLV([FHOILOHDOVRVKRZWKHVFKHPDIRUHDFKIRUPDQGVFKHGXOHZKLFK\RX¶OOQHHGLI
+you want to import campaign-finance data into Access or some other database manager. Sadly, the
+documentation for each field is scant at best. Looking at the blank forms (URLs provided above) is a good
+tool to help you puzzle out what a particular field means.
+If this seems a little overwhelmingGRQ¶WZRUUy. ,¶P showing you all the header versions and schema now
+VR\RX¶OOKDYHWKHse resources handy later in the tutorial. For now, all you really need to keep in mind is
+that headers change over time, and now you have the tools you need to discern the differences when it
+matters.
+7) How to inspect the detailed data in schedules A, B and so on
+The text data for an individual filing can be confusing because that one file contains the summary
+numbers and all schedules. Each schedule can have a different number of fields as well as its own
+headers, none of which is in the file.
+/HW¶VORRNDWDQH[DPSOH. Download the amended post-general report for the Texas Democratic Party:
+http://docquery.fec.gov/showcsv/nicweb312910/908542.fec, then open the file in Excel or some other
+spreadsheet program. To make it easier, you can change the .fec extension to .csv for this exercise. If
+you open the file LQ([FHO\RX¶OOVHHVRPHWKLQJOLNHWKLV
+
+908542.fec from the Texas Democratic Party
+
+$WILUVWJODQFHWKLVGRHVQ¶WORRNWRREDG7KHILUVWURZLVDKHDGHUIRUWKHILOH7KHRQO\UHDOO\XVHIXOSLHFH
+of information is the third column, which tells you the version of headers used in the report (8.1). The
+
+second row is the longest: It contains all the topline numbers, and if you scroll all the way to the right,
+\RX¶OOVHHWKHUHDUHPRUHWKDQFROXPQV
+The schedules data begins on the third row, and the key to deciphering each row lies in the first column. If
+you look at cell A3, you see: SA11AI. This means the row contains a Schedule A (SA) record that applies
+to line 11ai in the topline numbers,I\RXJRWR)RUP);XVHGE\DOO3$&V\RX¶OOVHHWKDWLWHPL]HG
+individual contributions are recorded on line 11ai.
+I ZRQ¶WVSHQGDORWRIWLPHon WKLVILOHEXWOHW¶VFKRSLWXSDOLWWOHELW
+x
+
+Row 40 shows a $120 contribution from Cargas for Congress. In this file, the amount of the
+contribution is in Column U and the aggregate for the election cycle is in Column V.
+
+x
+
+Rows 41 to 44 show more than $50,000 in transfers from Democratic groups.
+
+x
+
+Rows 48 to 116 show that a bunch of groups ± mostly state and local politicians ± paid more than
+IRUDFFHVVWRWKHJURXS¶VYRWHUDQGHPDLOOLVWV 7KLVLVQRWHGLQ&ROXPQ:
+
+x
+
+Rows 117 to 137 itemize the JURXS¶VRSHUDWLQJH[SHQVHV 6FKHGXOH%/LQHE $VZLWK
+Schedule A, some details concerning the transactions are in Column W.
+
+x
+
+Rows 138 to 141 show contributions to federal candidates.
+
+x
+
+Payroll is on lines 310 to 323 (Schedule B) and lines 406 to 422 (Schedule H4), with a Memo
+about payroll on line 480.
+
+7KRVHDUHWKHKLJKOLJKWV,I\RX¶UHFXULRXVDERXWWKHUHVWMXVWXVH&ROXPQ$WRILJXUHRXWZKDWOLQH
+number the row refers to, then go grab the appropriate headers.
+A note about delimiters:
+Revisiting the above example, if you go to the Candidate and Committee Viewer
+(http://www.fec.gov/finance/disclosure/candcmte_info.shtml), search for filings by the Texas Democratic
+Party (C00099267) and click the link for the February 2014 report (FEC-908542), you get a pop-up
+window asking whether you want a CSV (comma-separated values) RU$6&,,ILOH,I\RX¶UHJRLQJWRYLHZ
+WKLVGDWDLQ([FHOSLFN&69%XWLI\RX¶UHJRLQJWRLPSRUt the data into a database manager other than
+Access, consider ASCII (specifically, ASCII 28).
+$VVRPHRQHZKRKDVZRUNHGZLWKGDWDLQYDULRXVIRUPDWVIRUPRUHWKDQDGHFDGH,¶YHDOZD\VEHHQ
+mistrustful of CSV files. Because commas occur so frequently in data, you often have to surround your
+data fields with some kind of text qualifier. The FEC uses quotation marks as its qualifier. If a committee
+submitting an electronic report includes quotation marks in a field, however, it can cause all kinds of
+headaches for someone trying to parse the data.
+7KH)(&¶VDOWHUQDWLYHWRFRPPDVLVWKH$6&,,-GHOLPLWHU8QIRUWXQDWHO\,GRQ¶WNQRZRIDQHDV\ZD\WR
+import a file using this delimiter into Excel or AccessEXWLI\RX¶UHXVLQJDdifferent database manager,
+ASCII-28 offers a couple advantages. First, \RXZRQ¶W find ASCII-28 in any data field submitted to the
+FEC, so it parses quite smoothly. Second, because ASCII-GRHVQ¶WVKRZXSLQWKHGDWDLWGRHVQ¶WQHHG
+text qualifiers (quotation marks) around every field, thereby reducing WKHVL]HRIWKHILOHV,I\RXGRQ¶WWKLQN
+this is a big deal, consider this: the CSV version of the Texas Democratic Party file you¶YHEHHQZRUNLQJ
+with is 40 PERCENT larger than the ASCII-28 version. This size difference disappears once you convert
+the file to Excel format or import it into a database, but you still have to download all those files.
+
+8) Viewing an electronic report in Excel
+As you saw above, you can get a ton of information from the topline numbers of a campaign finance
+UHSRUW,I\RX¶UHZULWLQJDVWRU\RQWKHILOLQJGHDGOLQHZKHQWKHUHSRUWVFDQEHVXEPLWWHGDVODWHDV
+midnight, this might be all you have time for. But your story is going to be just a numbers comparison with
+little or no context and ± hopefully, at least ± DIHZTXRWHV,QVKRUWLW¶VJRLQJWRVXFN
+If you can find as little as 10 minutes, you can dig into Schedules A and B to get some context and rich
+details that will give your story some depth and a diversion from just reporting a bunch of big numbers.
+These numbers also will help you pinpoint human sources for your story and provide ideas about what
+questions to ask
+As you saw above, with a whole bunch of data from different forms with different headers cobbled
+together into one ILOHYLHZLQJ)RUPGDWDLQ([FHOLVFXPEHUVRPHDWEHVW6ROHW¶VGHDOZLWKWKDWSUREOHP
+once and for all by creating an Excel template.
+One caveat: Because even the latest version of Excel is limited to a little more than 1 million rows, this
+solution is not going to work if you are trying to look at a larger file with more than 1 million rows or if you
+DUHXVLQJDYHUVLRQRI([FHOROGHUWKDQ([FHO ZKHUH\RX¶UHOLPLWHGWRURZV ,QWKRVHFDVHV
+\RX¶UHJRLQJWRQHHGWRLPSRUW the data into a database manager. This is covered later.
+,I\RX¶UHOD]\ ,FDQ¶WSURPLVHKRZORQJWKHVHOLQNVZLOOEHDFWLYHEXWKHUHDUHSUH-made templates for
+header versions 8.0 and 8.1. You can download these and skip ahead to the section on using the
+templates.
+x
+
+https://s3.amazonaws.com/NICAR2014/FEC/Form3Template_v80.xlt
+
+x
+
+https://s3.amazonaws.com/NICAR2014/FEC/Form3Template_v81.xlt
+
+To create your template:
+1. II\RXGLGQ¶WDOUHDG\GRVRin Step 3, download the .zip file from the FEC containing all the header
+information (http://www.fec.gov/elecfil/eFilingFormats.zip GHFRPSUHVVLWDQGRSHQ³YH-filing
+KHDGHUV[OV[´
+2. Make sXUH\RX¶UHRQWKHILUVWWDEYKHDGHUV
+3. Click cell B1.
+4. Press Shift-Ctrl-End to highlight all your data except Column A.
+5. Press Ctrl-C to copy this data.
+6. Press Ctrl-N to create a new worksheet.
+7. Click on cell A2. (You want to leave a blank row at the top.)
+8. Type Ctrl-V to paste your copied data onto the new sheet.
+9. :HGRQ¶WQHHG&ROXPQ%VRFlick the B heading to highlight all of Column B, right-click
+somewhere in this highlighted column and select Delete to delete the entire column.
+10. 1RZOHW¶VFUHDWHVRPHJHneric headers. Go to A1 and just type a 1, Col1 or something similar,
+then go to B1 and type 2, Col2, etc.
+11. Highlight A1 and B1, grab the fill handle (the little square in the bottom-right corner of the frame
+around the two highlighted cells) and drag it all the way to cell GX1. This will give you 206 generic
+column headings.
+
+The Excel fill handle is a handy way to copy incremented data to other cells.
+
+12. Go to File, Save As to save your template. Make sure you select the Excel Template file type and
+give it a name like Form3Template_v81.xltx.
+To use your template:
+1. Download EXWGRQ¶WRSHQ the report you want in CSV format.
+2. Open your template.
+3. 7RPDNHVXUH\RXGRQ¶WRYHUZULWHyour template by accident, immediately go to File, Save As and
+save a copy of your template as a regular Excel Workbook. A good name is one that reflects the
+UHSRUW\RX¶UHJRLQJWRYLHZVXFKDV7H[DV'HP3W\B)HE0RQWKO\B[OV[
+4. Click on the first blank cell in Column A, which should be A50.
+5. Go to Data, Get External Data, From Text. Navigate to the report you downloaded.
+6. Navigate to the electronic report you downloaded and double-click it to open the file.
+
+Step 1: Select Delimited data, no headers.
+
+7. :KHQWKH7H[W,PSRUW:L]DUGRSHQVPDNHVXUH'HOLPLWHGLVVHOHFWHGDQGWKH³0\GDWDKDV
+KHDGHUV´ER[LVXQFKHFNHGWKHQFOLFN1H[W
+8. In Step 2, uncheck the Tab delimiter, check the Comma delimiter and make sure the text qualifier
+is set to double quotation marks. Click Next.
+9. In Step 3, leave the defaults and click Finish.
+
+Step 2: Select comma delimiter and quotation marks as the text qualifier.
+
+You might see an Import Data window after you click Finish.
+
+10. If an Import Data window pops up, make sure ³([LVWLQJZRUNVKHHW´LVVHOHFWHGDQGWKHFHOO
+DGGUHVVLVWKHILUVWEODQNFHOO ZKLFKVKRXOGEH³ $´ ,I\RXZDQWWRGLVDEOHWKHGDWD
+connection between your Excel file and the source text (I would), click Properties, and uncheck
+³6DYHTXHU\'HILQLWLRQ´&OLFN2.WKHQFOLFN2.DJDLQ6DYH\RXUILOH
+
+Use this window to break the connection between your Excel file and the text data.
+
+11. 1RZ\RX¶UHUHDG\WRORRNDW\RXUGDWD&OLFNDQRQ-empty cell near the top of your spreadsheet,
+then go to Data, Filter<RX¶OOVHHWKHJHQHULFFROXPQKHDGLQJVLQWKHILUVWURZQRZKDYH
+dropdown arrows.
+12. Click the dropdown arrow for A1 and select Text Filters, then Begins With.
+13. ,QWKHGLDORJWKDWRSHQVHQWHU³6$´ ZLWhout the quotes), then click OK, and voila: You are now
+looking at just your Schedule A data, with a nice row of headers in the second row.
+14. If you want to keep your headers visible at all times click the first cell of your first data row (below
+WKHKHDGHUV ,I\RX¶UHXVLQJWKH7H[DV'HPRFUDWLF3DUW\ILOHLWVhould be A53. Then go to View,
+Freeze Panes.
+
+Setting the text filter in your template.
+
+Using our template to filter for Schedule A records.
+
+This template is not ideal. You probably should avoid sorting, since you can scramble your data if you
+GRQ¶Whave everything selected, and this may be more likely to occur with some rows hidden by filtering.
+:KDW¶VPRUHHYHQZLWKWKHILOWHURQ\RX¶YHJRWWZRURZVRIKHDGHUV([FHOGRHVQ¶WNQRZWKHVHFRQGURZ
+needs to stay at the top and will freely move it arouQG\RXUILOHLI\RX¶UHQRWFDUHIXO
+If you want to keep the file long term, you could take the time to split this sheet up into separate tabs (or
+maybe just for Schedules A and B). To do that, turn off the Filter, highlight all your data and sort by
+
+Column A to get your header row and all your data into one contiguous block. Then just copy and paste to
+a new tab.
+Now that all your data is in one place, you can more easily examine it: Who are the big donors? Where
+are those donors from? (Are they out-of-state?) Are certain employers or industries providing a
+disproportionate amount of support? What PACs are giving to this group and vice versa? How much are
+they spending on their payroll? What other expenses do they have? Now that the data is in Excel, you
+can sort and filter to answer some of these questions and discover new questions.
+If you like the template, you can create additional templates for older header versions (8.0 and so on), but
+you might not need them unless you want to go back and look at older reports. No reports filed after midJanuary 2014 should use older headers, Schedule D is the only part of Form 3 that has changed since
+8.0, and 8.0 has been in use since September 2011.
+If you have any experience with Access, m\64/RURWKHUGDWDEDVHPDQDJHUV\RX¶UHSUREDEO\WKLQNLQJ
+about how much easier it would be to work with campaign finance data using one of those tools. Sadly,
+this is not an easy proposition. But before we discuss the pros and cons of putting campaign finance data
+into a database, OHW¶VORRNDWDQRWKHUSLWIDOO+HFNOHW¶VORRNDWWZR([FOXGHGURZVDQGFRQtribution
+refunds
+9) Excluded rows
+The Texas Democratic Party report you¶YHEHHQZRUNLQJZLWKGRHVQ¶WFRQWDLQDQH[DPSOHRIZKDW,¶P
+about to cover. ,I\RXZDQWWRWHVWWKHVNLOOV\RX¶YHOHDUQHGDQGPDNHDWHPSODWHRXWRIDQRWKHUUHSRUW
+download file 907289.fec, an amended 2013 year-end report for Minnesota Democratic-Farmer-Labor
+Party (C00025254). Otherwise, just read along and look at the screenshot.
+<RX¶OOQRWHWKDW&ROXPQin Schedule A is called MEMO CODE. This is a horrible name for this field,
+particularly since the next column is called MEMO. You might think MEMO CODE, which should always
+EHEODQNRUFRQWDLQDQ;MXVWPHDQVWKHUH¶VVRPHWKLQJLQ0(02EXWWKDW¶VQRWWKHFDVH0(02&2'(
+means this row is not included in the topline number referred to in the first column because the amount
+already is counted somewhere else.
+This happens a lot with joint fundraising committees and other groups, such as ActBlue, that collect
+money from a bunch of donors, then write one big check to a campaign. In cases like this, the grand total
+is counted in the topline numbers (meaning the MEMO CODE field is blank). The excluded rows that
+identify the individual donors satisfy the disclosure requirements, and excluding those rows is a way to
+make sure no money is double-counted. However, if your goal is to identify individual donors and you
+RPLWDQ\URZVZLWKDQ;LQ0(02&2'(\RX¶UHVWULSSLQJRXWDORWRIWKHGDWDthat identifies those donors
+and using a faceless aggregate.
+In the case of the Minnesota Democratic-Farmer-Labor report, if you filter on Schedule A records with an
+;LQ0(02&2'(WKHQORRNDWWKH0(02ILHOG\RX¶OOVHHQRWHVpointing to Dollars for Democrats,
+Minnesota State Party Victory Fund and Minnesota Senate Victory 2014<RX¶OODOVRQRWHDOORf these rows
+point to Line 12, which is where money transferred from other committees is tallied.
+
+,I\RXORRNIRU6$UHFRUGVZKHUHWKH0(02&2'(LVEODQN\RX¶OOVHHDFRQWULEXWLRQIURPWKH
+Democratic National Committee and two contributions from Minnesota Senate Victory 2014. If you add
+these up, you get $25,275. The same amount is recorded on Line 12 at the top of the report.
+If you add up the SA12 rows that have X in MEMO CODE (screenshot below), the total is more than
+$86,000, including about $57,000 in unitemized contributions from Dollars for Democrats and State Party
+Victory Fund. If you back these out, the sum you get is now within $4,000 of the amount on Line 12, but
+they WLOOGRQ¶WPDWFKMaybe the group decided not to include contributions where the aggregate is less
+than $200. Backing these out gets the two numbers within about $2,000 of each other, but again: They
+GRQ¶WPDWFK
+This kind of discrepancy can be immensely frustrating, particularly when you are trying to be exceedingly
+careful with an extremely complex dataset. Unfortunately, such discrepancies are the norm. If you really
+need the numbers to match, \RX¶OOQHHGWRFDOOWKHRUJDQL]DWLRQ. Otherwise, all you can do is get as close
+as you can and learn to be comfortable with being in the ballpark.
+
+907289.fec: A sample of data rows excluded from Schedule A, Line 12.
+
+10) Contribution refunds
+,I\RX¶UHEOHDU\-H\HGIURPUHDGLQJWKLVIDUFRQVLGHUWKLV,WKLQNWKHRQO\WLPH NQRFNNQRFN ,¶YHKDGWR
+run a correction related to an analysis of FEC data was when I missed a contribution refund, thereby
+overstating the amount of money a donor had given to Super PACs.
+,I\RX¶UHJRLQJWRUHSRUWKRZPXFKDQLQGLYLGXDORUJURXSJDYHWRDFRPPLWWHHPDNHVXUH\RXFKHFNIRU
+refunds. Refunds generally should be in Schedule B, but sometimes they show up as negative amounts
+in Schedule A. Keep in mind that weeks or months might pass between the contribution and the refund,
+so the two transactions might not be on the same report.
+A good rule of thumb is to do name searches on Schedules A and B to look for all contributions and
+refunds. You also can check TEXT records to see if there are references to refunds (though these should
+be in addition to, rather than in lieu of, Schedule A or B records showing the refund). Also pay attention to
+the aggregate of the most recent contribution to make sure everything adds up.
+
+11) Putting FEC data into a database
+Now that you finally know how to find and download campaign finance reports from the FEC and inspect
+WKHJXWVXVLQJDQ([FHONOXGJH\RXPLJKWEHWKLQNLQJ³7KLVZRXOGEHVRPXFKEHWWHUDQGHDVLHULI,MXVW
+put the data into Access/SQL Server/mySQLHWF´:HOO\HVDQGQR
+Unless you cover campaign finance nearly full time, it probably is not worth the effort. For one thing, if you
+GRQ¶WWDNHWKHWLPHWREXLOGVRPHNLQGRIV\VWHPWRDXWRPDWHDORWRIWKLVGDWDPDLQWHQDQFH\RX¶OOQHHGWR
+manually check the FEC websLWHIRUQHZDQGDPHQGHGILOLQJV,W¶VQRWIHDVLEOHWRGRWKLVIRUPRUHWKDQD
+handful of committees, and a manual process is error-prone and time-consuming at best.
+7RJLYH\RXVRPHSHUVSHFWLYHWKHV\VWHP,¶YHSLHFHd together during the last two years contains nearly
+660,000 files that go back to the 2000 election cycle. The database itself is 150 GB in size and hosted on
+a fairly nice SQL Server box. To keep it all up and running, I have an army of Python scripts to download,
+parse and load the data. (,I\RX¶UHFXULRXVDERXWWKLVDOORIP\FRGHLVDYDLODEOHRQJLWKXE at
+https://github.com/cschnaars/FEC-Scraper-Toolbox,¶PLQWKHSURFHVVRIDGGLQJcode to help you create
+the necessary database objects as well.)
+If access to hardware is the only issue, you could scale back the volume of data by just building a system
+in support of the 2014 Election. For that, you probably would need only reports from 2013 and 2014. You
+could delete amended data. You might even limit your database to specific committees, schedules and/or
+fields. If you do all these steps, you might even be able to get by with SQLite or Microsoft Access. An
+older version of my FEC database (https://github.com/cschnaars/FEC-Scraper) downloads reports only
+for the committees you specify.
+But automation is the key here, and that means working knowledge of a scripting language such as
+Python. You need a system in place to help you maintain and load all the data, and that system has to be
+JRRGHQRXJKWKDWRQWKHHYHRISXEOLVKLQJDVWRU\\RXFDQVD\³,¶PFRQILGHQWP\GDWDLVDFFXUDWH
+complete and up-to-GDWH´,I\RXFDQ¶WGRWKDW\Rur system has a fatal flaw.
+12) In conclusion
+My goal with this tutorial has been to shed some like upon the murky nature of campaign finance data
+and help journalists competently and confidently work with it. The toll the economy has taken on
+newsrooms throughout the country for much of the past decade has, I believe, resulted in fewer reporters
+to keep an eye on money in politics. Given the vehicles that allow donors to pump unlimited millions of
+dollars into an election ± largely through 527s, Super PACs and 501(c) nonprofits ± helping to make this
+data more accessible to other reporters is critical. We still compete for stories, but I think collaborating to
+help everyone obtain clean, workable data is in the best interest of readers everywhere.
+When I first took an interest in campaign finance, some very smart reporters at various news
+organizations helped me get started and have been an ongoing resource over the years. Without their
+help, I never would have gotten to the point where I could write the gXLGH\RXKDYHQRZ,¶GOLNHWRWKDQN
+some of them now: Derek Willis, The New York Times; Bob Biersack, Center for Responsive Politics;
+Aaron Bycoffe, Huffington Post; Paul Clark Jr., Federal Election Commission; Jacob Fenton, Sunlight
+Foundation; Scott Klein, ProPublica; and Fredreka Schouten, USA TODAY.
+
+

@@ -1,0 +1,264 @@
+How to avoid rookie
+data mistakes
+NICAR18
+
+You need help.
+Alex Richards, NerdWallet: @alexrichards, (702) 606-4519, arichards@nerdwallet.com
+Kristin Hussey, freelance: @kristinhussey1, (917) 533-4628, khussey1@gmail.com
+Mike Stucka, The Palm Beach Post: @mikestucka, (561) 820-4497, mstucka@pbpost.com
+Ask us about Slack, NICAR-L and other resources!
+
+Ways your data can make you crazy
+before you ever set eyes on it.
+
+You sort of know what your editor wants you to get,
+but you’re not really sure where to find it.
+Or how to ask for it.
+
+Find the Retention Schedules.
+Connecticut’s are on the state library website.
+
+Check out datasets on Data.gov.
+Peruse them. They lay out a map of the data on your beat.
+You’ll also learn government-speak, which will make the ask easier.
+
+The Ask
+** Do not forget the data dictionary.
+
+Wait. Before you ask,
+
+PREPARE. STUDY UP.
+
+FOI. OPRA.
+FOIA. ORA. FOIL.
+What does your open records law say about electronic records?
+Make sure you know that part of the law. At the federal level, DOJ
+recently launched a (mostly) one-stop shop at FOIA.gov.
+
+“... shall provide, to any person making a request… on paper, disk, tape or any other electronic
+storage device or medium requested by the person, including an electronic copy sent to the
+electronic mail address of the person making such request.”
+
+The Ask
+** Do not forget the data dictionary.
+
+Keep templates of state and federal requests in your Dropbox or Google Drive.
+
+Don’t forget the data dictionary.
+Ask for the record layout and all relevant documentation for the dataset in your FOIA.
+
+Crunch some numbers of your own.
+Just a small spreadsheet for reporting, nothing fancy.
+A simple spreadsheet sent me over the edge a couple years ago. I wasn’t
+proficient enough to do it quickly, so I ended up grabbing a legal pad and doing
+the math by hand.
+It happens. It’s frustrating. It gets easier.
+
+Evaluating what you have
+
+Question #1 for your data
+
+What’s wrong with you?
+(Something. Always.)
+
+Going big defect
+hunting
+Data problems
+●
+●
+●
+●
+●
+
+Entry errors
+Not standardized
+Nulls, blanks, zeros
+Weird outliers
+Etc.
+
+Universe problems
+●
+●
+●
+●
+●
+
+Missing data
+Duplicated info
+Misunderstanding
+the data
+Shift in standards
+Etc.
+
+How: Sketching out your data’s background
+Because the defects aren’t always inherently obvious.
+Some other questions to potentially throw into the mix:
+●
+
+Why is it kept?
+
+●
+
+What do they do with it?
+
+●
+
+Do they keep any documentation
+for it?
+
+●
+
+Who works with it regularly?
+
+Best practices once you start working...
+● Make and copy and stash the original somewhere
+● Don’t overwrite fields; make changes in a new space
+● Keep track of what you do
+○
+
+Memory refresher if you have to come back to a story at a later date
+
+○
+
+Showing your work makes it easier for someone to replicate
+
+● Know your data
+
+...And things to avoid while you’re working
+(All things I have done over the years.)
+●
+
+Queries that unintentionally force double-counting
+○
+
+●
+
+Bad joins
+○
+
+●
+
+I sketch Venn diagrams!
+
+Try doing them a few different ways (more Venn thinking)
+
+Not sufficiently probing the unexplained
+○
+
+Forms of assumption — on a spectrum from “complete trust” to “global conspiracy”
+
+...And things to avoid while you’re working
+●
+
+Overemphasizing small numbers in relative terms
+○
+
+And vice-versa
+
+●
+
+Spot cleaning when you need to deep clean
+
+●
+
+Getting too caught up in high-level summaries
+○
+
+When you overlook a potential story
+
+Ways Excel will try to get you fired
+Excel assumes your data is clean. It’s a messy world.
+If you have blank rows, you have problems. If you have blank columns, you
+have problems. If you try to sort when one row is highlighted, or a few cells,
+you have big problems.
+Solution: Control-A to select everything, or Control-* to see what’s contiguous
+
+More ways Excel will get you fired
+A number’s a number, unless it isn’t.
+Like that time New England disappeared off your map, because all the 5-digit
+ZIP codes beginning with 0s became 4-digit not-really-ZIP-codes.
+Or that time Excel looked at a really big number, and rounded it off, and
+suddenly none of your property tax parcel data worked.
+Solution: Define your column types as text when you import.
+
+Aim carefully
+It’s awful easy to write a
+formula in row 2 that
+refers to row 3, or you
+grab the wrong columns. If
+you miss, you have a big
+problem. Excel will
+highlight what it’s using as
+you type your formula.
+Missing is bad.
+
+Should you quit using Excel for complicated stuff?
+Probably.
+
+SQL is trying to make you crazy
+Error messages have meaning. It’s not always immediately clear. Read them.
+Slowly. And again.
+Sometimes it’s as basic as an extra space, or you forgot to say “from
+tablename.”
+
+Jimmy can’t read, and SQL can’t count
+Check your import statement results against an actual row count of your data.
+Sometimes … half of it will go missing. Or an insert will fail entirely. (Line
+endings are a problem, often.) wc -l is your friend. (Available for Windows, too)
+Note that
+select count(name) from mytable
+is very different from
+select count(*) from mytable
+
+The best advice on bulletproofing stories …
+...
+Is
+Not
+Here.
+See IRE’s web page, resources, tipsheets, search on bulletproof.
+https://ire.org/resource-center/tipsheets/?q=bulletproof
+
+But maybe we can help a bit.
+Start with a smell test. Is the second-most popular dog name really likely to be
+Mortimer? Is the congressman you sort of kind of didn’t know was in your
+state likely to be the biggest vote-getter?
+Some great stories come from data outliers. Some craptastic errors come
+from data outliers that were dirty data.
+
+2+2=…?
+Leave the big grinding data analysis aside
+for a moment. Does your stuff literally
+add up?
+Do the totals of your row-level data match
+the totals the agency gave you?
+Does your database have an identical
+number of rows as the original data
+source?
+
+Did you spot-check your data?
+Forget the data, even.
+Does some old paper record match your app’s version of the data set?
+Have you cross-checked the as-provided data and your processed data?
+
+Reality has a well-known anti-deadline bias
+Have you looked at the ground truth or other records to confirm?
+Have you run your data by a beat reporter and sources?
+Did you get the actual record layout, and verify the column headers mean
+what you think they mean?
+
+Stop and think again
+Warning signs
+include:
+Confused experts
+A trend contradicted
+by other evidence
+Something seeming …
+off
+
+You need help.
+Alex Richards, NerdWallet: @alexrichards, (702) 606-4519, arichards@nerdwallet.com
+Kristin Hussey, freelance: @kristinhussey1, (917) 533-4628, khussey1@gmail.com
+Mike Stucka, The Palm Beach Post: @mikestucka, (561) 820-4497, mstucka@pbpost.com
+Ask us about Slack, NICAR-L and other resources!
+
+
