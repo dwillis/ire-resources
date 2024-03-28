@@ -1,0 +1,127 @@
+Kaas & Mulvad | 11.03.2016 | Data journalism | import.io
+MEMO
+
+What
+
+Why
+
+Import.io scraper
+data without
+programming.
+
+Import.io is a web scraper, which is automated to a high
+degree. Many tasks can be solved simply by copy and pasting
+the URL into its web page. You must register as a user to
+retrieve data as a csv file. It is free. You can also download a
+free version to your computer, where you can then do more
+advanced scraping tasks. Finally, you can buy the enterprise
+version, and then import.io solves scraping tasks for you.
+
+How
+Basic site:
+https://import.io/
+Free download:
+https://www.import.io/dow
+nload/
+Tutorial:
+http://support.import.io/
+
+Magic
+
+Extractor
+
+.
+Magic is the most basic function, where you insert an url and then the software extracts the
+data in a structured way. If the data is on multiple pages, the limit is 20 pages. Magic handles
+a number of basic tasks - both in the web version and your downloaded version. import.io
+uses English separator of comma, which causes problems when loading other language data
+in Excel. However, it can be solved by using search and replace systematically ( " ", " : and " ,
+"to ; ), moving columns and text columns where ”;” is used as a separator. If you are
+importing a table from the web, it is often easier just to use an add-on for Google Chrome
+(Table Capture), which detects tables on a webpage, and you can then select the relevant
+table and then copy-paste into Excel. You can also use web import from Excel directly.
+After installing import.io on your computer, you can use the more advanced methods.
+Start by clicking New and select Extractor:
+
+Insert the link into the browser window and press enter :
+
+Change the button from OFF to ON:
+Name the first column and the click on the first cell with the content of the column that you
+want extracted:
+
+Click on Many rows.
+
+Kaas & Mulvad | 11.03.2016 | Data journalism | import.io
+MEMO
+
+Give your number a header name. Click the + New column. Select the first cell in the next
+column. Give it a name until you have selected all the columns. Click Done. Give your API a
+name and click Publish.
+Bulk Extraction
+
+Once you have built your Extractor, you can put it to extract data from many URLs, if they
+have the same structure. You need to understand the method for going to the next page. The
+easiest way if it is just numbers from 1 to the last page like this:
+http://www.fda.gov/Safety/Recalls/ArchiveRecalls/2015/default.htm?Page=1
+in the last page:
+http://www.fda.gov/Safety/Recalls/ArchiveRecalls/2015/default.htm?Page=15
+Here you can make the 15 urls in a spreadsheet. First part of the url is this and it is constant:
+http://www.fda.gov/Safety/Recalls/ArchiveRecalls/2015/default.htm?Page=
+Second part is the number (1 to 15). You can merge that by the formula =A1&B1.
+In total we will then build 15 URL’s to be pasted into import.io
+Here is a Google Spreadsheet with the URL’s prepared: kortlink.dk/ks7f
+In the example below the webpages are built by three parts.
+
+You collect the three parts of the formula: = A3 & B3 and C3 in cell D3. Then select all the 237
+Url 's in Excel and copy them. You go back to import.io, choose Bulk Extract, insert the many
+urls and press Run Queries waiting. After a while, the screen shows that everything is pulled
+out :
+
+Kaas & Mulvad | 11.03.2016 | Data journalism | import.io
+MEMO
+And yet, sometimes. Error detected :
+
+Click on i and run them again. Then it displays :
+
+It is better and you can then download all - select spreadsheet
+
+Extraction of tax
+data
+
+If you get problems with special characters, you can instead save it as HTML and open the file
+directly in Excel.
+Identify the structure of links in this page:
+https://www.revenue.wi.gov/delqlist/nmalla.htm
+
+For the letter A the url is:
+https://www.revenue.wi.gov/delqlist/NMALLA.htm
+For the letter B the url is:
+https://www.revenue.wi.gov/delqlist/NMALLB.htm
+And for the last url there is a slight change:
+https://www.revenue.wi.gov/delqlist/NUMALL.htm
+You can now construct the 27 urls copying the letters to word, replacing spaces with a new
+line, copy-pasting it to Excel and then make a formula combining 3 cells.
+https://www.revenu A
+.htm
+=a1&b1&c1
+e.wi.gov/delqlist/N
+MALL
+And then it’s the same as in the example below, making a new API from the first website and
+then copy and paste all the constructed urls into a bulk extraction.
+
+Extraction of many
+urls
+
+Often it is not so easy to identify the structure of links and you have to split the scraper in two
+API’s. One for extraction of links. The other for extraction of data. You then use the first API as
+input to the second.
+:
+
+Kaas & Mulvad | 11.03.2016 | Data journalism | import.io
+MEMO
+
+You save this scraper and then build a new scraper to extract the data.
+
+Then write the name of the relevant API into :
+
+
