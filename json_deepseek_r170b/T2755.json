@@ -1,0 +1,44 @@
+<think>
+Okay, so I need to create a JSON object based on the given tipsheet from an Investigative Reporters and Editors (IRE) conference. The user provided specific instructions on how to structure this JSON with certain keys like id, authors, conference, year, title, description, and keywords.
+
+First, let me parse through the input to extract all necessary information.
+
+The ID is given as T2755, so that's straightforward. 
+
+Looking for the author details: Jeff Claassen is listed with his email jclaassen@star-telegram.com and affiliation Fort Worth Star-Telegram. So I'll structure the authors array with one object containing name, email, and affiliation.
+
+Conference isn't explicitly mentioned in the text, but since it's from IRE, I can safely assume the conference is "IRE".
+
+The year isn't provided anywhere in the input, so I'll set that to "Not Listed".
+
+Title of the tipsheet seems to be about intranets at Fort Worth Star-Telegram, so I'll use that as the title.
+
+For the description, it should be a concise summary. The tipsheet discusses how the intranet evolved over time, design considerations, features added, and who maintains it. So a brief sentence summarizing that would work.
+
+Keywords need to be up to five terms excluding conference and authors. Looking through the content, "intranet design", "newsroom tools", "data access", "journalism resources" seem appropriate.
+
+Now, I'll structure all this into the JSON format as specified.
+</think>
+
+```json
+{
+  "id": "T2755",
+  "authors": [
+    {
+      "name": "Jeff Claassen",
+      "email": "jclaassen@star-telegram.com",
+      "affiliation": "Fort Worth Star-Telegram"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Intranets at the Fort Worth Star-Telegram",
+  "description": "This tipsheet discusses the evolution and design of the Fort Worth Star-Telegram's intranet, including features, databases, and future improvements.",
+  "keywords": [
+    "intranet design",
+    "newsroom tools",
+    "data access",
+    "journalism resources"
+  ]
+}
+```

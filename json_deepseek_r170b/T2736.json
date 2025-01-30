@@ -1,0 +1,41 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has given specific instructions on how to structure this JSON, with certain keys like id, authors, conference, year, title, description, and keywords.
+
+First, I'll look at the input text. It's titled "The Basics of Business Investigations" and led by David Wethe from the Fort Worth Star-Telegram. His email is provided as dwethe@star-telegram.com, and his phone number is (817) 685-3803. 
+
+Now, according to the instructions, each author should be an object with name, email, and affiliation. Since only one speaker is listed here, I'll make sure David Wethe's details are correctly filled in. The affiliation isn't explicitly mentioned next to his name, but since he's from the Fort Worth Star-Telegram, that will serve as his affiliation.
+
+The conference key should be set to "IRE" because it's an IRE conference tipsheet. The year is not provided in the text, so I'll mark it as "Not Listed".
+
+For the title, it's straightforward: "The Basics of Business Investigations". 
+
+The description needs to be a concise summary of the content. Looking through the tipsheet, it covers sources like SEC filings, company websites, real estate records, court documents, and other public data useful for business investigations. So I'll write a 1-2 sentence summary that encapsulates these elements.
+
+Next are the keywords. They should be no more than five terms excluding the conference and authors. I can extract relevant terms from the content: "Business investigations", "Public records", "SEC filings", "Real estate records", "Court documents". That makes five, so it's good.
+
+Putting this all together, each part of the JSON is addressed as per the instructions. I need to ensure all values are in English and that keys are enclosed in quotes. No markdown or additional formatting is needed, just a clean JSON object.
+</think>
+
+```json
+{
+  "id": "T2736",
+  "authors": [
+    {
+      "name": "David Wethe",
+      "email": "dwethe@star-telegram.com",
+      "affiliation": "Fort Worth Star-Telegram"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "The Basics of Business Investigations",
+  "description": "This tipsheet provides an overview of sources and techniques for investigating businesses, including public records, SEC filings, real estate documents, court records, and other resources.",
+  "keywords": [
+    "Business investigations",
+    "Public records",
+    "SEC filings",
+    "Real estate records",
+    "Court documents"
+  ]
+}
+```

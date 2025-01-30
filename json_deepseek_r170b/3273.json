@@ -1,0 +1,48 @@
+<think>
+Alright, I need to create a JSON object based on the user's query. They provided a tipsheet from an Investigative Reporters and Editors (IRE) conference titled "Broadcast: It's Not Just TV." 
+
+First, let's identify each required key:
+
+- **id**: The user specified it should be 3273.
+- **authors**: There are four speakers listed with their names, emails, and affiliations. I'll extract each one into an array of objects. Each object will have name, email, and affiliation fields. Since the emails in the input have typos (like "lawan.williarnsO" which should be "lawan.williams@"), I need to correct those.
+- **conference**: Since it's from IRE, this key is "IRE."
+- **year**: The copyright is 2009, so the year is 2009.
+- **title**: It's clearly stated as "Broadcast: It's Not Just TV."
+- **description**: I'll summarize the tipsheet in one or two sentences. It discusses using social media for investigative reporting before and after airing stories, including finding sources and promoting work.
+- **keywords**: Extract up to five terms from the content. Relevant keywords are social networking, investigative reporting, data mapping, online engagement, and broadcast journalism.
+
+I need to ensure all values are in English and properly quoted. Also, check that each field is correctly formatted without any markdown. The emails should be corrected for accuracy, and affiliations are taken from the provided text.
+</think>
+
+```json
+{
+  "id": 3273,
+  "authors": [
+    {
+      "name": "Lawan Williams",
+      "email": "lawan.williams@scripps.com",
+      "affiliation": "The E.W. Scripps Company"
+    },
+    {
+      "name": "Rick Yarborough",
+      "email": "rick.yarborough@foxtv.com",
+      "affiliation": "Fox5, WTTG"
+    },
+    {
+      "name": "Stephen Stock",
+      "email": "sstock@cbs.com",
+      "affiliation": "CBS4, WFOR"
+    },
+    {
+      "name": "Rhonda Schwartz",
+      "email": "rhonda.schwartz@abc.com",
+      "affiliation": "ABC News"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2009,
+  "title": "Broadcast: It's Not Just TV",
+  "description": "This tipsheet discusses strategies for using social media and online engagement in investigative reporting, including examples of successful campaigns and resources for journalists.",
+  "keywords": ["social networking", "investigative reporting", "data mapping", "online engagement", "broadcast journalism"]
+}
+```

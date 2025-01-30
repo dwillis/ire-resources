@@ -1,0 +1,54 @@
+<think>
+Okay, so I need to create a tipsheet based on an Investigative Reporters and Editors (IRE) conference session. The user provided a lot of slides from what seems like a presentation about data visualization and chart literacy.
+
+First, I'll start by reading through the content carefully. It starts with the question "Which chart should I use, and why?" and provides a link to bit.ly/nicar19-charts. That makes me think this is from the NICAR conference in 2019 because of the URL.
+
+The slides emphasize why data visualization matters, mentioning that humans are visual creatures and that charts can tell stories better than words alone. It differentiates between qualitative and quantitative data with examples like types of Girl Scout cookies (qualitative) versus the number of Samoas (quantitative). 
+
+There's a section on cross-sectional vs longitudinal data, which relates to how data is measured over time or at a single point. The importance of understanding data relationships is stressed, and there are tips on when to use maps effectively, such as when location is critical but cautioning against using them just for the sake of it.
+
+The presentation also includes examples from news outlets like Fox News, NYT, and Tampa Bay Times, showing how they used data effectively. It ends with a list of authors from Reuters, Philadelphia Inquirer, LA Times, and NYT.
+
+So, I need to structure this into a JSON object with specific keys: id, authors, conference, year, title, description, keywords. The ID is 5758. Authors are listed with their names, emails, and affiliations. Since the provided text only mentions names and affiliations but no emails, those will be null.
+
+The conference is NICAR because of the URL, and the year is 2019 as inferred from "NICAR19." The title can be derived from the main topic, which seems to be about choosing the right chart for data visualization. 
+
+For the description, I'll need a concise summary: something like how to choose appropriate charts based on data types and relationships, emphasizing storytelling through visuals.
+
+Keywords should include terms like "data visualization," "chart literacy," "qualitative data," "quantitative data," and "storytelling." Keeping it under five, these seem relevant.
+
+Now, putting this all together into the JSON structure as specified. I'll make sure each key is in quotes and that the authors array correctly lists each person with their details.
+</think>
+
+```json
+{
+  "id": "5758",
+  "authors": [
+    {
+      "name": "Ashlyn Still",
+      "email": null,
+      "affiliation": "Reuters"
+    },
+    {
+      "name": "Nathaniel Lash",
+      "email": null,
+      "affiliation": "Philadelphia Inquirer"
+    },
+    {
+      "name": "Casey Miller",
+      "email": null,
+      "affiliation": "Los Angeles Times"
+    },
+    {
+      "name": "Jasmine Lee",
+      "email": null,
+      "affiliation": "New York Times"
+    }
+  ],
+  "conference": "NICAR",
+  "year": "2019",
+  "title": "Which Chart Should I Use, and Why?",
+  "description": "A session on choosing appropriate charts for different types of data and effectively communicating insights through visualization.",
+  "keywords": ["data visualization", "chart literacy", "qualitative data", "quantitative data", "storytelling"]
+}
+```

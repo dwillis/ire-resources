@@ -1,0 +1,39 @@
+<think>
+Alright, let's tackle this query. So the user has provided a tipsheet from an Investigative Reporters and Editors (IRE) conference titled "Covering Nonprofits through back doors" by Jay Perkins. They want me to create a JSON object with specific keys: id, authors, conference, year, title, description, keywords.
+
+First, I need to parse the input correctly. The tipsheet starts with the title and author name, so that's straightforward for the "title" and "authors" fields. Since there's no email or affiliation provided for Jay Perkins, those will be null.
+
+Next, identifying the conference. Given the context and content, it's safe to assume this is from an IRE conference, even though the text doesn't explicitly mention the year. So the "conference" key will be "IRE", and since there's no specific year mentioned, that field will be "Not Listed".
+
+Now, the description needs to be a concise summary of one or two sentences in simple language. The tipsheet focuses on how nonprofits can be investigated using financial records and governmental documents, so I'll craft it to reflect that.
+
+For keywords, I need up to five relevant terms. Nonprofits are the main subject, so "nonprofits" is first. Financial records and governmental documents are key tools discussed, so those are next. Investigative reporting ties into the conference context, making it a good keyword. Salaries in nonprofits can be a point of investigation, so that's another term. Performance evaluation is also mentioned as important, so I'll include that.
+
+I have to ensure all keys and values are enclosed in quotes and that the JSON structure is correct. No markdown should be present since they specified a plain text response.
+
+Putting it all together, I make sure each field aligns with the user's instructions, especially ensuring no made-up data and correctly handling missing information by setting those fields to null.
+</think>
+
+```json
+{
+  "id": "T2296",
+  "authors": [
+    {
+      "name": "Jay Perkins",
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "A Teaching Tool: Covering Nonprofits through back doors",
+  "description": "This tipsheet explores how to investigate nonprofits by using financial records and governmental documents, emphasizing the importance of transparency and accountability in nonprofit operations.",
+  "keywords": [
+    "nonprofits",
+    "financial records",
+    "governmental documents",
+    "investigative reporting",
+    "salaries"
+  ]
+}
+```

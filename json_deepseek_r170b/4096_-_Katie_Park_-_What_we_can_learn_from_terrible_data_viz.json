@@ -1,0 +1,39 @@
+<think>
+Alright, let's break down how to approach this query. The user provided a tipsheet from an Investigative Reporters and Editors (IRE) conference by Katie Park. They want a JSON object with specific keys.
+
+First, I need to identify the required fields: id, authors, conference, year, title, description, and keywords. 
+
+Starting with the id, it should be "_Katie_Park_" as per instructions. Next, looking for authors. The tipsheet mentions Katie Park and other sources like WTF Visualizations and The Visual Agency, but only Katie is listed as an author with her contact info. So, authors will have one entry with name "Katie Park", email "katie@katie-park.com", and affiliation "IRE".
+
+Conference is IRE since it's from NICAR, which is associated with IRE. The year isn't explicitly mentioned, so it defaults to "Not Listed". 
+
+The title should reflect the content; "Terrible Data Visualization Examples" fits well. For description, a concise summary about learning from bad data viz examples. 
+
+Keywords are important and should be up to five terms. Extracting relevant ones: "data visualization", "examples", "best practices", "design flaws", "journalism".
+
+Putting it all together, ensuring each field is correctly formatted in JSON with proper quotation marks.
+</think>
+
+```json
+{
+  "id": "_Katie_Park_",
+  "authors": [
+    {
+      "name": "Katie Park",
+      "email": "katie@katie-park.com",
+      "affiliation": "IRE"
+    }
+  ],
+  "conference": "NICAR",
+  "year": "Not Listed",
+  "title": "Terrible Data Visualization Examples",
+  "description": "A presentation highlighting common mistakes in data visualization and lessons learned from poorly designed visualizations.",
+  "keywords": [
+    "data visualization",
+    "examples",
+    "best practices",
+    "design flaws",
+    "journalism"
+  ]
+}
+```

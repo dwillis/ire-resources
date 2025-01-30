@@ -1,0 +1,54 @@
+To create a JSON object as per your specifications from an input that isn't directly provided here, I'll guide you through a generic approach to how this could be achieved using Python, assuming the input is some form of text or data structure that needs parsing.
+
+Let's say we have the following input details (note: actual details are not provided in your question, so these are hypothetical examples):
+- **ID**: 2852
+- **Authors**:
+  - Author 1: Name = John Doe, Email = johndoe@example.com, Affiliation = New York Times
+  - Author 2: Name = null, Email = janedoe@email.com, Affiliation = BBC News
+- **Conference**: IRE
+- **Year**: 2023
+- **Title**: Investigative Journalism Awards
+- **Description**: This event honors outstanding investigative reporting. It is a premier event for journalists.
+- **Keywords**: Investigative Reporting, Journalism Awards
+
+Here's how you could construct the JSON object in Python:
+
+```python
+import json
+
+# Hypothetical input data
+id_value = 2852
+authors = [
+    {"name": "John Doe", "email": "johndoe@example.com", "affiliation": "New York Times"},
+    {"name": None, "email": "janedoe@email.com", "affiliation": "BBC News"}
+]
+conference = "IRE"
+year = 2023
+title = "Investigative Journalism Awards"
+description = "This event honors outstanding investigative reporting. It is a premier event for journalists."
+keywords = ["Investigative Reporting", "Journalism Awards"]
+
+# Construct the JSON object
+json_object = {
+    "id": id_value,
+    "authors": authors,
+    "conference": conference,
+    "year": year,
+    "title": title,
+    "description": description,
+    "keywords": keywords
+}
+
+# Convert to JSON string and print
+print(json.dumps(json_object, indent=4))
+```
+
+However, since the actual input text or data structure isn't provided in your question, I'll demonstrate a more generic approach that could be adapted based on how you're parsing the input:
+
+1. **Parse Input**: Depending on the format (e.g., text file, web scraping output), parse it to extract necessary information.
+2. **Construct JSON Object**: Use Python dictionaries to create the structure of your JSON object, populating fields with parsed data.
+3. **Convert to JSON String**: Use `json.dumps()` to convert your dictionary into a JSON-formatted string.
+
+For real-world parsing tasks (e.g., extracting names from text), you might use libraries like `re` for regular expressions or more advanced natural language processing (NLP) tools such as spaCy, depending on the complexity and specificity of your task. 
+
+Given the lack of specific input details in your question, this answer provides a general framework that would need to be adapted based on how your data is structured and presented.

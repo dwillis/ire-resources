@@ -1,0 +1,40 @@
+<think>
+Okay, I'm trying to figure out how to create this JSON object based on the user's query. Let me break down what they're asking for.
+
+First, the user provided a tipsheet from an Investigative Reporters and Editors (IRE) conference, specifically CAR 2013. The presentation is titled "@RWD + Dataviz: Friends or Frenemies?" by Miranda Mulligan and Pete Karl II. My task is to convert this information into a JSON object with specific keys.
+
+Looking at the structure they want:
+
+- id: Should be 3847 as per their instruction.
+- authors: A list where each author has name, email, and affiliation. I notice that the presentation mentions Miranda Mulligan (@jmm) affiliated with Knight Lab and Pete Karl II (@steyblind) from Upstatement. There are no emails provided, so those will be null.
+- conference: Since it's CAR 2013, which is part of IRE, the conference should be "IRE".
+- year: Clearly listed as 2013.
+- title: The exact title given is "@RWD + Dataviz: Friends or Frenemies?"
+- description: Needs to be a concise summary. From the slides, they discuss the challenges and synergy between responsive web design (RWD) and data visualization in mobile contexts. So I'll write that it explores the relationship and strategies for mobile storytelling.
+- keywords: They mentioned RWD, Dataviz, Mobile Design, Storytelling, and Responsive Web Design as key terms.
+
+I need to make sure all values are in English and properly quoted. Also, ensure that the JSON structure is correct without any markdown formatting as per their request. Let me assemble this step by step to avoid missing any fields.
+</think>
+
+```json
+{
+  "id": 3847,
+  "authors": [
+    {
+      "name": "Miranda Mulligan",
+      "email": null,
+      "affiliation": "Knight Lab"
+    },
+    {
+      "name": "Pete Karl II",
+      "email": null,
+      "affiliation": "Upstatement"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2013,
+  "title": "@RWD + Dataviz: Friends or Frenemies?",
+  "description": "This presentation explores the relationship between responsive web design (RWD) and data visualization, discussing their synergies and challenges in mobile storytelling.",
+  "keywords": ["RWD", "Dataviz", "Mobile Design", "Storytelling", "Responsive Web Design"]
+}
+```

@@ -1,0 +1,65 @@
+<think>
+Alright, let's tackle this problem step by step. The user has provided a query that includes an IRE tipsheet from June 2006 titled "Walking the Graveyards." They want me to create a JSON object with specific keys: id, authors, conference, year, title, description, keywords.
+
+First, I'll note the ID should be T2716 as given. The conference is clearly IRE since it's an Investigative Reporters and Editors conference tipsheet. The year is 2006 because it's listed in the header.
+
+Next, for the authors, I need to extract each name along with their email and affiliation. Looking at the contact info:
+
+- Ruth Teichroeb from Seattle Post-Intelligencer with her email and phone.
+- Bruce Shapiro from Dart Center for Journalism and Trauma.
+- Miles Moffeit from The Denver Post.
+- Paul McEnroe from Minneapolis Star-Tribune.
+- Scott North from Everett Herald.
+
+I'll structure each author as an object within the authors array, ensuring to include their name, email if available, and affiliation. If emails are missing like in Bruce Shapiro's case, I'll leave it null.
+
+The title is straightforward: "Walking the Graveyards." The description needs to be a concise summary of the tipsheet. Reading through, it seems the main points are about empathetic reporting, building trust with victims, and maintaining personal resilience. So I'll condense that into one or two sentences.
+
+For keywords, I need up to five terms excluding the conference and authors. Relevant words from the content include "investigative journalism," "victims," "trauma," "empathy," and "resilience."
+
+Putting it all together, I structure each key with appropriate values, making sure to handle cases where emails or affiliations might be missing by setting them to null.
+</think>
+
+```json
+{
+  "id": "T2716",
+  "authors": [
+    {
+      "name": "Ruth Teichroeb",
+      "email": "ruthteichroeb@seattlepi.com",
+      "affiliation": "Seattle Post-Intelligencer"
+    },
+    {
+      "name": "Bruce Shapiro",
+      "email": "bruce.shapiro@dartcenter.org",
+      "affiliation": "Dart Center for Journalism and Trauma"
+    },
+    {
+      "name": "Miles Moffeit",
+      "email": "mmoffeit@denverpost.com",
+      "affiliation": "The Denver Post"
+    },
+    {
+      "name": "Paul McEnroe",
+      "email": "pmcenroe@startribune.com",
+      "affiliation": "Minneapolis Star-Tribune"
+    },
+    {
+      "name": "Scott North",
+      "email": "snorth@herald.com",
+      "affiliation": "Everett Herald"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2006,
+  "title": "Walking the Graveyards",
+  "description": "This tipsheet emphasizes the importance of emotional connection and empathy in investigative reporting, particularly when dealing with victims and traumatic stories. It provides guidance on building trust with sources and maintaining personal resilience.",
+  "keywords": [
+    "investigative journalism",
+    "victims",
+    "trauma",
+    "empathy",
+    "resilience"
+  ]
+}
+```

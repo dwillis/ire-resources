@@ -1,0 +1,43 @@
+<think>
+Alright, so I need to create a JSON object based on this tipsheet from an IRE conference. The user provided specific instructions with certain keys: id, authors, conference, year, title, description, keywords.
+
+First, the id is straightforward—given as T2405.
+
+Next, the authors section. Looking at the text, James Neff is clearly mentioned multiple times, including his email and affiliation with The Seattle Times. So I'll list him with his details. There's no other author mentioned, so the authors array will only have one entry.
+
+For conference, it's explicitly stated as "IRE National Conference", so that's easy.
+
+The year is given in the date June 2-5, 2005, so year should be 2005.
+
+Title of the tipsheet is "Crafting the Investigative Narrative".
+
+Description needs to be a concise summary. The tipsheet discusses how to write investigative serial narratives, including elements like plot and character development. So I'll summarize that in one or two sentences.
+
+Keywords should be up to five terms. Looking through the text, relevant terms include "investigative narrative", "serial storytelling", "plot development", "character development", "journalism techniques". These capture the essence without overlapping too much with each other.
+
+I need to make sure all values are in English and properly quoted. Also, ensure that if any information isn't present, it's set to null. In this case, everything seems covered except for maybe other authors or missing info, but since James Neff is the only one mentioned, others aren't needed.
+</think>
+
+```json
+{
+  "id": "T2405",
+  "authors": [
+    {
+      "name": "James Neff",
+      "email": "jneff@seattletimes.com",
+      "affiliation": "The Seattle Times"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2005,
+  "title": "CRAFTING THE INVESTIGATIVE NARRATIVE",
+  "description": "Tips and strategies for writing investigative serial narratives, including story forms, character development, and maintaining reader interest.",
+  "keywords": [
+    "investigative narrative",
+    "serial storytelling",
+    "plot development",
+    "character development",
+    "journalism techniques"
+  ]
+}
+```

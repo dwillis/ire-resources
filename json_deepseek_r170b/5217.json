@@ -1,0 +1,44 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has given me specific instructions about what each key should contain.
+
+First, I'll look at the structure they want: id, authors, conference, year, title, description, keywords. They specified that the id is 5217, so that's straightforward.
+
+Next, for the authors, it's a list where each element has name, email, and affiliation. The user mentioned not to make up names; if none are listed, leave name as null. Email and affiliation can be null too, but if a news organization is mentioned, use that as the affiliation.
+
+Looking at the provided tipsheet, I see Jessica Pucci (@jessica_pucci) and Cronkite News (@cronkitenews). So, Jessica's affiliation should be Cronkite News since it's associated with her. There's no email listed for her, so email remains null.
+
+The conference is clearly stated as IRE 2017, so the conference key will be "IRE" and year will be 2017.
+
+The title of the tipsheet is "Social Media: Before, During & After the Investigation," which I can extract from the beginning.
+
+For the description, it needs to be a concise summary. The tipsheet talks about using social media during different phases of an investigation—before to identify audience and content, during to engage and create conversation, and after to keep the discussion alive. So, the description should capture that in 1-2 sentences without getting too detailed.
+
+Keywords are up to five terms, excluding conference and authors. From the content, relevant keywords might be "social media," "investigation phases," "audience engagement," "content strategy." I'll make sure they're all in lowercase as per standard practice.
+
+I need to ensure all values are in English unless specified otherwise, which they are here. Also, every key and string value should be enclosed in double quotes, so I have to format the JSON correctly without any markdown.
+
+Putting it all together, each part aligns with the user's instructions. I think that covers everything required. Let me structure it properly.
+</think>
+
+```json
+{
+  "id": 5217,
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": "Cronkite News"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2017,
+  "title": "Social Media: Before, During & After the Investigation",
+  "description": "A tipsheet discussing strategies for using social media before, during, and after an investigation to engage audiences and amplify content.",
+  "keywords": [
+    "social media",
+    "investigation",
+    "audience engagement",
+    "content strategy"
+  ]
+}
+```

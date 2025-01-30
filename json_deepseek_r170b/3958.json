@@ -1,0 +1,60 @@
+<think>
+Alright, so I've got this query from the user asking me to create a JSON object based on some tipsheet from an Investigative Reporters and Editors (IRE) conference. Let me break down what they need.
+
+First, looking at their input, it's a detailed tipsheet titled "INVESTIGATING BREAKING NEWS." There are three authors listed with their contact info and affiliations. The content is quite structured, with various sections like "STORY BREAKS – NOW WHAT?" and "HELPFUL RESOURCES." Each section has bullet points that provide actionable advice for journalists covering breaking news.
+
+The user wants me to convert this into a JSON object with specific keys: id, authors, conference, year, title, description, keywords. They mentioned that the id should be 3958. For the authors, I need to list each one's name, email, and affiliation. If any of those details aren't present, I can leave them as null.
+
+I notice that all three authors have their emails and affiliations provided, so I can fill those in without issues. The conference is clearly an IRE event since the tipsheet mentions "Investigative Reporters and Editors conferences." However, there's no specific year mentioned, so I'll set the year to "Not Listed."
+
+Next, the title is straightforward: "INVESTIGATING BREAKING NEWS." For the description, it needs to be a concise summary. The user provided an example that says it's about strategies for covering breaking news, including sources and tools. That works well.
+
+Now, keywords are up to five terms excluding the conference and authors. From the content, relevant keywords could be "breaking news," "investigation," "journalism resources," "misinformation," and "public records." These capture the essence of the tipsheet without overlapping with the excluded terms.
+
+I also need to ensure that all values are in English unless the original text is different, which it isn't here. Everything should be enclosed in quotes as per JSON standards. 
+
+Let me double-check each field to make sure I haven't missed anything:
+- id: 3958 – correct.
+- authors: Each has name, email, affiliation filled correctly.
+- conference: "IRE" since it's from an IRE event.
+- year: "Not Listed" as no specific year is given.
+- title: Correctly taken from the input.
+- description: Summarized in two sentences.
+- keywords: Five relevant terms without duplicates or excluded words.
+
+I think that covers everything. Time to structure this into a JSON object as per the user's instructions.
+</think>
+
+```json
+{
+  "id": 3958,
+  "authors": [
+    {
+      "name": "Marshall Zelinger",
+      "email": "marshall@thedenverchannel.com",
+      "affiliation": "The Denver Channel"
+    },
+    {
+      "name": "Amanda Kost",
+      "email": "amanda.kost@kmgh.com",
+      "affiliation": "KMGH"
+    },
+    {
+      "name": "Mike Beaudet",
+      "email": "mike.beaudet@foxtv.com",
+      "affiliation": "Fox TV"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "INVESTIGATING BREAKING NEWS",
+  "description": "A tipsheet providing strategies for journalists covering breaking news, including how to gather information, verify sources, and avoid misinformation.",
+  "keywords": [
+    "breaking news",
+    "investigation",
+    "journalism resources",
+    "misinformation",
+    "public records"
+  ]
+}
+```

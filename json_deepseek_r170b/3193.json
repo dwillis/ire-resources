@@ -1,0 +1,46 @@
+<think>
+Alright, I need to create a JSON object based on the given tipsheet from an Investigative Reporters and Editors (IRE) conference, specifically NICAR. The user has provided detailed information about the session titled "From Database to Story – A Step-by-step Guide" by Phil Harbord and David McKie.
+
+First, I'll identify the required keys: id, authors, conference, year, title, description, keywords.
+
+- **id**: Given as 3193.
+- **authors**: Need to list each author with name, email, affiliation. Both Phil Harbord and David McKie are listed with their emails and affiliations (CBC). I'll structure them as an array of objects.
+- **conference**: The session is part of NICAR, so the value will be "NICAR".
+- **year**: The input doesn't mention a specific year, so it defaults to "Not Listed".
+- **title**: Taken directly from the tipsheet title.
+- **description**: A concise summary. I'll focus on the main premise about non-traditional industries and the data handling steps mentioned.
+- **keywords**: Extract relevant terms like OSHA data, workplace safety, NAICS codes, inspections, rates calculation.
+
+I need to ensure all values are in English and properly enclosed in quotes. The description must be a brief summary without markdown. I'll also make sure not to include any extra information beyond the specified keys.
+
+Now, structuring this into JSON format with proper syntax.
+</think>
+
+```json
+{
+  "id": 3193,
+  "authors": [
+    {
+      "name": "Phil Harbord",
+      "email": "pharbord@rogers.com",
+      "affiliation": "CBC"
+    },
+    {
+      "name": "David McKie",
+      "email": "david_mckie@cbc.ca",
+      "affiliation": "CBC Investigative Unit"
+    }
+  ],
+  "conference": "NICAR",
+  "year": "Not Listed",
+  "title": "From Database to Story – A Step-by-step Guide",
+  "description": "This tipsheet guides journalists on using OSHA data to investigate workplace safety inspections, focusing on non-traditional industries like healthcare and education. It explains how to clean, analyze, and standardize data for storytelling.",
+  "keywords": [
+    "OSHA data",
+    "workplace safety",
+    "NAICS codes",
+    "inspections",
+    "rates calculation"
+  ]
+}
+```

@@ -1,0 +1,46 @@
+<think>
+Okay, I'm trying to figure out how to change the axis labels in my ggplot2 chart because right now they're showing up in scientific notation. I remember that ggplot2 usually defaults to certain formatting, but I don't recall the exact function or arguments to modify this. Let me think about what steps I can take.
+
+First, I know that in ggplot2, you can adjust various aspects of a plot using different themes and options. Maybe there's an option within the theme() function that controls the axis labels' format. Alternatively, perhaps there are specific functions like labs() or something else that deal with labels.
+
+I think labs() is used to set the titles for axes and the plot itself. So maybe I can use labs(x = "New X Label", y = "New Y Label") within my ggplot code. But wait, that's just for changing the text of the labels, not necessarily the formatting like scientific notation.
+
+For the format, especially avoiding scientific notation, perhaps there's an argument in scale_x_continuous() or scale_y_continuous(). I remember something about using breaks and labels to control how numbers are displayed. Maybe there's a way to specify that the labels should be written out fully without exponents.
+
+Wait, yes! There might be a function like format_number() from the scales package that can help with this. So if I load the scales library, I could use something like scale_x_continuous(labels = number_format()) to prevent scientific notation.
+
+Putting it all together, my approach would be:
+
+1. Use labs() to set the desired axis labels.
+2. Use scale_x_continuous() and/or scale_y_continuous() with appropriate arguments to format the numbers without scientific notation.
+
+I think this should work, but I'm not entirely sure about the exact syntax or whether I need additional packages. Maybe I should look up some examples online to confirm how these functions are used together. That way, I can ensure that my code correctly changes both the labels and their formatting.
+</think>
+
+To change axis labels in ggplot2 without scientific notation, follow these steps:
+
+1. **Change Axis Titles**:
+   Use the `labs()` function within your ggplot chain to set new titles for the x and y axes.
+
+   ```r
+   p + labs(x = "New X Label", y = "New Y Label")
+   ```
+
+2. **Adjust Number Formatting on Axes**:
+   To prevent scientific notation, use `scale_x_continuous()` or `scale_y_continuous()`. The `labels` argument can be set to a function that formats numbers as desired.
+
+   ```r
+   p + scale_x_continuous(labels = function(x) format(x, scientific = FALSE))
+   ```
+
+3. **Combine Both Adjustments**:
+   Modify both the labels and their formatting in your plot.
+
+   ```r
+   ggplot(df, aes(x, y)) +
+     geom_point() +
+     labs(x = "New X Label", y = "New Y Label") +
+     scale_x_continuous(labels = function(x) format(x, scientific = FALSE))
+   ```
+
+This approach ensures both the axis titles and their numerical formats are correctly adjusted.

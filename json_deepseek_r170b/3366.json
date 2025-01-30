@@ -1,0 +1,49 @@
+<think>
+Okay, so I'm trying to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has given me specific instructions on how to structure this JSON with certain keys: id, authors, conference, year, title, description, keywords.
+
+First, I need to extract the necessary information from the input text. Let's break down what's provided:
+
+- The title of the tipsheet is "Social media tools for journalists."
+- The author mentioned is Doug Haddix, who is affiliated with both IRE and NICAR. Since IRE is one of the allowed conferences, that will be useful.
+- There are a bunch of statistics about Facebook and Twitter usage, which probably aren't needed for the JSON but give context to the content.
+- The possible uses of social media for journalists are listed, such as finding sources, getting story ideas, etc. This will help in crafting the description.
+
+Now, according to the instructions:
+
+1. **id** should be 3366. That's straightforward.
+2. **authors** is a list where each entry has name, email, and affiliation. Since only Doug Haddix is mentioned, his name goes here. Email isn't provided, so it will be null. Affiliation is IRE & NICAR as stated.
+3. **conference**: It says the tipsheet is from an IRE conference, so that's clear.
+4. **year**: The input doesn't mention a specific year, so it should be "Not Listed."
+5. **title**: Directly taken from the first line, which is "Social media tools for journalists."
+6. **description**: Needs to be 1-2 sentences summarizing the content. I'll note that the tipsheet discusses using social media platforms like Facebook and Twitter for journalism purposes.
+7. **keywords**: Up to five terms excluding conference and authors. So, "social media," "journalists," "Facebook," "Twitter," and maybe "tools" as they're relevant.
+
+I should ensure all values are in English, enclosed in quotes, and the JSON structure is correct without any markdown.
+
+Wait, I need to make sure that for each author entry, if there's no email or affiliation, it's set to null. Since Doug Haddix only has an affiliation, email remains null.
+
+Putting it all together, I'll structure the JSON with these considerations in mind.
+</think>
+
+```json
+{
+  "id": 3366,
+  "authors": [
+    {
+      "name": "Doug Haddix",
+      "email": null,
+      "affiliation": "IRE & NICAR"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Social media tools for journalists",
+  "description": "This tipsheet discusses the use of social media platforms like Facebook and Twitter for journalism purposes, including finding sources and monitoring trends.",
+  "keywords": [
+    "social media",
+    "journalists",
+    "Facebook",
+    "Twitter"
+  ]
+}
+```

@@ -1,0 +1,49 @@
+<think>
+Okay, so I need to create a JSON object based on this query. Let me break down what's being asked here.
+
+First, the user provided a tipsheet from an Investigative Reporters and Editors (IRE) conference about digging into non-profits. The speaker is Brad Racino from inewsource. There are several slides with information on where to find 990 forms, supplemental filings, checking exempt status, knowing the different IRS forms, and a mention of non-profit shell games.
+
+The user's instructions specify that I must produce only a JSON object describing this tipsheet. The keys required are id, authors, conference, year, title, description, keywords. Each has specific formatting rules.
+
+Starting with id: it should be 5640 as per the example.
+
+Authors is a list where each entry has name, email, affiliation. Since Brad Racino's email isn't provided, I'll set it to null. His affiliation is inewsource, so that's clear.
+
+Conference: It says "IRE" because that's the conference mentioned.
+
+Year: The original didn't specify the year, so it should be "Not Listed".
+
+Title: The title from the tipsheet is "Digging into Nonprofits".
+
+Description needs to be a concise summary. I'll mention that it covers resources and methods for investigating non-profits, including 990 forms and government filings.
+
+Keywords are up to five terms. From the content, relevant keywords include "nonprofits", "990 forms", "IRS", "financial statements", "investigative reporting".
+
+I need to make sure all values are in English and keys are enclosed in quotes. Also, avoid making up any information; stick strictly to what's provided.
+
+Double-checking the example response, it looks like they included everything correctly. I should follow that structure closely.
+</think>
+
+```json
+{
+  "id": 5640,
+  "authors": [
+    {
+      "name": "Brad Racino",
+      "email": null,
+      "affiliation": "inewsource"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Digging into Nonprofits",
+  "description": "This tipsheet provides resources and methods for investigating nonprofits, including where to find tax filings like Form 990, how to check exempt status, and supplementary government filings.",
+  "keywords": [
+    "nonprofits",
+    "Form 990",
+    "IRS",
+    "financial statements",
+    "investigative reporting"
+  ]
+}
+```

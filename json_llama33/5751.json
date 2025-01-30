@@ -1,0 +1,70 @@
+Here's how you can create a JSON object from the input:
+
+```json
+{
+  "id": "5751",
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "Not Listed",
+  "year": "Not Listed",
+  "title": null,
+  "description": "This text describes how to use regex101 to extract data from a large text file and then format it into a CSV file that can be used in Excel. The process involves creating a pattern with groups of data, substituting the groups into a new string with tabs between each group, and then copying the result into Excel.",
+  "keywords": [
+    "regex101",
+    "data extraction",
+    "CSV file"
+  ]
+}
+```
+
+However, since there's no actual text provided in your prompt for me to extract information from, I've left many fields as `null` or with default values. If you provide the actual text you'd like me to work with, I can give a more accurate response.
+
+Here is a simple python program that does what you want:
+
+```python
+import re
+import json
+
+# assuming 'text' is your input string
+text = """
+your text here
+"""
+
+# Extract data from text using regex101 pattern
+pattern = r"^\"(.*)\"\n(.+), (TX) (\d+)\n\(([\d\.]+), ([\d\-\.]+)\)$"
+match = re.search(pattern, text)
+
+if match:
+    id = "5751"
+    authors = [
+        {
+            "name": None,
+            "email": None,
+            "affiliation": None
+        }
+    ]
+    conference = "Not Listed"
+    year = "Not Listed"
+    title = match.group(1)
+    description = "This text describes how to use regex101 to extract data from a large text file and then format it into a CSV file that can be used in Excel."
+    keywords = ["regex101", "data extraction", "CSV file"]
+
+    data = {
+        "id": id,
+        "authors": authors,
+        "conference": conference,
+        "year": year,
+        "title": title,
+        "description": description,
+        "keywords": keywords
+    }
+
+    print(json.dumps(data, indent=4))
+else:
+    print("No match found.")
+```

@@ -1,0 +1,47 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from Joe Yerardi's presentation at the IRE 2015 conference in Philadelphia. Let me break this down step by step.
+
+First, understanding what each part of the query requires:
+
+- **id**: Given as 4530.
+- **authors**: A list where each author has name, email, and affiliation. The tipsheet only mentions Joe Yerardi without an explicit email or affiliation. So his entry will have name: "Joe Yerardi", email: null, affiliation: "inewsource" since that's the news organization he's associated with.
+- **conference**: Clearly stated as IRE 2015, so conference is "IRE".
+- **year**: The year is 2015, as given in the text.
+- **title**: The title of the tipsheet isn't explicitly mentioned, but from the content, it's about using Google Fusion Tables. So a suitable title would be "Using Google Fusion Tables".
+- **description**: A concise summary. The tipsheet teaches journalists to create interactive maps with Fusion Tables without coding, so the description should reflect that.
+- **keywords**: Up to five relevant terms. From the content, keywords could be "Google Fusion Tables", "Interactive Maps", "Journalism Tools", "Data Visualization", and "No Coding".
+
+Now, I'll structure this information into a JSON object ensuring all keys are in quotes and values appropriately formatted.
+
+I need to make sure that:
+- The authors array only includes Joe Yerardi since he's the only one mentioned.
+- Emails and affiliations are null where not provided, except for affiliation which is "inewsource" as it's the news org mentioned.
+- The description is a brief summary in simple language.
+- Keywords are relevant and within five.
+
+Putting it all together, I'll draft the JSON object accordingly.
+</think>
+
+```json
+{
+  "id": 4530,
+  "authors": [
+    {
+      "name": "Joe Yerardi",
+      "email": null,
+      "affiliation": "inewsource"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2015,
+  "title": "Using Google Fusion Tables",
+  "description": "A guide on using Google Fusion Tables to create interactive maps for journalism without needing to code.",
+  "keywords": [
+    "Google Fusion Tables",
+    "Interactive Maps",
+    "Journalism Tools",
+    "Data Visualization",
+    "No Coding"
+  ]
+}
+```

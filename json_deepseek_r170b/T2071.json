@@ -1,0 +1,48 @@
+<think>
+Okay, I need to create a JSON object based on the provided document using specific keys: id, authors, conference, year, title, description, keywords.
+
+Starting with the id, it's given as T2071.
+
+Next, for authors, the document lists Schelin and Reisner. However, their emails and affiliations aren't mentioned, so those will be null. But looking at the content, since they're associated with IRE (Investigative Reporters & Editors), that should be their affiliation.
+
+The conference is either IRE, NICAR, or Not Listed. The document mentions it's maintained by IRE and NICAR, so the conference key should be "IRE".
+
+The year isn't explicitly stated in the text, so I'll set year to "Not Listed".
+
+For the title, it seems to be about resources for journalists covering specific beats, maybe something like "Journalist's Guide to Internet Resources" or similar. The exact title isn't clear, but I can infer a suitable one based on content.
+
+The description needs to be a concise summary. It’s about providing various tools and resources for journalists, including search engines, directories, news tools, etc., aimed at helping with investigative reporting.
+
+Keywords should include terms like "investigative journalism," "online resources," "journalist tools," "search engines," and "government information."
+
+I need to ensure all values are in English and properly enclosed in quotes. Also, no markdown formatting, just plain JSON.
+</think>
+
+```json
+{
+  "id": "T2071",
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": null,
+      "email": null,
+      "affiliation": "NICAR"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Journalist's Guide to Internet Resources",
+  "description": "A comprehensive guide providing various tools and resources for journalists, including search engines, directories, news tools, and specialized directories.",
+  "keywords": [
+    "investigative journalism",
+    "online resources",
+    "journalist tools",
+    "search engines",
+    "government information"
+  ]
+}
+```

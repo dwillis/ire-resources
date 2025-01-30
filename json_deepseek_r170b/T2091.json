@@ -1,0 +1,41 @@
+<think>
+Okay, so I need to create a JSON object based on the given tipsheet from an IRE conference. Let me start by understanding the structure and content of the input.
+
+First, the tipsheet is titled "Deadline CAR / IRE 2004 conference" presented by Ziva Branstetter. The main sections are general tips for handling databases, specific database resources, and information about what's on the Tulsa World’s intranet using Uniquery. 
+
+The user wants a JSON object with keys: id, authors, conference, year, title, description, keywords.
+
+- **id**: Given as T2091.
+- **authors**: Ziva Branstetter is listed with her contact info and affiliation. So the author object will have name "Ziva Branstetter", email "ziva.branstetter@tulsaworld.com", and affiliation "Tulsa World Projects Editor".
+- **conference**: Since it's from an IRE conference, this should be "IRE".
+- **year**: The year is clearly 2004.
+- **title**: The title is "Deadline CAR / IRE 2004 conference".
+- **description**: Need a concise summary. The tipsheet provides advice on managing databases for investigative journalism, including data gathering, resources, and tools like Uniquery. So maybe something like: "A tipsheet providing advice on managing databases for investigative reporting, including data acquisition strategies, resource lists, and tool recommendations."
+- **keywords**: Should include relevant terms from the content without including the conference or authors. Looking at the sections, keywords could be "databases", "investigative journalism", "data management", "Uniquery", "journalism resources".
+
+Now I'll structure all these into a JSON object.
+</think>
+
+```json
+{
+  "id": "T2091",
+  "authors": [
+    {
+      "name": "Ziva Branstetter",
+      "email": "ziva.branstetter@tulsaworld.com",
+      "affiliation": "Tulsa World Projects Editor"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2004,
+  "title": "Deadline CAR / IRE 2004 conference",
+  "description": "A tipsheet providing advice on managing databases for investigative reporting, including data acquisition strategies, resource lists, and tool recommendations.",
+  "keywords": [
+    "databases",
+    "investigative journalism",
+    "data management",
+    "Uniquery",
+    "journalism resources"
+  ]
+}
+```

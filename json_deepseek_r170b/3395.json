@@ -1,0 +1,66 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from the Investigative Reporters and Editors (IRE) conference. Let me go through this step by step.
+
+First, the id is given as 3395, so that's straightforward. Next, the authors section requires some attention. Looking at the text, I see Matthew Haggman listed with his email and affiliation as The Miami Herald. There are other reporters mentioned like Jack Dolan, Rob Barry, Mike Sallah, and Chuck Fadely, but none of them have emails or affiliations explicitly stated. So for each author, I'll include their name if available, set email and affiliation to null unless specified.
+
+The conference is clearly the 2010 IRE National Conference in Las Vegas, so the conference key will be "IRE" and the year is 2010. The title of the tipsheet is about exposing felons in the home-loan industry and insurance kickbacks, which I can condense into a concise title.
+
+For the description, it needs to be a short summary. The main points are that reporters found over 10,000 individuals with criminal histories working in Florida's mortgage industry, leading to regulatory reforms. So I'll phrase that into one or two sentences.
+
+Keywords should be up to five terms. Relevant ones here are "mortgage fraud," "criminal backgrounds," "regulatory failure," and "financial crime." That covers the main aspects without overlapping too much.
+
+I also need to ensure all keys and values are in English and properly quoted. No markdown, just plain JSON structure. Let me double-check each field:
+
+- id: 3395
+- authors: Each with name, email, affiliation. Only Matthew has all three.
+- conference: "IRE"
+- year: 2010
+- title: Concise version of the main topic.
+- description: Brief summary.
+- keywords: Four relevant terms.
+
+I think that covers everything. Now I'll structure it accordingly.
+</think>
+
+```json
+{
+  "id": 3395,
+  "authors": [
+    {
+      "name": "Matthew Haggman",
+      "email": "matthew.haggman@mherald.com",
+      "affiliation": "The Miami Herald"
+    },
+    {
+      "name": "Jack Dolan",
+      "email": null,
+      "affiliation": null
+    },
+    {
+      "name": "Rob Barry",
+      "email": null,
+      "affiliation": null
+    },
+    {
+      "name": "Mike Sallah",
+      "email": null,
+      "affiliation": null
+    },
+    {
+      "name": "Chuck Fadely",
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": 2010,
+  "title": "Exposing Felons in the Home-Loan Industry and Insurance Kickbacks",
+  "description": "Reporters uncovered over 10,000 individuals with criminal histories working in Florida's mortgage industry, leading to significant regulatory reforms.",
+  "keywords": [
+    "mortgage fraud",
+    "criminal backgrounds",
+    "regulatory failure",
+    "financial crime"
+  ]
+}
+```

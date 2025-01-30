@@ -1,0 +1,45 @@
+<think>
+Okay, so I need to create a JSON object based on the given input about an investigative reporting tipsheet from IRE conferences. Let me break down what's needed.
+
+First, the user has provided a Spanish document outlining tips for conducting international investigations by Oscar Corral at the 2007 IRE conference in Phoenix, AZ. They want this information transformed into a JSON object with specific keys: id, authors, conference, year, title, description, keywords.
+
+The ID is given as 3021, so that's straightforward. 
+
+For the authors, it needs to be a list where each element has name, email, and affiliation. The example provided only mentions Oscar Corral without an email or affiliation, so I'll set those to null.
+
+Conference should be "IRE" since it's from their annual conference.
+
+Year is clearly 2007 as mentioned in the text.
+
+Title is given as "Haciendo investigaciones internacionales / Conducting International Investigations". Since the JSON requires English unless the original is different, but the title is bilingual, I'll keep both parts as they are.
+
+Description needs to be a concise summary. The tipsheet covers preparing for international investigations, including research, local assistance, language skills, government contacts, document requests, and cultural considerations. So the description can succinctly mention these points.
+
+Keywords should be up to five terms excluding conference and authors. From the content, relevant keywords could be "international investigations", "investigative reporting", "research techniques", "government contacts", "cultural considerations".
+
+Now, I'll structure all this into a JSON object ensuring proper syntax with quotation marks around keys and string values, and correct data types for lists and nulls.
+</think>
+
+```json
+{
+  "id": 3021,
+  "authors": [
+    {
+      "name": "Oscar Corral",
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": 2007,
+  "title": "Haciendo investigaciones internacionales / Conducting International Investigations",
+  "description": "This tipsheet provides guidance on conducting international investigations, covering preparation, research techniques, local assistance, language skills, government contacts, document requests, and cultural considerations.",
+  "keywords": [
+    "international investigations",
+    "investigative reporting",
+    "research techniques",
+    "government contacts",
+    "cultural considerations"
+  ]
+}
+```

@@ -1,0 +1,36 @@
+<think>
+Alright, let me try to figure out how to approach this query. So, the user provided a detailed tipsheet from an IRE conference presentation by Yang Wang from the Houston Chronicle. The main goal is to convert this into a specific JSON object with certain keys.
+
+First, I'll identify each required key: id, authors, conference, year, title, description, keywords. The id given is 3991_2, so that's straightforward. Next, for authors, there's only one author mentioned, Yang Wang, with an email and affiliation at the Houston Chronicle. Since the email isn't provided, I'll leave it null.
+
+The conference is clearly stated as IRE, so that's set. The year isn't explicitly given in the text, so I'll default to "Not Listed". For the title, the main heading seems to be about databases every newsroom should have, so I'll go with that.
+
+Now, the description needs a concise summary of what Yang Wang presented. It was about various datasets useful for investigative reporting, such as environmental complaints and workplace safety records. So, I'll phrase it in simple terms, ensuring it's 1-2 sentences.
+
+Keywords are next. They should be relevant to the content but not include the conference or author names. From the data sources listed, environmental violations, OSHA records, student loans, and municipal worker disciplinary records stand out as key topics. That gives me five keywords.
+
+I need to make sure all values are in English and properly enclosed in quotes. Also, since there's no year provided, I stick with "Not Listed". Double-checking everything to ensure it fits the structure without any made-up information.
+</think>
+
+```json
+{
+  "id": "3991_2",
+  "authors": [
+    {
+      "name": "Yang Wang",
+      "email": null,
+      "affiliation": "Houston Chronicle"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Databases Every Newsroom Should Have",
+  "description": "This tipsheet highlights essential databases for investigative reporting, including environmental complaints, workplace safety records, and student loan data.",
+  "keywords": [
+    "Environmental violations",
+    "OSHA records",
+    "Student loans",
+    "Municipal worker disciplinary records"
+  ]
+}
+```

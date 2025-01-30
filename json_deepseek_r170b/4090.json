@@ -1,0 +1,52 @@
+<think>
+Alright, let me try to figure out how to approach this problem. The user has provided a detailed query asking for specific data extraction from what looks like a slide deck or presentation transcript about social media tools used in investigations.
+
+First, I need to parse the input given. It seems to be a lengthy text that includes various sections on content tools, verification tools, and other resources. There's also mention of authors like Sarah Kendzior and others from news organizations like The Washington Post.
+
+The user is asking for a JSON object with specific keys: id, authors, conference, year, title, description, keywords. They've set the id as 4090. I need to make sure each key is properly filled out according to their instructions.
+
+For the authors section, the user specified that it should be a list of objects with name, email, and affiliation. They mentioned not making up names and using null if not available. Also, if an author is associated with a news organization, use that as affiliation even if it's not directly next to their name. In this case, Sarah Kendzior is listed without an email or affiliation, so her entry will have those fields as null.
+
+The conference field needs to be either "IRE", "NICAR", or "Not Listed". Looking through the text, there's no indication of a specific conference mentioned, so it should default to "Not Listed".
+
+For the year, since the slide deck doesn't specify an event year, I'll set that as "Not Listed" too.
+
+The title and description need to be concise. The title seems clear from the initial line: "Social Media for Investigations". The description should summarize the content in 1-2 sentences. From the text, it's about various social media tools used in investigative journalism, so I'll craft a brief summary around that.
+
+Keywords are up to five terms excluding conference and authors. Looking at the tools mentioned—Content Tools, Photo Verification, Crowdsourcing—I can extract relevant keywords like "social media", "investigative journalism", "tools", "verification", and "crowdsourcing".
+
+I should also ensure all values are in English unless otherwise specified, which they are here.
+
+Putting it all together, I'll structure the JSON accordingly. Make sure to use proper formatting with quotes and commas where needed. Also, since some fields like email and affiliation can be null, represent them as such without quotes around null.
+
+I think that covers all the requirements. Now, I just need to present this in a clear JSON format.
+</think>
+
+```json
+{
+  "id": "4090",
+  "authors": [
+    {
+      "name": "Sarah Kendzior",
+      "email": null,
+      "affiliation": "The Washington Post"
+    },
+    {
+      "name": "Glenn Simpson",
+      "email": null,
+      "affiliation": "Fusion GPS"
+    }
+  ],
+  "conference": "Not Listed",
+  "year": "Not Listed",
+  "title": "Social Media for Investigations",
+  "description": "A presentation detailing various social media tools and techniques used in investigative journalism, including content creation, photo verification, and crowdsourcing.",
+  "keywords": [
+    "social media",
+    "investigative journalism",
+    "tools",
+    "verification",
+    "crowdsourcing"
+  ]
+}
+```

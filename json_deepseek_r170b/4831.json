@@ -1,0 +1,39 @@
+<think>
+Alright, so I have this query where the user wants me to create a JSON object based on some tipsheet from an Investigative Reporters and Editors (IRE) conference. The input provided is a bit fragmented with slides from a presentation by Doug Haddix titled "SOCIAL MEDIA ON THE MAP." 
+
+First, I need to parse through each slide to extract relevant information. The title is clear: "SOCIAL MEDIA ON THE MAP," so that goes into the JSON as the title. Since the conference isn't explicitly mentioned in the slides but it's from an IRE event, I'll set the conference key to "IRE."
+
+Next, looking for authors. The only name listed is Doug Haddix, and he's associated with @DougHaddix. There's no email or affiliation provided, so those fields will be null.
+
+For the description, I need a concise summary. The slides talk about using social media tools like Facebook, LinkedIn, Twitter, Banjo Discovery, and IFTTT for investigative reporting. So, summarizing that into one sentence: "Tips on using social media platforms to gather information and sources for investigative journalism."
+
+Keywords should capture the main topics without including the conference or authors. The slides mention specific tools (Facebook, LinkedIn, Twitter) and techniques like geolocation and influencer identification. So keywords would be ["social media," "investigative journalism," "geolocation," "Facebook," "Twitter"].
+
+Since there's no year mentioned in the input, the year will default to "Not Listed."
+
+Putting it all together, I structure the JSON with id 4831, authors list with Doug Haddix and his details as nulls, conference as IRE, title, description, keywords, and year not listed.
+</think>
+
+```json
+{
+  "id": 4831,
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "SOCIAL MEDIA ON THE MAP",
+  "description": "Tips on using social media platforms to gather information and sources for investigative journalism.",
+  "keywords": [
+    "social media",
+    "investigative journalism",
+    "geolocation",
+    "Facebook",
+    "Twitter"
+  ]
+}
+```

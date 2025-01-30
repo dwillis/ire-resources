@@ -1,0 +1,86 @@
+<think>
+Okay, I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. Let's break down the requirements step by step.
+
+First, the structure should include id, authors, conference, year, title, description, and keywords. The id is given as T2650. 
+
+Looking at the authors section: I see several names like Tom Torok, Margot Williams, Terry Schwadron, Jo Craven McGinty, Andy Lehren, Ron Nixon, Aron Pilhofer, and Janet Roberts. Some have affiliations listed, others don't. For example, Terry Schwadron is listed as Editor at The New York Times (NYT). I'll need to extract each author's name and their affiliation if available.
+
+The conference is clearly stated as IRE in the header, so that's straightforward. The year isn't explicitly mentioned, so it should be "Not Listed".
+
+For the title, the main heading seems to be about organizing a campaign using Computer-Assisted Reporting (CAR) approaches, so I'll use that as the title.
+
+The description needs to be a concise summary of the tipsheet content. It's about strategies for implementing CAR in newsrooms, covering data sources and successful story examples. I'll make sure it's 1-2 sentences.
+
+Keywords should include relevant terms like Computer-Assisted Reporting, CAR, data journalism, investigative reporting, and newsroom strategy. I'll limit this to five terms.
+
+Now, putting it all together:
+
+- id: "T2650"
+- authors: Each author is an object with name, email, affiliation. Emails aren't provided, so they remain null.
+- conference: "IRE"
+- year: "Not Listed"
+- title: A concise statement about the campaign and CAR approaches.
+- description: Summarizes the strategies and examples covered in the tipsheet.
+- keywords: Five relevant terms without including the conference or authors.
+
+I'll structure each part accordingly, ensuring all keys are enclosed in quotes and values are correctly formatted. Also, I'll check for any missing information to handle appropriately, like setting null where data isn't available.
+</think>
+
+```json
+{
+  "id": "T2650",
+  "authors": [
+    {
+      "name": "Tom Torok",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Margot Williams",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Terry Schwadron",
+      "email": "Terrys@nytimes.com",
+      "affiliation": "The New York Times"
+    },
+    {
+      "name": "Jo Craven McGinty",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Andy Lehren",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Ron Nixon",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Aron Pilhofer",
+      "email": null,
+      "affiliation": "IRE"
+    },
+    {
+      "name": "Janet Roberts",
+      "email": null,
+      "affiliation": "IRE"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Organizing a Campaign toward Computer-Assisted Reporting Approaches",
+  "description": "This tipsheet outlines strategies for implementing computer-assisted reporting (CAR) approaches in newsrooms, including data sources and successful story examples.",
+  "keywords": [
+    "Computer-Assisted Reporting",
+    "CAR",
+    "Data Journalism",
+    "Investigative Reporting",
+    "Newsroom Strategy"
+  ]
+}
+```

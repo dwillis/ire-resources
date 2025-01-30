@@ -1,0 +1,58 @@
+<think>
+Okay, so I'm trying to figure out how to create this JSON object based on the given tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has provided specific instructions on what each key should contain, so I need to make sure I follow those carefully.
+
+First, let's break down the input. The title of the tipsheet is "Responding to Disasters - TIP SHEET" and it was presented by Wade Rawlins from The News & Observer in Raleigh, N.C. His contact information is also provided: phone number 919-829-4528 and email wrawlins@newsobserver.com.
+
+The content of the tipsheet is about the Coastal Barrier Resources Act (CBRA), also known as the Cobra Act. It explains that this act was passed to minimize loss of life, federal revenue waste, and damage to natural resources by restricting certain developments in coastal areas. The act was initially passed in 1982 and later expanded in 1990 to include more regions like the Great Lakes and Puerto Rico.
+
+The tipsheet provides several resources for reporters:
+1. FEMA's website with a database of CBRA-designated communities across 21 states and two territories.
+2. Links to the full text of the CBRA act on NOAA and U.S. Fish and Wildlife websites.
+3. Contact information for Coastal Barrier Coordinators in different regions.
+4. Information on ordering maps from the U.S. Fish and Wildlife Service.
+5. Expert sources like Dr. Rutherford H. Plant, Orrin Pilkey, Prof. Raymond J. Burby, etc., along with their affiliations and contact details.
+
+Additionally, there are sections about coastal development, water quality resources (Earth 911, Surf Rider Foundation), and tips on checking sewage discharge reporting.
+
+Now, moving on to constructing the JSON object as per the user's instructions:
+
+1. **id**: Should be T2101.
+2. **authors**: A list of objects with name, email, and affiliation. Since only Wade Rawlins is listed, his details go here. Email and phone aren't directly linked in the structure, so I'll include his email if possible.
+3. **conference**: The tipsheet is from an IRE conference, so that's straightforward.
+4. **year**: The input doesn't specify a year, so it should be "Not Listed".
+5. **title**: Clearly given as "Responding to Disasters - TIP SHEET".
+6. **description**: A 1-2 sentence summary in simple language. It should mention the CBRA and its purpose of minimizing disasters through development restrictions.
+7. **keywords**: Up to five relevant terms, excluding conference and authors. So, "Coastal Barrier Resources Act", "Disaster Response", "FEMA", "Coastal Development", "Water Quality".
+
+I need to make sure that all values are in English and enclosed in quotes. Also, for the authors, I shouldn't invent any names; if they aren't listed, leave them as null. In this case, only Wade Rawlins is provided with his affiliation.
+
+Wait, in the user's example response, the author's name is "Wade Rawlins" and affiliation is correctly noted. So, that part should be fine.
+
+I also need to ensure that phone numbers aren't included since they aren't part of the required keys. Only email and affiliation are needed for authors.
+
+Putting it all together, I'll structure each key accordingly, making sure not to exceed five keywords and keeping the description concise.
+</think>
+
+```json
+{
+  "id": "T2101",
+  "authors": [
+    {
+      "name": "Wade Rawlins",
+      "email": "wrawlins@newsobserver.com",
+      "affiliation": "The News & Observer"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Responding to Disasters - TIP SHEET",
+  "description": "This tipsheet provides information on the Coastal Barrier Resources Act and resources for reporters covering disaster response.",
+  "keywords": [
+    "Coastal Barrier Resources Act",
+    "Disaster Response",
+    "FEMA",
+    "Coastal Development",
+    "Water Quality"
+  ]
+}
+```

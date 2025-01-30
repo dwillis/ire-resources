@@ -1,0 +1,41 @@
+<think>
+Alright, so I need to create a JSON object based on the user's query about an Investigative Reporters and Editors (IRE) conference tipsheet by Ken Armstrong from ProPublica.
+
+First, I'll identify the required keys: id, authors, conference, year, title, description, keywords. The id is given as 5521. 
+
+Next, for the authors section, there's only one author mentioned, Ken Armstrong. His email is provided (ken.armstrong@propublica.org) and his affiliation is ProPublica. So I'll structure this as an array with one object containing name, email, and affiliation.
+
+The conference is clearly stated as IRE, so that goes into the conference key. The year isn't mentioned in the text, so it should be "Not Listed".
+
+For the title, it's "Constructing the Narrative" and there's another part titled "Writing the Investigative Story: General Tips". I'll combine these into a single title that reflects both.
+
+The description needs to be a concise summary. The tipsheet covers techniques like using unanswered questions, embedding rules for tension, surprising readers with perspective shifts, avoiding nut graphs, using simple language, and cinematic storytelling. It also includes writing tips like creating suspense, experimenting with narrative structures, pronoun usage, and adding transparency through sourcing without bogging down the story.
+
+Keywords should be relevant and not include the conference or author names. I'll pick: "narrative techniques", "investigative journalism", "storytelling", "suspense", "transparency".
+
+Putting it all together, ensuring each key is properly formatted with quotes and values are correctly assigned.
+</think>
+
+```json
+{
+  "id": 5521,
+  "authors": [
+    {
+      "name": "Ken Armstrong",
+      "email": "ken.armstrong@propublica.org",
+      "affiliation": "ProPublica"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Constructing the Narrative and Writing the Investigative Story: General Tips",
+  "description": "This tipsheet provides guidance on constructing compelling narratives in investigative journalism, including techniques like using unanswered questions, embedding rules for tension, and shifting perspectives. It also offers general tips for writing investigative stories effectively.",
+  "keywords": [
+    "narrative techniques",
+    "investigative journalism",
+    "storytelling",
+    "suspense",
+    "transparency"
+  ]
+}
+```

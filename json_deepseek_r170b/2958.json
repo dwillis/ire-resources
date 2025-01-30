@@ -1,0 +1,48 @@
+<think>
+Okay, so I'm trying to figure out how to create this JSON object based on the user's query and the provided example. The user wants me to respond with only a JSON object describing a tipsheet from Investigative Reporters and Editors (IRE) conferences. Let me break down what they're asking for.
+
+First, I need to parse the input text they gave. It seems like it's about investigating war crimes, presented at an IRE conference in Phoenix back in 2007 by Deborah Nelson, who was a Carnegie Visiting Professor at the University of Maryland. Her email is provided as dnelson@jmail.umd.edu.
+
+The tipsheet includes various military guides and resources for dealing with UCMJ cases, websites where these guides can be found, methods for locating military personnel, and specific examples of unit websites that provide historical data on military units involved in different wars. There are also references to additional resources like the Library of Congress and some books.
+
+There's a section about how to find military personnel and their survivors using locator guides, directories, and various websites. Tips include using Social Security number prefixes, squadron numbers, and other details to track individuals. It mentions specific websites like Military.com, GISearch.com, and MilitaryBrats.com, which require registration or membership.
+
+Additionally, the tipsheet includes information about war crimes during Vietnam, citing an investigative report by Nick Turse and Deborah Nelson in the LA Times. They analyzed declassified files from the National Archives, detailing numerous substantiated allegations of atrocities but limited convictions.
+
+Now, I need to structure this into a JSON object with specific keys: id, authors, conference, year, title, description, keywords.
+
+- **id**: Given as 2958.
+- **authors**: A list where each author has name, email, and affiliation. Deborah Nelson's details are provided, but Nick Turse is only mentioned in the Vietnam section without contact info. So, I'll include both authors with available data.
+- **conference**: The input starts with "IRE Phoenix 2007", so conference should be "IRE".
+- **year**: Clearly stated as 2007.
+- **title**: From the header, it's "Investigating War Crimes".
+- **description**: Needs to be a concise summary. The tipsheet provides resources and methods for investigating military justice and war crimes, including guides, personnel location techniques, and historical records.
+- **keywords**: Up to five terms excluding conference and authors. Possible keywords: UCMJ, war crimes, military justice, Vietnam War, National Archives.
+
+I should ensure all values are in English and properly enclosed in quotes. The authors' list includes Deborah with her email and affiliation, and Nick without contact info but as an author from the LA Times, so his affiliation is "Los Angeles Times".
+
+Let me double-check each field to make sure I'm not missing anything or including incorrect data.
+</think>
+
+```json
+{
+  "id": 2958,
+  "authors": [
+    {
+      "name": "Deborah Nelson",
+      "email": "dnelson@jmail.umd.edu",
+      "affiliation": "Carnegie Visiting Professor, Philip Merrill College of Journalism, University of Maryland"
+    },
+    {
+      "name": null,
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": 2007,
+  "title": "Investigating War Crimes",
+  "description": "A tipsheet providing resources and methods for investigating military justice and war crimes, including guides for dealing with UCMJ cases, locating military personnel, and accessing historical records.",
+  "keywords": ["UCMJ", "war crimes", "military justice", "Vietnam War", "National Archives"]
+}
+```

@@ -1,0 +1,37 @@
+<think>
+Alright, so I need to create a JSON object based on the given tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has provided specific instructions on how to structure this JSON with certain keys like id, authors, conference, year, etc.
+
+First, I'll start by identifying each required key. The ID is given as T2735, which is straightforward. Next, the authors section requires a list of objects, each containing name, email, and affiliation. From the input, there's only one author mentioned: David Wethe from the Fort Worth Star-Telegram with his email provided. So I'll include that in the authors array.
+
+The conference key should be "IRE" since it's specified by the user. The year isn't provided in the input, so according to instructions, it will be "Not Listed". 
+
+For the title, the tipsheet is titled "Using data for Profit and Nonprofit Businesses," which I'll use as is. The description needs to be a concise summary of the content. The tipsheet lists various sources for backgrounding businesses, both public and private, so the description should reflect that.
+
+Keywords are next. They need to be up to five terms excluding conference and authors. Looking at the content, relevant keywords could be "business research," "SEC filings," "private companies," "public records," and "investigative reporting."
+
+Putting it all together, I structure each part carefully, ensuring all values are in English and enclosed in quotes as per JSON standards.
+</think>
+
+```json
+{
+  "id": "T2735",
+  "authors": [
+    {
+      "name": "David Wethe",
+      "email": "dwethe@star-telegram.com",
+      "affiliation": "Fort Worth Star-Telegram"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Using data for Profit and Nonprofit Businesses",
+  "description": "A tipsheet providing resources and methods for backgrounding businesses, including company websites, SEC filings, private company data, secretary of state records, court filings, and more.",
+  "keywords": [
+    "business research",
+    "SEC filings",
+    "private companies",
+    "public records",
+    "investigative reporting"
+  ]
+}
+```

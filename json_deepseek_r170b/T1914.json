@@ -1,0 +1,51 @@
+<think>
+Alright, I'm trying to figure out how to create this JSON object based on the user's query and the provided example. The user has given me a tipsheet from an Investigative Reporters and Editors (IRE) conference presentation about white-collar crime by Alice Crites from The Washington Post. My task is to convert that into a specific JSON structure with keys like id, authors, conference, year, title, description, keywords.
+
+First, I need to parse the input provided. It includes details on state courts, free and commercial sites for accessing court information, other public records, federal courts (including Pacer info), miscellaneous resources like lobbying and political donations, and contact information for Alice Crites.
+
+I'll start by identifying each required key:
+
+1. **id**: The user mentioned it should be "T1914". Easy enough.
+2. **authors**: A list where each author has name, email, and affiliation. In the input, only Alice Crites is listed with her email (critesa@washpost.com) and affiliation (The Washington Post). So, I'll create an array with one object containing these details.
+3. **conference**: Since this tipsheet is from an IRE conference presentation, the value should be "IRE".
+4. **year**: The input doesn't specify a year, so it defaults to "Not Listed".
+5. **title**: The title given in the input is "White Collar Crime". I'll use that exactly.
+6. **description**: Needs to be a concise 1-2 sentence summary. Looking at the content, the tipsheet provides resources for accessing court records and other public data useful for investigating white-collar crime. So, I can phrase it as: "Tipsheet providing resources for accessing state and federal court records, public records and other information useful for investigating white-collar crime."
+7. **keywords**: Up to five terms excluding the conference and authors. From the content, relevant keywords would be "court records", "public records", "white-collar crime", "PACER", and "lobbying". These capture the main topics without including the conference or author names.
+
+I need to ensure that all values are in English unless otherwise specified, which they are here. Also, every key and value must be enclosed in quotes as per JSON standards.
+
+Double-checking each part:
+
+- Authors: Only Alice Crites is listed with her email and affiliation. No other authors.
+- Year: No year mentioned, so "Not Listed".
+- Title: Clearly stated as "White Collar Crime".
+- Description: Summarized to include the main purpose of the tipsheet.
+- Keywords: Selected based on content without overlapping with conference or author names.
+
+I think that's all covered. Now, I'll structure this into a JSON object following the specified keys and formatting.
+</think>
+
+```json
+{
+  "id": "T1914",
+  "authors": [
+    {
+      "name": "Alice Crites",
+      "email": "critesa@washpost.com",
+      "affiliation": "The Washington Post"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "White Collar Crime",
+  "description": "Tipsheet providing resources for accessing state and federal court records, public records and other information useful for investigating white-collar crime.",
+  "keywords": [
+    "court records",
+    "public records",
+    "white-collar crime",
+    "PACER",
+    "lobbying"
+  ]
+}
+```

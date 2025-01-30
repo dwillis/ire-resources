@@ -1,0 +1,39 @@
+<think>
+Alright, let me try to figure out how to approach this query. The user has given me a specific instruction that they want only a JSON object as a response, describing a tipsheet from an Investigative Reporters and Editors (IRE) conference. They also provided an example of such a JSON structure in their input.
+
+First, I need to understand the content of the tipsheet. It's titled "Make Your Investigations Mobile" by Jeff Taylor from IndyStar/Indianapolis Star. The tipsheet emphasizes starting with a digital plan, involving a team, and considering various elements like data, visuals, and promotion.
+
+Now, breaking down the required JSON keys: id is straightforward as 3987_1. For authors, I see only Jeff Taylor is listed, so his name will be there, but email and affiliation are null since they aren't provided. The conference is clearly IRE, so that's set. The year isn't mentioned in the text, so it'll be "Not Listed". 
+
+The description needs to be a concise summary. I'll focus on the main points: starting digital, involving a team, elements like data and visuals, promotion strategies, and varying complexity levels.
+
+For keywords, I have to pick up to five terms excluding conference and authors. From the content, relevant terms are mobile investigations, digital storytelling, team collaboration, interactive tools, and cross-platform planning.
+
+I need to ensure all values are in English and properly enclosed in quotes. Also, since it's for an IRE conference, that's correctly noted under the conference key.
+
+Putting it all together, I structure each part carefully, making sure not to add any extra information beyond what's provided. Double-checking each field against the user's instructions ensures compliance with their requirements.
+</think>
+
+```json
+{
+  "id": "3987_1",
+  "authors": [
+    {
+      "name": "Jeff Taylor",
+      "email": null,
+      "affiliation": "IndyStar/Indianapolis Star"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Make Your Investigations Mobile",
+  "description": "A tipsheet on how to approach investigative storytelling with a focus on mobile platforms, emphasizing the importance of teamwork and digital planning.",
+  "keywords": [
+    "mobile investigations",
+    "digital storytelling",
+    "team collaboration",
+    "interactive tools",
+    "cross-platform planning"
+  ]
+}
+```

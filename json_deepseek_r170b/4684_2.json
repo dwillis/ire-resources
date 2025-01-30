@@ -1,0 +1,67 @@
+<think>
+Okay, so I'm trying to figure out how to split apart city and state from a string that isn't delimited by anything like commas or spaces. The example given in the Excel Magic text was about having a column where the city and state are together without any separator, making it tricky to parse them into separate columns.
+
+First, I need to understand the problem better. Let's say I have entries like "SpringfieldIL" where Springfield is the city and IL is the state abbreviation. The goal is to split this into two columns: one for the city ("Springfield") and one for the state ("IL"). Since there are no spaces or commas, it's not straightforward.
+
+I remember that Excel functions like LEFT, RIGHT, MID, LEN, and FIND can be helpful here. But without a delimiter, how do I determine where the city ends and the state begins? Well, I know that all U.S. states have two-letter abbreviations, so maybe that's the key. If every entry in this column ends with exactly two uppercase letters representing the state, then I can use that to my advantage.
+
+So, here's what I'm thinking: for each cell containing the combined city and state string, I'll take the last two characters as the state. That would be straightforward using the RIGHT function. For example, RIGHT(A1,2) where A1 is "SpringfieldIL" would give me "IL".
+
+The tricky part is extracting the city name from what's left after removing the state abbreviation. If the original string is in cell A1, then the length of the string is LEN(A1). Since I know the last two characters are the state, I can subtract 2 from LEN(A1) to get the length of just the city part. Then, using LEFT(A1, LEN(A1)-2), that should give me everything except the last two characters, which would be the city name.
+
+Wait a minute, does this always work? What if the city itself ends with an uppercase letter or something? Hmm, but in most cases, cities don't end with two capital letters unless it's part of the actual city name, like "St. LouisMO". In that case, my method would incorrectly take the last two letters as the state abbreviation, but actually, "MO" is correct for Missouri. So maybe it still works because regardless of what comes before, the last two are always the state.
+
+I should also consider cases where there might be lowercase letters or other characters, but assuming that all entries are consistently formatted with uppercase state abbreviations at the end, this method should hold up.
+
+Let me test this idea with a few examples:
+
+1. "SpringfieldIL" → RIGHT(A1,2) = "IL", LEFT(A1, LEN(A1)-2) = "Springfield"
+2. "StLouisMO" → RIGHT(A1,2) = "MO", LEFT(A1, LEN(A1)-2) = "StLouis"
+3. "MiamiFL" → RIGHT(A1,2) = "FL", LEFT(A1, LEN(A1)-2) = "Miami"
+
+Seems to work in these cases. What about a city with numbers or special characters? Probably not an issue since city names usually don't have those.
+
+What if the state abbreviation isn't exactly two letters? Well, all U.S. states have two-letter abbreviations, so that shouldn't be a problem.
+
+Another thing to consider is handling empty cells or errors. I should make sure that if there's no data in cell A1, this formula doesn't throw an error. Maybe using IF statements to check if the cell is blank before applying these functions would help prevent errors.
+
+Also, sometimes city names might have spaces, like "New YorkNY". My method would still work because RIGHT(A1,2) gives "NY", and LEFT(A1, LEN(A1)-2) gives "New York".
+
+I think this approach should handle most cases effectively. It's a clever way to use the fixed length of state abbreviations to split the string without any delimiter.
+
+Now, to implement this in Excel, I would:
+
+- In the cell where I want the city name, use =LEFT(A1, LEN(A1)-2)
+- In the adjacent cell for the state, use =RIGHT(A1, 2)
+
+This should neatly separate the two parts of the string.
+</think>
+
+To split a combined city and state string into two separate columns in Excel without any delimiter, follow these steps:
+
+### Step-by-Step Explanation:
+
+1. **Identify the Combined String Column**: Assume the combined city and state strings are in column A (e.g., "SpringfieldIL").
+
+2. **Extract State Abbreviation**:
+   - In a new column (e.g., column B), use the formula `=RIGHT(A1, 2)`. This extracts the last two characters as the state abbreviation.
+   
+3. **Extract City Name**:
+   - In another new column (e.g., column C), use the formula `=LEFT(A1, LEN(A1)-2)`. This takes all characters except the last two, effectively extracting the city name.
+
+4. **Handle Blank Cells**: To prevent errors in empty cells, wrap each formula with an IF statement to check if the cell is blank.
+   - For State: `=IF(ISBLANK(A1), "", RIGHT(A1, 2))`
+   - For City: `=IF(ISBLANK(A1), "", LEFT(A1, LEN(A1)-2))`
+
+5. **Apply Formulas to All Rows**: Drag the formulas down to apply them across all rows in your data range.
+
+### Example:
+
+| Combined String (A) | State (B)  | City (C)     |
+|----------------------|------------|--------------|
+| SpringfieldIL       | =RIGHT(A2,2)|=LEFT(A2, LEN(A2)-2)|
+
+- **State**: `ILL`
+- **City**: `Springfield`
+
+This method efficiently separates the city and state using Excel functions based on the fixed two-letter state abbreviation.

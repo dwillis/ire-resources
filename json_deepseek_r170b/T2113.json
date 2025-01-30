@@ -1,0 +1,51 @@
+<think>
+Okay, so I've got this query where the user wants me to produce a JSON object based on a tipsheet from an Investigative Reporters and Editors (IRE) conference. The example they provided is about reporting on workplace deaths by Justin Pritchard.
+
+First, I need to understand what exactly the user is asking for. They want only a JSON response that describes this specific tipsheet with certain keys: id, authors, conference, year, title, description, and keywords. Each of these has specific requirements.
+
+Looking at the example, the id starts with T followed by numbers, like T2113. The authors are listed as an array of objects, each containing name, email, and affiliation. If there's no email or affiliation provided in the text, those fields should be null. Also, if a news organization is mentioned, it becomes the affiliation.
+
+The conference must be either "IRE", "NICAR", or "Not Listed". Since this tipsheet is from IRE Annual Conference 2004, that's straightforward. The year is clearly given as 2004, so no issues there.
+
+For the title, it should be taken directly from the source, which in the example was "REPORTING/WRITING ABOUT WORKPLACE DEATHS". The description needs to be a concise summary of the tipsheet, just 1-2 sentences. In the example, they summarized it as guidance on covering workplace fatalities using data and personal stories.
+
+Keywords are up to five relevant terms excluding the conference and authors. From the example, they chose "workplace deaths", "investigative reporting", "data analysis", "occupational safety", and "Bureau of Labor Statistics".
+
+Now, applying this structure to the given query:
+
+1. **id**: T2113 as specified.
+2. **authors**: The tipsheet is by Justin Pritchard from AP. So name is "Justin Pritchard", email is "jdpritchard@ap.org", and affiliation is "Associated Press".
+3. **conference**: Since it's the IRE Annual Conference, this is "IRE".
+4. **year**: Clearly 2004.
+5. **title**: Use the exact title from the tipsheet.
+6. **description**: Summarize in simple terms what the tipsheet covers, focusing on data sources and storytelling.
+7. **keywords**: Extract relevant terms related to the content.
+
+I need to ensure that all values are in English unless specified otherwise and that all keys and values are enclosed in quotes. Also, the JSON must not include any markdown formatting, just a plain object.
+
+Double-checking each part: authors have correct details, conference is right, year is accurate, title matches, description is clear, keywords capture the essence without exceeding five terms. Everything seems to fit.
+</think>
+
+```json
+{
+  "id": "T2113",
+  "authors": [
+    {
+      "name": "Justin Pritchard",
+      "email": "jdpritchard@ap.org",
+      "affiliation": "Associated Press"
+    }
+  ],
+  "conference": "IRE",
+  "year": 2004,
+  "title": "REPORTING/WRITING ABOUT WORKPLACE DEATHS",
+  "description": "Tipsheet provides guidance on reporting workplace deaths, including data sources, storytelling strategies and overcoming challenges in gathering information.",
+  "keywords": [
+    "workplace deaths",
+    "investigative reporting",
+    "data analysis",
+    "occupational safety",
+    "Bureau of Labor Statistics"
+  ]
+}
+```

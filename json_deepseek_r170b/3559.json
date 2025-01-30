@@ -1,0 +1,57 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. Let me go through each step carefully.
+
+First, looking at the input, it's about OpenBlock, which is a free and open-source platform for creating hyperlocal news websites. It allows users to aggregate data like crime reports, 311 requests, building permits, etc., onto local maps. Users can browse by location or content type, set up custom feeds and alerts.
+
+The task is to structure this into a JSON with specific keys: id, authors, conference, year, title, description, keywords.
+
+ID is given as 3559, so that's straightforward.
+
+Authors section needs a list of objects each containing name, email, and affiliation. From the text, I see Frank Hebbert is mentioned with his contact info: frank@openplans.org, affiliated with OpenPlans. The other organizations involved are Boston Globe and Columbia Daily Tribune, but no specific authors are listed there, so I should leave their names as null.
+
+Conference is either IRE, NICAR, or Not Listed. Since the tipsheet mentions it's from an IRE conference, conference should be "IRE".
+
+Year isn't explicitly stated in the text, so it defaults to "Not Listed".
+
+Title should clearly state what OpenBlock is. Maybe "Hyperlocal News Platform: OpenBlock" as that captures its purpose.
+
+Description needs a concise 1-2 sentence summary. It's about creating hyperlocal sites and integrating civic data on maps at various location levels with custom features.
+
+Keywords are up to five terms excluding conference and authors. So, hyperlocal news, civic data, mapping, open source, geotagging seem relevant.
+
+Now, I'll structure all this into the JSON object.
+</think>
+
+```json
+{
+  "id": 3559,
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": "Boston Globe"
+    },
+    {
+      "name": null,
+      "email": null,
+      "affiliation": "Columbia Daily Tribune"
+    },
+    {
+      "name": "Frank Hebbert",
+      "email": "frank@openplans.org",
+      "affiliation": "OpenPlans"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Hyperlocal News Platform: OpenBlock",
+  "description": "A free and open-source platform for creating hyperlocal news websites that aggregate civic data like crime reports and building permits onto local maps, allowing users to browse by location or content type.",
+  "keywords": [
+    "hyperlocal news",
+    "civic data",
+    "mapping",
+    "open source",
+    "geotagging"
+  ]
+}
+```

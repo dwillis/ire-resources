@@ -1,0 +1,43 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. The user has given me specific instructions on how to structure this JSON with certain keys: id, authors, conference, year, title, description, and keywords.
+
+First, looking at the input, the main author mentioned is Ziva Branstetter from Tulsa World. So in the authors array, I'll have one object with her name, email as null since it's not provided, and affiliation as Tulsa World.
+
+The id is given as 4005, so that's straightforward. The conference is IRE because the tipsheet is from an IRE event.
+
+The year isn't explicitly mentioned in the text, so I'll set it to "Not Listed". 
+
+For the title, the document starts with "Your guide to finding documents and data" by Ziva Branstetter, so that's the title.
+
+In the description, I need a 1-2 sentence summary. The tipsheet provides various sources for finding information like city records, county records, state, federal, etc., along with specific websites and advice on verifying sources. So the description could be: "A guide to locating public documents and data sources, including city, county, state, and federal records, with tips on verification and access."
+
+For keywords, I should pick up to five terms. Looking through the content, relevant keywords are "public records", "investigative reporting", "document research", "government transparency", and "data journalism". These capture the essence without including the conference or authors.
+
+Putting it all together, the JSON structure is clear. Each key needs to be in quotes, and all values should follow as specified. I need to ensure that strings are properly enclosed and that the data types are correct—for example, authors is an array of objects, each with name, email, and affiliation.
+
+I think that covers everything. Let me just double-check that I didn't miss any specific details or make up any information since the instructions say not to make up names or emails if they're not provided.
+</think>
+
+```json
+{
+  "id": 4005,
+  "authors": [
+    {
+      "name": "Ziva Branstetter",
+      "email": null,
+      "affiliation": "Tulsa World"
+    }
+  ],
+  "conference": "IRE",
+  "year": "Not Listed",
+  "title": "Your guide to finding documents and data",
+  "description": "A guide to locating public documents and data sources, including city, county, state, and federal records, with tips on verification and access.",
+  "keywords": [
+    "public records",
+    "investigative reporting",
+    "document research",
+    "government transparency",
+    "data journalism"
+  ]
+}
+```

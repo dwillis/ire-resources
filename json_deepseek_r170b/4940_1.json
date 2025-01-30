@@ -1,0 +1,48 @@
+<think>
+Okay, so I need to create a JSON object based on the provided tipsheet from an Investigative Reporters and Editors (IRE) conference. The input includes details about understanding financial documents, presented by Diana B. Henriques and Michelle Leder from footnoted.com at an IRE Workshop in January 2017.
+
+First, I'll break down each part of the query. The user wants a JSON object with specific keys: id, authors, conference, year, title, description, keywords. 
+
+Starting with the id, it's given as "4940_1". That's straightforward.
+
+Next, authors should be a list. Each author has name, email, and affiliation. From the input, Diana B. Henriques is mentioned, along with her contact info: Twitter handle @DianaBHenriques and email diananyt@gmail.com. Her website is www.dianabhenriques.com. Michelle Leder is also listed as the founder of footnoted.com, so her affiliation would be "*footnoted.com". Since her email isn't provided, it'll be null.
+
+The conference is clearly stated as IRE, and the year is January 2017, so that's set.
+
+The title comes from the heading: "UNDERSTANDING FINANCIAL DOCUMENTS".
+
+For the description, I need a concise summary. The tipsheet covers SEC filings like 10-Ks, 10-Qs, 8-Ks, and proxy statements, highlighting where to find them and strategies companies use to disclose information.
+
+Keywords should be up to five terms excluding the conference and authors. Relevant terms are "SEC filings", "financial documents", "proxy statement", "10-K", "disclosure strategies".
+
+Putting it all together, I structure each key with appropriate values, ensuring emails and affiliations are correctly assigned where possible.
+</think>
+
+```json
+{
+  "id": "4940_1",
+  "authors": [
+    {
+      "name": "Diana B. Henriques",
+      "email": "diananyt@gmail.com",
+      "affiliation": null
+    },
+    {
+      "name": "Michelle Leder",
+      "email": null,
+      "affiliation": "*footnoted.com"
+    }
+  ],
+  "conference": "IRE",
+  "year": "2017",
+  "title": "UNDERSTANDING FINANCIAL DOCUMENTS",
+  "description": "A tipsheet on understanding and analyzing SEC filings such as 10-Ks, 10-Qs, 8-Ks, and proxy statements, with strategies for finding hidden information.",
+  "keywords": [
+    "SEC filings",
+    "financial documents",
+    "proxy statement",
+    "10-K",
+    "disclosure strategies"
+  ]
+}
+```

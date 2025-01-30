@@ -1,0 +1,43 @@
+<think>
+Okay, so I need to help create a JSON object from the given tipsheet. Let me go through this step by step.
+
+First, looking at the input provided, it's from an IRE conference in Oklahoma City, year 2013. The title is "Quick Hit Investigative." There are several authors listed: Nanci Wilson with her email and phone number, and a note about My Links for online resources.
+
+I need to structure this into JSON with specific keys: id, authors, conference, year, title, description, keywords.
+
+The id is given as 4009. 
+
+For the authors, it's a list. Each author should have name, email, and affiliation. Nanci Wilson's name is there, her email is nanciw@gmail.com, but no affiliation mentioned. So I'll set affiliation to null for her.
+
+The conference is clearly IRE, year is 2013. The title is "Quick Hit Investigative."
+
+Now the description needs to be a concise summary of the tipsheet. It includes advice on keeping an open records pipeline, networking with sources, investigating smaller government entities, and using specific resources like IRE's website and GAO reports.
+
+Keywords should capture the main topics without including the conference or authors. So possible keywords: investigative reporting, FOIA requests, government accountability, public records, data journalism.
+
+Putting it all together, making sure each key is in quotes and values are correctly formatted.
+</think>
+
+```json
+{
+  "id": 4009,
+  "authors": [
+    {
+      "name": null,
+      "email": null,
+      "affiliation": null
+    }
+  ],
+  "conference": "IRE",
+  "year": 2013,
+  "title": "Quick Hit Investigative",
+  "description": "Tipsheet from IRE Oklahoma City 2013 conference covering investigative techniques and resources.",
+  "keywords": [
+    "investigative reporting",
+    "FOIA requests",
+    "government accountability",
+    "public records",
+    "data journalism"
+  ]
+}
+```
