@@ -73,8 +73,8 @@ def write_to_csv(file_path, results):
         writer.writerows(results)
 
 # Specify the base directory containing the JSON directories
-base_directory = '/Users/dwillis/code/ire-stuff'
-output_csv_path = '/Users/dwillis/code/ire-stuff/results.csv'
+base_directory = '/Users/dpwillis/code/ire-resources'
+output_csv_path = '/Users/dpwillis/code/ire-resources/results.csv'
 
 results = check_json_files_in_directories(base_directory)
 write_to_csv(output_csv_path, results)
